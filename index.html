@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Three Years of Numbers — VAPPL Investor Brief</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-O-D Parks — Investor Brief · May 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
@@ -722,6 +723,52 @@ body{
   article:last-child{page-break-after:auto;}
 }
 
+/* === RESPONSIVE / MOBILE === */
+
+/* Archetype cards — stack on small screens */
+.archetype-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0 0;}
+@media(max-width:640px){.archetype-cards{grid-template-columns:1fr;gap:14px;}}
+
+/* Portfolio maturity strip — stack on small screens */
+.portfolio-maturity-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;}
+@media(max-width:480px){.portfolio-maturity-grid{grid-template-columns:1fr;gap:6px;}}
+
+/* Financial tables — horizontal scroll on mobile rather than overflow clip */
+@media(max-width:640px){
+  .financial{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;}
+  body{font-size:15px;}
+  .lead{font-size:clamp(17px,4.5vw,20px);margin-bottom:36px;}
+  .chapter-header{margin-bottom:32px;}
+  .section-head{margin:40px 0 18px;}
+  .bs-card{padding:22px 18px 20px;}
+}
+
+/* Very narrow phones (SE, Moto G) */
+@media(max-width:380px){
+  .topbar__inner{padding:10px 16px;}
+  .layout{padding:18px 16px 60px;}
+}
+
+/* Tablet — tighten side padding slightly */
+@media(min-width:641px) and (max-width:1100px){
+  .layout{padding:32px 28px 96px;}
+  .main{max-width:100%;}
+}
+
+/* Safe-area insets for iPhone notch/home-bar */
+@supports(padding:max(0px)){
+  .topbar__inner{
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
+  @media(max-width:1100px){
+    .layout{
+      padding-left:max(22px,env(safe-area-inset-left));
+      padding-right:max(22px,env(safe-area-inset-right));
+    }
+  }
+}
+
 </style>
 </head>
 <body>
@@ -798,7 +845,7 @@ body{
           </div>
           <div style="margin:18px 0 4px;padding:14px 18px;background:rgba(43,102,234,0.07);border-left:3px solid var(--blue);border-radius:4px;max-width:560px;">
             <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Portfolio maturity · FY25-26</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;">
+            <div class="portfolio-maturity-grid">
               <div style="font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);line-height:1.4;"><span style="color:var(--terracotta);font-weight:700;">EMV</span> &nbsp;<span style="color:var(--ink-soft);font-size:11px;">E-O-D Adventure Park, Mayur Vihar</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mature · full season</div>
               <div style="font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);line-height:1.4;"><span style="color:var(--terracotta);font-weight:700;">DME</span> &nbsp;<span style="color:var(--ink-soft);font-size:11px;">E-O-D at Delhi–Meerut Expressway</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year 1 · incomplete product</div>
               <div style="font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink);line-height:1.4;"><span style="color:var(--terracotta);font-weight:700;">EAC</span> &nbsp;<span style="color:var(--ink-soft);font-size:11px;">E-O-D Agra Chaupati, Agra</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phase 1 · live Jan 2026 (~3 months)</div>
@@ -1254,7 +1301,7 @@ body{
         <h2 class="section-head__title">Two park archetypes. <em>One brand.</em></h2>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0 0;">
+      <div class="archetype-cards">
 
         <div style="border:1px solid var(--rule);border-radius:6px;overflow:hidden;">
           <div style="background:var(--blue);padding:14px 18px;">
