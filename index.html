@@ -1,0 +1,2132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three Years of Numbers — VAPPL Investor Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2B66EA;
+  --blue-mid:#275AC7;
+  --blue-deep:#2A51A3;
+  --blue-navy:#1A315D;
+  --terracotta:#C8553D;
+  --terracotta-soft:rgba(200,85,61,0.08);
+  --ink:#0A1426;
+  --ink-soft:#3B4660;
+  --ink-mute:#6E7689;
+  --canvas:#FAF7F2;
+  --paper:#FFFFFF;
+  --rule:#E6DFD4;
+  --rule-strong:#1A1F2E;
+  --shadow:0 1px 0 rgba(10,20,38,0.04), 0 12px 32px -16px rgba(10,20,38,0.10);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--canvas);
+  color:var(--ink);
+  font-family:"DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"ss01","cv11";
+}
+
+/* progress bar across top */
+.progress-bar{
+  position:fixed;top:0;left:0;right:0;height:2px;
+  background:transparent;z-index:100;
+}
+.progress-bar__fill{
+  height:100%;background:var(--blue);width:0%;
+  transition:width .3s ease;
+}
+
+/* top strip — brand + mobile chapter selector */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,247,242,0.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar__inner{
+  max-width:1280px;margin:0 auto;
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
+.brand__mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:"DM Sans",sans-serif;font-weight:700;font-size:14px;
+  letter-spacing:-0.02em;
+  background:var(--ink);color:var(--canvas);
+  padding:5px 9px 4px;border-radius:4px;line-height:1;
+}
+.brand__mark::after{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--blue);margin-left:6px;
+}
+.brand__name{font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;letter-spacing:0.01em;color:var(--ink-soft);}
+.topbar__meta{
+  font-family:"DM Sans",sans-serif;font-size:12px;
+  color:var(--ink-mute);letter-spacing:0.04em;text-transform:uppercase;
+}
+.topbar__meta strong{color:var(--ink);font-weight:600;}
+
+/* mobile chapter dropdown */
+.mobile-chapter{display:none;}
+@media(max-width:1100px){
+  .topbar__meta{display:none;}
+  .mobile-chapter{
+    display:flex;align-items:center;gap:8px;
+    font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;
+    background:var(--paper);border:1px solid var(--rule);
+    padding:8px 12px;border-radius:6px;color:var(--ink);
+    cursor:pointer;
+  }
+  .mobile-chapter__num{color:var(--blue-deep);font-variant-numeric:tabular-nums;letter-spacing:0.06em;}
+  .mobile-chapter::after{content:"⌄";color:var(--ink-mute);font-size:14px;margin-top:-3px;}
+}
+
+/* layout grid */
+.layout{
+  max-width:1280px;margin:0 auto;
+  display:grid;
+  grid-template-columns: 220px minmax(0,1fr);
+  gap:64px;
+  padding:48px 24px 120px;
+}
+@media(max-width:1100px){
+  .layout{display:block;padding:24px 22px 80px;}
+}
+
+/* sticky chapter rail */
+.rail{
+  position:sticky;top:96px;align-self:start;
+  font-family:"DM Sans",sans-serif;font-size:13px;
+}
+.rail__label{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:18px;font-weight:500;
+}
+.rail__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
+.rail__item a{
+  display:flex;gap:14px;align-items:baseline;
+  padding:7px 0;
+  color:var(--ink-soft);text-decoration:none;line-height:1.4;
+  border-left:2px solid transparent;padding-left:14px;margin-left:-14px;
+  transition:all .15s ease;
+}
+.rail__item a:hover{color:var(--ink);}
+.rail__item--active a{
+  color:var(--ink);font-weight:500;border-left-color:var(--blue);
+}
+.rail__num{
+  font-variant-numeric:tabular-nums;
+  font-size:11px;letter-spacing:0.06em;
+  color:var(--ink-mute);min-width:18px;
+}
+.rail__item--active .rail__num{color:var(--blue);font-weight:600;}
+
+@media(max-width:1100px){.rail{display:none;}}
+
+/* main column */
+.main{max-width:760px;}
+
+/* chapter header */
+.chapter-header{margin-bottom:48px;}
+.chapter-eyebrow{
+  font-family:"DM Sans",sans-serif;
+  font-size:12px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--blue);font-weight:600;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:22px;
+}
+.chapter-eyebrow::after{
+  content:"";flex:1;height:1px;background:var(--rule);
+}
+.chapter-title{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:500;font-optical-sizing:auto;
+  font-size:clamp(40px,6vw,68px);
+  line-height:1.02;letter-spacing:-0.025em;
+  margin:0 0 18px;color:var(--ink);
+}
+.chapter-subtitle{
+  font-family:"Fraunces",Georgia,serif;
+  font-style:italic;font-weight:400;
+  font-size:clamp(19px,2.4vw,24px);
+  line-height:1.4;color:var(--ink-soft);
+  margin:0;max-width:560px;
+}
+
+/* lead paragraph */
+.lead{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:400;font-size:clamp(19px,2vw,22px);
+  line-height:1.55;color:var(--ink);
+  margin:0 0 56px;max-width:600px;
+}
+.lead strong{font-weight:600;}
+
+/* hero figure — single oversized number */
+.hero-figure{
+  margin:0 0 64px;
+  padding:40px 0 36px;
+  border-top:1px solid var(--rule-strong);
+  border-bottom:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:36px;align-items:end;
+}
+@media(max-width:640px){
+  .hero-figure{grid-template-columns:1fr;gap:18px;align-items:start;}
+}
+.hero-figure__number{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:500;
+  font-size:clamp(76px,12vw,128px);
+  line-height:0.9;letter-spacing:-0.04em;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.hero-figure__number .currency{
+  font-size:0.5em;color:var(--ink-mute);
+  vertical-align:0.32em;font-weight:400;margin-right:0.04em;
+}
+.hero-figure__number .unit{
+  font-size:0.32em;color:var(--ink-mute);
+  font-style:italic;letter-spacing:0;margin-left:0.12em;
+  font-weight:400;
+}
+.hero-figure__caption{
+  padding-bottom:14px;
+}
+.hero-figure__label{
+  font-family:"DM Sans",sans-serif;
+  font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:500;margin-bottom:8px;
+}
+.hero-figure__desc{
+  font-family:"DM Sans",sans-serif;
+  font-size:15px;line-height:1.55;color:var(--ink-soft);
+}
+.hero-figure__desc b{color:var(--ink);font-weight:600;}
+
+/* section headers */
+.section-head{
+  display:flex;align-items:baseline;gap:14px;
+  margin:64px 0 24px;
+}
+.section-head__num{
+  font-family:"DM Sans",sans-serif;
+  font-size:12px;letter-spacing:0.08em;
+  color:var(--blue);font-weight:600;font-variant-numeric:tabular-nums;
+}
+.section-head__title{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:600;font-size:clamp(22px,2.4vw,28px);
+  letter-spacing:-0.015em;color:var(--ink);margin:0;
+}
+.section-head__title em{font-style:italic;font-weight:400;color:var(--ink-soft);}
+
+/* financial table */
+.financial{
+  width:100%;border-collapse:collapse;
+  font-family:"DM Sans",sans-serif;font-size:14.5px;
+  font-variant-numeric:tabular-nums;
+  margin:0 0 8px;
+}
+.financial th{
+  font-weight:500;text-align:left;
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-mute);
+  padding:14px 16px 12px 0;
+  border-bottom:1px solid var(--rule-strong);
+  white-space:nowrap;
+}
+.financial th.num,.financial td.num{text-align:right;padding-right:0;}
+.financial td{
+  padding:16px 16px 16px 0;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);vertical-align:baseline;
+}
+.financial tr:last-child td{border-bottom:none;}
+.financial tr.highlight td{
+  background:linear-gradient(to right, var(--terracotta-soft), transparent 70%);
+}
+.financial tr.highlight td:first-child{font-weight:600;}
+.financial td .year{font-weight:600;}
+.financial td .meta{
+  display:block;font-size:12px;color:var(--ink-mute);
+  margin-top:2px;font-weight:400;
+}
+.financial td.num{font-weight:500;font-size:15px;}
+.financial td.num.positive{color:var(--ink);}
+.financial td.num.muted{color:var(--ink-mute);font-weight:400;}
+.financial .footmark{
+  font-size:0.7em;vertical-align:0.4em;
+  color:var(--terracotta);font-weight:500;margin-left:1px;
+}
+.financial .delta{
+  font-size:12px;color:var(--ink-mute);
+  font-weight:400;margin-left:6px;
+}
+.financial .delta.up{color:#1F7A4D;}
+
+/* chart */
+.chart{
+  margin:32px 0 16px;
+  background:var(--paper);
+  border:1px solid var(--rule);border-radius:8px;
+  padding:28px 28px 20px;
+}
+.chart__title{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink-mute);font-weight:500;
+  margin-bottom:4px;
+}
+.chart__sub{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;
+  font-size:14px;color:var(--ink-soft);margin-bottom:18px;
+}
+.chart svg{width:100%;height:auto;display:block;}
+.chart__legend{
+  display:flex;gap:24px;flex-wrap:wrap;
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);
+  font-family:"DM Sans",sans-serif;font-size:12.5px;color:var(--ink-soft);
+}
+.chart__legend span{display:inline-flex;align-items:center;gap:8px;}
+.chart__legend i{width:18px;height:2px;background:var(--blue);display:inline-block;}
+.chart__legend i.tc{background:var(--terracotta);border-top:0;}
+.chart__legend i.dashed{
+  background:transparent;border-top:2px dashed var(--terracotta);height:0;
+}
+
+/* balance sheet card */
+.bs-card{
+  margin:48px 0 16px;
+  background:var(--ink);color:var(--canvas);
+  border-radius:8px;padding:32px 32px 28px;
+  position:relative;overflow:hidden;
+}
+.bs-card::before{
+  content:"";position:absolute;top:0;left:0;width:4px;height:100%;
+  background:var(--blue);
+}
+.bs-card__label{
+  font-family:"DM Sans",sans-serif;
+  font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(250,247,242,0.55);font-weight:500;margin-bottom:6px;
+}
+.bs-card__title{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:500;font-size:24px;letter-spacing:-0.01em;
+  margin:0 0 24px;color:var(--canvas);
+}
+.bs-card__grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);gap:24px 32px;
+}
+@media(max-width:640px){
+  .bs-card__grid{grid-template-columns:1fr;gap:20px;}
+  .bs-card{padding:26px 24px 24px;}
+}
+.bs-kpi{}
+.bs-kpi__num{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:500;font-size:32px;line-height:1;
+  color:var(--canvas);
+  font-variant-numeric:tabular-nums lining-nums;
+  margin-bottom:6px;
+}
+.bs-kpi__num .small{font-size:0.55em;color:rgba(250,247,242,0.6);vertical-align:0.3em;font-weight:400;}
+.bs-kpi__num.terra{color:#F4A78B;}
+.bs-kpi__label{
+  font-family:"DM Sans",sans-serif;font-size:13px;
+  line-height:1.4;color:rgba(250,247,242,0.75);
+}
+.bs-kpi__label b{color:var(--canvas);font-weight:600;}
+
+/* closing line */
+.closing{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:400;font-style:italic;
+  font-size:clamp(20px,2.4vw,26px);line-height:1.4;
+  color:var(--ink);
+  margin:64px 0 16px;padding-left:24px;
+  border-left:3px solid var(--terracotta);
+  max-width:620px;
+}
+.closing b{font-style:normal;font-weight:600;color:var(--terracotta);}
+
+/* footnotes */
+.footnotes{
+  margin-top:64px;padding-top:24px;
+  border-top:1px solid var(--rule);
+  font-family:"DM Sans",sans-serif;font-size:12.5px;line-height:1.6;
+  color:var(--ink-mute);
+}
+.footnotes p{margin:0 0 8px;}
+.footnotes .mark{
+  color:var(--terracotta);font-weight:600;margin-right:4px;
+}
+
+/* bottom chapter nav */
+.chapter-nav{
+  margin-top:96px;padding-top:32px;
+  border-top:1px solid var(--rule-strong);
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  font-family:"DM Sans",sans-serif;
+}
+@media(max-width:640px){
+  .chapter-nav{grid-template-columns:1fr;}
+}
+.chapter-nav a{
+  text-decoration:none;color:var(--ink);
+  padding:20px 0;display:block;
+}
+.chapter-nav__dir{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:6px;
+}
+.chapter-nav__title{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:20px;font-weight:500;letter-spacing:-0.01em;
+}
+.chapter-nav__title::before,.chapter-nav__title::after{color:var(--blue);font-weight:400;}
+.chapter-nav__prev .chapter-nav__title::before{content:"← ";}
+.chapter-nav__next{text-align:right;}
+.chapter-nav__next .chapter-nav__title::after{content:" →";}
+@media(max-width:640px){
+  .chapter-nav__next{text-align:left;}
+}
+
+/* print */
+@media print{
+  @page{size:A4;margin:20mm 18mm;}
+  body{background:#fff;color:#000;font-size:11pt;}
+  .progress-bar,.topbar,.rail,.chapter-nav,.mobile-chapter{display:none !important;}
+  .layout{display:block;padding:0;max-width:none;}
+  .main{max-width:none;}
+  .chapter-title{font-size:32pt;}
+  .chapter-subtitle{font-size:14pt;}
+  .hero-figure__number{font-size:60pt;color:#000;}
+  .bs-card{background:#0A1426;color:#fff;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .chart{break-inside:avoid;}
+  .closing{break-inside:avoid;}
+  .financial{break-inside:auto;}
+  .financial tr{break-inside:avoid;}
+/* === COVER (ch01) === */
+.cover{min-height:80vh;display:flex;flex-direction:column;justify-content:space-between;padding:24px 0 32px;}
+.cover__brand{display:flex;align-items:baseline;gap:14px;}
+.cover__wordmark{
+  font-family:"DM Sans",sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;
+  background:var(--ink);color:var(--canvas);padding:8px 14px 7px;border-radius:6px;line-height:1;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.cover__wordmark::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue);}
+.cover__company{font-family:"DM Sans",sans-serif;font-size:12px;color:var(--ink-mute);letter-spacing:0.02em;}
+.cover__hero{margin:72px 0 64px;}
+.cover__eyebrow{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--terracotta);font-weight:600;margin-bottom:24px;
+}
+.cover__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;
+  font-size:clamp(40px,7vw,80px);line-height:1;letter-spacing:-0.03em;color:var(--ink);
+  margin:0 0 24px;
+}
+.cover__title em{font-style:italic;font-weight:400;color:var(--terracotta);}
+.cover__thesis{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(18px,2.4vw,24px);line-height:1.4;color:var(--ink-soft);max-width:600px;
+}
+.cover__summary{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  padding:28px 0;border-top:1px solid var(--rule-strong);
+}
+@media(max-width:640px){.cover__summary{grid-template-columns:repeat(2,1fr);gap:20px;}}
+.cover__stat__label{
+  font-family:"DM Sans",sans-serif;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:500;margin-bottom:6px;
+}
+.cover__stat__num{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;
+  font-size:clamp(22px,2.6vw,30px);line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums;
+}
+.cover__stat__num .small{font-size:0.55em;color:var(--ink-mute);margin-left:2px;font-weight:400;}
+.cover__scroll-hint{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:500;margin-top:24px;
+}
+
+/* === FORMAT CARDS (ch02) === */
+.format-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0 40px;}
+@media(max-width:900px){.format-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.format-grid{grid-template-columns:1fr;}}
+.format-card{background:var(--paper);border:1px solid var(--rule);padding:22px 20px;border-radius:8px;}
+.format-card__arrow{font-family:"DM Sans",sans-serif;color:var(--ink-mute);font-size:14px;margin-bottom:12px;}
+.format-card__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;letter-spacing:-0.01em;
+  margin:0 0 8px;color:var(--ink);
+}
+.format-card__desc{font-family:"DM Sans",sans-serif;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+
+/* === CALLOUT LIST (ch03 Agra infrastructure) === */
+.callout-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;margin:20px 0 32px;}
+@media(max-width:640px){.callout-list{grid-template-columns:1fr;}}
+.callout{
+  font-family:"DM Sans",sans-serif;font-size:14px;line-height:1.5;color:var(--ink);
+  padding:14px 0;border-top:1px solid var(--rule);
+}
+.callout b{color:var(--blue-deep);}
+
+/* === TIMELINE (ch05) === */
+.timeline{margin:32px 0;position:relative;}
+.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:var(--rule);}
+.timeline__item{position:relative;padding-left:42px;padding-bottom:30px;}
+.timeline__item:last-child{padding-bottom:0;}
+.timeline__dot{
+  position:absolute;left:6px;top:8px;width:11px;height:11px;border-radius:50%;
+  background:var(--canvas);border:2px solid var(--blue);
+}
+.timeline__item--key .timeline__dot{background:var(--terracotta);border-color:var(--terracotta);}
+.timeline__year{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  font-weight:600;color:var(--blue);margin-bottom:4px;
+}
+.timeline__item--key .timeline__year{color:var(--terracotta);}
+.timeline__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:19px;letter-spacing:-0.01em;
+  margin:0 0 6px;color:var(--ink);
+}
+.timeline__desc{font-family:"DM Sans",sans-serif;font-size:14px;line-height:1.55;color:var(--ink-soft);}
+
+/* === SURVEY FINDINGS (ch06) === */
+.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:24px 0;}
+@media(max-width:640px){.findings{grid-template-columns:1fr;}}
+.finding{padding:22px 20px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;}
+.finding__num{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:32px;line-height:1;
+  color:var(--blue);font-variant-numeric:tabular-nums;margin-bottom:8px;letter-spacing:-0.02em;
+}
+.finding__label{font-family:"DM Sans",sans-serif;font-size:13.5px;line-height:1.5;color:var(--ink-soft);}
+.finding__label b{color:var(--ink);font-weight:600;}
+
+/* === ARCHETYPE COMPARISON (ch06) === */
+.archetype{
+  display:grid;grid-template-columns:140px 1fr 1fr;gap:0 24px;
+  font-family:"DM Sans",sans-serif;font-size:14.5px;margin:24px 0;
+}
+@media(max-width:640px){.archetype{grid-template-columns:1fr;gap:4px;}}
+.archetype__row{display:contents;}
+.archetype__row > div{padding:14px 0;border-bottom:1px solid var(--rule);}
+.archetype__row:last-of-type > div{border-bottom:none;}
+.archetype__row--header > div{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);
+  font-weight:600;padding:0 0 8px;border-bottom:1px solid var(--rule-strong);
+}
+.archetype__row:not(.archetype__row--header) > div:first-child{color:var(--ink-mute);}
+.archetype__row > div b{color:var(--ink);font-weight:500;}
+@media(max-width:640px){
+  .archetype__row > div{padding:6px 0;border-bottom:none;}
+  .archetype__row{padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .archetype__row--header{display:none;}
+}
+
+/* === TESTIMONIAL (ch06) === */
+.testimonial{margin:48px 0 0;padding:32px 0 0;border-top:1px solid var(--rule);}
+.testimonial__quote{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(18px,2.2vw,22px);line-height:1.5;color:var(--ink);
+  margin:0 0 18px;max-width:620px;
+}
+.testimonial__quote::before{content:"\201C";font-style:normal;color:var(--terracotta);font-size:1.4em;line-height:0;vertical-align:-0.15em;margin-right:0.02em;}
+.testimonial__quote::after{content:"\201D";font-style:normal;color:var(--terracotta);font-size:1.4em;line-height:0;vertical-align:-0.15em;margin-left:0.02em;}
+.testimonial__attrib{font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink-mute);}
+.testimonial__attrib b{color:var(--ink);font-weight:600;}
+
+/* === REVENUE STREAMS (ch04, ch07) === */
+.streams{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0 36px;}
+@media(max-width:880px){.streams{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.streams{grid-template-columns:1fr;}}
+.stream{padding:22px 20px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;}
+.stream__num{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.12em;color:var(--blue);
+  font-weight:600;font-variant-numeric:tabular-nums;margin-bottom:8px;
+}
+.stream__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;letter-spacing:-0.01em;
+  margin:0 0 8px;color:var(--ink);
+}
+.stream__desc{font-family:"DM Sans",sans-serif;font-size:13px;line-height:1.55;color:var(--ink-soft);}
+.stream__desc b{color:var(--ink);font-weight:600;}
+
+/* === MOAT CARDS (ch09) === */
+.moat-list{margin:32px 0 32px;display:flex;flex-direction:column;}
+.moat{
+  display:grid;grid-template-columns:80px 1fr;gap:24px;align-items:start;
+  padding:28px 0;border-bottom:1px solid var(--rule);
+}
+.moat:last-child{border-bottom:none;}
+.moat__num{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:52px;line-height:0.95;
+  color:var(--blue);font-variant-numeric:tabular-nums;letter-spacing:-0.04em;
+}
+.moat__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:21px;letter-spacing:-0.015em;
+  margin:0 0 10px;color:var(--ink);line-height:1.25;
+}
+.moat__title em{font-style:italic;font-weight:400;color:var(--ink-soft);}
+.moat__desc{font-family:"DM Sans",sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink-soft);}
+.moat__desc b{color:var(--ink);font-weight:600;}
+@media(max-width:520px){
+  .moat{grid-template-columns:1fr;gap:8px;}
+  .moat__num{font-size:36px;}
+}
+
+/* === HORIZON / GROWTH PIPELINE (ch10) === */
+.horizon{margin:32px 0 40px;}
+.horizon__label{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--terracotta);font-weight:600;margin-bottom:6px;
+}
+.horizon__title{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:24px;letter-spacing:-0.015em;
+  margin:0 0 22px;color:var(--ink);
+}
+.parks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:640px){.parks-grid{grid-template-columns:1fr;}}
+.park-card{background:var(--paper);border:1px solid var(--rule);padding:22px 20px;border-radius:8px;}
+.park-card__code{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.12em;font-weight:600;
+  color:var(--blue);margin-bottom:6px;
+}
+.park-card__name{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;letter-spacing:-0.01em;
+  margin:0 0 12px;color:var(--ink);
+}
+.park-card__action{font-family:"DM Sans",sans-serif;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+.park-card__action b{color:var(--ink);font-weight:600;}
+.pipeline-list{display:flex;flex-direction:column;margin:4px 0 24px;}
+.pipeline-item{
+  display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;
+  padding:18px 0;border-bottom:1px solid var(--rule);
+}
+.pipeline-item:last-child{border-bottom:none;}
+.pipeline-item__status{
+  font-family:"DM Sans",sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  font-weight:700;padding:4px 10px;border-radius:14px;
+  background:var(--rule);color:var(--ink);white-space:nowrap;align-self:start;margin-top:4px;
+}
+.pipeline-item__status--signed{background:var(--terracotta);color:var(--paper);}
+.pipeline-item__status--active{background:var(--blue);color:var(--paper);}
+.pipeline-item__name{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:17px;letter-spacing:-0.01em;
+  margin:0 0 6px;color:var(--ink);
+}
+.pipeline-item__desc{font-family:"DM Sans",sans-serif;font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+.pipeline-item__desc b{color:var(--ink);font-weight:600;}
+.pipeline-item__location{
+  font-family:"DM Sans",sans-serif;font-size:11.5px;color:var(--ink-mute);
+  white-space:nowrap;letter-spacing:0.04em;align-self:start;margin-top:6px;
+}
+@media(max-width:640px){
+  .pipeline-item{grid-template-columns:1fr;gap:10px;}
+  .pipeline-item__status{justify-self:start;margin-top:0;}
+  .pipeline-item__location{justify-self:start;margin-top:0;}
+}
+
+/* === TEAM (ch11) === */
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px 28px;margin:32px 0 8px;}
+@media(max-width:640px){.team-grid{grid-template-columns:1fr;}}
+.team-member__name{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-0.01em;
+  margin:0 0 4px;color:var(--ink);
+}
+.team-member__role{
+  font-family:"DM Sans",sans-serif;font-size:11.5px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px;
+}
+.team-member__bio{font-family:"DM Sans",sans-serif;font-size:14px;line-height:1.6;color:var(--ink-soft);}
+.team-member__bio b{color:var(--ink);font-weight:600;}
+
+/* === ASK (ch12) === */
+.ask-trio{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  padding:36px 0 32px;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+  margin:32px 0 32px;
+}
+@media(max-width:640px){.ask-trio{grid-template-columns:1fr;gap:32px;}}
+.ask-stat__label{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:500;margin-bottom:10px;
+}
+.ask-stat__num{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;
+  font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-0.03em;
+  color:var(--ink);font-variant-numeric:tabular-nums;
+}
+.ask-stat__num .small{font-size:0.5em;color:var(--ink-mute);vertical-align:0.5em;margin-left:4px;font-weight:400;}
+.ask-stat__num .terra{color:var(--terracotta);}
+.ask-stat__sub{font-family:"DM Sans",sans-serif;font-size:12.5px;line-height:1.5;color:var(--ink-soft);margin-top:10px;}
+
+.ask-vision{
+  background:var(--paper);border-left:3px solid var(--terracotta);
+  padding:28px 28px 24px;border-radius:0 8px 8px 0;margin:36px 0;
+}
+.ask-vision__label{
+  font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--terracotta);font-weight:600;margin-bottom:14px;
+}
+.ask-vision__body{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:17px;line-height:1.55;color:var(--ink);margin:0;}
+.ask-vision__body + .ask-vision__body{margin-top:14px;}
+.ask-vision__body b{font-weight:600;}
+
+.ask-final{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:clamp(22px,3vw,30px);line-height:1.35;color:var(--ink);
+  text-align:center;margin:56px 0 8px;padding:32px 24px;
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+}
+.ask-final b{font-style:normal;font-weight:600;color:var(--terracotta);}
+
+/* === MOBILE RAIL OVERLAY === */
+@media(max-width:1100px){
+  body.mobile-rail-open .rail{
+    display:block;position:fixed;top:60px;left:0;right:0;
+    background:var(--canvas);border-bottom:1px solid var(--rule);
+    padding:20px 22px 24px;z-index:40;max-height:75vh;overflow-y:auto;
+    box-shadow:0 20px 40px -20px rgba(10,20,38,0.15);
+  }
+  body.mobile-rail-open .mobile-chapter::after{transform:rotate(180deg);}
+  .mobile-chapter::after{transition:transform .2s ease;}
+}
+
+/* === PRINT EXTENSIONS === */
+@media print{
+  .cover{min-height:auto;page-break-after:always;}
+  .moat,.park-card,.stream,.finding,.format-card{break-inside:avoid;}
+  .timeline__item{break-inside:avoid;}
+  .ask-trio,.ask-vision,.ask-final{break-inside:avoid;}
+  article{page-break-after:always;}
+  article:last-child{page-break-after:auto;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-bar__fill"></div></div>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="#">
+      <img src="https://www.eodparks.com/logo.webp" alt="e-o-d" style="height:38px;width:auto;display:block;">
+      <span class="brand__name">Investor Brief · May 2026</span>
+    </a>
+    <div class="topbar__meta">Chapter <strong>01</strong> of 12</div>
+    <button class="mobile-chapter" aria-label="Open chapter menu"><span class="mobile-chapter__num">01</span> Cover</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- chapter rail -->
+  <aside class="rail" aria-label="Chapter navigation">
+    <div class="rail__label">Contents</div>
+    <ol class="rail__list">
+      <li class="rail__item rail__item--active"><a href="#ch01"><span class="rail__num">01</span><span>Cover</span></a></li>
+      <li class="rail__item"><a href="#ch02"><span class="rail__num">02</span><span>The Opportunity</span></a></li>
+      <li class="rail__item"><a href="#ch03"><span class="rail__num">03</span><span>The Market</span></a></li>
+      <li class="rail__item"><a href="#ch04"><span class="rail__num">04</span><span>The Answer</span></a></li>
+      <li class="rail__item"><a href="#ch05"><span class="rail__num">05</span><span>The Journey</span></a></li>
+      <li class="rail__item"><a href="#ch06"><span class="rail__num">06</span><span>Who We Serve</span></a></li>
+      <li class="rail__item"><a href="#ch07"><span class="rail__num">07</span><span>How We Make Money</span></a></li>
+      <li class="rail__item"><a href="#ch08"><span class="rail__num">08</span><span>Three Years of Numbers</span></a></li>
+      <li class="rail__item"><a href="#ch09"><span class="rail__num">09</span><span>The Moat</span></a></li>
+      <li class="rail__item"><a href="#ch10"><span class="rail__num">10</span><span>Growth Pipeline</span></a></li>
+      <li class="rail__item"><a href="#ch11"><span class="rail__num">11</span><span>The Team</span></a></li>
+      <li class="rail__item"><a href="#ch12"><span class="rail__num">12</span><span>The Ask</span></a></li>
+    </ol>
+  </aside>
+
+  <!-- main column -->
+  <main class="main">
+
+    <!-- ========== CHAPTER 01: COVER ========== -->
+    <article id="ch01">
+      <section class="cover">
+        <div class="cover__brand">
+          <img src="https://www.eodparks.com/logo.webp" alt="E-O-D Adventure Parks" style="height:52px;width:auto;display:block;margin-bottom:6px;">
+          <span class="cover__company">Vision Amusement Park Pvt. Ltd. · CIN U93000DL2011PTC212814</span>
+        </div>
+
+        <div class="cover__hero">
+          <div class="cover__eyebrow">Investor Brief · May 2026 · Confidential</div>
+          <h1 class="cover__title">Not once a year. <em>Every Other Day.</em></h1>
+          <p class="cover__thesis">India built malls for shopping. Multiplexes for watching. Destination parks for once-a-year occasions. Nobody built the everyday adventure park — the place you go not for a special event, but for a great Saturday. That's E-O-D.</p>
+        </div>
+
+        <div>
+          <div class="cover__summary">
+            <div class="cover__stat">
+              <div class="cover__stat__label">FY25-26 Revenue</div>
+              <div class="cover__stat__num">₹16.29<span class="small">Cr</span></div>
+            </div>
+            <div class="cover__stat">
+              <div class="cover__stat__label">YoY growth</div>
+              <div class="cover__stat__num">+27<span class="small">%</span></div>
+            </div>
+            <div class="cover__stat">
+              <div class="cover__stat__label">Raise · Equity</div>
+              <div class="cover__stat__num">₹10<span class="small">Cr</span></div>
+            </div>
+            <div class="cover__stat">
+              <div class="cover__stat__label">Pre-money</div>
+              <div class="cover__stat__num">₹90<span class="small">Cr</span></div>
+            </div>
+          </div>
+          <div class="cover__scroll-hint">↓ Read in twelve chapters · approximately eight minutes</div>
+        </div>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Adjacent chapters">
+        <a class="chapter-nav__prev" style="visibility:hidden;"><div class="chapter-nav__dir">—</div><div class="chapter-nav__title">—</div></a>
+        <a class="chapter-nav__next" href="#ch02">
+          <div class="chapter-nav__dir">Next · Chapter 02</div>
+          <div class="chapter-nav__title">The Opportunity</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 02: THE OPPORTUNITY ========== -->
+    <article id="ch02">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 02</span></div>
+        <h1 class="chapter-title">The Opportunity</h1>
+        <p class="chapter-subtitle">India's urban middle class is ready to go out — and they want to <em>do</em> something.</p>
+      </header>
+
+      <p class="lead">
+        For decades, recreation in India meant the rare occasion — the annual holiday, the once-a-year theme park, the special outing saved for a reason. What has changed is aspiration. India's per capita income has grown 2.5× in a decade. Tier 2 and 3 cities have metro connectivity, expressways, and disposable income that didn't exist a generation ago. A growing middle class has moved from <em>surviving well</em> to <em>living well</em> — and living well means doing things, not just buying things. <strong>COVID was a catalyst for what was already in motion.</strong> It didn't create the shift. It made an entire generation conscious of it faster.
+      </p>
+
+      <p class="lead">
+        The evidence is in how Indians now spend their time. The way festivals are celebrated has changed — Navratri 2024 generated ₹50,000 Cr nationally in nine days, not from religious offerings but from ticketed garba nights and carnival infrastructure (CAIT, 2024). India hosted 30,687 live events across 319 cities in 2024, rising to 34,000 in 2025. Over 70% of young urban Indians attended at least one ticketed live event during the year. Indians are paying to do things — actively, repeatedly, and at scale. <strong>The shift from passive to active is measurable, durable, and still early.</strong>
+      </p>
+
+      <div class="section-head">
+        <span class="section-head__num">02.1</span>
+        <h2 class="section-head__title">The formats that exist <em>were built for a different era</em></h2>
+      </div>
+
+      <div class="format-grid">
+        <div class="format-card">
+          <div class="format-card__arrow">→</div>
+          <h3 class="format-card__title">Destination parks · ₹1,200+</h3>
+          <p class="format-card__desc">A full day. A car. A calendar slot. Wonderla. Imagica. Built for the occasion, not the habit.</p>
+        </div>
+        <div class="format-card">
+          <div class="format-card__arrow">→</div>
+          <h3 class="format-card__title">Malls &amp; multiplexes</h3>
+          <p class="format-card__desc">Passive. Consumptive. Interchangeable. The thing the 18–35 cohort is moving away from.</p>
+        </div>
+        <div class="format-card">
+          <div class="format-card__arrow">→</div>
+          <h3 class="format-card__title">Indoor Amusement Centres · ₹500–800</h3>
+          <p class="format-card__desc">Growing fast — 67% capacity expansion by 2028 (JLL) — but structurally locked into the premium segment. IACs anchor inside malls and high-footfall retail developments, paying commercial rents that demand premium ticket prices to survive. They serve the mall-going customer well. But they can't serve the neighbourhood: high rental floors, footfall ceilings, and no outdoor scale. Delhi NCR's 68 IAC centres average roughly 13,000 sq ft each — enough for a few hundred visitors at a time, not a city.</p>
+        </div>
+        <div class="format-card">
+          <div class="format-card__arrow">→</div>
+          <h3 class="format-card__title">Public parks</h3>
+          <p class="format-card__desc">Free, but inert. No structured activity. No reason to return next week.</p>
+        </div>
+      </div>
+
+      <p class="lead" style="margin-top:8px;">
+        The neighbourhood adventure park — urban, accessible, active, <strong>priced for frequency</strong> — does not exist at scale in India. Every concert, every garba night, every carnival proves the appetite is there. The gap is every other day.
+      </p>
+
+      <p class="closing">
+        E-O-D was built for <b>exactly that.</b>
+      </p>
+
+      <nav class="chapter-nav" aria-label="Adjacent chapters">
+        <a class="chapter-nav__prev" href="#ch01">
+          <div class="chapter-nav__dir">Previous · Chapter 01</div>
+          <div class="chapter-nav__title">Cover</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch03">
+          <div class="chapter-nav__dir">Next · Chapter 03</div>
+          <div class="chapter-nav__title">The Market</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 03: THE MARKET ========== -->
+    <article id="ch03">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 03</span></div>
+        <h1 class="chapter-title">The Market</h1>
+        <p class="chapter-subtitle">India's recreation spend, <em>sized from the bottom up.</em></p>
+      </header>
+
+      <p class="lead">
+        India's amusement park and indoor entertainment industry stands at approximately <strong>₹11,500 Cr</strong>, growing at 15% annually toward <strong>₹25,000 Cr by 2030</strong> — figures from IAAPI, the Indian Association of Amusement Parks and Industries, the sector's own trade body (2024). JLL's September 2024 report projects India's indoor amusement centre space to expand 67% by 2028, from 6.6 mn sq ft to 11 mn sq ft across 500+ centres in 83 cities. The organized live events sector adds a further ₹20,861 Cr (2024). Gen Z now drives 43% of India's total consumer spending (BCG/Snap, 2024) and is set to command 45% of the travel and tourism market by FY2030 at nearly twice the category average (Redseer, 2026). The top-down is validated — but the bottom-up is what matters.
+      </p>
+
+      <section class="hero-figure">
+        <div class="hero-figure__number">~<span class="currency">₹</span>2,100<span class="unit"> Cr</span></div>
+        <div class="hero-figure__caption">
+          <div class="hero-figure__label">Serviceable addressable market · Delhi-NCR + Agra</div>
+          <div class="hero-figure__desc">
+          E-O-D's current capture: <b>₹16.29 Cr — 0.8% of SAM</b>. Massive headroom. Proven model. First mover.
+        </div>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <span class="section-head__num">03.1</span>
+        <h2 class="section-head__title">SAM build, by geography</h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Geography</th>
+            <th class="num">Target pop. (18–35)</th>
+            <th class="num">Avg ARPU</th>
+            <th class="num">Visits / year</th>
+            <th class="num">SAM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year">Delhi-NCR</span></td>
+            <td class="num">~12 million</td>
+            <td class="num">₹500</td>
+            <td class="num">3×</td>
+            <td class="num">₹1,800 Cr</td>
+          </tr>
+          <tr>
+            <td><span class="year">Agra + 100 km</span></td>
+            <td class="num">~2.5 million</td>
+            <td class="num">₹300</td>
+            <td class="num">4×</td>
+            <td class="num">₹300 Cr</td>
+          </tr>
+          <tr class="highlight">
+            <td><span class="year">Total SAM</span></td>
+            <td class="num muted">—</td>
+            <td class="num muted">—</td>
+            <td class="num muted">—</td>
+            <td class="num" style="color:var(--terracotta);font-weight:600;">~₹2,100 Cr</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--ink-mute);margin:12px 0 0;line-height:1.55;font-style:italic;">
+        <b style="font-style:normal;color:var(--ink);">Methodology:</b> Agra repeat-visit frequency is set higher than Delhi (4× vs 3×) because (a) fewer alternative entertainment options exist in the Agra catchment, and (b) E-O-D introduces new activities and IP rotations every few months — multiple "reasons to return" within a single year.
+      </p>
+
+      <div class="section-head">
+        <span class="section-head__num">03.2</span>
+        <h2 class="section-head__title">Agra is in infrastructure inflection <em>— why now</em></h2>
+      </div>
+
+      <p class="lead" style="font-size:17px;">
+        Agra is a regional capital in acceleration — the entertainment hub for 7–8 million people across five cities — with no quality active entertainment operator. E-O-D holds two parks here already.
+      </p>
+
+      <div class="callout-list">
+        <div class="callout"><b>Agra Metro</b> launched March 6, 2024 (PM Modi inauguration) — Yellow + Blue lines, 29.4 km, 28 stations. Phase 1 completion due 2026. Property appreciation underway in metro-adjacent areas.</div>
+        <div class="callout"><b>New Agra Urban Centre</b> · 10,500 hectares planned by YEIDA — commercial, industrial and tourism focus.</div>
+        <div class="callout"><b>Jewar International Airport</b> via Yamuna Expressway — direct connect to the Agra catchment.</div>
+        <div class="callout"><b>Gwalior–Agra Expressway</b> · 88.4 km, 6-lane, NHAI/Bharatmala — construction from Nov 2025, opening 2028. Adds Gwalior catchment (~1.2M). Source: NHAI.</div>
+        <div class="callout"><b>6+ million tourists</b> visit the Taj Mahal annually (6.1 million in 2024; pre-COVID average 7–8 million). Source: Ministry of Tourism / ASI.</div>
+        <div class="callout"><b>Catchment cities</b> · Mathura, Firozabad, Aligarh, Hathras, Mainpuri — 7–8 million people within 100 km.</div>
+      </div>
+
+      <p class="closing">
+        Commercial property rental yields in Agra: <b>7–9%</b>. The infrastructure is being built. We're already operating.
+      </p>
+
+      <nav class="chapter-nav" aria-label="Adjacent chapters">
+        <a class="chapter-nav__prev" href="#ch02">
+          <div class="chapter-nav__dir">Previous · Chapter 02</div>
+          <div class="chapter-nav__title">The Opportunity</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch04">
+          <div class="chapter-nav__dir">Next · Chapter 04</div>
+          <div class="chapter-nav__title">The Answer</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 04: THE ANSWER ========== -->
+    <article id="ch04">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 04</span></div>
+        <h1 class="chapter-title">The Answer</h1>
+        <p class="chapter-subtitle">We stopped selling. We started delivering. Then we rebuilt sales <em>the right way.</em></p>
+      </header>
+
+      <p class="lead">
+        In 2019, E-O-D made a decision that went against every instinct in the amusement park industry. We dismantled our group sales team — six to eight people chasing corporate outings, school trips, birthday packages. Instead we asked a simpler question: <strong>what does the person who walks in off the street actually need?</strong>
+      </p>
+
+      <section class="hero-figure">
+        <div class="hero-figure__number"><span class="currency">₹</span>299</div>
+        <div class="hero-figure__caption">
+          <div class="hero-figure__label">The combo ticket · founding price, 2019</div>
+          <div class="hero-figure__desc">
+            One price. No menu of activity charges. No upsells. <b>Come in, do everything, have a great afternoon.</b>
+          </div>
+        </div>
+      </section>
+
+      <p class="lead">
+        We invested what we saved into operations, safety, and experience. We let the product do the selling. Then we rebuilt — smarter.
+      </p>
+
+      <div class="section-head">
+        <span class="section-head__num">04.1</span>
+        <h2 class="section-head__title">Three streams. Three distribution models. <em>Zero bloated fixed cost.</em></h2>
+      </div>
+
+      <div class="streams">
+        <div class="stream">
+          <div class="stream__num">01 · Walk-in</div>
+          <h3 class="stream__title">Content + UGC, zero sales cost</h3>
+          <p class="stream__desc">Guests discover E-O-D through Instagram, Google, and word-of-mouth — powered by an active content team and organic UGC posted by guests after every visit. <b>No dedicated walk-in sales function.</b> The product and the content do the selling. Highest-volume, lowest cost-of-acquisition of any stream.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">02 · Schools &amp; Groups</div>
+          <h3 class="stream__title">Travel agent network + off-site salesperson</h3>
+          <p class="stream__desc"><b>10–20 agents in 2022. 150+ active agents by FY25-26.</b> Commission built into the package — agents earn, we earn, no fixed overhead. One variable-pay off-site salesperson closes direct school enquiries and corporate group bookings. School distribution is EMV-primary today; EAC and DME activation follows as those parks scale.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">03 · Digital</div>
+          <h3 class="stream__title">Online booking + Annual Pass</h3>
+          <p class="stream__desc">Direct booking via eodparks.com and BookMyShow. Annual Pass for loyal recurring visitors. Owned channel, growing as a structured recurring stream.</p>
+        </div>
+      </div>
+
+      <p class="closing">
+        Serve the walk-in guest obsessively. Price for frequency. Generate leads digitally. <b>Only pay for sales that close.</b>
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch03">
+          <div class="chapter-nav__dir">Previous · Chapter 03</div>
+          <div class="chapter-nav__title">The Market</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch05">
+          <div class="chapter-nav__dir">Next · Chapter 05</div>
+          <div class="chapter-nav__title">The Journey</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 05: THE JOURNEY ========== -->
+    <article id="ch05">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 05</span></div>
+        <h1 class="chapter-title">The Journey</h1>
+        <p class="chapter-subtitle">One park. One city. <em>One bet</em> on the neighbourhood.</p>
+      </header>
+
+      <div class="timeline">
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2015 · Gates open</div>
+          <h3 class="timeline__title">EMV launches at Sanjay Lake, Mayur Vihar</h3>
+          <p class="timeline__desc">Government concession. 6.3 acres. A park designed for groups — travel agents, corporates, schools, birthdays.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--key">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2019 · The Pivot</div>
+          <h3 class="timeline__title">Stop chasing groups</h3>
+          <p class="timeline__desc">₹299 combo ticket launches. The entire sales team is dismantled. We start obsessing over the walk-in guest. Every Other Day stops being a tagline and becomes an operating philosophy.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2020–21 · COVID</div>
+          <h3 class="timeline__title">Revenue collapses. The team holds.</h3>
+          <p class="timeline__desc">The park stays closed. We wait.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--key">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2022 · First mover</div>
+          <h3 class="timeline__title">Open the day the lockdown lifted</h3>
+          <p class="timeline__desc">While destination parks worked through maintenance backlogs and indoor entertainment venues fought landlord disputes, E-O-D's gates opened. No backlog. No legal battle. No delay. Because we'd stripped out the fixed overhead and rebuilt around the walk-in guest, reopening was an operational decision — not a financial one. Revenge tourism arrived. We were the only one ready.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--key">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2023 · Breakout · Two years on top</div>
+          <h3 class="timeline__title">Revenue surges 5.3× year-on-year</h3>
+          <p class="timeline__desc">First fully profitable post-pivot year. 32.5% net margin. For two consecutive years after COVID, E-O-D was middle India's preferred active entertainment destination. Novelty on our side — aspirational activities that most of our audience had never experienced, at prices that felt almost unreasonably affordable in a moment when the masses were still cautious about spending. ₹299 had trained the market. The market was now hungry. And we were the only neighbourhood park ready to serve it.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">2024 · Investment year</div>
+          <h3 class="timeline__title">New attractions at EMV; agent network scales</h3>
+          <p class="timeline__desc">8-player Laser Tag. Indoor Kids Playground expansion. Margins compress temporarily. 150+ travel agents now active.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">Early 2025 · Park Two</div>
+          <h3 class="timeline__title">DME opens on the Delhi–Meerut Expressway</h3>
+          <p class="timeline__desc">Indoor format. Highway location. Family audience. A different archetype — same brand. Opened with a partial activity stack: outdoor zone not yet launched, indoor equipment pending full commissioning. FY26-27 is the first year the complete product operates.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">June 2025 · Park Three handover</div>
+          <h3 class="timeline__title">EAC possession at Agra Chaupati</h3>
+          <p class="timeline__desc">Handover from ADA on 2 June, under ADA concession. 6+ acres. Three months of build-out begin.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">Late August 2025 · EAC opens</div>
+          <h3 class="timeline__title">Soft launch at Agra Chaupati</h3>
+          <p class="timeline__desc">Zipline, Roller Coaster, Go Kart, and Graffiti Ride installed. Rental commences September. Stabilised operations with full systems from October. Agra's first quality active entertainment destination.</p>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">November 2025 · Park Four</div>
+          <h3 class="timeline__title">ESP opens at Subhash Park</h3>
+          <p class="timeline__desc">A premium neighbourhood public park under ADA concession. The brand completes its second city.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--key">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">FY25-26 · Scale</div>
+          <h3 class="timeline__title">All-time high revenue at ₹16.29 Cr</h3>
+          <p class="timeline__desc">Four parks. Two cities. One team. Template proven and replicating — DME completes its first full year, EAC stabilises over ~6 months, ESP opens its first 4–5 months. Consolidated margins compressed during ramp-up; EMV mature benchmark remains 30%+ net.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--key">
+          <div class="timeline__dot"></div>
+          <div class="timeline__year">FY26-27 · First full year at scale</div>
+          <h3 class="timeline__title">Target: ₹20–21 Cr ex-GST</h3>
+          <p class="timeline__desc">First year all four parks run twelve full months. EMV holds its mature lane — price and product refinement ongoing. EAC scales into its first complete season; combo ticket moves from ₹200 to ₹400 as the activity stack fills out. DME launches its outdoor zone (Go Kart, Zipline, Obstacle Course) and completes indoor commissioning — the first year the full product is available to sell. ESP runs its first full summer camp cycle. Karnal site identification underway.</p>
+        </div>
+
+      </div>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch04">
+          <div class="chapter-nav__dir">Previous · Chapter 04</div>
+          <div class="chapter-nav__title">The Answer</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch06">
+          <div class="chapter-nav__dir">Next · Chapter 06</div>
+          <div class="chapter-nav__title">Who We Serve</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 06: WHO WE SERVE ========== -->
+    <article id="ch06">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 06</span></div>
+        <h1 class="chapter-title">Who We Serve</h1>
+        <p class="chapter-subtitle">We didn't assume our customer. <em>We surveyed them.</em> Every day. Across all four parks.</p>
+      </header>
+
+      <section class="hero-figure">
+        <div class="hero-figure__number">3,049</div>
+        <div class="hero-figure__caption">
+          <div class="hero-figure__label">Survey responses · 4 parks · Oct 2025 – May 2026</div>
+          <div class="hero-figure__desc">
+            EMV 1,638 · DME 863 · EAC 457 · ESP 91. <b>Four parks. One consistent customer profile.</b>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <span class="section-head__num">06.1</span>
+        <h2 class="section-head__title">The Social Animal <em>— 18 to 35, urban, active, planned</em></h2>
+      </div>
+
+      <div class="findings">
+        <div class="finding">
+          <div class="finding__num">47–54%</div>
+          <div class="finding__label"><b>Aged 25–34 at every park.</b> Add 18–24 and over 75% of all visitors are under 35.</div>
+        </div>
+        <div class="finding">
+          <div class="finding__num">60–63%</div>
+          <div class="finding__label"><b>Come in groups</b> — friends or couples — at EMV and EAC. People who chose to spend an afternoon together.</div>
+        </div>
+        <div class="finding">
+          <div class="finding__num">62–68%</div>
+          <div class="finding__label"><b>Plan the visit</b> at EMV, EAC, and DME. E-O-D is a destination they decided on — not an impulse.</div>
+        </div>
+        <div class="finding">
+          <div class="finding__num">61–69%</div>
+          <div class="finding__label"><b>Discovered us digitally</b> — Instagram or Google. We spend nothing on traditional advertising.</div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-head__num">06.2</span>
+        <h2 class="section-head__title">Current pricing <em>— from eodparks.com, May 2026</em></h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Park</th>
+            <th class="num">Base combo</th>
+            <th class="num">Premium combo</th>
+            <th class="num">Kids</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year">EMV · Weekday</span></td>
+            <td class="num">₹500 (Conqueror)</td>
+            <td class="num">₹900 (Killer)</td>
+            <td class="num">₹400</td>
+          </tr>
+          <tr>
+            <td><span class="year">EMV · Weekend</span></td>
+            <td class="num">₹600 (Conqueror)</td>
+            <td class="num">₹1,000 (Killer)</td>
+            <td class="num">₹400</td>
+          </tr>
+          <tr>
+            <td><span class="year">DME</span></td>
+            <td class="num">₹500</td>
+            <td class="num muted">—</td>
+            <td class="num">₹500</td>
+          </tr>
+          <tr>
+            <td><span class="year">EAC</span></td>
+            <td class="num">₹200 <span style="color:var(--ink-mute);font-weight:400;">(all activities)</span></td>
+            <td class="num">₹350 <span style="color:var(--ink-mute);font-weight:400;">(+ Go Kart)</span></td>
+            <td class="num">₹200</td>
+          </tr>
+          <tr>
+            <td><span class="year">ESP</span></td>
+            <td class="num muted">₹20 <span style="color:var(--ink-mute);font-weight:400;">(public park entry)</span></td>
+            <td class="num muted">—</td>
+            <td class="num muted">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink-mute);margin:14px 0 0;line-height:1.55;">
+        Comparable listed parks (Wonderla, Imagica): <b style="color:var(--ink);">₹1,200+ per head</b>. We are not in the same market.
+      </p>
+
+      <div class="section-head">
+        <span class="section-head__num">06.3</span>
+        <h2 class="section-head__title">Two park archetypes. <em>One brand.</em></h2>
+      </div>
+
+      <div class="archetype">
+        <div class="archetype__row archetype__row--header">
+          <div></div><div>EMV + EAC</div><div>DME</div>
+        </div>
+        <div class="archetype__row">
+          <div>Primary visitor</div><div><b>Friends, couples</b></div><div><b>Families with children</b></div>
+        </div>
+        <div class="archetype__row">
+          <div>Discovery</div><div>Instagram-led (65%+)</div><div>Highway passthrough + WOM</div>
+        </div>
+        <div class="archetype__row">
+          <div>Visit type</div><div>Planned outing</div><div>Spontaneous stop</div>
+        </div>
+        <div class="archetype__row">
+          <div>Duration</div><div>2–4 hours</div><div>1–2 hours</div>
+        </div>
+      </div>
+
+      <p style="font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin:24px 0 0;max-width:580px;line-height:1.4;">
+        The same brand serves two distinct occasions. That is not dilution. That is <span style="color:var(--terracotta);font-weight:500;font-style:normal;">reach</span>.
+      </p>
+
+      <div class="testimonial">
+        <p class="testimonial__quote">Overall this place is very affordable and full of adventures. One of my students lost her spectacles lens in the trampoline — the staff named Pramod Kumar helped us even when the session was over. He tried hard and finally found it. I liked the kind and helpful behaviour of the staff.</p>
+        <p class="testimonial__attrib"><b>Bhupinder Kaur</b> · ★★★★★ · EMV · March 2026</p>
+      </div>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch05">
+          <div class="chapter-nav__dir">Previous · Chapter 05</div>
+          <div class="chapter-nav__title">The Journey</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch07">
+          <div class="chapter-nav__dir">Next · Chapter 07</div>
+          <div class="chapter-nav__title">How We Make Money</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 07: HOW WE MAKE MONEY ========== -->
+    <article id="ch07">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 07</span></div>
+        <h1 class="chapter-title">How We Make Money</h1>
+        <p class="chapter-subtitle">Six revenue streams. <em>No single point of dependence.</em></p>
+      </header>
+
+      <p class="lead">
+        Most amusement parks in India earn 80–90% from gate tickets alone. E-O-D has deliberately built a diversified model across six streams — each with its own distribution channel, pricing logic, and growth trajectory.
+      </p>
+
+      <div class="streams">
+        <div class="stream">
+          <div class="stream__num">01</div>
+          <h3 class="stream__title">Walk-in Gate</h3>
+          <p class="stream__desc">The core. Combo tickets at counter or online. <b>Priced for frequency:</b> ₹200 at EAC, ₹500–600 weekday at EMV. High volume, low friction, daily footfall. Driven by content and UGC, not a sales team.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">02</div>
+          <h3 class="stream__title">Schools · Travel Agents</h3>
+          <p class="stream__desc">10–20 in 2022 → <b>150+ active agents by FY25-26.</b> Commission built into the package. Self-funding distribution. Currently EMV-primary; EAC and DME school activation starting FY26-27. ₹2.5 Cr target at EMV alone in FY26-27.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">03</div>
+          <h3 class="stream__title">Corporate &amp; Groups</h3>
+          <p class="stream__desc">Inbound leads generated digitally, closed by the same variable-pay off-site salesperson who handles schools. Zero fixed cost. Scales with demand. Birthday packages and corporate day-outs are an active and growing sub-segment.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">04</div>
+          <h3 class="stream__title">F&amp;B</h3>
+          <p class="stream__desc">EMV: <b>Dhinchak Dhaba</b> — full restaurant and buffet on-site. EAC: 30-shop food court transitioning to FOFO (Aug–Nov 2026). ₹1.5 Cr target at EMV — includes restaurant revenue plus events-driven F&amp;B spend.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">05</div>
+          <h3 class="stream__title">Events</h3>
+          <p class="stream__desc">Dandiya Night. Christmas Carnival. Independence Day Mela. Summer Mela. <b>Ticketed; drives off-peak footfall and press visibility.</b> ₹1.5 Cr target at EMV.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">06</div>
+          <h3 class="stream__title">Annual Pass</h3>
+          <p class="stream__desc">Recurring loyal visits — drives repeat frequency and predictable recurring revenue across all parks. Separate from transactional online ticketing.</p>
+        </div>
+        <div class="stream">
+          <div class="stream__num">07</div>
+          <h3 class="stream__title">Online Ticketing</h3>
+          <p class="stream__desc">Own website (eodparks.com) + BookMyShow. Currently ~1–2% of total sales — an <b>active focus area for FY26-27.</b> Combined online target ₹1.5 Cr at EMV.</p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-head__num">07.1</span>
+        <h2 class="section-head__title">FY26-27 EMV revenue mix <em>— ₹18 Cr target</em></h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Stream</th>
+            <th class="num">Target</th>
+            <th class="num">% of total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="year">Walk-in counters</span></td><td class="num">₹9.5 Cr</td><td class="num">53%</td></tr>
+          <tr><td><span class="year">Schools</span></td><td class="num">₹2.5 Cr</td><td class="num">14%</td></tr>
+          <tr><td><span class="year">F&amp;B</span></td><td class="num">₹1.5 Cr</td><td class="num">8%</td></tr>
+          <tr><td><span class="year">Online</span></td><td class="num">₹1.5 Cr</td><td class="num">8%</td></tr>
+          <tr><td><span class="year">Events</span></td><td class="num">₹1.5 Cr</td><td class="num">8%</td></tr>
+          <tr><td><span class="year">Corporate &amp; Groups</span></td><td class="num">₹1.0 Cr</td><td class="num">6%</td></tr>
+          <tr><td><span class="year">Miscellaneous</span></td><td class="num">₹0.5 Cr</td><td class="num">3%</td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-mute);margin-top:14px;line-height:1.55;">
+        EMV alone. EAC, DME, ESP add incrementally to each stream as they mature. <b style="color:var(--ink);">Three distinct distribution models — direct, agent network, digital — is what makes this a platform, not just a park.</b>
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch06">
+          <div class="chapter-nav__dir">Previous · Chapter 06</div>
+          <div class="chapter-nav__title">Who We Serve</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch08">
+          <div class="chapter-nav__dir">Next · Chapter 08</div>
+          <div class="chapter-nav__title">Three Years of Numbers</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 08: THREE YEARS OF NUMBERS ========== -->
+    <article id="ch08">
+
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 08</span></div>
+        <h1 class="chapter-title">Three Years of Numbers</h1>
+        <p class="chapter-subtitle">One park became four. The numbers followed.</p>
+        <p style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink-mute);margin:18px 0 0;letter-spacing:0.02em;">All revenue figures shown net of GST · FY25-26 figures provisional, pre-depreciation</p>
+      </header>
+
+      <p class="lead">
+        E-O-D spent ten years proving a single park could work. In the last twenty-four months it became a four-park platform.
+        The revenue base set a new all-time high. Consolidated margins compressed during the natural ramp-up of three new parks — DME first full year, EAC stabilised for six months, ESP for four. The mature park (EMV) demonstrated what the model delivers at steady state: <strong>32.5% net margin</strong>. <strong>FY26-27 is the first year all four parks run twelve full months.</strong>
+      </p>
+
+      <!-- hero figure: the headline number -->
+      <section class="hero-figure" aria-label="Revenue, FY25-26 provisional">
+        <div class="hero-figure__number"><span class="currency">₹</span>16.29<span class="unit"> Cr</span></div>
+        <div class="hero-figure__caption">
+          <div class="hero-figure__label">Revenue, FY25-26 (provisional)</div>
+          <div class="hero-figure__desc">
+            All-time high. <b>DME in its first year, EAC stabilised for only six months, ESP for four.</b>
+            Only EMV ran a full twelve months.
+          </div>
+        </div>
+      </section>
+
+      <!-- revenue table -->
+      <div class="section-head">
+        <span class="section-head__num">08.1</span>
+        <h2 class="section-head__title">Revenue <em>— the platform building</em></h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Parks operational</th>
+            <th class="num">Revenue</th>
+            <th class="num">Growth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year">FY22-23</span><span class="footmark">‡</span></td>
+            <td>EMV only</td>
+            <td class="num">₹12.71 Cr</td>
+            <td class="num"><span class="delta up">+430%</span></td>
+          </tr>
+          <tr>
+            <td><span class="year">FY23-24</span></td>
+            <td>EMV only</td>
+            <td class="num">₹14.99 Cr</td>
+            <td class="num"><span class="delta up">+18%</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span class="year">FY24-25</span>
+              <span class="meta">Headwind year<span class="footmark">*</span></span>
+            </td>
+            <td>EMV + DME <span style="color:var(--ink-mute)">(partial)</span></td>
+            <td class="num muted">₹12.82 Cr</td>
+            <td class="num muted">−14%</td>
+          </tr>
+          <tr class="highlight">
+            <td>
+              <span class="year">FY25-26</span><span class="footmark">†</span>
+              <span class="meta">All-time high</span>
+            </td>
+            <td>All 4 parks</td>
+            <td class="num">₹16.29 Cr</td>
+            <td class="num"><span class="delta up">+27%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- chart -->
+      <figure class="chart" aria-label="Revenue trajectory FY22-23 to FY26-27">
+        <div class="chart__title">Revenue trajectory · ₹ Cr</div>
+        <div class="chart__sub">FY24-25 was a sector-wide down year — Wonderla Holidays revenue fell 4.6%; PVR INOX gross box office fell 9%. E-O-D's deeper dip (−14%) reflects the sector headwind compounded by a specific company event: monsoon met inadequate covered-activity capacity at EMV, while the team simultaneously launched a new city. FY26-27 is the first full year at four-park scale.</div>
+        <svg viewBox="0 0 720 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart of revenue from FY22-23 to FY26-27, with projection range for FY26-27">
+          <!-- grid lines -->
+          <g stroke="#E6DFD4" stroke-width="1">
+            <line x1="60" y1="40" x2="700" y2="40"/>
+            <line x1="60" y1="100" x2="700" y2="100"/>
+            <line x1="60" y1="160" x2="700" y2="160"/>
+            <line x1="60" y1="220" x2="700" y2="220"/>
+          </g>
+          <!-- y-axis labels -->
+          <g font-family="DM Sans, sans-serif" font-size="11" fill="#6E7689" font-variant-numeric="tabular-nums">
+            <text x="50" y="44" text-anchor="end">₹30</text>
+            <text x="50" y="104" text-anchor="end">₹20</text>
+            <text x="50" y="164" text-anchor="end">₹10</text>
+            <text x="50" y="224" text-anchor="end">₹0</text>
+          </g>
+          <!-- x-axis labels -->
+          <g font-family="DM Sans, sans-serif" font-size="11" fill="#6E7689">
+            <text x="120" y="250" text-anchor="middle">FY22-23</text>
+            <text x="260" y="250" text-anchor="middle">FY23-24</text>
+            <text x="400" y="250" text-anchor="middle">FY24-25</text>
+            <text x="540" y="250" text-anchor="middle">FY25-26</text>
+            <text x="660" y="250" text-anchor="middle">FY26-27</text>
+          </g>
+          <!-- projection range indicator for FY26-27: ₹20–21 Cr ex-GST -->
+          <!-- y mapping: ₹20 → 100, ₹21 → 94, mid (₹20.5) → 97 -->
+          <line x1="660" y1="94" x2="660" y2="100" stroke="#C8553D" stroke-width="3" stroke-linecap="round"/>
+          <line x1="652" y1="94" x2="668" y2="94" stroke="#C8553D" stroke-width="2" stroke-linecap="round"/>
+          <line x1="652" y1="100" x2="668" y2="100" stroke="#C8553D" stroke-width="2" stroke-linecap="round"/>
+          <text x="660" y="84" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" fill="#C8553D" font-weight="600" letter-spacing="0.5">₹20–21 Cr target</text>
+          <!-- actual line: FY22-23 → FY25-26 -->
+          <!-- mapping: y = 220 - (value/30 * 180); FY22-23 12.71→143.7, FY23-24 14.99→130, FY24-25 12.82→143.1, FY25-26 16.29→122.3 -->
+          <path d="M 120,143.7 L 260,130 L 400,143.1 L 540,122.3"
+                fill="none" stroke="#2B66EA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- dashed projection: FY25-26 → FY26-27 midpoint (20.5) → y = 220 - (20.5/30*180) = 97 -->
+          <path d="M 540,122.3 L 660,97"
+                fill="none" stroke="#C8553D" stroke-width="2.5" stroke-dasharray="4 5" stroke-linecap="round"/>
+          <!-- data points -->
+          <g>
+            <circle cx="120" cy="143.7" r="5" fill="#FAF7F2" stroke="#2B66EA" stroke-width="2.5"/>
+            <circle cx="260" cy="130"   r="5" fill="#FAF7F2" stroke="#2B66EA" stroke-width="2.5"/>
+            <circle cx="400" cy="143.1" r="5" fill="#FAF7F2" stroke="#2B66EA" stroke-width="2.5"/>
+            <circle cx="540" cy="122.3" r="6" fill="#2B66EA" stroke="#FAF7F2" stroke-width="2"/>
+            <circle cx="660" cy="97"    r="4" fill="#FAF7F2" stroke="#C8553D" stroke-width="2"/>
+          </g>
+          <!-- annotation: revenue headwind on FY24-25 -->
+          <g font-family="DM Sans, sans-serif" font-size="10.5" fill="#6E7689">
+            <line x1="400" y1="148" x2="400" y2="178" stroke="#6E7689" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="400" y="194" text-anchor="middle" font-style="italic">Monsoon + DME pre-launch drag</text>
+          </g>
+          <!-- value labels on points -->
+          <g font-family="DM Sans, sans-serif" font-size="11" fill="#0A1426" font-weight="600" font-variant-numeric="tabular-nums">
+            <text x="120" y="133" text-anchor="middle">12.71</text>
+            <text x="260" y="118" text-anchor="middle">14.99</text>
+            <text x="400" y="133" text-anchor="middle" fill="#6E7689" font-weight="500">12.82</text>
+            <text x="540" y="110" text-anchor="middle">16.29</text>
+          </g>
+        </svg>
+        <div class="chart__legend">
+          <span><i></i> Actual revenue</span>
+          <span><i class="dashed"></i> Target (mid-point of ₹20–21 Cr range)</span>
+        </div>
+      </figure>
+
+      <!-- park breakdown table -->
+      <div class="section-head">
+        <span class="section-head__num">08.1b</span>
+        <h2 class="section-head__title">FY25-26 by park <em>— the platform coming online</em></h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Park</th>
+            <th class="num">Revenue</th>
+            <th class="num">Net P/L</th>
+            <th>Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="year">EMV · Mayur Vihar</span>
+              <span class="meta">Full year</span>
+            </td>
+            <td class="num">₹14.56 Cr</td>
+            <td class="num" style="color:var(--terracotta);font-weight:600;">+₹2.53 Cr</td>
+            <td style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.5;">Founding team simultaneously launched 3 parks across 2 cities. Feb 2025 capex (Laser Tag, Rain Dance upgrade, covered Archery) runs its first full season in FY26-27.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="year">EAC · Agra Chaupati</span>
+              <span class="meta">~6 months · ₹200 combo</span>
+            </td>
+            <td class="num">₹1.33 Cr</td>
+            <td class="num" style="color:var(--terracotta);font-weight:600;">+₹40.96 L · <b>30.7%</b></td>
+            <td style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.5;">Profitable in the first partial season at the lowest price point in the portfolio. Moves to ₹400 combo + full activity stack in FY26-27.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="year">DME · Delhi-Meerut</span>
+              <span class="meta">Full year · indoor-only</span>
+            </td>
+            <td class="num">₹25.42 L</td>
+            <td class="num">−₹37.51 L</td>
+            <td style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.5;">₹29.9L of the loss is fixed CAM paid to the sub-lessor — a structural lease cost that is independent of revenue. Against ₹25.4L revenue from an incomplete, pre-launch product, it drives the shortfall. Once DME runs at full capacity (outdoor zone + complete indoor stack), target revenue of ₹2.5–3 Cr absorbs CAM at ~10–12%. FY26-27 is the first year the complete product operates.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="year">ESP · Subhash Park</span>
+              <span class="meta">~4 months · zero capex</span>
+            </td>
+            <td class="num">₹13.86 L</td>
+            <td class="num" style="color:var(--terracotta);font-weight:600;">+₹2.43 L</td>
+            <td style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.5;">Entry ₹20 + one pre-packaged F&amp;B stall. No activities. Profitable from day one — the PPP concession model at its most elemental.</td>
+          </tr>
+          <tr class="highlight">
+            <td><span class="year">Consolidated</span></td>
+            <td class="num">₹16.29 Cr</td>
+            <td class="num">~+₹87 L–1.37 Cr</td>
+            <td style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.5;">After depreciation (~₹1.05 Cr) + corporate overhead not captured at park level.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:20px 0 32px;">
+        Three things to hold: <b style="color:var(--ink);">EAC's 30.7% margin in 6 months at ₹200</b> is the operational moat made concrete — the same unit economics EMV took years to build, replicated in a new city in the first partial season. <b style="color:var(--ink);">DME's loss is a fixed-cost problem, not a performance story</b> — ₹29.9L of fixed CAM to the sub-lessor against ₹25.4L revenue from a product that wasn't complete yet. The outdoor expansion converts a ₹25L indoor-only park into a ₹2.5–3 Cr highway destination; CAM then sits at ~10% of revenue. <b style="color:var(--ink);">ESP is the zero-capex proof point</b> — entry fee plus one stall, government land, profitable from month one.
+      </p>
+
+      <!-- profitability table -->
+      <div class="section-head">
+        <span class="section-head__num">08.2</span>
+        <h2 class="section-head__title">Profitability <em>— margins through the build</em></h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th class="num">Net Profit</th>
+            <th class="num">Net Margin</th>
+            <th class="num">EBITDA Margin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year">FY22-23</span></td>
+            <td class="num">₹4.13 Cr</td>
+            <td class="num">32.5%</td>
+            <td class="num">~36%</td>
+          </tr>
+          <tr>
+            <td><span class="year">FY23-24</span></td>
+            <td class="num">₹2.04 Cr</td>
+            <td class="num">13.6%</td>
+            <td class="num">~16%</td>
+          </tr>
+          <tr>
+            <td><span class="year">FY24-25</span></td>
+            <td class="num muted">₹45.8 L</td>
+            <td class="num muted">3.6%</td>
+            <td class="num muted">~9%</td>
+          </tr>
+          <tr class="highlight">
+            <td>
+              <span class="year">FY25-26</span><span class="footmark">†</span>
+            </td>
+            <td class="num">~₹0.87–1.37 Cr <span style="color:var(--ink-mute);font-weight:400;">(est.)</span></td>
+            <td class="num">~5–8%</td>
+            <td class="num" style="color:var(--terracotta);font-weight:600;">14.9–22.5%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- balance sheet card -->
+      <aside class="bs-card" aria-label="Balance sheet strength">
+        <div class="bs-card__label">Balance Sheet · FY25-26 provisional</div>
+        <h3 class="bs-card__title">Strongest position in company history</h3>
+        <div class="bs-card__grid">
+
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">₹1.40 <span class="small">Cr</span></div>
+            <div class="bs-kpi__label">Cash &amp; bank — <b>4.1× the prior year</b></div>
+          </div>
+
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">₹2.22 <span class="small">Cr</span></div>
+            <div class="bs-kpi__label">FDR investments (HDFC + Kotak) earning <b>₹9.2 L p.a.</b></div>
+          </div>
+
+          <div class="bs-kpi">
+            <div class="bs-kpi__num terra">₹2.58 <span class="small">Cr</span></div>
+            <div class="bs-kpi__label">Net worth — crossed from <b>−₹5.44 Cr (FY22) to positive in FY24</b>, more than doubled again in FY25-26</div>
+          </div>
+
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">0</div>
+            <div class="bs-kpi__label"><b>Zero claims</b> — no bodily injury or property damage in three years. Trade payables ₹3.87 L — near-zero.</div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- closing line -->
+      <p class="closing">
+        EMV alone built a <b>₹15 Cr revenue base at 30%+ net margins</b>. FY26-27 is the first year all four parks run twelve full months.
+        Target: ₹20–21 Cr ex-GST.
+      </p>
+
+      <!-- footnotes -->
+      <footer class="footnotes">
+        <p><span class="mark">‡</span> FY22-23: First full post-COVID year. While destination parks cleared maintenance backlogs and indoor entertainment venues fought landlord disputes, E-O-D opened immediately when the lockdown lifted. Revenge tourism met a park already rebuilt around the walk-in guest — aspirational activities at ₹299, in a moment when the masses were still cautious about spending. Two consecutive years as middle India's preferred active entertainment destination followed.</p>
+        <p><span class="mark">*</span> FY24-25 — Context first: the Indian entertainment sector experienced a broad-based down year. Wonderla Holidays revenue fell 4.6% (heat waves, water shortages, election disruptions in key markets). PVR INOX gross box office fell 9%, consolidated revenue fell 5% (weak content calendar, post-Hollywood-strike effects). E-O-D's steeper decline (−14%) reflects the sector headwind compounded by two company-specific events: a heavier-than-usual monsoon meeting an EMV without enough covered-activity capacity, while senior team bandwidth was simultaneously absorbed by the DME pre-launch in a new city. The response — a new indoor Laser Tag, upgraded Rain Dance area, and covered Archery — was commissioned in February 2025 and powered the FY25-26 rebound (+27%, above the sector recovery). Separately, profit compression reflects DME fit-out, AC, staffing, and equipment costs hitting the P&amp;L while DME revenue arrived only at year-end.</p>
+        <p><span class="mark">†</span> FY25-26 figures from provisional trial balance. Depreciation of ~₹1.0–1.1 Cr not yet booked. Subject to audit finalisation.</p>
+      </footer>
+
+      <!-- chapter nav -->
+      <nav class="chapter-nav" aria-label="Adjacent chapters">
+        <a class="chapter-nav__prev" href="#ch07">
+          <div class="chapter-nav__dir">Previous · Chapter 07</div>
+          <div class="chapter-nav__title">How We Make Money</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch09">
+          <div class="chapter-nav__dir">Next · Chapter 09</div>
+          <div class="chapter-nav__title">The Moat</div>
+        </a>
+      </nav>
+
+    </article>
+
+    <!-- ========== CHAPTER 09: THE MOAT ========== -->
+    <article id="ch09">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 09</span></div>
+        <h1 class="chapter-title">The Moat</h1>
+        <p class="chapter-subtitle">What stops someone from copying this <em>tomorrow?</em></p>
+      </header>
+
+      <p class="lead">
+        A 30% EBITDA margin in a category that the listed parks can't enter without rebuilding their cost structure should provoke one question from any serious investor. <strong>This chapter answers it.</strong>
+      </p>
+
+      <div class="moat-list">
+
+        <div class="moat">
+          <div class="moat__num">01</div>
+          <div>
+            <h3 class="moat__title">Government land. <em>No one else can have it.</em></h3>
+            <p class="moat__desc">EMV: DTTDC concession on DDA land at Sanjay Lake. EAC + ESP: ADA concessions in Agra. These are <b>government grants, not negotiable leases.</b> No prime urban park land of this kind is available in central Delhi. A new entrant cannot replicate this location at any price. Zero land cost = permanently superior unit economics.</p>
+          </div>
+        </div>
+
+        <div class="moat">
+          <div class="moat__num">02</div>
+          <div>
+            <h3 class="moat__title">Ten years of brand trust <em>in a trust-deficit market</em></h3>
+            <p class="moat__desc">Safety in amusement is <b>earned, not assumed.</b> Zero bodily injury claims in ten years. 3,000+ Google reviews. A decade of word-of-mouth in East Delhi and Agra. Cannot be bought. A new entrant starts from zero.</p>
+          </div>
+        </div>
+
+        <div class="moat">
+          <div class="moat__num">03</div>
+          <div>
+            <h3 class="moat__title">A distribution network <em>that took years to build</em></h3>
+            <p class="moat__desc"><b>150+ active travel agents</b> on variable commission, selling school packages specifically to E-O-D. Sticky, self-sustaining, three years to build from 10–20 agents. They will not switch to an unproven entrant — and the network compounds with every new park added.</p>
+          </div>
+        </div>
+
+        <div class="moat">
+          <div class="moat__num">04</div>
+          <div>
+            <h3 class="moat__title">Operational knowledge <em>at this ARPU</em></h3>
+            <p class="moat__desc">Running a ₹200–600 ARPU park at the margins EMV demonstrated in its mature year — <b>32.5% net</b> — is not obvious. Activity mix, combo pricing architecture, staff ratios, F&amp;B model, safety protocols — <b>institutional knowledge accumulated over a decade.</b> Capital can build the rides. It cannot buy ten years of knowing what works.</p>
+          </div>
+        </div>
+
+        <div class="moat">
+          <div class="moat__num">05</div>
+          <div>
+            <h3 class="moat__title">Government relationship capital <em>— the pipeline moat</em></h3>
+            <p class="moat__desc">DTTDC. ADA. Active liaison with GDA, DDA, BDA, Haryana Tourism, Delhi Tourism, UP Tourism. Swadesh Darshan 2.0 stakeholder positioning across four states. A decade of operating credibility with government bodies. <b>When a new government concession opens in North India, E-O-D is already in the room.</b></p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="closing">
+        You cannot replicate our locations, our trust, our agent network, our operating knowledge, or our government relationships — <b>regardless of how much capital you raise.</b>
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch08">
+          <div class="chapter-nav__dir">Previous · Chapter 08</div>
+          <div class="chapter-nav__title">Three Years of Numbers</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch10">
+          <div class="chapter-nav__dir">Next · Chapter 10</div>
+          <div class="chapter-nav__title">Growth Pipeline</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 10: GROWTH PIPELINE ========== -->
+    <article id="ch10">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 10</span></div>
+        <h1 class="chapter-title">Growth Pipeline</h1>
+        <p class="chapter-subtitle">The model is proven. The platform is built. <em>Now we scale it.</em></p>
+      </header>
+
+      <div class="horizon">
+        <div class="horizon__label">Horizon 1 · 0–12 months</div>
+        <h2 class="horizon__title">Maximise and multiply the four parks we already operate</h2>
+
+        <div class="parks-grid">
+          <div class="park-card">
+            <div class="park-card__code">EMV · Mayur Vihar</div>
+            <div class="park-card__name">Widen the base, deepen every stream</div>
+            <p class="park-card__action">Four growth levers. (1) <b>Full-year IP calendar</b> — at least one major activation per month: Night Bazaar, Summer Camp, Rain events, Independence Adventure Fest, Dandiya Nights, Diwali Mela, Winter Carnival, Christmas/NYE Carnival, Lohri, Republic Fest. Twelve months of reasons to visit. (2) Schools + groups scaling through the 150+ agent network. (3) <b>Birthday packages and corporate day-outs</b> — nascent but actively scaling: birthday party packages, corporate team events, and college group bookings being built through digital and agent channels. (4) Online + annual pass as structured recurring revenue.</p>
+          </div>
+
+          <div class="park-card">
+            <div class="park-card__code">DME · Delhi-Meerut Expressway</div>
+            <div class="park-card__name">Add outdoor — unlock the full highway stop</div>
+            <p class="park-card__action">DME already runs 7 indoor activities: Trampoline park, Soft Play area, Bull Ride, Meltdown, Archery, Kids Bounce House, Kids Car Ride. <b>FY26-27 adds the outdoor layer</b> — Go Karting, Zipline, Obstacle Course — plus Bowling and Merchandising indoors. The indoor-only format works for passthrough visitors; the outdoor expansion turns DME into a destination worth a 2-hour stop. Same location, dramatically higher ARPU and dwell time.</p>
+          </div>
+
+          <div class="park-card">
+            <div class="park-card__code">EAC · Agra Chaupati</div>
+            <div class="park-card__name">Platform activation: full activity stack + food court at scale</div>
+            <p class="park-card__action">EAC's FY26-27 story is a step-change from soft launch to full-scale operation.<br><br>
+            <b>Activities:</b> Expanding to a full stack — Zip Cycle, Body Zorbing, Meltdown, adult Zip-Line Roller Coaster, Go Kart; plus a dedicated kids' zone with water rollers, soft play, bounce house, and panda train. Full combo price moves from <b>₹200 to ₹400</b>, anchoring a significantly higher ARPU.<br><br>
+            <b>Food court:</b> Scaling from current ~12 active shops to all 30 — through the FOFO model VAPPL owns and operates. VAPPL controls product, pricing, and quality across all stalls. Batch 1 Aug 2026, Batch 2 Oct–Nov 2026.<br><br>
+            <b>Distribution — three channels simultaneously:</b> (1) Local shops, retail employees, and traders via activity + F&amp;B combo packages; (2) Tourist packages through the 150+ travel agent network; (3) School and group bookings as Agra's education and corporate community discovers the park.</p>
+          </div>
+
+          <div class="park-card">
+            <div class="park-card__code">ESP · Subhash Park, Agra</div>
+            <div class="park-card__name">From entry-only to full cultural programme</div>
+            <p class="park-card__action"><b>Current model:</b> ₹20 entry ticket + one pre-packaged F&B stall (RTE goods). No activities. Revenue ₹13.86L in FY25-26, profitable from day one on zero capex — the government-concession unit economics at their most pure.<br><br><b>FY26-27 activation:</b> Four FOFO food stores + full-year cultural programme. Summer camp launches May 2026 — ₹1,299 for two months, daily yoga, Zumba, dance, and art classes for all age groups. ADA concession agreement specifically emphasises events and IP. Full-year themed events calendar building through the year.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="horizon__label">Horizon 2 · 12–36 months</div>
+        <h2 class="horizon__title">New parks and concessions</h2>
+
+        <div class="pipeline-list">
+
+          <div class="pipeline-item">
+            <span class="pipeline-item__status pipeline-item__status--signed">Signed</span>
+            <div>
+              <h3 class="pipeline-item__name">Karnal — waiting to build</h3>
+              <p class="pipeline-item__desc">Sub-lease with A4A Highway Nest LLP. ~22,000 sqft, NH-1 Milestone 109, Gharaunda (Delhi–Amritsar highway). <b>15-year term. Minimum guarantee ₹2–3 lakh/month. Long rent-free build period.</b> Highway model proven at DME — replicating on India's busiest national highway. Zero land risk.</p>
+            </div>
+            <div class="pipeline-item__location">NH-1 · 15-yr</div>
+          </div>
+
+          <div class="pipeline-item">
+            <span class="pipeline-item__status pipeline-item__status--active">Active</span>
+            <div>
+              <h3 class="pipeline-item__name">Swadesh Darshan 2.0 — government-funded infrastructure</h3>
+              <p class="pipeline-item__desc">A Ministry of Tourism scheme that funds tourism infrastructure <b>100% centrally</b>. At each sanctioned destination, <b>Site Selection Committees (SSCs)</b> and <b>Destination Management Companies (DMCs)</b> evaluate and onboard private operators — PPP is mandatory, not optional. Twelve thematic tourism circuits are active under SD 2.0; adventure tourism is a dedicated niche product within the scheme. VAPPL's play: register as a stakeholder in SSCs and DMCs across UP, Delhi, Haryana, and Rajasthan <i>before</i> destinations are finalised — then win the PPP operator slot for adventure and recreation components at each site. <b>Zero land cost, zero CapEx risk.</b> Government builds the infrastructure; E-O-D operates the active entertainment layer.</p>
+            </div>
+            <div class="pipeline-item__location">UP · DEL · HR · RJ</div>
+          </div>
+
+          <div class="pipeline-item">
+            <span class="pipeline-item__status">Prospect</span>
+            <div>
+              <h3 class="pipeline-item__name">Ramayan Vatika, Bareilly (BDA)</h3>
+              <p class="pipeline-item__desc">33,000 sq. metre spiritual-cultural park by Bareilly Development Authority. 51-ft Ram statue, open-air theatre under development. Bareilly positioning itself as a multi-day pilgrimage tourism destination. <b>VAPPL is an active bidder</b> — the tender has been floated approximately three times; the process has not concluded due to limited competing bids, making VAPPL a strong candidate for the eventual award.</p>
+            </div>
+            <div class="pipeline-item__location">Bareilly · BDA</div>
+          </div>
+
+          <div class="pipeline-item">
+            <span class="pipeline-item__status pipeline-item__status--active">RFP Live</span>
+            <div>
+              <h3 class="pipeline-item__name">Geeta Govind Vatika, Agra (ADA)</h3>
+              <p class="pipeline-item__desc">ADA developing thematic Zonal Park at Taj Nagri Phase II — <b>same precinct as EAC.</b> ₹4.20 Cr state-approved lighting + laser show. The <b>RFP for this project is live</b> and VAPPL is actively evaluating a bid. VAPPL already holds an active ADA concession in this exact zone — the strongest positioning of any potential operator.</p>
+            </div>
+            <div class="pipeline-item__location">Agra · ADA</div>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="closing">
+        Four parks generating cash. Karnal signed. <b>Government-funded infrastructure opening new concessions across four states — where we already have the relationships.</b>
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch09">
+          <div class="chapter-nav__dir">Previous · Chapter 09</div>
+          <div class="chapter-nav__title">The Moat</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch11">
+          <div class="chapter-nav__dir">Next · Chapter 11</div>
+          <div class="chapter-nav__title">The Team</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 11: THE TEAM ========== -->
+    <article id="ch11">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 11</span></div>
+        <h1 class="chapter-title">The Team</h1>
+        <p class="chapter-subtitle">Built from the inside. <em>Proven under pressure.</em></p>
+      </header>
+
+      <div class="team-grid">
+
+        <div class="team-member">
+          <h3 class="team-member__name">Apoorv Babbar</h3>
+          <div class="team-member__role">Director &amp; Founder</div>
+          <p class="team-member__bio">The 2019 decision to stop chasing group bookings and dismantle the entire sales team — against every industry instinct — is the <b>defining founder call.</b> Revenue collapsed before recovering to ₹12.71 Cr with a 32.5% net margin. The walk-in model, the ₹299 combo ticket, and the neighbourhood park positioning all came from that single contrarian conviction. Now executing a four-park expansion while maintaining 30% EBITDA margins.</p>
+        </div>
+
+        <div class="team-member">
+          <h3 class="team-member__name">Rakesh Babbar</h3>
+          <div class="team-member__role">Strategic Advisor</div>
+          <p class="team-member__bio">Operated <b>Worlds of Wonder, Adventure Island, and Appu Ghar</b> — India's defining first-generation large-format amusement parks. Accessible on tap for long-term vision. Does not micromanage. E-O-D has direct lineage to India's original amusement park operators.</p>
+        </div>
+
+        <div class="team-member">
+          <h3 class="team-member__name">KCS Pillai</h3>
+          <div class="team-member__role">Head of Sales &amp; Administration</div>
+          <p class="team-member__bio">Joined in 2015 bringing direct operational experience from Rakesh Babbar's parks. Has held every senior role: operations, sales, administration. <b>Deep understanding of human psychology and negotiation</b> — central to every vendor, concession, and agent relationship the company has built. Institutional memory from day one.</p>
+        </div>
+
+        <div class="team-member">
+          <h3 class="team-member__name">Raj Kumar</h3>
+          <div class="team-member__role">COO in Training</div>
+          <p class="team-member__bio">With the company since inception. Purchase manager → admin executive → ops head → facilities head → COO in training. <b>Broke E-O-D's self-imposed ceiling of 500 school students per day. Today: up to 1,400</b> — nearly 3× throughput on the same physical asset, without compromise on safety or quality.</p>
+        </div>
+
+        <div class="team-member">
+          <h3 class="team-member__name">Manoj Sharma</h3>
+          <div class="team-member__role">Finance Lead</div>
+          <p class="team-member__bio">Joined to bring structure to a multi-park, multi-revenue-stream P&amp;L that had outgrown its reporting infrastructure. Primary mandate: <b>automate expense tracking and reporting across all four parks.</b> Moving the finance function from black box to live dashboard — foundation for investor-grade reporting as the company scales.</p>
+        </div>
+
+        <div class="team-member">
+          <h3 class="team-member__name">Ayush Kumar Singh</h3>
+          <div class="team-member__role">Technology</div>
+          <p class="team-member__bio">Built E-O-D's entire digital infrastructure in Year 1: online booking platform (eodparks.com), annual pass system, GST-compliant invoicing, CRM integration, live DSR reporting stack. <b>The online channel he built targets ₹1.5 Cr in FY26-27.</b> Year 2 scope: QR gamification, predictive analytics, internal AI knowledge assistant, machine vision on CCTV.</p>
+        </div>
+
+      </div>
+
+      <p class="closing">
+        <b>Every person on this slide has been inside E-O-D through at least one crisis</b> — COVID, the pivot, the expansion year. None were hired after the results came in.
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch10">
+          <div class="chapter-nav__dir">Previous · Chapter 10</div>
+          <div class="chapter-nav__title">Growth Pipeline</div>
+        </a>
+        <a class="chapter-nav__next" href="#ch12">
+          <div class="chapter-nav__dir">Next · Chapter 12</div>
+          <div class="chapter-nav__title">The Ask</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- ========== CHAPTER 12: THE ASK ========== -->
+    <article id="ch12">
+      <header class="chapter-header">
+        <div class="chapter-eyebrow"><span>Chapter 12 · The Ask</span></div>
+        <h1 class="chapter-title">We are not raising capital <em>to survive.</em><br>We are raising capital <em>to lead.</em></h1>
+        <p class="chapter-subtitle">The business today: ₹16.29 Cr revenue. Four parks, two cities. A model proven over ten years at EMV — <em>32.5% net margin in the mature year</em> — now replicating across the platform.</p>
+      </header>
+
+      <div class="ask-trio">
+        <div class="ask-stat">
+          <div class="ask-stat__label">The Raise · Equity</div>
+          <div class="ask-stat__num"><span class="terra">₹10</span><span class="small">Cr</span></div>
+          <div class="ask-stat__sub">First institutional capital in the company's history. ₹100 Cr post-money.</div>
+        </div>
+        <div class="ask-stat">
+          <div class="ask-stat__label">Pre-money valuation</div>
+          <div class="ask-stat__num">₹90<span class="small">Cr</span></div>
+          <div class="ask-stat__sub">Asset-based: 4 active government concessions + 1 signed location + 10-year brand + 150+ agent network. ~4.4× forward revenue (₹20–21 Cr ex-GST) — a material discount to Wonderla's ~7× EV/Revenue.</div>
+        </div>
+        <div class="ask-stat">
+          <div class="ask-stat__label">Equity on offer</div>
+          <div class="ask-stat__num">10<span class="small">%</span></div>
+          <div class="ask-stat__sub">Four government concessions on zero land cost. The only operator building this category at scale in North India.</div>
+        </div>
+      </div>
+
+      <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--ink-mute);margin:8px 0 28px;max-width:680px;line-height:1.55;">
+        Primary basis: asset-by-asset bottoms-up — 4 operating concessions, 1 signed highway location, and 10 years of accumulated brand, agent network, and operational knowledge. ~4.4× forward revenue at a material discount to listed comps. <span style="color:var(--ink-soft);">Trailing EBITDA not used: FY25-26 margins reflect three parks in ramp-up. EMV at maturity: 32.5% net; consolidated expansion to ~25% expected FY26-27.</span>
+      </p>
+
+      <div class="section-head">
+        <span class="section-head__num">12.1</span>
+        <h2 class="section-head__title">Use of funds</h2>
+      </div>
+
+      <table class="financial">
+        <thead>
+          <tr>
+            <th>Deployment</th>
+            <th class="num">Amount</th>
+            <th class="num">Timeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year">Karnal · Phase 1 build-out</span></td>
+            <td class="num">₹3.5 Cr</td>
+            <td class="num">12 months</td>
+          </tr>
+          <tr>
+            <td><span class="year">DME · outdoor expansion</span><span class="meta">Go Karting, Zipline, Obstacle Course (outdoor) + Bowling, Merchandising (indoor) — converting an indoor-only park to full-format destination</span></td>
+            <td class="num">₹2.5 Cr</td>
+            <td class="num">6 months</td>
+          </tr>
+          <tr>
+            <td><span class="year">EAC · Phase 2 activities</span><span class="meta">Zip Cycle, Body Zorbing, Meltdown, kids' zone — lifting combo from ₹200 to ₹400</span></td>
+            <td class="num">₹2 Cr</td>
+            <td class="num">9 months</td>
+          </tr>
+          <tr>
+            <td><span class="year">Working capital</span><span class="meta">4-park operations + ESP FOFO launch</span></td>
+            <td class="num">₹2 Cr</td>
+            <td class="num">Immediate</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink-soft);margin:20px 0 0;max-width:640px;line-height:1.45;">
+        Parallel to investor capital, internal cashflow funds the EAC FOFO owned-store buildout and ESP IP programming. <b style="font-style:normal;color:var(--ink);">Investor capital is the accelerant, not the engine.</b>
+      </p>
+
+      <div class="ask-vision">
+        <div class="ask-vision__label">The Three-Year Vision</div>
+        <p class="ask-vision__body">
+          10–15 parks. North India's category leader in neighbourhood active entertainment. Platform exists. Playbook proven. Pipeline live — <b>Karnal signed, Geeta Govind Vatika and Ramayan Vatika in active pursuit, Swadesh Darshan 2.0 positioning across four states.</b>
+        </p>
+        <p class="ask-vision__body">
+          At 10–15 parks: ₹20–21 Cr four-park revenue base (ex-GST) scales to ~₹70–100 Cr. At current sector EV/Revenue multiples (Wonderla: 7×) — <b>enterprise value crosses ₹500 Cr.</b>
+        </p>
+      </div>
+
+      <aside class="bs-card">
+        <div class="bs-card__label">The Investor's Position</div>
+        <h3 class="bs-card__title">10% of a ₹500–700 Cr business in five years</h3>
+        <div class="bs-card__grid">
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">₹50–70 <span class="small">Cr</span></div>
+            <div class="bs-kpi__label">Exit value on a ₹10 Cr entry</div>
+          </div>
+          <div class="bs-kpi">
+            <div class="bs-kpi__num terra">5–7×</div>
+            <div class="bs-kpi__label">Gross return · ~38–48% IRR in five years</div>
+          </div>
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">0</div>
+            <div class="bs-kpi__label">Land acquisition risk · government concessions as structural moat</div>
+          </div>
+          <div class="bs-kpi">
+            <div class="bs-kpi__num">∞</div>
+            <div class="bs-kpi__label">Cashflow-funded expansion reducing capital deployment risk</div>
+          </div>
+        </div>
+      </aside>
+
+      <p class="ask-final">
+        This is not a bet on a category.<br>
+        This is a bet on the <b>only operator already building it.</b>
+      </p>
+
+      <nav class="chapter-nav">
+        <a class="chapter-nav__prev" href="#ch11">
+          <div class="chapter-nav__dir">Previous · Chapter 11</div>
+          <div class="chapter-nav__title">The Team</div>
+        </a>
+        <a class="chapter-nav__next" style="visibility:hidden;"><div class="chapter-nav__dir">—</div><div class="chapter-nav__title">—</div></a>
+      </nav>
+    </article>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var chapters = document.querySelectorAll('article[id^="ch"]');
+  var railItems = document.querySelectorAll('.rail__item');
+  var progressFill = document.querySelector('.progress-bar__fill');
+  var topbarNum = document.querySelector('.topbar__meta strong');
+  var mobileBtn = document.querySelector('.mobile-chapter');
+  var mobileNum = document.querySelector('.mobile-chapter__num');
+
+  var chapterTitles = {};
+  chapters.forEach(function(ch){
+    var t = ch.querySelector('.chapter-title');
+    chapterTitles[ch.id] = t ? t.textContent.replace(/\s+/g,' ').trim() : ch.id;
+  });
+  chapterTitles['ch01'] = 'Cover';
+
+  function update(){
+    // Progress bar
+    var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = maxScroll > 0 ? Math.min(100, (window.scrollY / maxScroll) * 100) : 0;
+    if(progressFill) progressFill.style.width = pct + '%';
+
+    // Active chapter — first chapter whose top is above 30% of viewport
+    var trigger = window.innerHeight * 0.3;
+    var activeId = chapters[0] ? chapters[0].id : null;
+    chapters.forEach(function(ch){
+      var r = ch.getBoundingClientRect();
+      if(r.top < trigger) activeId = ch.id;
+    });
+    if(!activeId) return;
+    var num = activeId.replace('ch','');
+
+    railItems.forEach(function(item){
+      var link = item.querySelector('a');
+      var match = link && link.getAttribute('href') === '#' + activeId;
+      item.classList.toggle('rail__item--active', !!match);
+    });
+    if(topbarNum) topbarNum.textContent = num;
+    if(mobileNum) mobileNum.textContent = num;
+    if(mobileBtn){
+      // Replace text content after the num span
+      var nodes = mobileBtn.childNodes;
+      for(var i=0;i<nodes.length;i++){
+        if(nodes[i].nodeType === 3){
+          nodes[i].textContent = ' ' + chapterTitles[activeId];
+          break;
+        }
+      }
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(function(){
+        update();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
+
+  if(mobileBtn){
+    mobileBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      document.body.classList.toggle('mobile-rail-open');
+    });
+  }
+  document.addEventListener('click', function(e){
+    if(document.body.classList.contains('mobile-rail-open')){
+      if(!e.target.closest('.rail') && !e.target.closest('.mobile-chapter')){
+        document.body.classList.remove('mobile-rail-open');
+      }
+    }
+  });
+  // Close rail when tapping a chapter link
+  document.querySelectorAll('.rail a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.body.classList.remove('mobile-rail-open');
+    });
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
