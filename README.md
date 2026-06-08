@@ -21,7 +21,7 @@ The deck makes the case for a ₹10 Cr equity raise at a ₹90 Cr pre-money valu
 
 ## The business
 
-E-O-D (Every Other Day) operates neighbourhood adventure parks on government-concession land across North India. The thesis: India built destination parks for once-a-year occasions. E-O-D built the park you go to every other Saturday.
+E-O-D (Every Other Day) operates neighbourhood adventure parks across North India — three on government-concession land (EMV, EAC, ESP) and one on a private highway sub-lease (DME). The thesis: India built destination parks for once-a-year occasions. E-O-D built the park you go to every other Saturday.
 
 **Current portfolio — FY25-26:**
 
