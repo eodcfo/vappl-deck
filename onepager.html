@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-O-D Parks — Investor One-Pager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2B66EA; --blue-deep:#2A51A3; --blue-navy:#1A315D;
+  --terracotta:#C8553D; --terracotta-soft:rgba(200,85,61,0.08);
+  --green:#10B981; --green-soft:rgba(16,185,129,0.08);
+  --ink:#0A1426; --ink-soft:#3B4660; --ink-mute:#6E7689;
+  --canvas:#FFFFFF; --paper:#F8F9FA; --rule:#E8E8ED;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--paper); color:var(--ink);
+  line-height:1.45; -webkit-font-smoothing:antialiased;
+  font-size:13px;
+}
+.sheet{
+  max-width:1000px; margin:24px auto; background:var(--canvas);
+  padding:34px 40px 30px; box-shadow:0 12px 32px -16px rgba(10,20,38,0.18);
+}
+.num{font-family:"Clash Display",sans-serif; font-variant-numeric:tabular-nums; letter-spacing:-0.01em;}
+h1,h2,h3,.disp{font-family:"Clash Display",sans-serif; letter-spacing:-0.01em;}
+
+/* header */
+.head{display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:18px;}
+.brand{display:flex; align-items:center; gap:9px;}
+.logo{font-family:"Clash Display";font-weight:600;font-size:13px;letter-spacing:0.02em;background:var(--ink);color:#fff;padding:5px 8px;border-radius:5px;}
+.logo b{color:#fff;background:var(--blue);margin-left:5px;padding:0 4px;border-radius:3px;}
+.brand__name{font-size:12px;font-weight:600;color:var(--ink-soft);}
+.brand__sub{font-size:10.5px;color:var(--ink-mute);letter-spacing:0.02em;}
+.head__meta{text-align:right;font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;line-height:1.6;}
+.head__meta strong{color:var(--ink);font-weight:600;}
+
+.tag{font-family:"Fraunces",serif;font-style:italic;font-size:21px;color:var(--ink);line-height:1.25;margin-bottom:4px;}
+.tag b{color:var(--blue);font-style:italic;font-weight:400;}
+.lede{font-size:12.5px;color:var(--ink-soft);max-width:760px;margin-bottom:18px;}
+
+/* metric bar */
+.bar{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-bottom:20px;}
+.bar .cell{padding:13px 14px;border-right:1px solid var(--rule);}
+.bar .cell:last-child{border-right:none;}
+.bar .k{font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-mute);margin-bottom:5px;font-weight:600;}
+.bar .v{font-size:24px;font-weight:600;line-height:1;}
+.bar .v.blue{color:var(--blue);} .bar .v.green{color:var(--green);} .bar .v.terra{color:var(--terracotta);}
+.bar .n{font-size:9.5px;color:var(--ink-mute);margin-top:5px;}
+
+/* two col */
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:26px;}
+.sec-h{font-size:11px;text-transform:uppercase;letter-spacing:0.07em;color:var(--blue-deep);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.sec-h::after{content:"";flex:1;height:1px;background:var(--rule);}
+
+.proof{list-style:none;}
+.proof li{padding:7px 0;border-bottom:1px solid var(--rule);display:flex;gap:10px;align-items:baseline;}
+.proof li:last-child{border-bottom:none;}
+.proof .pv{font-family:"Clash Display";font-weight:600;font-size:14px;color:var(--ink);min-width:92px;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.proof .pv.green{color:var(--green);} .proof .pv.blue{color:var(--blue);}
+.proof .pt{font-size:11.5px;color:var(--ink-soft);}
+.proof .pt b{color:var(--ink);font-weight:600;}
+
+/* projection table */
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th,td{text-align:right;padding:5px 8px;border-bottom:1px solid var(--rule);}
+th:first-child,td:first-child{text-align:left;}
+thead th{font-size:9.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink-mute);font-weight:700;border-bottom:1.5px solid var(--ink);}
+tbody td{font-variant-numeric:tabular-nums;}
+tbody tr.tot td{font-weight:700;border-top:1.5px solid var(--ink);border-bottom:none;background:var(--paper);}
+tbody td:first-child{color:var(--ink-soft);}
+
+/* ask box */
+.ask{background:var(--blue-navy);color:#fff;border-radius:8px;padding:16px 18px;margin-top:4px;}
+.ask .ah{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.6);font-weight:700;margin-bottom:10px;}
+.ask .arow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.12);font-size:11.5px;}
+.ask .arow:last-child{border-bottom:none;}
+.ask .arow span:first-child{color:rgba(255,255,255,0.8);}
+.ask .arow b{font-family:"Clash Display";font-weight:600;}
+.ask .av{color:#fff;}
+
+.use{margin-top:14px;}
+.use .urow{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px dashed var(--rule);}
+.use .urow:last-child{border-bottom:none;}
+.use .urow b{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;}
+.use .urow span{color:var(--ink-soft);}
+
+.moat{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.chip{font-size:10px;background:var(--paper);border:1px solid var(--rule);border-radius:20px;padding:3px 10px;color:var(--ink-soft);font-weight:500;}
+.chip b{color:var(--ink);font-weight:700;}
+
+.exit{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+.exit .ec{background:var(--green-soft);border:1px solid rgba(16,185,129,0.25);border-radius:6px;padding:9px 10px;text-align:center;}
+.exit .ec .ev{font-family:"Clash Display";font-weight:600;font-size:17px;color:var(--green);}
+.exit .ec .el{font-size:9px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.03em;margin-top:2px;}
+
+.foot{margin-top:22px;padding-top:12px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:9.5px;color:var(--ink-mute);}
+
+@media print{
+  body{background:#fff;font-size:11.5px;}
+  .sheet{box-shadow:none;margin:0;max-width:none;padding:14px 18px;}
+  @page{size:A4 landscape;margin:10mm;}
+}
+@media(max-width:760px){
+  .grid{grid-template-columns:1fr;} .bar{grid-template-columns:repeat(2,1fr);}
+  .bar .cell:nth-child(2n){border-right:none;}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="head">
+    <div class="brand">
+      <span class="logo">E—O<b>D</b></span>
+      <div>
+        <div class="brand__name">E-O-D Adventure Parks</div>
+        <div class="brand__sub">Vision Amusement Park Pvt. Ltd. · CIN U93000DL2011PTC212814</div>
+      </div>
+    </div>
+    <div class="head__meta">
+      Investor One-Pager<br>
+      <strong>Confidential · May 2026</strong><br>
+      Delhi-NCR + Agra
+    </div>
+  </div>
+
+  <div class="tag">Not once a year. <b>Every Other Day.</b></div>
+  <p class="lede">India built destination parks for once-a-year occasions. E-O-D built the neighbourhood adventure park you go to every other Saturday — urban, on government-concession land, priced ₹200–600 for frequency, with near-zero land cost and near-zero customer-acquisition cost. Four parks. Two cities. Ten years. Zero injury claims.</p>
+
+  <div class="bar">
+    <div class="cell"><div class="k">FY25-26 Revenue</div><div class="v blue num">₹16.29 Cr</div><div class="n">All-time high · +27% YoY</div></div>
+    <div class="cell"><div class="k">EMV Mature Net Margin</div><div class="v green num">32.5%</div><div class="n">Proven at scale (FY22-23)</div></div>
+    <div class="cell"><div class="k">EAC 1st-Season Margin</div><div class="v green num">30.7%</div><div class="n">6 months · ₹200 combo</div></div>
+    <div class="cell"><div class="k">The Raise · Equity</div><div class="v num">₹10 Cr</div><div class="n">10% · ₹90 Cr pre-money</div></div>
+    <div class="cell"><div class="k">Land Cost · 4/4 Parks</div><div class="v terra num">₹0</div><div class="n">Government concessions</div></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT -->
+    <div>
+      <div class="sec-h">What we've proven</div>
+      <ul class="proof">
+        <li><span class="pv green">32.5% net</span><span class="pt"><b>EMV mature year</b> — ₹14.56 Cr revenue, audited. The benchmark every new park replicates toward.</span></li>
+        <li><span class="pv green">30.7% net</span><span class="pt"><b>EAC replicated it in a new city</b> — ₹40.96L on ₹1.33 Cr in ~6 months, at the portfolio's lowest price (₹200). Proof the model travels.</span></li>
+        <li><span class="pv blue">Day one</span><span class="pt"><b>ESP profitable from opening</b> — entry fee + one stall on government land, zero capex.</span></li>
+        <li><span class="pv num">150+</span><span class="pt"><b>Active travel agents</b> on variable commission — self-funding distribution, 3 years to build.</span></li>
+        <li><span class="pv num">61–69%</span><span class="pt"><b>Discover us digitally</b> (Instagram / Google) — ~₹0 traditional ad spend. CAC structurally near zero.</span></li>
+        <li><span class="pv num">+₹2.58 Cr</span><span class="pt"><b>Net worth</b> — crossed from −₹1.30 Cr (FY22-23) to positive; cash 4.1× prior year.</span></li>
+      </ul>
+
+      <div class="sec-h" style="margin-top:18px;">Three-year outlook · ₹ Cr ex-GST</div>
+      <table>
+        <thead><tr><th>Park</th><th>FY26-27</th><th>FY27-28</th><th>FY28-29</th></tr></thead>
+        <tbody>
+          <tr><td>EMV · Mature</td><td>18</td><td>19–20</td><td>20–22</td></tr>
+          <tr><td>EAC · ₹400 from May 22</td><td>4–5</td><td>7–9</td><td>10–13</td></tr>
+          <tr><td>DME · Highway + outdoor</td><td>0.6–0.8</td><td>2.5–3</td><td>4–5</td></tr>
+          <tr><td>ESP · Events & IP</td><td>0.5–1</td><td>1–1.5</td><td>2–2.5</td></tr>
+          <tr><td>Karnal · NH-1 (signed)</td><td>—</td><td>0.5–1</td><td>3–4</td></tr>
+          <tr class="tot"><td>Consolidated</td><td>23–25</td><td>31–35</td><td>41–46</td></tr>
+          <tr><td>EBITDA margin</td><td>20–22%</td><td>23–25%</td><td>27–29%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:9.5px;color:var(--ink-mute);margin-top:7px;">EAC's move to ₹400 (22 May 2026) is <b>not raise-dependent</b> — near-term growth doesn't require the round. Raise-funded capex (DME outdoor, EAC Phase 2, Karnal) commissions through FY26-27 year-end; full benefit flows from FY27-28 — the primary investor reference year.</p>
+    </div>
+
+    <!-- RIGHT -->
+    <div>
+      <div class="ask">
+        <div class="ah">The Ask</div>
+        <div class="arow"><span>Equity raise</span><b class="av">₹10 Cr · 10%</b></div>
+        <div class="arow"><span>Pre-money / post-money</span><b class="av">₹90 Cr / ₹100 Cr</b></div>
+        <div class="arow"><span>Trailing (FY25-26 ₹16.29 Cr)</span><b class="av">5.5× EV/Rev</b></div>
+        <div class="arow"><span>Fwd (FY26-27 ₹24 Cr)</span><b class="av">3.8×</b></div>
+        <div class="arow"><span>Operational fwd (FY27-28 ₹33 Cr)</span><b class="av">2.7× · ~60% disc.</b></div>
+        <div class="arow"><span>Listed peer avg (Wonderla / Nicco)</span><b class="av">6.5–7×</b></div>
+      </div>
+
+      <div class="sec-h" style="margin-top:18px;">Use of funds</div>
+      <div class="use">
+        <div class="urow"><span>Karnal · Phase 1 build-out (NH-1, signed)</span><b>₹4.0 Cr</b></div>
+        <div class="urow"><span>DME · outdoor expansion</span><b>₹1.5 Cr</b></div>
+        <div class="urow"><span>EAC · Phase 2 activity stack</span><b>₹1.5 Cr</b></div>
+        <div class="urow"><span>ESP · IP activation</span><b>₹0.5 Cr</b></div>
+        <div class="urow"><span>Working capital</span><b>₹2.5 Cr</b></div>
+      </div>
+
+      <div class="sec-h" style="margin-top:18px;">The moat — uncopyable in 3 years</div>
+      <div class="moat">
+        <span class="chip"><b>4/4</b> government concessions · zero land cost</span>
+        <span class="chip"><b>10 yrs</b> brand trust · zero injury claims</span>
+        <span class="chip"><b>150+</b> agent distribution network</span>
+        <span class="chip"><b>32.5%</b> operating knowledge at ₹200–600 ARPU</span>
+        <span class="chip"><b>2 bodies</b> DTTDC + ADA · no single-point risk</span>
+        <span class="chip"><b>SD 2.0</b> govt-funded pipeline across 4 states</span>
+      </div>
+
+      <div class="sec-h" style="margin-top:18px;">The investor's position · 5 years</div>
+      <div class="exit">
+        <div class="ec"><div class="ev num">₹50–70 Cr</div><div class="el">Exit value on ₹10 Cr</div></div>
+        <div class="ec"><div class="ev num">5–7×</div><div class="el">Gross return</div></div>
+        <div class="ec"><div class="ev num">~38–48%</div><div class="el">5-yr IRR</div></div>
+      </div>
+      <p style="font-size:9.5px;color:var(--ink-mute);margin-top:8px;">10% of a ₹500–700 Cr business at 10–15 parks, at the listed-peer multiple. Government concessions remove land-acquisition risk; cashflow-funded expansion reduces capital deployment risk.</p>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <span>Vision Amusement Park Pvt. Ltd. · E-O-D Adventure Parks · eodparks.com</span>
+    <span>Full deck &amp; 11-section financial model: eodcfo.github.io/vappl-deck</span>
+  </div>
+
+</div>
+</body>
+</html>
