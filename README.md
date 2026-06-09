@@ -122,4 +122,4 @@ python3 -m http.server 8080
 
 Deployed via GitHub Pages from the `main` branch. To update the live site, commit changes to `main` and push — Pages rebuilds automatically within ~2 minutes.
 
-> **Working branch:** `claude/sleepy-noether-OssmJ` — merge to `main` to publish.
+> **Workflow:** develop on a feature branch, open a PR into `main`, and merge to publish.
