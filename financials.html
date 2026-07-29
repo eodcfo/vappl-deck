@@ -86,6 +86,9 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
 .fin tr.dim td{color:var(--ink-mute);}
 .fin .label{font-weight:600;font-size:14px;}
 .fin .meta{display:block;font-size:11.5px;color:var(--ink-mute);margin-top:1px;font-weight:400;}
+/* multi-column tables: right-aligned cells need a gutter when another column follows */
+.fin--cols th.r:not(:last-child),.fin--cols td.r:not(:last-child){padding-right:20px;}
+.fin--cols th.r{min-width:62px;}
 .fin .pos{color:var(--green);font-weight:600;}
 .fin .neg{color:var(--terracotta);font-weight:600;}
 .fin .muted{color:var(--ink-mute);font-weight:400;}
@@ -337,7 +340,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
           </tbody>
         </table>
       </div>
-      <div class="note amber"><b>FY25-26 PAT note:</b> Depreciation placeholder ₹54.5L in provisional P&amp;L will increase to est. ₹1.0–1.1 Cr on audit (FY26 gross block ₹6.13 Cr). PAT estimate will change accordingly. EBITDA is unaffected. Audit expected August 2026.</div>
+      <div class="note amber"><b>FY25-26 PAT note:</b> Depreciation placeholder ₹54.5L in provisional P&amp;L will increase to est. ₹1.05 Cr on audit — the placeholder covers the opening block only and omits the ₹3.68 Cr of FY26 additions. Full Schedule II schedule in Section 06. PAT estimate will change accordingly. EBITDA is unaffected. Audit expected August 2026.</div>
       <div class="note blue"><b>FY27-28 is the primary investor reference year</b> — first full year of all-park operations after fundraise deployment. Model assumes fundraise close September 2026.</div>
     </section>
 
@@ -394,7 +397,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
               <td class="r">0.06</td><td class="r">0.02</td><td class="r">0.20</td><td class="r">0.51</td>
             </tr>
             <tr>
-              <td><span class="label">Depreciation</span><span class="meta">FY26: placeholder ₹54.5L; est. final ₹1.0–1.1 Cr</span></td>
+              <td><span class="label">Depreciation</span><span class="meta">FY26: placeholder ₹54.5L; est. final ₹1.05 Cr — schedule in §06</span></td>
               <td class="r">0.21</td><td class="r">0.30</td><td class="r">0.49</td><td class="r muted">~1.05<span class="mark">†</span></td>
             </tr>
             <tr>
@@ -431,7 +434,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
           </tbody>
         </table>
       </div>
-      <div class="note terra"><b>† FY25-26 depreciation:</b> The provisional P&amp;L from HMBA (11 May 2026) carries a placeholder of ₹54.5L. The fixed asset register for FY26 shows gross block of ₹6.13 Cr (₹3.68 Cr additions in FY26), implying final depreciation of ₹1.0–1.1 Cr on audit. PBT and PAT will be revised downward accordingly. EBITDA is unaffected.</div>
+      <div class="note terra"><b>† FY25-26 depreciation:</b> The provisional P&amp;L from HMBA (11 May 2026) carries a placeholder of ₹54.5L — exactly 21.0% of the ₹2.59 Cr opening net block, i.e. the opening block depreciated on WDV with the ₹3.68 Cr of FY26 additions not yet loaded into the register. Adding the pro-rata charge on those additions under Schedule II gives <b>₹104.6L (~₹1.05 Cr)</b>; the asset-by-asset schedule is in <a href="#s06" style="color:var(--blue-deep);">Section 06</a>. PBT falls from ₹1.32 Cr as filed to ₹0.81 Cr, and PAT to ~₹0.66 Cr. EBITDA is unaffected.</div>
 
       <div style="margin-top:28px;">
         <div style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:14px;">Year-on-Year Commentary</div>
@@ -528,7 +531,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
 
       <div style="margin-top:36px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:14px;">FY25-26 Park P&amp;L — Actuals (Provisional)</div>
       <div class="fin-scroll">
-        <table class="fin">
+        <table class="fin fin--cols">
           <thead>
             <tr>
               <th style="min-width:140px;">Park</th>
@@ -588,7 +591,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
       <div class="note blue">All projections assume fundraise closes September 2026 — except EAC ₹400 pricing which is already live (22 May 2026) and independent of the raise. Ranges reflect conservative (left) to upside (right). Midpoints used for valuation references.</div>
 
       <div class="fin-scroll" style="margin-top:20px;">
-        <table class="fin">
+        <table class="fin fin--cols">
           <thead>
             <tr>
               <th style="min-width:160px;">Line Item (₹ Crores)</th>
@@ -752,7 +755,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
               <td class="r">1.07</td><td class="r">0.59</td><td class="r">0.79</td><td class="r pos">0.04</td>
             </tr>
             <tr>
-              <td>Other Current Liabilities<span class="meta">FY26: incl. ₹2.14 Cr electricity arrears</span></td>
+              <td>Other Current Liabilities<span class="meta">FY26: statutory dues, accrued employee costs, licence fee payable — composition under review, see note</span></td>
               <td class="r muted">—</td><td class="r muted">—</td><td class="r">1.30</td><td class="r">2.09</td>
             </tr>
             <tr class="total">
@@ -761,7 +764,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
             </tr>
             <tr class="sub"><td colspan="5" style="font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:4px;padding-top:20px;">ASSETS</td></tr>
             <tr>
-              <td><span class="label">PP&amp;E Net Block</span><span class="meta">FY26: before final FY26 dep booking; gross block ₹6.13 Cr</span></td>
+              <td><span class="label">PP&amp;E Net Block</span><span class="meta">FY26: before final dep booking; falls to ~₹5.22 Cr once the full ₹1.05 Cr charge is booked</span></td>
               <td class="r">0.81</td><td class="r">1.74</td><td class="r">2.59</td><td class="r">5.80</td>
             </tr>
             <tr>
@@ -820,7 +823,12 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
           </tbody>
         </table>
       </div>
-      <div class="note amber"><b>Electricity payable ₹2.14 Cr</b> on FY26 balance sheet represents accumulated arrears across parks — classified under Other Current Liabilities. Resolution in progress.</div>
+      <div class="note amber"><b>Other Current Liabilities ₹2.09 Cr — the "₹2.14 Cr electricity payable" tag is a mis-classification, not a real utility arrear.</b> The provisional pack labels ₹2.14 Cr of this balance as accumulated electricity dues across parks. That cannot be right, on three independent tests:
+        <br><br><b>1 · It exceeds its own parent line.</b> Total Other Current Liabilities at 31 March 2026 is ₹2.09 Cr. A component cannot be ₹5L larger than the head it sits inside.
+        <br><br><b>2 · It is 4.9× the entire annual electricity bill.</b> FY25-26 electricity cost across all four parks is ₹0.44 Cr (Section 06). ₹2.14 Cr would mean roughly <b>fifty-eight months</b> of portfolio-wide consumption unpaid — for parks that have only operated as a four-park portfolio since FY26, and two of which (EAC, ESP) opened mid-year.
+        <br><br><b>3 · The connections would not still be live.</b> The DERC and UPERC supply codes permit disconnection of a commercial consumer within roughly fifteen days of a defaulted bill, against a held security deposit and with late payment surcharge accruing. EMV, EAC and ESP additionally sit on government concessions where a utility default is a licence-condition breach. All four parks have traded continuously through FY26.
+        <br><br><b>What it more likely is:</b> a pre-regrouping trial-balance bucket carried forward under the wrong head — statutory dues (GST, TDS, PF/ESI), accrued salaries and director remuneration, concession and licence fee payable, and customer/vendor deposits — inside which a <i>genuine</i> electricity accrual would be on the order of <b>₹4–15L</b>, being one to four months at the FY26 run-rate. The FY24-25 comparative of ₹1.30 Cr carries no such label, which is consistent with a tagging error introduced in the FY26 provisional pack rather than an arrear that built up over years.
+        <br><br><b>Effect on the model: none.</b> The ₹2.09 Cr liability, total liabilities of ₹12.56 Cr, EBITDA and PAT are all unchanged — only the description of what sits inside the line is wrong. Head-wise composition requested from HMBA for the August 2026 audit.</div>
     </section>
 
     <!-- S06: COST STRUCTURE -->
@@ -830,7 +838,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
         <h2 class="sec-title">Cost Structure <em>— FY25-26 detail</em></h2>
       </div>
       <div class="fin-scroll">
-        <table class="fin">
+        <table class="fin fin--cols">
           <thead>
             <tr>
               <th style="min-width:220px;">Cost Line (₹ Crores)</th>
@@ -911,7 +919,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
             </tr>
             <tr class="sub"><td colspan="6" style="font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:4px;padding-top:16px;">DEPRECIATION &amp; FINANCE</td></tr>
             <tr>
-              <td>Depreciation<span class="meta">FY26: placeholder; est. final ₹1.0–1.1 Cr</span></td>
+              <td>Depreciation<span class="meta">FY26: placeholder ₹54.5L; est. final ₹1.05 Cr — see schedule below</span></td>
               <td class="r">0.21</td><td class="r">0.30</td><td class="r">0.49</td><td class="r muted">~1.05</td>
               <td style="padding-left:14px;font-size:12.5px;color:var(--ink-soft);">~₹1.50–1.80 in FY27 (new capex)</td>
             </tr>
@@ -947,7 +955,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
 
       <div style="margin-top:28px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:14px;">FY26 Major Capex Additions (₹ Crores)</div>
       <div class="fin-scroll">
-        <table class="fin">
+        <table class="fin fin--cols">
           <thead>
             <tr><th style="min-width:200px;">Asset</th><th class="r">Cost</th><th>Park</th><th>Status</th></tr>
           </thead>
@@ -965,6 +973,187 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
           </tbody>
         </table>
       </div>
+
+      <div style="margin-top:40px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:14px;">FY25-26 Depreciation Schedule — Draft for Audit</div>
+
+      <div class="note blue"><b>Basis of preparation.</b> VAPPL is a private company below the Ind AS thresholds, so it reports under the Companies (Accounting Standards) Rules — <b>AS 10, Property, Plant and Equipment</b> — with useful lives capped by <b>Schedule II, Part C of the Companies Act, 2013</b>. Schedule II limits residual value to 5% of cost and requires depreciation <b>pro rata from the date the asset is put to use</b>. The WDV rates below are the Schedule II rates derived as <i>1 − (0.05)<sup>1/n</sup></i> and already embed the 5% residual. Part A note 4 also requires <b>componentisation</b> where a significant part has a different useful life — applied here to the roller coaster / zipline, which is split between its civil foundation and its structural and mechanical components.</div>
+
+      <div class="note"><b>Why the company depreciates on WDV.</b> The historical charge is consistent with a written-down-value method at a blended 17–21%: FY23-24 ₹0.30 Cr on an average net block of ~₹1.43 Cr (21%), FY24-25 ₹0.49 Cr on ~₹2.41 Cr (20%), and the FY25-26 placeholder ₹0.545 Cr on an opening net block of ₹2.59 Cr (21.0%). SLM at Schedule II lives would produce roughly a third of these charges. <b>The schedule below therefore uses WDV, consistent with the company's established method.</b></div>
+
+      <div class="note terra"><b>What the ₹54.5L placeholder actually is.</b> ₹0.545 Cr is exactly 21.0% of the ₹2.59 Cr opening net block — i.e. HMBA has depreciated the <b>opening block only</b> and has not yet run the ₹3.68 Cr of FY26 additions through the register with their commissioning dates. The gap is not an error in the placeholder; it is an incomplete register. Adding the pro-rata charge on FY26 additions is what takes the figure to ~₹1.05 Cr.</div>
+
+      <div class="fin-scroll" style="margin-top:20px;">
+        <table class="fin fin--cols">
+          <thead>
+            <tr>
+              <th style="min-width:230px;">Asset / Block (₹ Lakhs)</th>
+              <th class="r">Cost</th>
+              <th style="min-width:170px;">Schedule II Class</th>
+              <th class="r">Life</th>
+              <th class="r">WDV Rate</th>
+              <th class="r">In Use</th>
+              <th class="r">FY26 Charge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="sub"><td colspan="7" style="font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:4px;">A · OPENING BLOCK — ASSETS IN USE AT 1 APRIL 2025</td></tr>
+            <tr>
+              <td><span class="label">Opening net block (WDV)</span><span class="meta">EMV legacy rides, buildings, plant, fit-out</span></td>
+              <td class="r">259.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Blended — P&amp;M, buildings, electrical, F&amp;F</td>
+              <td class="r muted">blended</td>
+              <td class="r">21.0%</td>
+              <td class="r">12 mo</td>
+              <td class="r">54.50</td>
+            </tr>
+            <tr class="total">
+              <td><span class="label">Sub-total A</span><span class="meta">= the ₹54.5L placeholder in the provisional P&amp;L</span></td>
+              <td class="r">259.00</td><td></td><td></td><td></td><td></td>
+              <td class="r">54.50</td>
+            </tr>
+
+            <tr class="sub"><td colspan="7" style="font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:4px;padding-top:20px;">B · FY25-26 ADDITIONS — PRO RATA FROM DATE PUT TO USE</td></tr>
+            <tr>
+              <td>Go Kart Track<span class="meta">EMV · commissioned ~May 2025</span></td>
+              <td class="r">82.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">13.61</td>
+            </tr>
+            <tr>
+              <td>Roller Coaster / Zipline — civil foundation<span class="meta">Componentised per Sch. II Part A note 4</span></td>
+              <td class="r">33.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Building — other than RCC frame</td>
+              <td class="r">30 y</td><td class="r">9.50%</td><td class="r">11 mo</td><td class="r">2.87</td>
+            </tr>
+            <tr>
+              <td>Roller Coaster / Zipline — structure &amp; mechanical<span class="meta">Cable, towers, braking, harness systems</span></td>
+              <td class="r">33.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">5.48</td>
+            </tr>
+            <tr>
+              <td>Indoor Kids Playground Expansion<span class="meta">EMV</span></td>
+              <td class="r">40.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">6.64</td>
+            </tr>
+            <tr>
+              <td>Graffiti Ride<span class="meta">EMV</span></td>
+              <td class="r">25.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">4.15</td>
+            </tr>
+            <tr>
+              <td>Laser Tag 8-Player System<span class="meta">EMV</span></td>
+              <td class="r">19.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">3.15</td>
+            </tr>
+            <tr>
+              <td>Playground Soft Play<span class="meta">EMV</span></td>
+              <td class="r">10.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">11 mo</td><td class="r">1.66</td>
+            </tr>
+            <tr>
+              <td>IT / Computer Equipment<span class="meta">All parks · POS, desktops, laptops</span></td>
+              <td class="r">8.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Computers — end user devices</td>
+              <td class="r">3 y</td><td class="r">63.16%</td><td class="r">6 mo</td><td class="r">2.53</td>
+            </tr>
+            <tr>
+              <td>Furniture &amp; Fixtures<span class="meta">All parks</span></td>
+              <td class="r">6.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">F&amp;F — theatres / entertainment</td>
+              <td class="r">8 y</td><td class="r">31.23%</td><td class="r">6 mo</td><td class="r">0.94</td>
+            </tr>
+            <tr>
+              <td>Other additions — electrical installations<span class="meta">EAC / ESP / DME fit-out · assumed ~Nov 2025</span></td>
+              <td class="r">45.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Electrical installations &amp; equipment</td>
+              <td class="r">10 y</td><td class="r">25.89%</td><td class="r">5 mo</td><td class="r">4.85</td>
+            </tr>
+            <tr>
+              <td>Other additions — activity plant &amp; equipment<span class="meta">EAC / ESP / DME · assumed ~Nov 2025</span></td>
+              <td class="r">45.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Plant &amp; Machinery — general</td>
+              <td class="r">15 y</td><td class="r">18.10%</td><td class="r">5 mo</td><td class="r">3.39</td>
+            </tr>
+            <tr>
+              <td>Other additions — site &amp; civil works<span class="meta">Pathways, sheds, boundary works</span></td>
+              <td class="r">22.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Building — other than RCC frame</td>
+              <td class="r">30 y</td><td class="r">9.50%</td><td class="r">5 mo</td><td class="r">0.87</td>
+            </tr>
+            <tr class="total">
+              <td><span class="label">Sub-total B — FY26 additions</span></td>
+              <td class="r">368.00</td><td></td><td></td><td></td><td></td>
+              <td class="r">50.14</td>
+            </tr>
+
+            <tr class="sub"><td colspan="7" style="font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:4px;padding-top:20px;">C · NOT DEPRECIATED</td></tr>
+            <tr class="dim">
+              <td>Capital Work-in-Progress<span class="meta">Fisheries Project + Roller Coaster / Zipline completion</span></td>
+              <td class="r">40.00</td>
+              <td style="font-size:12.5px;color:var(--ink-soft);">Not yet put to use — AS 10</td>
+              <td class="r muted">—</td><td class="r muted">—</td><td class="r muted">—</td><td class="r muted">nil</td>
+            </tr>
+
+            <tr class="total">
+              <td><span class="label">FY25-26 Depreciation Charge (A + B)</span></td>
+              <td class="r">627.00</td><td></td><td></td><td></td><td></td>
+              <td class="r">104.64</td>
+            </tr>
+            <tr class="dim">
+              <td>In ₹ Crores</td>
+              <td class="r">6.27</td><td></td><td></td><td></td><td></td>
+              <td class="r">1.05</td>
+            </tr>
+            <tr class="dim">
+              <td>Increment over ₹54.5L placeholder</td>
+              <td class="r muted">—</td><td></td><td></td><td></td><td></td>
+              <td class="r neg">+50.14</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note green" style="margin-top:16px;"><b>The schedule lands at ₹1.05 Cr — inside the ₹1.0–1.1 Cr range already carried throughout this model.</b> The ₹54.5L placeholder plus ₹50.1L of pro-rata depreciation on FY26 additions gives ₹104.6L. Every downstream figure in this model — FY26 PBT ₹0.81 Cr, PAT ~₹0.66 Cr, park-level consolidated profit ~₹0.87–1.37 Cr — is already stated on this basis. <b>EBITDA of ₹2.37 Cr is unaffected</b>, since depreciation sits below it.</div>
+
+      <div class="fin-scroll" style="margin-top:20px;">
+        <table class="fin fin--cols">
+          <thead>
+            <tr><th style="min-width:200px;">Sensitivity / Cross-check</th><th class="r">FY26 Depreciation</th><th class="r">FY26 PBT</th><th style="min-width:200px;padding-left:14px;">Note</th></tr>
+          </thead>
+          <tbody>
+            <tr class="dim">
+              <td>Provisional P&amp;L as filed<span class="meta">Opening block only</span></td>
+              <td class="r">₹0.55 Cr</td><td class="r">₹1.32 Cr</td>
+              <td style="padding-left:14px;font-size:12.5px;color:var(--ink-soft);">Register incomplete — FY26 additions not yet loaded.</td>
+            </tr>
+            <tr>
+              <td><span class="label">WDV, Schedule II lives</span><span class="meta">Base case — company's established method</span></td>
+              <td class="r">₹1.05 Cr</td><td class="r">₹0.81 Cr</td>
+              <td style="padding-left:14px;font-size:12.5px;color:var(--ink-soft);">The schedule above. Used throughout this model.</td>
+            </tr>
+            <tr class="dim">
+              <td>SLM, Schedule II lives<span class="meta">If the method were changed on audit</span></td>
+              <td class="r">₹0.45–0.55 Cr</td><td class="r">₹1.31–1.41 Cr</td>
+              <td style="padding-left:14px;font-size:12.5px;color:var(--ink-soft);">Not expected — a method change requires retrospective restatement and disclosure under AS 10. Shown as the upside bound on PAT.</td>
+            </tr>
+            <tr class="dim">
+              <td>Income Tax Act, s.32<span class="meta">Separate block-of-assets register</span></td>
+              <td class="r">₹0.44 Cr <span class="meta">on additions only</span></td>
+              <td class="r muted">n/a</td>
+              <td style="padding-left:14px;font-size:12.5px;color:var(--ink-soft);">P&amp;M 15%, buildings 10%, furniture 10%, computers 40% on WDV; half-rate where put to use &lt;180 days. Plus depreciation on the opening tax WDV, which is not reconstructable from the disclosed data. No additional depreciation u/s 32(1)(iia) — that relief is confined to manufacturing and power.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note amber" style="margin-top:16px;"><b>Gross block reconciliation — the ₹6.13 Cr figure does not hold as a gross block.</b> Closing net block is ₹5.80 Cr and accumulated depreciation for FY22-23 to FY24-25 alone is ₹1.00 Cr (₹0.21 + ₹0.30 + ₹0.49), before any pre-FY23 charge. Gross block at 31 March 2026 must therefore be <b>at least ₹7.27 Cr</b>, not ₹6.13 Cr. ₹6.13 Cr is far more consistent with a net/WDV-basis figure or a partial register — note that opening net block ₹2.59 Cr + additions ₹3.68 Cr = ₹6.27 Cr, within ₹0.14 Cr of it. <b>This does not change the depreciation estimate</b>, because WDV depreciation is computed on written-down value, not on gross block. It does mean the fixed asset register needs a gross-block / accumulated-depreciation reconciliation before the audit signs off. Flagged for HMBA.</div>
+
+      <div class="note amber"><b>Balance sheet consequence on final booking.</b> Section 05 shows PP&amp;E net block at ₹5.80 Cr — the placeholder basis. On booking the full ₹1.05 Cr charge, net block falls to <b>~₹5.22 Cr</b> (₹2.59 opening + ₹3.68 additions − ₹1.05 depreciation), total assets fall by ₹0.58 Cr, and net worth falls by ~₹0.41 Cr after the tax effect at MAT 17.47%. The provisional pack carries the placeholder net block on the balance sheet while this model carries the estimated final charge in the P&amp;L; the two reconcile on audit. Investors should treat FY25-26 net worth as <b>~₹2.2 Cr rather than ₹2.58 Cr</b> once depreciation is fully booked.</div>
     </section>
 
     <!-- S07: BORROWINGS -->
@@ -1199,7 +1388,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
         <div class="risk-row">
           <div>
             <div class="risk-factor">Depreciation Quantum</div>
-            <div class="risk-desc">FY26 PAT highly sensitive: placeholder ₹54.5L vs est. final ₹1.0–1.1 Cr.</div>
+            <div class="risk-desc">FY26 PAT highly sensitive: placeholder ₹54.5L vs est. final ₹1.05 Cr per the Schedule II schedule in Section 06. PBT ₹1.32 Cr → ₹0.81 Cr.</div>
           </div>
           <div><span class="risk-sev sev-h">High (PAT only)</span></div>
           <div class="risk-desc">EBITDA completely unaffected. Audit expected August 2026. Model presents PAT as a range — do not anchor to the ₹0.66 Cr estimate until audit completes.</div>
@@ -1279,7 +1468,7 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
         </div>
         <div class="source-item">
           <div><div class="source-name">Provisional P&amp;L + BS<br>(HMBA &amp; Associates)</div><span class="source-status st-prov">Provisional</span></div>
-          <div class="source-detail">Received 11 May 2026. Covers FY25-26 consolidated P&amp;L and Balance Sheet. Unaudited. Depreciation not yet booked (placeholder ₹54.5L). Multiple column-swap corrections applied. Audit expected August 2026.</div>
+          <div class="source-detail">Received 11 May 2026. Covers FY25-26 consolidated P&amp;L and Balance Sheet. Unaudited. Depreciation only partly booked (₹54.5L placeholder — opening block only, FY26 additions not yet in the register). Multiple column-swap corrections applied, and two head-level tagging issues identified and restated in this model (electricity payable, gross block). Audit expected August 2026.</div>
         </div>
         <div class="source-item">
           <div><div class="source-name">Balance Sheet Analysis<br>(Internal — Notion)</div><span class="source-status st-mgmt">Internal</span></div>
@@ -1305,11 +1494,11 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
 
       <div style="margin-top:36px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:12px;">Key Caveats</div>
       <ul class="cav-list">
-        <li><span class="cav-num">1.</span><span>FY25-26 depreciation will increase from the ₹54.5L placeholder to estimated ₹1.0–1.1 Cr on audit (FY26 gross block ₹6.13 Cr, ₹3.68 Cr additions). PAT estimate will be revised downward. EBITDA and all operational metrics are unaffected.</span></li>
+        <li><span class="cav-num">1.</span><span>FY25-26 depreciation will increase from the ₹54.5L placeholder to an estimated ₹1.05 Cr on audit. The placeholder is 21.0% of the ₹2.59 Cr opening net block — HMBA has depreciated the opening block only and has not yet loaded the ₹3.68 Cr of FY26 additions into the register. The full asset-by-asset schedule under Schedule II of the Companies Act, 2013 is in <b>Section 06</b> and lands at ₹104.6L. PAT will be revised downward; EBITDA and all operational metrics are unaffected.</span></li>
         <li><span class="cav-num">2.</span><span>All FY26-27 onwards projections for DME outdoor expansion and Karnal are raise-dependent. <b>EAC ₹400 pricing is NOT raise-dependent</b> — it is already live as of 22 May 2026.</span></li>
         <li><span class="cav-num">3.</span><span>FY24-25 audited figures for Depreciation and Cost of Material Consumed were corrected after initial analysis. The authoritative corrected figures are used throughout this model.</span></li>
-        <li><span class="cav-num">4.</span><span>A ₹6,038 arithmetic residual exists in the FY25-26 provisional P&amp;L total. Flagged for HMBA reconciliation. Does not affect EBITDA, PAT estimates, or the balance sheet.</span></li>
-        <li><span class="cav-num">5.</span><span>Electricity payable of ₹2.14 Cr on the FY26 balance sheet represents accumulated arrears across parks, classified under Other Current Liabilities. Resolution is in progress.</span></li>
+        <li><span class="cav-num">4.</span><span><b>The "₹2.14 Cr electricity payable" on the FY26 provisional balance sheet is a mis-classification, not a real utility arrear.</b> It exceeds the entire Other Current Liabilities balance it sits inside (₹2.09 Cr), it is 4.9× the full-year electricity cost of all four parks (₹0.44 Cr), and no discom carries a commercial consumer that far in arrears — DERC and UPERC supply codes allow disconnection within about fifteen days, and three of the four parks are on government concessions where a utility default breaches the licence. The balance is far more likely a pre-regrouping bucket of statutory dues, accrued employee costs, licence fee payable and deposits, inside which a genuine electricity accrual would be ~₹4–15L. Head-wise composition requested from HMBA. <b>No effect on P&amp;L, EBITDA or total liabilities.</b> See Section 05.</span></li>
+        <li><span class="cav-num">5.</span><span>The FY26 gross block is stated at ₹6.13 Cr, but closing net block of ₹5.80 Cr plus FY23–FY25 accumulated depreciation of ₹1.00 Cr implies a gross block of <b>at least ₹7.27 Cr</b>. ₹6.13 Cr appears to be a net/WDV-basis or partial-register figure. This does not change the depreciation estimate — WDV depreciation runs off written-down value, not gross block — but the register needs a gross-block reconciliation before sign-off. Flagged for HMBA.</span></li>
         <li><span class="cav-num">6.</span><span>Note 5 (Short-Term Borrowings) and Note 6 (Long-Term Borrowings) labels are reversed on the face of the FY26 provisional balance sheet. Corrected throughout this model — ST = ₹5.26 Cr (NBFC/bank), LT = ₹2.60 Cr (related parties).</span></li>
       </ul>
 
