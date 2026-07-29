@@ -85,12 +85,13 @@ A standalone 11-section model linked from Chapter 12 of the deck. All figures so
 | 08 · Fundraise Timeline | Deployment milestones with dates + use of funds table |
 | 09 · Assumptions | Macro, per-park (EMV/EAC/DME/Karnal), capital structure, valuation |
 | 10 · Risk & Sensitivity | 8 risks with severity + 3-scenario sensitivity (downside/base/upside) |
-| 11 · Data Sources | Audit trail, source descriptions, 6 key caveats |
+| 11 · Data Sources | Audit trail, source descriptions, 7 key caveats |
 
 **Key caveats tracked in the model:**
 - FY25-26 depreciation placeholder ₹54.5L → ₹1.05 Cr on audit (August 2026). The placeholder is the opening block on WDV; the ₹3.68 Cr of FY26 additions are not yet in the register. Full Schedule II schedule drafted in §06. EBITDA unaffected; PAT will change.
 - All DME outdoor + Karnal projections are raise-dependent. EAC ₹400 is NOT — already live 22 May 2026.
-- The "₹2.14 Cr electricity payable" tag on the FY26 provisional BS is a mis-classification — it exceeds the ₹2.09 Cr Other Current Liabilities line it sits inside and is 4.9× the ₹0.44 Cr annual portfolio electricity cost. Restated in §05; genuine electricity accrual ~₹4–15L.
+- The "₹2.14 Cr electricity payable" tag on the FY26 provisional BS is a mis-classified grouping, not an arrear. Non-borrowing current liabilities across FY23–FY26 were ₹2.44 / ₹2.48 / ₹2.09 / ₹2.13 Cr — flat, not accumulating. FY26's movement is a transfer (trade payables −₹0.75 Cr vs other current liabilities +₹0.79 Cr), and ₹2.14 Cr is the whole grouping, not a line inside it. Genuine electricity accrual ~₹4–15L. Deep dive + indicative composition in §05.
+- FY22-23 and FY23-24 balance sheets do not foot as presented — ₹1.37 Cr / ₹1.89 Cr of liabilities and ₹0.71 Cr / ₹1.55 Cr of assets were never broken out. Now derived and shown in §05; `n/d` means not disclosed, not nil.
 - FY26 "gross block ₹6.13 Cr" is not reconcilable as a gross block (net ₹5.80 Cr + FY23–25 accumulated depreciation ₹1.00 Cr ⇒ ≥ ₹7.27 Cr). Does not affect the depreciation estimate; flagged for HMBA.
 - Note 5/6 label swap on FY26 provisional BS corrected throughout (ST = ₹5.26 Cr, LT = ₹2.60 Cr).
 
