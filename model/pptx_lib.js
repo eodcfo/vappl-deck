@@ -25,6 +25,13 @@ const SERIES = [C.blue, C.terra, C.green, C.amber];
 const F = { head: "Calibri", body: "Calibri" };
 const W = 13.333, H = 7.5, M = 0.62;              // LAYOUT_WIDE, margins
 
+// Build-time overflow reporting: a panel that cannot fit the space left on its
+// slide is recorded here rather than silently clipped.
+const OVERFLOWS = [];
+const CURRENT = { deck: "", slide: 0 };
+function mark(deck, slide) { CURRENT.deck = deck; CURRENT.slide = slide; }
+function overflowReport() { return OVERFLOWS; }
+
 // ---------------------------------------------------------------- formatting --
 const cr  = (x, d = 2) => x == null ? "—" : `₹${(x / CR).toFixed(d)} Cr`;
 const crN = (x, d = 2) => x == null ? "—" : (x / CR).toFixed(d);
@@ -49,7 +56,7 @@ function measure(text, w, fontSize, lineSpacingPt) {
   for (const para of String(text).split("\n")) {
     lines += para.length === 0 ? 1 : Math.ceil(para.length / charsPerLine);
   }
-  return (lines * ls / 72) * 1.06;
+  return (lines * ls / 72) * 1.04;
 }
 
 // ------------------------------------------------------------------- slides ---
@@ -88,7 +95,7 @@ function cover(s, { eyebrow, title, sub, meta, stats }) {
     });
     if (t.sub) s.addText(t.sub, {
       x, y: 6.2, w: cw, h: 0.62, fontFace: F.body, fontSize: 10,
-      color: "7C889B", lineSpacing: 13.5, margin: 0, valign: "top",
+      color: "A8B2C4", lineSpacing: 13.5, margin: 0, valign: "top",
     });
   });
 }
@@ -106,11 +113,12 @@ function head(s, n, title, lede) {
     fontSize: 30, bold: true, color: C.ink, margin: 0, valign: "middle",
   });
   if (lede) {
+    const ledeH = measure(lede, W - 2 * M, 12.5, 17.5);
     s.addText(lede, {
-      x: M, y: 1.1, w: W - 2 * M, h: 0.56, fontFace: F.body, fontSize: 13.5,
-      color: C.inkSoft, lineSpacing: 19, margin: 0, valign: "top",
+      x: M, y: 1.04, w: W - 2 * M, h: ledeH, fontFace: F.body, fontSize: 12.5,
+      color: C.inkSoft, lineSpacing: 17.5, margin: 0, valign: "top",
     });
-    return 1.78;
+    return 1.04 + ledeH + 0.14;
   }
   return 1.24;
 }
@@ -128,13 +136,15 @@ function stats(s, y, cells, opts = {}) {
       line: { color: t.line || C.rule, width: 1 },
     });
     s.addText(t.label.toUpperCase(), {
-      x: x + 0.2, y: y + 0.15, w: cw - 0.4, h: 0.24, fontFace: F.body, fontSize: 9,
-      bold: true, color: C.inkMute, charSpacing: 1.2, margin: 0,
+      x: x + 0.2, y: y + 0.13, w: cw - 0.4, h: 0.26, fontFace: F.body, fontSize: 8.5,
+      bold: true, color: C.inkMute, charSpacing: 1.0, margin: 0, valign: "top",
     });
+    let vpt = t.small ? 20 : 26;
+    while (measure(t.value, cw - 0.4, vpt, vpt * 1.1) > 0.44 && vpt > 12) vpt -= 1;
     s.addText(t.value, {
       x: x + 0.2, y: y + 0.4, w: cw - 0.4, h: 0.5, fontFace: F.head,
-      fontSize: t.small ? 20 : 26, bold: true, color: t.color || C.ink,
-      margin: 0, valign: "top",
+      fontSize: vpt, bold: true, color: t.color || C.ink,
+      margin: 0, valign: "top", fit: "shrink",
     });
     if (t.sub) s.addText(t.sub, {
       x: x + 0.2, y: y + 0.92, w: cw - 0.4, h: h - 1.0, fontFace: F.body,
@@ -202,34 +212,39 @@ function verdict(s, y, kind, headline, bodyText, h) {
   }[kind];
   const innerW = W - 2 * M - 0.52;
   // shrink the body a step at a time until the panel fits the space left on the slide
-  const room = H - 0.62 - y;                       // keep clear of the footer
+  const room = H - 0.54 - y;                       // keep clear of the footer
   let bodyPt = 12, headPt = 19, hh;
   for (;;) {
     const headH = measure(headline, innerW, headPt, headPt * 1.15);
-    hh = 0.4 + headH + 0.1 + measure(bodyText, innerW, bodyPt, bodyPt * 1.42) + 0.22;
-    if (hh <= room || bodyPt <= 8.5) break;
+    hh = 0.34 + headH + 0.08 + measure(bodyText, innerW, bodyPt, bodyPt * 1.42) + 0.18;
+    if (hh <= room || bodyPt <= 9) break;
     bodyPt -= 0.5;
-    if (bodyPt < 11 && headPt > 15) headPt -= 1;
+    if (bodyPt < 11.5 && headPt > 14) headPt -= 1;
   }
   if (h && h > hh) hh = h;                          // caller may reserve more
-  hh = Math.min(hh, Math.max(0.8, room));
+  if (hh > room) {                                  // genuinely over-full slide
+    OVERFLOWS.push({ slide: CURRENT.slide, deck: CURRENT.deck,
+                     headline: headline.slice(0, 54), need: +hh.toFixed(2),
+                     room: +room.toFixed(2), short: +(hh - room).toFixed(2) });
+    hh = Math.max(0.8, room);
+  }
   const headH = measure(headline, innerW, headPt, headPt * 1.15);
   s.addShape("roundRect", {
     x: M, y, w: W - 2 * M, h: hh, rectRadius: 0.05,
     fill: { color: K.bg }, line: { color: K.line, width: 1.25 },
   });
   s.addText(kind === "note" ? "NOTE" : "VERDICT", {
-    x: M + 0.26, y: y + 0.16, w: 3, h: 0.22, fontFace: F.body, fontSize: 8.5,
+    x: M + 0.26, y: y + 0.12, w: 3, h: 0.2, fontFace: F.body, fontSize: 8.5,
     bold: true, color: K.tag, charSpacing: 1.6, margin: 0,
   });
   s.addText(headline, {
-    x: M + 0.26, y: y + 0.38, w: innerW, h: headH, fontFace: F.head,
+    x: M + 0.26, y: y + 0.32, w: innerW, h: headH, fontFace: F.head,
     fontSize: headPt, bold: true, color: C.ink, margin: 0, valign: "top",
     lineSpacing: headPt * 1.15,
   });
   s.addText(bodyText, {
-    x: M + 0.26, y: y + 0.38 + headH + 0.08, w: innerW,
-    h: Math.max(0.2, hh - 0.46 - headH - 0.08), fontFace: F.body,
+    x: M + 0.26, y: y + 0.32 + headH + 0.06, w: innerW,
+    h: Math.max(0.2, hh - 0.4 - headH - 0.06), fontFace: F.body,
     fontSize: bodyPt, color: C.inkSoft, lineSpacing: bodyPt * 1.42,
     margin: 0, valign: "top",
   });
@@ -309,7 +324,11 @@ function itemList(s, y, items, opts = {}) {
 
 /** Native chart with the house frame. Data labels are always on (palette relief). */
 function chart(s, pres, y, type, data, opts = {}) {
-  s.addChart(pres.ChartType[type], data, Object.assign({
+  const stacked = type === "barStacked";
+  const ct = pres.ChartType[stacked ? "bar" : type];
+  if (!ct) throw new Error(`unknown chart type "${type}"`);
+  s.addChart(ct, data, Object.assign({
+    barGrouping: stacked ? "stacked" : "clustered",
     x: opts.x != null ? opts.x : M,
     y, w: opts.w || (W - 2 * M), h: opts.h || 3.2,
     chartColors: opts.colors || SERIES,
@@ -319,7 +338,7 @@ function chart(s, pres, y, type, data, opts = {}) {
     legendFontSize: 10, legendColor: C.inkSoft,
     showValue: true, dataLabelFontFace: F.body, dataLabelFontSize: 9,
     dataLabelColor: C.inkSoft, dataLabelFormatCode: opts.fmt || "0.00",
-    dataLabelPosition: opts.labelPos || (type === "bar" ? "outEnd" : "t"),
+    dataLabelPosition: opts.labelPos || (stacked ? "ctr" : type === "bar" ? "outEnd" : "t"),
     catAxisLabelFontFace: F.body, catAxisLabelFontSize: 10, catAxisLabelColor: C.inkSoft,
     valAxisLabelFontFace: F.body, valAxisLabelFontSize: 10, valAxisLabelColor: C.inkMute,
     valAxisTitle: opts.axisTitle, showValAxisTitle: !!opts.axisTitle,
@@ -377,6 +396,6 @@ function foot(s, text) {
   });
 }
 
-module.exports = { C, SERIES, F, W, H, M, CR, cr, crN, lk, pc, pp, xx, money, measure,
+module.exports = { mark, overflowReport, C, SERIES, F, W, H, M, CR, cr, crN, lk, pc, pp, xx, money, measure,
                    cover, head, stats, table, verdict, optionCards, itemList,
                    chart, closing, foot };

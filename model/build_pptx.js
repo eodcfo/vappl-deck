@@ -17,7 +17,9 @@ const M = JSON.parse(fs.readFileSync(path.join(ROOT, "model", "pf_model.json"), 
 const OUT = path.join(ROOT, "pptx");
 fs.mkdirSync(OUT, { recursive: true });
 
+let DECK = "";
 const newDeck = (title, subject) => {
+  DECK = title; SLIDE = 0;
   const p = new pptxgen();
   p.layout = "LAYOUT_WIDE";
   p.author = "Vision Amusement Park Pvt. Ltd.";
@@ -26,17 +28,19 @@ const newDeck = (title, subject) => {
   p.subject = subject;
   return p;
 };
+let SLIDE = 0;
+const slide = p => { SLIDE += 1; L.mark(DECK, SLIDE); return p.addSlide(); };
 const rev = y => typeof y.revenue === "object" ? y.revenue.total : y.revenue;
 
 /* ============================ shared project sections ==================== */
 
-function sectionProjection(p, f, yrs, name, note) {
-  const s = p.addSlide();
-  let y = L.head(s, "05", "Projection", note);
+function sectionProjection(p, f, yrs, name, note, num) {
+  const s = slide(p);
+  let y = L.head(s, num || "05", "Projection", note);
   L.chart(p ? s : s, p, y, "bar", [
     { name: "Revenue", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(rev(v))) },
     { name: "EBITDA",  labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.ebitda)) },
-  ], { h: 3.3, axisTitle: "₹ crore", colors: [C.blue, C.green] });
+  ], { h: 2.95, axisTitle: "₹ crore", colors: [C.blue, C.green] });
   const first = yrs.findIndex(v => v.ebitda > 0) + 1;
   L.stats(s, 5.42, [
     { label: "EBITDA breakeven", value: `Year ${first}`, small: true,
@@ -45,21 +49,21 @@ function sectionProjection(p, f, yrs, name, note) {
       sub: `Final year of the modelled term` },
     { label: "Cumulative EBITDA", value: cr(yrs.reduce((a, v) => a + v.ebitda, 0)),
       sub: "Across the modelled term" },
-  ], { h: 1.32 });
+  ], { h: 1.24 });
   L.foot(s, name);
   return s;
 }
 
-function sectionReturns(p, f, name, extra) {
-  const s = p.addSlide();
+function sectionReturns(p, f, name, extra, num) {
+  const s = slide(p);
   const fc = f.project_fcf, coc = f.cost_of_capital;
-  let y = L.head(s, "06", "Project returns",
+  let y = L.head(s, num || "06", "Project returns",
     `Unlevered free cash flow to the project. Capital deployed is the true project cost — the revolving opex facility is financing, not project cost, so it is excluded here.`);
   const d = fc.detail;
   y = L.chart(s, p, y, "bar", [
     { name: "Free cash flow", labels: ["Capital", ...d.map(v => `Yr ${v.year}`)],
       values: [ -(+crN(fc.t0)), ...d.map(v => +crN(v.fcf)) ] },
-  ], { h: 2.75, axisTitle: "₹ crore", colors: [C.blue], labelPos: "outEnd" });
+  ], { h: 2.40, axisTitle: "₹ crore", colors: [C.blue], labelPos: "outEnd" });
   y = L.stats(s, y + 0.05, [
     { label: "Project IRR", value: pc(fc.irr_pct),
       color: coc.clears_debt ? C.green : C.terra,
@@ -71,22 +75,22 @@ function sectionReturns(p, f, name, extra) {
     { label: "Spread over debt", value: pp(coc.spread_over_debt_pct),
       color: coc.clears_debt ? C.green : C.terra,
       sub: extra || "Percentage points of project IRR above the cost of guaranteed debt" },
-  ], { h: 1.4 });
+  ], { h: 1.32 });
   L.foot(s, name);
   return s;
 }
 
-function sectionScenarios(p, scen, name, lede, noteKind, noteHead, noteBody) {
-  const s = p.addSlide();
+function sectionScenarios(p, scen, name, lede, noteKind, noteHead, noteBody, num) {
+  const s = slide(p);
   const order = ["downside", "base", "upside", "bda_indicative"].filter(k => scen[k]);
   const nm = { downside: "Downside", base: "Base case", upside: "Upside",
                bda_indicative: "BDA's own case" };
-  let y = L.head(s, "07", "Scenarios", lede);
+  let y = L.head(s, num || "07", "Scenarios", lede);
   y = L.chart(s, p, y, "bar", [
     { name: "Project IRR", labels: order.map(k => nm[k]),
       values: order.map(k => scen[k].project_irr_pct == null ? 0
                              : +scen[k].project_irr_pct.toFixed(1)) },
-  ], { h: 2.5, axisTitle: "Project IRR, %", fmt: '0.0"%"',
+  ], { h: 2.15, axisTitle: "Project IRR, %", fmt: '0.0"%"',
        colors: order.map(k => k === "base" ? C.blue
                              : (scen[k].project_irr_pct || 0) < 0 ? C.terra : C.green) });
   L.table(s, y + 0.05, ["", ...order.map(k => nm[k])], [
@@ -96,21 +100,20 @@ function sectionScenarios(p, scen, name, lede, noteKind, noteHead, noteBody) {
     { cells: ["Payback", ...order.map(k => scen[k].payback_years
         ? `${scen[k].payback_years.toFixed(1)} yrs` : "Not within term")], emphasis: "total" },
   ], { colW: [3.6, ...Array(order.length).fill((L.W - 2 * L.M - 3.6) / order.length)], rowH: 0.32 });
-  if (noteHead) L.verdict(s, 6.05, noteKind, noteHead, noteBody, 0.98);
+  if (noteHead) L.verdict(s, y + 0.16, noteKind, noteHead, noteBody);
   L.foot(s, name);
   return s;
 }
 
-function sectionDebt(p, f, name, lede, notes) {
+function sectionDebt(p, f, name, lede, notes, num) {
   const db = f.debt, dc = f.debt_capacity;
-  const s = p.addSlide();
-  let y = L.head(s, "09", "Option B · Debt under CGTMSE", lede);
+  const s = slide(p);
+  let y = L.head(s, num || "09", "Option B · Debt under CGTMSE", lede);
   const sch = db.schedule;
   y = L.chart(s, p, y, "bar", [
     { name: "Debt service", labels: sch.map(r => `Yr ${r.year}`), values: sch.map(r => +crN(r.debt_service)) },
     { name: "Cash available (EBITDA)", labels: sch.map(r => `Yr ${r.year}`), values: sch.map(r => +crN(r.cfads)) },
-  ], { h: 2.6, axisTitle: "₹ crore", colors: [C.terra, C.blue] });
-  const post = sch.slice(db.tl_moratorium_years);
+  ], { h: 2.05, axisTitle: "₹ crore", colors: [C.terra, C.blue] });
   y = L.stats(s, y + 0.02, [
     { label: "Total facility", value: cr(db.total_limit),
       sub: `Term loan ${cr(db.term_loan)} + working capital ${cr(db.wc_limit)}` },
@@ -121,14 +124,14 @@ function sectionDebt(p, f, name, lede, notes) {
       sub: `After the ${db.tl_moratorium_years}-year moratorium. Banks underwrite to 1.30×` },
     { label: "Debt capacity", value: cr(dc.max_total_limit),
       sub: `Most the project services at a ${dc.target_dscr}× floor` },
-  ], { h: 1.42 });
-  if (notes) L.verdict(s, y + 0.02, notes.kind, notes.head, notes.body, 1.0);
+  ], { h: 1.26 });
+  if (notes) L.verdict(s, y + 0.06, notes.kind, notes.head, notes.body);
   L.foot(s, name);
   return s;
 }
 
 function sectionCompare(p, f, name, rows, rec) {
-  const s = p.addSlide();
+  const s = slide(p);
   const eq = f.equity, db = f.debt, cc = f.ccd;
   let y = L.head(s, rec.num, "Which option, and why");
   y = L.optionCards(s, y, [
@@ -168,7 +171,7 @@ function buildGGV() {
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · 01 of 04", title: "Geeta Govind\nVatika",
     sub: "A 19-acre cultural park in Taj Nagri Phase-II, five minutes from the park E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build — and one year of operating expenditure to fund before it pays for itself.",
     meta: "Agra Development Authority · Licence-fee model · 7 + 4 years\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
@@ -181,7 +184,7 @@ function buildGGV() {
   });
 
   // 01 the project
-  let s = p.addSlide();
+  let s = slide(p);
   let y = L.head(s, "01", "The project",
     "ADA has built a ₹4.0–4.2 crore themed park and now wants an operator. Everything physical already exists — the musical fountains, the 40-minute Krishna Leela laser show, eight kiosks, the Tulsi forest. The winning bidder pays a monthly licence fee and keeps what it collects at the gate.");
   y = L.table(s, y, ["Term", "What the RFP says"], [
@@ -200,7 +203,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 02 the ask
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "What the money is for",
     "The brief was one year of opex as loan or investment. That is the right facility size — but being precise about what the money does changes which instrument fits.");
   y = L.stats(s, y, [
@@ -209,40 +212,42 @@ function buildGGV() {
       sub: "Mobilisation plus the year-1 operating deficit" },
     { label: "Revolving liquidity", value: cr(f.ask - cap.total),
       sub: "Drawn, spent, and recovered from collections" },
-  ], { h: 1.34 });
+  ], { h: 1.26 });
   y = L.table(s, y, ["Total requirement", "Amount"], [
     { cells: ["Mobilisation capex — activity equipment, kiosk fit-out, ticketing, signage", lk(mob.capex)] },
-    { cells: ["Security deposit — three months of licence fee, refundable at expiry", lk(mob.security_deposit)] },
-    { cells: ["Advance licence fee — first six months", lk(mob.advance_licence_fee_6m)] },
-    { cells: ["EMD and tender fee", lk(mob.emd + mob.tender_fee)] },
+    { cells: ["Security deposit (3 months, refundable), advance licence fee (6 months), EMD and tender fee",
+              lk(mob.security_deposit + mob.advance_licence_fee_6m + mob.emd + mob.tender_fee)] },
     { cells: ["Sub-total — mobilisation", lk(mob.total)], emphasis: "sub" },
     { cells: ["Year 1 operating expenditure", lk(g.year1_opex)] },
     { cells: ["Facility requested", lk(f.ask)], emphasis: "total" },
   ], { colW: [10.0, L.W - 2 * L.M - 10.0], rowH: 0.34 });
   L.verdict(s, y, "stop", "A liquidity requirement, not a capital requirement",
-    `Of the ${cr(f.ask)} asked for, only ${cr(cap.total)} is capital the project consumes and does not return. The rest is working capital — drawn to pay wages and the electricity bill, and recovered at the gate. Equity does not come back; a revolving limit does. That is why Option B is the recommendation.`, 1.3);
+    `Of the ${cr(f.ask)} asked for, only ${cr(cap.total)} is capital the project consumes and does not return. The rest is working capital — spent on wages and electricity, recovered at the gate. Equity does not come back; a revolving limit does.`);
   L.foot(s, NAME);
 
   // 03 revenue
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "Revenue model",
     "Six streams, built bottom-up from footfall and capture rates. All figures net of GST.");
-  const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"], ["fnb", "Food and beverage"],
-             ["activities", "E-O-D activity layer"], ["parking", "Parking"], ["events", "Events & shoots"]];
-  y = L.chart(s, p, y, "barStacked", K.map(([k, n], i) => ({
-    name: n, labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.revenue[k])),
-  })), { h: 3.0, axisTitle: "₹ crore", labelPos: "ctr",
-         colors: [C.blue, C.terra, C.green, C.amber, "6E7689", C.blueDeep] });
+  const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"],
+             ["fnb", "Food and beverage"], ["activities", "E-O-D activity layer"]];
+  y = L.chart(s, p, y, "barStacked", [
+    ...K.map(([k, n]) => ({ name: n, labels: yrs.map(v => `Yr ${v.year}`),
+                            values: yrs.map(v => +crN(v.revenue[k])) })),
+    { name: "Parking, events and shoots", labels: yrs.map(v => `Yr ${v.year}`),
+      values: yrs.map(v => +crN(v.revenue.parking + v.revenue.events)) },
+  ], { h: 3.05, axisTitle: "₹ crore", labelPos: "ctr",
+       colors: [C.blue, C.terra, C.green, C.amber, "8A93A6"] });
   L.stats(s, y + 0.05, [
     { label: "Year 1 footfall", value: `${yrs[0].revenue.footfall_lakh.toFixed(2)} L`, sub: "About 850 visits a day" },
     { label: "Year 7 footfall", value: `${yrs[6].revenue.footfall_lakh.toFixed(2)} L`, sub: "About 1,575 visits a day" },
     { label: "Show conversion", value: "24% → 31%", small: true, sub: "Share buying the fountain and laser ticket" },
     { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA — no escalation modelled" },
-  ], { h: 1.28 });
+  ], { h: 1.20 });
   L.foot(s, NAME);
 
   // 04 cost
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "04", "Cost model",
     "Payroll and the licence fee are the two structural lines. Everything else scales with footfall, revenue or inflation.");
   const CK = [["licence_fee", "Licence fee to ADA"], ["manpower", "Payroll"],
@@ -254,11 +259,10 @@ function buildGGV() {
      { cells: ["Other operating cost", ...yrs.map(v => crN(v.opex.total -
         CK.reduce((a, [k]) => a + v.opex[k], 0)))] },
      { cells: ["Total operating cost", ...yrs.map(v => crN(v.opex.total))], emphasis: "total" },
-     { cells: ["Revenue", ...yrs.map(v => crN(rev(v)))], emphasis: "sub" },
-     { cells: ["EBITDA margin", ...yrs.map(v => pc(v.ebitda_margin, 0))], emphasis: "total" }],
-    { colW: [3.5, ...Array(7).fill((L.W - 2 * L.M - 3.5) / 7)], rowH: 0.32, fontSize: 10.5 });
+     { cells: ["Revenue / EBITDA margin", ...yrs.map(v => `${crN(rev(v))} · ${pc(v.ebitda_margin, 0)}`)], emphasis: "sub" }],
+    { colW: [3.5, ...Array(7).fill((L.W - 2 * L.M - 3.5) / 7)], rowH: 0.29, fontSize: 10.5 });
   L.verdict(s, y, "caution", "What is not in this model",
-    "ADA requires CCTV integrated with the Agra Smart City centre, ex-servicemen at entry points, police verification, a dedicated technical supervisor and six-monthly safety audits — all costed above. What is not costed is replacing any laser or fountain asset that reaches end of life during the term. That burden sits with the agency, and the onus of proving irreparability sits there too. Get the commissioning dates and AMC history before bidding.", 1.28);
+    "The CCTV integration, ex-servicemen at entry, police verification and six-monthly audits are costed above. What is not costed is replacing a laser or fountain asset that reaches end of life mid-term — that burden sits with the agency. Get the AMC history before bidding.");
   L.foot(s, NAME);
 
   sectionProjection(p, f, yrs, NAME,
@@ -270,7 +274,7 @@ function buildGGV() {
     `The model solves the break-even licence fee at ${lk(wa.licence_fee_year1)} a year — ${lk(wa.licence_fee_month, 2)} a month, about ${pc((wa.licence_fee_month / r.reserve_licence_fee_month_lakh - 1) * 100, 0)} above ADA's reserve. Hold that line in the auction room.`);
 
   // 08 equity
-  s = p.addSlide();
+  s = slide(p);
   const eq = f.equity;
   y = L.head(s, "08", "Option A · Equity",
     "A third party funds the project for a share of it. No repayment obligation, no covenant — and on these numbers the most expensive money on the table.");
@@ -293,7 +297,7 @@ function buildGGV() {
       body: `The three-year principal moratorium pushes the first repayment into year 4, when EBITDA is ${cr(yrs[3].ebitda)} rather than ${cr(yrs[1].ebitda)}. A bank offering this with a one-year moratorium is offering a facility that defaults in year 2.` });
 
   // 10 CCD
-  s = p.addSlide();
+  s = slide(p);
   const cc = f.ccd;
   y = L.head(s, "10", "Option C · Debt converted to equity",
     "Money in as debt, a coupon while the project ramps, then compulsory conversion into equity on a formula fixed the day it is issued.");
@@ -305,10 +309,8 @@ function buildGGV() {
     { cells: ["Coupon paid to conversion", cr(cc.coupon_paid_total)] },
     { cells: ["Investor IRR", pc(cc.irr_pct)], emphasis: "total" },
   ], { colW: [8.4, L.W - 2 * L.M - 8.4], rowH: 0.36 });
-  y = L.verdict(s, y + 0.28, "stop", "Worse than either pure option, at project level",
-    `The CCD returns ${pc(cc.irr_pct)} — below the equity case, because the coupon years consume the cash the project needs while ramping. At project level a CCD combines the cash-flow burden of debt with the dilution of equity and the guarantee benefit of neither.`, 1.14);
-  L.verdict(s, y, "note", "If a CCD is used anywhere in this structure",
-    "The conversion formula must be fixed on the date of issue — a price set later fails the FEMA pricing test if any money is foreign and turns the instrument into external commercial borrowing. A valuation report under section 62(1)(c) is needed before conversion, and the issue is a private placement under section 42. Until it converts, a CCD is borrowing on the balance sheet.", 1.28);
+  L.verdict(s, y + 0.2, "stop", "Worse than either pure option, at project level",
+    `The CCD returns ${pc(cc.irr_pct)} — below the equity case, because the coupon years consume the cash the project needs while ramping. It combines the cash-flow burden of debt with the dilution of equity and the guarantee benefit of neither.\n\nIf a CCD is used anywhere: the conversion formula must be fixed on the date of issue, or it fails the FEMA pricing test and becomes external commercial borrowing. Until it converts it is borrowing on the balance sheet.`);
   L.foot(s, NAME);
 
   sectionCompare(p, f, NAME, null, {
@@ -317,7 +319,7 @@ function buildGGV() {
   });
 
   // 12 risks
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "12", "Risks and open items");
   L.itemList(s, y, [
     { title: "Auction overshoot", color: C.terra,
@@ -345,7 +347,7 @@ function buildRV() {
   const p = newDeck("Ramayan Vatika — Project Finance", "BDA licence-fee concession, 10+5 years");
   const NAME = "Ramayan Vatika · Bareilly Development Authority · Project finance";
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · 02 of 04", title: "Ramayan\nVatika",
     sub: "Fifteen years of operating rights over a 51-foot bronze Ram, a holographic show projected onto it, and 16,000 Miyawaki trees in Bareilly. The longest contract in the portfolio, the tightest margin, and the only one where the RFP forbids pledging anything.",
     meta: "Bareilly Development Authority · 10 + 5 years · 5-year lock-in\nReserve licence fee ₹30 lakh a year · sealed H1 bid · performance security ₹30 lakh",
@@ -358,7 +360,7 @@ function buildRV() {
   });
 
   // 00 read this first
-  let s = p.addSlide();
+  let s = slide(p);
   s.background = { color: C.white };
   L.verdict(s, 0.5, "stop", "Read this before the rest of the deck",
     `This deck does not conclude that Ramayan Vatika should be funded on the terms briefed. On the base assumptions the project returns ${pc(f.project_fcf.irr_pct)} against a ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} cost of guaranteed debt, and services ${cr(dc.max_total_limit)} of facility against the ${cr(f.facility_ask)} asked for.\n\nThe three financing structures are set out in full because they were asked for, and because the project does work on BDA's own revenue assumptions. But the bid discipline is the part that matters: the model solves the break-even licence fee at ${lk(wa.licence_fee_year1)} a year against BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve — ${pc((wa.licence_fee_year1 / r.reserve_licence_fee_year_lakh - 1) * 100, 0)} of headroom in a sealed highest-bid process.`, 2.9);
@@ -369,13 +371,13 @@ function buildRV() {
       tint: "EDFAF4", line: C.green, sub: "500 visitors a day, 60% buying the show" },
     { label: "The whole difference", value: "Show conversion", small: true,
       sub: "42% → 52% modelled here against BDA's 60%. There is no operating history to calibrate against." },
-  ], { h: 1.5 });
+  ], { h: 1.42 });
   L.verdict(s, 5.42, "note", "What would change the recommendation",
-    "Written confirmation from BDA on three points moves this from marginal to clearly fundable: the show's capacity, daily slot count and any soft-launch footfall data; an agreed tariff with a contractual escalation path rather than annual discretion; and resolution of the five-versus-seven-year lock-in conflict. All three are legitimate pre-bid queries and all three are free to ask.", 1.42);
+    "Three written answers from BDA move this from marginal to clearly fundable: the show's capacity, slot count and any soft-launch footfall; an agreed tariff with a contractual escalation path; and resolution of the five-versus-seven-year lock-in conflict. All three are free to ask.");
   L.foot(s, NAME);
 
   // 01 the project
-  s = p.addSlide();
+  s = slide(p);
   let y = L.head(s, "01", "The project",
     "BDA has built a 33,000 square metre thematic park around the Ramayana. The centrepiece is a 51-foot bronze Lord Ram by Ram Sutar, with a 3D holographic laser and sound programme projected onto the statue.");
   y = L.table(s, y, ["Term", "What the RFP says"], [
@@ -392,7 +394,7 @@ function buildRV() {
   L.foot(s, NAME);
 
   // 02 the ask
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "What the money is for",
     `The brief was two years of opex. Sized literally that is ${cr(f.facility_ask)}. The project's capacity to service debt is ${cr(dc.max_total_limit)}. The gap between those two numbers is the whole question.`);
   y = L.stats(s, y, [
@@ -400,44 +402,45 @@ function buildRV() {
     { label: "True capital at risk", value: cr(cap.total), sub: "Mobilisation, toy train, and two years of deficit" },
     { label: "Serviceable at 1.30× DSCR", value: cr(dc.max_total_limit), tint: "FBF1EE", line: C.terra,
       sub: `Gap to the brief: ${cr(f.facility_ask - dc.max_total_limit)}` },
-  ], { h: 1.34 });
+  ], { h: 1.26 });
   y = L.table(s, y, ["Requirement", "Amount"], [
     { cells: ["Mobilisation capex — ticketing, food court, activity equipment, signage", lk(mob.capex_year0)] },
     { cells: ["Performance security — interest-free for the whole 15-year term", lk(mob.performance_security)] },
-    { cells: ["EMD, bid fee, stamp duty and registration", lk(mob.emd + mob.bid_fee + mob.stamp_duty_registration)] },
-    { cells: ["Advance licence fee — first quarter", lk(mob.advance_licence_fee_q1)] },
+    { cells: ["EMD, bid fee, stamp duty, registration and the first quarter's licence fee",
+              lk(mob.emd + mob.bid_fee + mob.stamp_duty_registration + mob.advance_licence_fee_q1)] },
     { cells: ["Sub-total — mobilisation", lk(mob.total)], emphasis: "sub" },
-    { cells: ["Toy train and track — year 2, optional", lk(mob.capex_year2_toy_train)] },
-    { cells: ["Year 1 and year 2 operating expenditure", lk(v.opex_year1 + v.opex_year2)] },
+    { cells: ["Toy train (year 2, optional) and two years of operating expenditure",
+              lk(mob.capex_year2_toy_train + v.opex_year1 + v.opex_year2)] },
     { cells: ["Facility requested", lk(f.facility_ask)], emphasis: "total" },
   ], { colW: [10.0, L.W - 2 * L.M - 10.0], rowH: 0.33 });
   L.verdict(s, y, "caution", "The performance security is the hidden cost",
-    `${lk(r.performance_security_lakh, 0)} sits with BDA, interest-free, for fifteen years. At an 11.5% opportunity cost that is roughly ₹3.45 lakh a year foregone, or about ₹52 lakh across the contract — more than a year and a half of licence fee. Price it into the bid rather than treating it as a refundable deposit.`, 0.98);
+    `${lk(r.performance_security_lakh, 0)} sits with BDA interest-free for fifteen years — roughly ₹52 lakh of foregone return at an 11.5% opportunity cost, more than a year and a half of licence fee. Price it into the bid.`);
   L.foot(s, NAME);
 
   // 03 revenue
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "Revenue model",
     `BDA published its own indicative revenue of ₹2.25–2.30 crore a year. This model sits below it early and reaches it in year 3 — because the assumption BDA's number rests on is the one most likely to be wrong.`);
-  const RK = [["entry", "Entry ticketing"], ["show", "Holographic & laser show"], ["fnb", "Food court"],
-              ["parking", "Parking"], ["events", "Cultural events"], ["ancillary", "Souvenirs, photo, schools"],
-              ["toy_train", "Toy train"]];
-  y = L.chart(s, p, y, "barStacked", RK.map(([k, n]) => ({
-    name: n, labels: yrs.map(x => `Yr ${x.year}`), values: yrs.map(x => +crN(x.revenue[k])),
-  })), { h: 2.85, axisTitle: "₹ crore", labelPos: "ctr",
-         colors: [C.blue, C.terra, C.green, C.amber, "6E7689", C.blueDeep, "9AA3B6"] });
+  const RK = [["entry", "Entry ticketing"], ["show", "Holographic & laser show"], ["fnb", "Food court"]];
+  y = L.chart(s, p, y, "barStacked", [
+    ...RK.map(([k, n]) => ({ name: n, labels: yrs.map(x => `Yr ${x.year}`),
+                             values: yrs.map(x => +crN(x.revenue[k])) })),
+    { name: "Parking, events, toy train, ancillary", labels: yrs.map(x => `Yr ${x.year}`),
+      values: yrs.map(x => +crN(x.revenue.parking + x.revenue.events
+                              + x.revenue.ancillary + x.revenue.toy_train)) },
+  ], { h: 2.80, axisTitle: "₹ crore", labelPos: "ctr",
+       colors: [C.blue, C.terra, C.green, "8A93A6"] });
   L.verdict(s, y + 0.05, "stop", "Where this model parts company with BDA",
     `BDA's ₹2.30 crore assumes 500 visitors a day with 300 of them paying ₹125 for the show — a 60% conversion, implying three in five visitors including morning walkers, families with small children and school groups buy an evening show. This model starts at 42% and reaches 52% by year 10. That single assumption is worth about ${lk(f.conversion_gap_value.value_lakh, 0)} a year at year-5 volumes.`, 1.42);
   L.foot(s, NAME);
 
   // 04 cost
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "04", "Cost model",
     "A maintenance-heavy contract. BDA transfers the entire comprehensive maintenance obligation — civil, electrical, horticultural, statuary and IT — to the operator, at the operator's cost.");
   const VK = [["licence_fee", "Licence fee to BDA"], ["manpower", "Payroll"],
               ["electricity", "Electricity"], ["horticulture", "Horticulture"],
-              ["show_amc", "Show AMC"], ["statue_upkeep", "Statue and artefact upkeep"],
-              ["insurance", "Insurance"], ["marketing", "Marketing"]];
+              ["show_amc", "Show AMC"], ["statue_upkeep", "Statue and artefact upkeep"]];
   y = L.table(s, y, ["₹ crore", ...yrs.filter((_, i) => i % 2 === 0).map(x => `Yr ${x.year}`)],
     [...VK.map(([k, n]) => ({ cells: [n, ...yrs.filter((_, i) => i % 2 === 0).map(x => crN(x.opex[k]))] })),
      { cells: ["Other operating cost", ...yrs.filter((_, i) => i % 2 === 0).map(x =>
@@ -447,7 +450,7 @@ function buildRV() {
      { cells: ["EBITDA margin", ...yrs.filter((_, i) => i % 2 === 0).map(x => pc(x.ebitda_margin, 0))], emphasis: "total" }],
     { colW: [4.2, ...Array(5).fill((L.W - 2 * L.M - 4.2) / 5)], rowH: 0.32, fontSize: 10.5 });
   L.verdict(s, y, "caution", "The manpower floor is contractual, not discretionary",
-    "BDA prescribes 4 sweepers and 5 security personnel per shift, plus 8 gardeners, a site manager, an electrician and a plumber per day — around 29 heads before a single ticket is sold. Add ticketing, show technicians and food-court staff and the establishment is roughly 37 people, with EPF and ESI explicit. Payroll is the largest cost line in every year and it cannot be flexed down in a bad season. That is the structural reason the margin here is thinner than at Geeta Govind Vatika.", 1.28);
+    "BDA prescribes 4 sweepers and 5 security per shift plus 8 gardeners, a site manager, an electrician and a plumber per day — about 29 heads before a ticket is sold, and roughly 37 with ticketing and show staff. Payroll cannot flex in a bad season. That is why the margin here is thinner than at Geeta Govind Vatika.");
   L.foot(s, NAME);
 
   sectionProjection(p, f, yrs, NAME,
@@ -456,10 +459,10 @@ function buildRV() {
   sectionScenarios(p, v.scenarios, NAME,
     "One assumption separates a project that should not be bid from one that comfortably clears its cost of capital: how many visitors buy the show.",
     "go", "BDA's own case works — and it is not implausible",
-    `On BDA's stated assumptions the project returns ${pc(v.scenarios.bda_indicative.project_irr_pct)} with a stabilised margin of ${pc(v.scenarios.bda_indicative.ebitda_margin_stabilised)}. Bid at a price that survives the base case and rewards the BDA case.`);
+    `On BDA's own assumptions the project returns ${pc(v.scenarios.bda_indicative.project_irr_pct)}. Bid a price that survives the base case and rewards the BDA case.`);
 
   // 08 equity
-  s = p.addSlide();
+  s = slide(p);
   const eq = f.equity;
   y = L.head(s, "08", "Option A · Equity",
     "Sized to the true capital requirement rather than the gross facility, and valued at exit on the discounted cash flow still to come over the balance of the concession.");
@@ -470,19 +473,17 @@ function buildRV() {
     { cells: ["Investor IRR", pc(eq.irr_pct)], emphasis: "total" },
     { cells: ["Stake needed to clear a 22% hurdle", pc(eq.stake_for_22pct, 0)], emphasis: "total" },
   ], { colW: [7.4, L.W - 2 * L.M - 7.4], rowH: 0.36 });
-  y = L.verdict(s, y + 0.3, "stop", "The arithmetic does not work at project level",
-    `At ${pc(eq.stake_pct, 0)} of the project an investor earns ${pc(eq.irr_pct)}. Reaching a 22% hurdle would take ${pc(eq.stake_for_22pct, 0)} — the entire project and then some. There is no split of this concession that pays third-party equity a market return and leaves E-O-D a reason to operate it.`, 1.2);
-  L.verdict(s, y, "caution", "And it needs BDA's written consent",
-    "Any equity structure that changes VAPPL's shareholding pattern requires BDA's prior written approval during the lock-in, with forfeiture of the performance security and blacklisting as the stated consequence of breach. The equity conversation starts at BDA's office, not the investor's.", 1.16);
+  L.verdict(s, y + 0.24, "stop", "The arithmetic does not work — and it needs BDA's consent",
+    `At ${pc(eq.stake_pct, 0)} of the project an investor earns ${pc(eq.irr_pct)}; a 22% hurdle would take ${pc(eq.stake_for_22pct, 0)} — the whole project and then some.\n\nAny structure that changes VAPPL's shareholding also needs BDA's prior written approval during the lock-in, with forfeiture of the performance security as the stated consequence. The equity conversation starts at BDA's office.`);
   L.foot(s, NAME);
 
   sectionDebt(p, f, NAME,
     "The RFP forbids any charge over the Vatika. That is not an obstacle to a CGTMSE facility — it is the reason to use one. The guarantee replaces the security the contract will not allow.",
     { kind: "stop", head: "The facility as briefed does not clear a bank's coverage test",
-      body: `At ${cr(db.total_limit)} the minimum post-moratorium DSCR is ${xx(db.min_dscr_post_moratorium)}; banks underwrite to 1.30× and prefer 1.50×. The workable structure is a sanctioned limit of ${cr(f.facility_ask)} with a committed component of ${cr(dc.max_total_limit)} and the balance uncommitted. Presenting two full years of opex to a credit committee as committed term money will get the proposal declined.` });
+      body: `At ${cr(db.total_limit)} the minimum post-moratorium DSCR is ${xx(db.min_dscr_post_moratorium)}; banks underwrite to 1.30×. The workable structure sanctions ${cr(f.facility_ask)} but commits ${cr(dc.max_total_limit)}. Two full years of opex presented as committed term money will be declined.` });
 
   // 10 CCD
-  s = p.addSlide();
+  s = slide(p);
   const cc = f.ccd;
   y = L.head(s, "10", "Option C · Debt converted to equity",
     "Money in as debt, a coupon while the park ramps, compulsory conversion into equity on a fixed formula.");
@@ -504,7 +505,7 @@ function buildRV() {
   });
 
   // 12 risks
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "12", "Risks and open items");
   L.itemList(s, y, [
     { title: "Show conversion", color: C.terra,
@@ -531,7 +532,7 @@ function buildKarnal() {
   const p = newDeck("Karnal — Project Finance", "NH-1 private sub-lease, 15 years");
   const NAME = "Karnal · NH-1 Gharaunda · Project finance";
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · 03 of 04", title: "Karnal",
     sub: "The only one of the three that is a build, not a takeover. Fifteen years on India's busiest national highway, a signed sub-lease, a long rent-free construction window — and the only project in the portfolio with assets a lender can take a charge over.",
     meta: "Sub-lease with A4A Highway Nest LLP · NH-1 Milestone 109, Gharaunda · 15-year term\nMinimum guarantee ₹2–3 lakh a month from opening · Phase 1 build-out ₹4.00 Cr · opening ~September 2027",
@@ -544,7 +545,7 @@ function buildKarnal() {
   });
 
   // 01 the project
-  let s = p.addSlide();
+  let s = slide(p);
   let y = L.head(s, "01", "The project",
     "Karnal replicates the Delhi–Meerut Expressway format on a busier corridor. DME proved the highway-stopover model works and exposed exactly where it fails — indoor-only product against a fixed common-area charge. Karnal is built with the outdoor activity stack from day one.");
   y = L.table(s, y, ["Term", "Position"], [
@@ -554,54 +555,52 @@ function buildKarnal() {
     { cells: ["Build", `${ff.build_months} months · opening ${ff.open_estimate} · long rent-free build period`] },
     { cells: ["Asset position", "E-O-D owns the activity equipment, fit-out and fixtures — a lender can hypothecate them"], emphasis: "total" },
   ], { colW: [3.0, L.W - 2 * L.M - 3.0], rowH: 0.36 });
-  y = L.verdict(s, y + 0.28, "go", "What makes this the strongest of the three",
-    "No auction — the rent is a negotiated minimum guarantee, not a number set against unknown bidders. No authority tariff control — E-O-D prices its own tickets. No mandated manpower floor — the establishment flexes with the season. No restoration obligation over somebody else's bronze statue. And real assets that can secure the facility funding them.", 1.32);
-  L.verdict(s, y, "caution", "One fact to settle before any of this is bid or drawn",
-    ff.area_discrepancy, 1.14);
+  y = L.verdict(s, y + 0.2, "go", "The strongest of the three — and one fact to settle first",
+    "No auction, no authority tariff control, no mandated manpower floor, no restoration obligation over somebody else's bronze statue — and real assets that can secure the facility funding them.\n\nBut: index.html records ~22,000 sq ft where financials.html reads ~6 acres. The footprint drives the revenue ceiling. Confirm it against the executed sub-lease before any drawdown.");
   L.foot(s, NAME);
 
   // 02 project cost
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "Project cost",
     "Unlike the two concessions, every rupee here is capital. There is no revolving working-capital component to separate out — the money buys assets that stay bought.");
   y = L.chart(s, p, y, "bar", [
     { name: "Capex", labels: k.capex_lines.map(c => c.item.split(" — ")[0].split(",")[0].slice(0, 30)),
       values: k.capex_lines.map(c => +crN(c.amount)) },
-  ], { h: 2.5, axisTitle: "₹ crore", colors: [C.blue],
+  ], { h: 2.15, axisTitle: "₹ crore", colors: [C.blue],
        extra: { barDir: "bar", catAxisLabelFontSize: 9 } });
   y = L.stats(s, y + 0.05, [
     { label: "Project cost", value: cr(f.project_cost), sub: "As committed in the ₹10 Cr investor deck" },
     { label: "Promoter contribution", value: cr(db.promoter_contribution),
       sub: `${pc(db.promoter_margin_pct, 0)} margin — the standard bank requirement` },
     { label: "Term loan sought", value: cr(db.term_loan), sub: "Against the assets financed" },
-  ], { h: 1.3 });
+  ], { h: 1.22 });
   L.verdict(s, y + 0.02, "note", "This is already funded in the existing plan — the question is how",
-    `The ₹10 crore equity round earmarks ₹4 crore for Karnal Phase 1. On these numbers that is not the cheapest way to fund it: the project earns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt. Funding Karnal with debt frees ₹4 crore of the round for the parks that cannot be debt-funded — or reduces the round, and the dilution, by the same amount.`, 1.16);
+    `The round earmarks ₹4 crore for Karnal. On these numbers that is not the cheapest way: the project earns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt. Debt-funding it frees that ₹4 crore for the parks with no debt route.`);
   L.foot(s, NAME);
 
   // 03 projection
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "Ten-year projection",
     "Revenue follows the range published in the company financial model: ₹0.50–1.00 crore in the FY27-28 stub half-year, ₹3.00–4.00 crore in the first full year. Midpoints used throughout.");
   y = L.chart(s, p, y, "bar", [
     { name: "Revenue", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.revenue)) },
     { name: "EBITDA", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.ebitda)) },
-  ], { h: 3.1, axisTitle: "₹ crore", colors: [C.blue, C.green] });
+  ], { h: 2.75, axisTitle: "₹ crore", colors: [C.blue, C.green] });
   L.stats(s, y + 0.05, [
     { label: "First full year", value: cr(yrs[1].revenue), sub: `${pc(yrs[1].ebitda_margin)} EBITDA margin` },
     { label: "Margin at year 5", value: pc(yrs[4].ebitda_margin), sub: "Against 21.6% at GGV and 20.3% at Ramayan Vatika in the same year" },
     { label: "Year 10 EBITDA", value: cr(yrs[9].ebitda), sub: "Five sub-lease years still to run beyond the model" },
-  ], { h: 1.3 });
+  ], { h: 1.22 });
   L.foot(s, NAME);
 
-  sectionReturns(p, f, NAME, "The closest of the three to clearing an equity hurdle");
+  sectionReturns(p, f, NAME, "The closest of the three to clearing an equity hurdle", "04");
   sectionScenarios(p, k.scenarios, NAME,
     "The revenue range in the company financial model is ₹3–4 crore for the first full year. Base is the midpoint; downside sits below the published floor.",
     "go", "Even the downside services its debt",
-    `At 25% below base — below the floor of the published range — the project still reaches ${cr(k.scenarios.downside.ebitda_stabilised)} of stabilised EBITDA. That is the difference between a project with its own assets and one renting somebody else's: the cost base moves with the revenue.`);
+    `At 25% below base — under the floor of the published range — the project still reaches ${cr(k.scenarios.downside.ebitda_stabilised)} of stabilised EBITDA. A project with its own assets flexes its cost base; one renting somebody else's cannot.`, "05");
 
   // 06 equity
-  s = p.addSlide();
+  s = slide(p);
   const eq = f.equity;
   y = L.head(s, "06", "Option A · Equity",
     "How Karnal is funded in the existing plan — ₹4 crore of the ₹10 crore round. Shown at project level so it compares like for like against the other two instruments.");
@@ -620,10 +619,10 @@ function buildKarnal() {
   sectionDebt(p, f, NAME,
     "A conventional CGTMSE term loan against assets the borrower owns, with a promoter margin and a construction moratorium. Of the three projects, this is the one a credit committee will recognise immediately.",
     { kind: "go", head: "The cleanest credit in the pack",
-      body: `A signed fifteen-year sub-lease, a rent-free construction period, assets the bank can hypothecate, a ${db.tl_moratorium_years}-year moratorium covering construction and ramp, and DSCR at ${xx(db.min_dscr_post_moratorium)} rising through the term. Take this facility to a bank first — a sanction here establishes the CGTMSE track record the two concession facilities will need.` });
+      body: `A signed fifteen-year sub-lease, assets the bank can hypothecate, a ${db.tl_moratorium_years}-year moratorium covering construction and ramp, and DSCR at ${xx(db.min_dscr_post_moratorium)}. Bank this one first — the sanction establishes the CGTMSE record the two concession facilities will need.` }, "07");
 
   // 08 CCD
-  s = p.addSlide();
+  s = slide(p);
   const cc = f.ccd;
   y = L.head(s, "08", "Option C · Debt converted to equity",
     "Debt with a fixed conversion date. The instrument that most closely matches a build-and-ramp project: no dilution while the site is under construction, conversion once it is trading.");
@@ -634,10 +633,8 @@ function buildKarnal() {
     { cells: ["Coupon paid to conversion", cr(cc.coupon_paid_total)] },
     { cells: ["Investor IRR", pc(cc.irr_pct)], emphasis: "total" },
   ], { colW: [8.4, L.W - 2 * L.M - 8.4], rowH: 0.36 });
-  y = L.verdict(s, y + 0.28, "stop", "The coupon lands in the wrong years",
-    `Years 1 to ${cc.conversion_year} are construction and ramp: the project loses ${cr(-yrs[0].ebitda)} at EBITDA in year 1, and there is no rent-free relief on a debenture coupon. ${cr(cc.coupon_paid_total)} has to be funded from the group while the site is being built. A CGTMSE term loan with a two-year principal moratorium defers the same burden and costs less.`, 1.24);
-  L.verdict(s, y, "note", "A structural variant worth considering instead",
-    "If the objective is deferred dilution rather than debt capacity, a zero-coupon CCD with a conversion premium removes the cash burden entirely — the investor's return comes from converting at a fixed discount to a later round rather than from a coupon during construction. The pricing must still be fixed on the date of issue to satisfy the FEMA conversion-formula test if any of the money is foreign.", 1.18);
+  L.verdict(s, y + 0.2, "stop", "The coupon lands in the wrong years",
+    `Years 1 to ${cc.conversion_year} are construction and ramp — the project loses ${cr(-yrs[0].ebitda)} at EBITDA in year 1, and there is no rent-free relief on a debenture coupon. ${cr(cc.coupon_paid_total)} has to come from the group while the site is being built. A CGTMSE term loan with a two-year moratorium defers the same burden for less.\n\nIf the objective is deferred dilution rather than debt capacity, a zero-coupon CCD with a conversion premium removes the cash burden — priced on the date of issue, to satisfy the FEMA formula test.`);
   L.foot(s, NAME);
 
   sectionCompare(p, f, NAME, null, {
@@ -646,7 +643,7 @@ function buildKarnal() {
   });
 
   // 10 risks
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "10", "Risks and open items");
   L.itemList(s, y, [
     { title: "Footprint unconfirmed", color: C.terra,
@@ -677,7 +674,7 @@ function buildCompany() {
                     "Equity, CGTMSE debt and debt converted to equity");
   const NAME = "Vision Amusement Park Pvt. Ltd. · Company capital structure";
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · 04 of 04", title: "Vision\nAmusement Park",
     sub: "Three ways to fund the company rather than the projects — equity, guaranteed debt, and debt that becomes equity. One is materially cheaper than the headline round, and one balance-sheet move has to happen before any of them.",
     meta: `${pr.name} · CIN ${pr.cin}\nFY25-26 revenue ₹16.29 Cr · EBITDA ₹2.37 Cr · net worth ₹2.58 Cr · borrowings ₹7.85 Cr`,
@@ -690,7 +687,7 @@ function buildCompany() {
   });
 
   // 01 where the company stands
-  let s = p.addSlide();
+  let s = slide(p);
   let y = L.head(s, "01", "Where the company stands",
     "Only what determines whether VAPPL can borrow, and at what price.");
   y = L.table(s, y, ["FY25-26 position", "Amount", "What a credit committee sees"], [
@@ -707,7 +704,7 @@ function buildCompany() {
   L.foot(s, NAME);
 
   // 02 MSME / CGTMSE
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "MSME status and CGTMSE eligibility",
     "CGTMSE covers micro and small enterprises only. VAPPL's eligibility is not marginal — but it has an expiry date, and the date is inside this plan.");
   y = L.stats(s, y, [
@@ -717,27 +714,26 @@ function buildCompany() {
       sub: `Against a ₹100 Cr limit — ₹${ms.headroom_turnover_cr.toFixed(2)} Cr of headroom` },
     { label: "Classification", value: "Small Enterprise", small: true, color: C.green,
       tint: "EDFAF4", line: C.green, sub: "CGTMSE eligible. Both tests cleared" },
-  ], { h: 1.36 });
+  ], { h: 1.28 });
   y = L.table(s, y, ["Facility size", "Standard annual guarantee fee"],
-    M.cgtmse.agf_slabs.map(([capL, rate], i) => ({
-      cells: [i === 0 ? `Up to ${money(capL)}`
-                      : `Above ${money(M.cgtmse.agf_slabs[i - 1][0])} and up to ${money(capL)}`,
-              pc(rate, 2)],
-      emphasis: capL === 1000 ? "total" : null,
-    })), { colW: [8.6, L.W - 2 * L.M - 8.6], rowH: 0.28, fontSize: 10.5 });
+    M.cgtmse.agf_slabs.filter(([capL]) => capL >= 200).map(([capL, rate]) => {
+      const prevIdx = M.cgtmse.agf_slabs.findIndex(x => x[0] === capL) - 1;
+      return { cells: [`Above ${money(M.cgtmse.agf_slabs[prevIdx][0])} and up to ${money(capL)}`, pc(rate, 2)],
+               emphasis: capL === 1000 ? "total" : null };
+    }), { colW: [8.6, L.W - 2 * L.M - 8.6], rowH: 0.28, fontSize: 10.5 });
   L.verdict(s, y, "note", "The thresholds moved in VAPPL's favour on 1 April 2025",
-    "Small Enterprise limits rose from ₹10 Cr to ₹25 Cr of investment and ₹50 Cr to ₹100 Cr of turnover, and the CGTMSE guarantee ceiling doubled from ₹5 Cr to ₹10 Cr per borrower. Both landed after the ₹10 crore equity round was designed. A guaranteed, collateral-free ₹10 crore facility is available today that was not available when the round was structured — which is the reason this pack exists. A facility sanctioned while the company qualifies keeps its cover for its full tenor.", 1.28);
+    "Small Enterprise limits rose to ₹25 Cr of investment and ₹100 Cr of turnover, and the CGTMSE ceiling doubled to ₹10 Cr per borrower. Both landed after the ₹10 crore equity round was designed — which is the reason this pack exists. A facility sanctioned while the company qualifies keeps its cover for its full tenor.");
   L.foot(s, NAME);
 
   // 03 balance sheet repair — the headline finding
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "Fix the balance sheet first",
     "Before raising anything there is a free move. Roughly ₹4 crore of VAPPL's ₹7.85 crore of borrowings is money the promoters already put in. Converting it costs no cash and transforms the balance sheet a lender is asked to lend against.");
   y = L.chart(s, p, y, "bar", [
     { name: "Largest facility inside a 2.0× covenant",
       labels: ["No\nconversion", "Convert the\n₹2.60 Cr", "Convert all\n₹4.09 Cr", "Convert all, drawn\nin tranches"],
       values: lev.cases.map(x => +crN(x.max_facility_at_covenant)) },
-  ], { h: 2.5, axisTitle: "₹ crore",
+  ], { h: 2.15, axisTitle: "₹ crore",
        colors: lev.cases.map(x => x.max_facility_at_covenant >= 1000 ? C.green : C.terra) });
   y = L.table(s, y + 0.02, ["Conversion", "Net worth", "D/E once ₹10 Cr is drawn", "Max facility at 2.0×"],
     lev.cases.map(x => ({
@@ -747,11 +743,11 @@ function buildCompany() {
       emphasis: x.conversion === lev.conversion_full && !x.retained_earnings ? "total" : null,
     })), { colW: [5.4, 1.9, 2.6, 2.2], rowH: 0.34, fontSize: 10.5 });
   L.verdict(s, y, "stop", "Converting only the ₹2.60 crore is not enough",
-    `With ${cr(260)} converted, gearing after a full drawdown lands at ${xx(lev.cases[1].debt_equity)} — outside a 2.0× covenant — and the largest facility that stays inside it is ${cr(lev.cases[1].max_facility_at_covenant)}. Converting all ${cr(lev.conversion_full)} takes post-drawdown gearing to ${xx(lev.cases[2].debt_equity)} and lifts capacity to ${cr(lev.cases[2].max_facility_at_covenant)}. Without any conversion the company supports ${cr(lev.cases[0].max_facility_at_covenant)} — which is to say, it cannot borrow at all.`, 0.98);
+    `Converting ${cr(260)} caps the facility at ${cr(lev.cases[1].max_facility_at_covenant)}. Converting all ${cr(lev.conversion_full)} lifts it to ${cr(lev.cases[2].max_facility_at_covenant)}. Converting nothing supports ${cr(lev.cases[0].max_facility_at_covenant)} — the company cannot borrow at all.`);
   L.foot(s, NAME);
 
   // 04 consolidated plan
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "04", "The consolidated plan",
     "The existing four parks plus all three new projects, phased on the award and opening dates assumed in each project deck. Existing-portfolio figures are the midpoints already published in the company financial model.");
   y = L.chart(s, p, y, "barStacked", [
@@ -759,29 +755,27 @@ function buildCompany() {
     { name: "Geeta Govind Vatika", labels: consol.map(r => r.fy), values: consol.map(r => +crN(r.parts.ggv.revenue)) },
     { name: "Ramayan Vatika", labels: consol.map(r => r.fy), values: consol.map(r => +crN(r.parts.rv.revenue)) },
     { name: "Karnal", labels: consol.map(r => r.fy), values: consol.map(r => +crN(r.parts.karnal.revenue)) },
-  ], { h: 3.05, axisTitle: "Revenue, ₹ crore", labelPos: "ctr", fmt: "0.0" });
+  ], { h: 2.70, axisTitle: "Revenue, ₹ crore", labelPos: "ctr", fmt: "0.0" });
   L.stats(s, y + 0.05, [
     { label: "FY30-31 revenue", value: cr(consol[4].revenue, 0), sub: "From ₹16.29 Cr in FY25-26" },
     { label: "FY30-31 EBITDA", value: cr(consol[4].ebitda, 0), sub: `${pc(consol[4].ebitda_margin)} margin` },
     { label: "New projects' share", value: pc(["ggv", "rv", "karnal"]
         .reduce((a, k) => a + consol[4].parts[k].revenue, 0) / consol[4].revenue * 100, 0),
       sub: "Of FY30-31 revenue. EMV was 73% of the group in FY25-26 — concentration risk materially reduced" },
-  ], { h: 1.3 });
+  ], { h: 1.22 });
   L.foot(s, NAME);
 
   // 05 equity
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "05", "Option A · Equity",
     "The existing round is ₹10 crore at ₹90 crore pre-money. Funding all three new projects with equity would take it to roughly ₹16 crore. Here is what that returns to the person writing the cheque.");
   y = L.table(s, y, ["Exit basis", "Value"], [
-    { cells: [`Exit year — ${ex.fy}, five years from a September 2026 close`, ""] },
-    { cells: ["Revenue at exit", cr(ex.revenue, 0)] },
-    { cells: [`Enterprise value at ${ex.ev_revenue_multiple.toFixed(1)}× revenue — the company model's own peer frame is 3–5×`, cr(ex.enterprise_value, 0)] },
-    { cells: ["Cross-check at 11× EBITDA", cr(ex.ev_ebitda_crosscheck, 0)] },
+    { cells: [`Revenue at exit — ${ex.fy}, five years from a September 2026 close`, cr(ex.revenue, 0)] },
+    { cells: [`Enterprise value at ${ex.ev_revenue_multiple.toFixed(1)}× revenue (11× EBITDA cross-checks at ${cr(ex.ev_ebitda_crosscheck, 0)})`, cr(ex.enterprise_value, 0)] },
     { cells: ["Equity value at exit, net of debt", cr(ex.equity_value, 0)], emphasis: "sub" },
     { cells: [`Investor proceeds — ${pc(eq.stake_pct, 1)} of exit equity value`, cr(eq.exit_proceeds, 0)] },
     { cells: ["Investor IRR over five years", pc(eq.irr_pct)], emphasis: "total" },
-  ], { colW: [9.4, L.W - 2 * L.M - 9.4], rowH: 0.32 });
+  ], { colW: [9.4, L.W - 2 * L.M - 9.4], rowH: 0.3 });
   y = L.table(s, y + 0.22, ["Investor hurdle", "Stake required", "Implied pre-money"], [
     { cells: ["18% — family office, strategic", pc(eq.pricing_sensitivity.irr_18.stake_pct), cr(eq.pricing_sensitivity.irr_18.pre_money, 0)] },
     { cells: ["22% — lower-quartile growth fund", pc(eq.pricing_sensitivity.irr_22.stake_pct), cr(eq.pricing_sensitivity.irr_22.pre_money, 0)] },
@@ -789,18 +783,18 @@ function buildCompany() {
     { cells: ["At the asking price", pc(eq.stake_pct, 1), cr(eq.pre_money, 0)], emphasis: "total" },
   ], { colW: [6.4, 2.8, L.W - 2 * L.M - 9.2], rowH: 0.32 });
   L.verdict(s, y, "caution", "₹90 crore pre-money prices most of the growth in",
-    `On this plan an investor entering at ₹90 crore pre-money earns ${pc(eq.irr_pct)} over five years — respectable for a family office or strategic, below what an institutional growth fund underwrites to. Not an argument that the valuation is wrong; an argument about who the right counterparty is, and how long the round takes to close.`, 0.9);
+    `At ₹90 crore pre-money an investor earns ${pc(eq.irr_pct)} over five years — an argument about counterparty, not valuation.`);
   L.foot(s, NAME);
 
   // 06 debt
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "06", "Option B · Debt under CGTMSE",
     "A single collateral-free composite facility: a term loan for the project build-outs and a working-capital limit that consolidates the NBFC book.");
   y = L.chart(s, p, y, "bar", [
     { name: "New facility", labels: db.combined_service.map(r => `Yr ${r.year}`), values: db.combined_service.map(r => +crN(r.new_facility)) },
     { name: "Existing debt", labels: db.combined_service.map(r => `Yr ${r.year}`), values: db.combined_service.map(r => +crN(r.existing_debt)) },
     { name: "EBITDA available", labels: db.combined_service.map(r => `Yr ${r.year}`), values: db.combined_service.map(r => +crN(r.cfads)) },
-  ], { h: 2.75, axisTitle: "₹ crore", colors: [C.terra, C.amber, C.blue] });
+  ], { h: 2.40, axisTitle: "₹ crore", colors: [C.terra, C.amber, C.blue] });
   y = L.stats(s, y + 0.02, [
     { label: "Total facility", value: cr(db.total_limit, 0),
       sub: `Term loan ${cr(db.term_loan)} + working capital ${cr(db.wc_limit)}` },
@@ -810,13 +804,13 @@ function buildCompany() {
       sub: "Including the existing ₹7.85 Cr book, not just the new facility" },
     { label: "Total finance cost", value: cr(db.total_finance_cost),
       sub: `Over seven years, against ${cr(ex.equity_value * eq.stake_pct / 100, 0)} for the equivalent equity` },
-  ], { h: 1.4 });
+  ], { h: 1.32 });
   L.verdict(s, y + 0.02, "go", "The debt is roughly a fifth of the cost of the equity",
-    `A ${cr(db.total_limit, 0)} collateral-free facility at ${pc(db.rate_pct + db.cgtmse.agf_rate_pct, 2)} all-in costs ${cr(db.total_finance_cost)} over seven years — against ${pc(eq.stake_pct, 1)} of a company this plan values at ${cr(ex.equity_value, 0)} in FY30-31, or ${cr(ex.equity_value * eq.stake_pct / 100, 0)}. On the company's own projections.`, 0.92);
+    `${cr(db.total_limit, 0)} collateral-free at ${pc(db.rate_pct + db.cgtmse.agf_rate_pct, 2)} costs ${cr(db.total_finance_cost)} over seven years — against ${cr(ex.equity_value * eq.stake_pct / 100, 0)} for the equivalent equity, on the company's own projections.`);
   L.foot(s, NAME);
 
   // 07 CCD
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "07", "Option C · Debt converted to equity",
     "Money in as debt at a coupon, converting into equity on a fixed formula three years out. At company level — unlike at project level — this is genuinely competitive with both alternatives.");
   y = L.table(s, y, ["Term", "Structure"], [
@@ -828,14 +822,12 @@ function buildCompany() {
     { cells: ["Investor IRR", pc(cc.irr_pct)], emphasis: "total" },
     { cells: ["Money multiple", `${cc.money_multiple.toFixed(2)}×`], emphasis: "total" },
   ], { colW: [8.4, L.W - 2 * L.M - 8.4], rowH: 0.32 });
-  y = L.verdict(s, y + 0.24, "go", "The best risk-adjusted structure for an outside investor",
-    `${pc(cc.irr_pct)} against ${pc(eq.irr_pct)} for straight equity at the same valuation and the same exit. The difference comes from three years of coupon and from entering as a creditor while the three new projects are unproven. For VAPPL the trade is symmetrical: dilution deferred three years, and if the projects deliver, ${pc(cc.conversion_stake_pct, 1)} converted at a ${cr(cc.conversion_valuation_implied, 0)} implied valuation is cheaper than ${pc(eq.stake_pct, 1)} sold today at ₹90 crore pre-money.`, 1.28);
-  L.verdict(s, y, "stop", "The covenant problem — and it is not optional",
-    "CCDs sit as borrowings until conversion. Convert the related-party debt first, or negotiate the CGTMSE leverage covenant to exclude compulsorily convertible instruments — standard practice, since a CCD that must convert is quasi-equity, but it has to be agreed in the sanction letter rather than argued later.", 1.1);
+  L.verdict(s, y + 0.2, "go", "The best risk-adjusted structure — with one condition",
+    `${pc(cc.irr_pct)} against ${pc(eq.irr_pct)} for straight equity at the same valuation and exit. Dilution is deferred three years, and ${pc(cc.conversion_stake_pct, 1)} converted at ${cr(cc.conversion_valuation_implied, 0)} is cheaper than ${pc(eq.stake_pct, 1)} sold today at ₹90 crore pre-money.\n\nThe condition: a CCD is borrowing until it converts. Convert the related-party debt first, or agree in the sanction letter that the CGTMSE leverage covenant excludes compulsorily convertible instruments.`);
   L.foot(s, NAME);
 
   // 08 comparison
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "08", "Which option, and why");
   y = L.optionCards(s, y, [
     { tag: "Option A", name: "Equity", big: pc(eq.irr_pct), cap: "Investor IRR", bigColor: C.amber, rows: [
@@ -858,7 +850,7 @@ function buildCompany() {
   L.foot(s, NAME);
 
   // 09 conditions precedent
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "09", "Conditions precedent to any lender approach");
   L.itemList(s, y, [
     { title: "Convert all ₹4.09 Cr of related-party debt", color: C.terra,
@@ -892,7 +884,7 @@ function buildHub() {
   const totalCap = gf.true_capital_requirement.total + vf.true_capital_requirement.total
                  + kf.true_capital_requirement.total;
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · Portfolio", title: "Three projects,\none balance sheet",
     sub: "Geeta Govind Vatika, Ramayan Vatika and Karnal, each modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.",
     meta: `${c.profile.name} · CIN ${c.profile.cin} · MSME classification Small Enterprise\nPrepared ${M.meta.prepared} · every figure generated from model/pf_model.py`,
@@ -905,7 +897,7 @@ function buildHub() {
   });
 
   // 01 the three projects compared
-  let s = p.addSlide();
+  let s = slide(p);
   let y = L.head(s, "01", "The three projects, compared",
     "The same analysis run three times. What differs is not the method — it is how much capital each genuinely consumes, and what it earns on it.");
   y = L.table(s, y, ["", "Geeta Govind Vatika", "Ramayan Vatika", "Karnal"], [
@@ -932,7 +924,7 @@ function buildHub() {
   L.foot(s, NAME);
 
   // 02 CGTMSE framework
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "The CGTMSE framework",
     "Every debt structure in this pack rests on the Credit Guarantee Fund Trust for Micro and Small Enterprises. The scheme changed materially on 1 April 2025, and the change is what makes this pack possible.");
   y = L.stats(s, y, [
@@ -941,21 +933,20 @@ function buildHub() {
     { label: "Coverage for a Small Enterprise", value: pc(cg.coverage_small_enterprise_pct, 0),
       sub: `Up to ${pc(cg.coverage_preferential_pct, 0)} for micro, women-owned, NER and ZED units` },
     { label: "Collateral required", value: "Nil", sub: "On the guaranteed portion. Third-party guarantee not permitted; director personal guarantee is" },
-  ], { h: 1.42 });
+  ], { h: 1.34 });
   y = L.table(s, y, ["Parameter", "Position"], [
     { cells: ["Eligible borrowers", "Micro and small enterprises with a live Udyam registration. Amusement and recreation is a covered service activity"] },
-    { cells: ["Ceiling basis", "Per borrower, aggregated across all member lending institutions — four sanctions from four banks still share one ceiling"] },
-    { cells: ["Hybrid security", "Permitted. Collateral may be taken on part of a facility with the remainder guaranteed — the route for exposure above the ceiling"] },
+    { cells: ["Ceiling basis", "Per borrower, across all member lending institutions — four sanctions from four banks still share one ceiling"] },
+    { cells: ["Hybrid security", "Permitted — collateral on part of a facility with the remainder guaranteed. The route for exposure above the ceiling"] },
     { cells: ["Interest rate", "MLI rate not to exceed ~3% over its EBLR or MCLR. NBFC pricing for the same borrower runs 14–22%"] },
-    { cells: ["Guarantee fee basis", "On the sanctioned amount in year 1; on the outstanding thereafter — which is why an over-sanctioned, undrawn limit is expensive"] },
-    { cells: ["Fee concession", "10% for women, SC/ST, differently-abled, Agniveer and transgender borrowers, and for NER, J&K, Aspirational District or ZED units"] },
-  ], { colW: [2.9, L.W - 2 * L.M - 2.9], rowH: 0.42, fontSize: 10.5 });
+    { cells: ["Guarantee fee basis", "On the sanctioned amount in year 1; on the outstanding thereafter — an over-sanctioned, undrawn limit is expensive"] },
+  ], { colW: [2.9, L.W - 2 * L.M - 2.9], rowH: 0.38, fontSize: 10.5 });
   L.verdict(s, y, "caution", "Verify before you apply, not after",
-    "CGTMSE parameters are revised by circular and vary between member lending institutions. These reflect the position published after the April 2025 revisions, checked against public sources in August 2026. Confirm the current operative circular and the fee applicable to the specific bank with the lender before relying on any number here.", 0.82);
+    "CGTMSE parameters are revised by circular and vary between lending institutions. These reflect the April 2025 revisions, checked against public sources in August 2026. Confirm the operative circular with the lender before relying on any number here.");
   L.foot(s, NAME);
 
   // 03 the ceiling problem
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "The ceiling problem",
     "The single most important structural fact in the pack, and easy to miss: the ₹10 crore ceiling is per borrower — not per project, per facility or per lender.");
   y = L.chart(s, p, y, "bar", [
@@ -963,20 +954,20 @@ function buildHub() {
       values: Object.values(alloc.gross_demand).map(x => +crN(x)) },
     { name: "Allocated within the ceiling", labels: Object.keys(alloc.gross_demand).map(x => x.replace(" — ", "\n").replace(" — ", "\n")),
       values: Object.values(alloc.single_borrower_plan).map(x => +crN(x)) },
-  ], { h: 2.6, axisTitle: "₹ crore", colors: [C.terra, C.blue], extra: { catAxisLabelFontSize: 8.5 } });
+  ], { h: 2.25, axisTitle: "₹ crore", colors: [C.terra, C.blue], extra: { catAxisLabelFontSize: 8.5 } });
   y = L.stats(s, y + 0.05, [
     { label: "Gross demand", value: cr(alloc.total_gross_demand, 1), color: C.terra,
       sub: "Adding the composite facilities from each deck plus company working capital" },
     { label: "CGTMSE ceiling", value: cr(alloc.ceiling, 0), sub: "Per borrower, across all member lending institutions" },
     { label: "To fund another way", value: cr(alloc.excess_over_ceiling, 1), tint: "FBF1EE", line: C.terra,
       sub: "Hybrid security, or the company-level equity round" },
-  ], { h: 1.36 });
+  ], { h: 1.28 });
   L.verdict(s, y + 0.02, "note", "Routes for the residual",
-    "Hybrid security is preferred — CGTMSE expressly permits collateral on part of a facility with the balance guaranteed, needing no new entity and no consent. The company-level round covers the rest, which is precisely the ₹6–8 crore the company deck arrives at. Separate SPVs are legally available but practically difficult: a new entity has no turnover history and fails the eligibility tests in both RFPs, and Ramayan Vatika's lock-in bars restructuring without BDA's consent.", 0.98);
+    "Hybrid security is preferred — CGTMSE permits collateral on part of a facility with the balance guaranteed, needing no new entity and no consent. The company-level round covers the rest. Separate SPVs are legally available but fail the eligibility tests in both RFPs.");
   L.foot(s, NAME);
 
   // 04 recommended sequence
-  L.closing(p.addSlide(), {
+  L.closing(slide(p), {
     eyebrow: "The recommended sequence",
     headline: "Debt is the cheap capital, and it only just became available",
     body: `The ₹10 crore equity round was designed before the CGTMSE ceiling doubled and the MSME thresholds were raised, both on 1 April 2025. VAPPL is a Small Enterprise with ₹${c.msme.headroom_investment_cr.toFixed(1)} crore of investment headroom and ₹${c.msme.headroom_turnover_cr.toFixed(1)} crore of turnover headroom, and can now access ${cr(alloc.ceiling, 0)} of collateral-free guaranteed debt at ${pc(cf.debt.rate_pct + cf.debt.cgtmse.agf_rate_pct, 2)} all-in. Two of the three new projects out-earn that cost by six to seven percentage points; none out-earns an equity hurdle.`,
@@ -993,7 +984,7 @@ function buildHub() {
   });
 
   // 05 what still has to be verified
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "05", "What still has to be verified",
     "These decks are a model, not a due-diligence report. Everything below is unknown, inconsistent in the source documents, or dependent on a third party — and each moves numbers.");
   L.itemList(s, y, [
@@ -1027,5 +1018,13 @@ const rpc = c => c.related_party_conversion.convert_lt_plus_promoter_409;
     const file = await fn();
     const kb = (fs.statSync(file).size / 1024).toFixed(0);
     console.log(`  ${name.padEnd(28)} ${path.basename(file).padEnd(46)} ${kb} KB`);
+  }
+  const over = L.overflowReport();
+  if (over.length) {
+    console.log(`\n  ${over.length} panel(s) short of room — fix the source, do not ship clipped text:`);
+    over.forEach(o => console.log(
+      `    ${o.deck.split(" — ")[0].padEnd(26)} slide ${String(o.slide).padStart(2)}  short ${String(o.short).padStart(4)}"  "${o.headline}"`));
+  } else {
+    console.log("\n  no panel overflows");
   }
 })();
