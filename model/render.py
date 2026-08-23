@@ -222,6 +222,8 @@ def page(title, badge, sections, rail, self_href):
         f'<li class="rail__item{" rail__item--active" if i == 0 else ""}">'
         f'<a href="#{sid}"><span class="rail__num">{n}</span><span>{e(label)}</span></a></li>'
         for i, (n, sid, label) in enumerate(rail))
+    hub_link = ("" if self_href == "pf-index.html"
+                else '<a class="back-link" href="pf-index.html">← Portfolio hub</a>')
     others = "\n".join(
         f'<li class="rail__item"><a href="{h}"><span class="rail__num">→</span><span>{e(l)}</span></a></li>'
         for h, l in RAIL_SHARED if h != self_href)
@@ -237,14 +239,13 @@ def page(title, badge, sections, rail, self_href):
 <body>
 <header class="topbar">
   <div class="topbar__inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="pf-index.html">
       <span class="brand__mark">EOD</span>
       <span class="brand__name">E-O-D Parks · Vision Amusement Park Pvt. Ltd.</span>
     </a>
     <div class="topbar__right">
       <span class="topbar__badge">{e(badge)}</span>
-      <a class="back-link" href="pf-index.html">Project finance</a>
-      <a class="back-link" href="financials.html">Financial model</a>
+      {hub_link}
     </div>
   </div>
 </header>

@@ -26,7 +26,7 @@ The deck makes the case for a ₹10 Cr equity raise at a ₹90 Cr pre-money valu
 
 The **project finance pack** (`pf-*.html`) sits alongside them: three new projects, each modelled under equity, CGTMSE-guaranteed debt and convertible debt, plus the company-level capital structure. Unlike the two hand-edited files above, those five decks are **generated from a model** — see the section below.
 
-**The pack is deliberately separate from the fundraise deck.** `index.html` and `financials.html` are the materials submitted to investors and must stay untouched — they contain no link to the pack and no awareness of it. The pack links *out* to them, never the reverse. Share `pf-index.html` directly with anyone who should see the project finance work.
+**The pack is deliberately separate from the fundraise deck.** `index.html` and `financials.html` are the materials submitted to investors and must stay untouched. There are no links in either direction: the deck has no awareness of the pack, and the pack navigates only within itself, so a lender reading it cannot click through to the equity pitch. Share `pf-index.html` directly with anyone who should see the project finance work.
 
 ---
 
@@ -107,8 +107,11 @@ A standalone 11-section model linked from Chapter 12 of the deck. All figures so
 
 ## Project finance pack (`pf-*.html`)
 
-> **Separate from the fundraise deck by design.** Nothing in this pack is reachable from `index.html`
-> or `financials.html`, and neither of those files was modified. Circulate `pf-index.html` on its own.
+> **Separate from the fundraise deck by design.** No links run in either direction. Nothing in this pack
+> is reachable from `index.html` or `financials.html` (neither was modified), and the pack navigates only
+> within itself — a lender reading it cannot click through to the ₹90 Cr equity pitch. Circulate
+> `pf-index.html` on its own. The Karnal deck cites `index.html` and `financials.html` by name where it
+> flags the footprint discrepancy between them; those are plain-text citations, not links.
 
 Five decks covering the three new projects and the company-level capital structure. Each project is
 modelled under all three financing structures the brief asked for — **equity**, **debt under CGTMSE**,
