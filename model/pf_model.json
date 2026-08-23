@@ -1,0 +1,3463 @@
+{
+ "meta": {
+  "entity": "Vision Amusement Park Pvt. Ltd.",
+  "cin": "U93000DL2011PTC212814",
+  "prepared": "August 2026",
+  "units": "INR lakh unless stated",
+  "generator": "model/pf_model.py",
+  "tax_rate_pct": 25.0,
+  "bank_rate_pct": 11.5
+ },
+ "cgtmse": {
+  "scheme": "CGS-I",
+  "ceiling_per_borrower_cr": 10.0,
+  "ceiling_startup_dpiit_cr": 20.0,
+  "ceiling_basis": "per borrower, aggregated across all member lending institutions",
+  "coverage_small_enterprise_pct": 75.0,
+  "coverage_preferential_pct": 85.0,
+  "interest_cap_note": "MLI rate not to exceed ~3% over its EBLR/MCLR",
+  "agf_slabs": [
+   [
+    10,
+    0.37
+   ],
+   [
+    50,
+    0.55
+   ],
+   [
+    100,
+    0.6
+   ],
+   [
+    200,
+    0.85
+   ],
+   [
+    500,
+    1.0
+   ],
+   [
+    800,
+    1.1
+   ],
+   [
+    1000,
+    1.2
+   ]
+  ],
+  "agf_basis_y1": "sanctioned amount",
+  "agf_basis_y2plus": "outstanding principal at start of the year",
+  "agf_concession_pct": 10.0,
+  "hybrid_security": true,
+  "collateral": "nil on the guaranteed portion",
+  "third_party_guarantee": "not permitted; personal guarantee of directors is permitted"
+ },
+ "msme_limits": {
+  "micro": {
+   "investment_cr": 2.5,
+   "turnover_cr": 10.0
+  },
+  "small": {
+   "investment_cr": 25.0,
+   "turnover_cr": 100.0
+  },
+  "medium": {
+   "investment_cr": 125.0,
+   "turnover_cr": 500.0
+  }
+ },
+ "ggv": {
+  "rfp": {
+   "authority": "Agra Development Authority (ADA)",
+   "site": "Geeta Govind Vatika (formerly Zonal Park), Taj Nagri Phase-II, Agra 282004",
+   "area_acres": 19,
+   "term": "7 years + 4 years extendable (performance + mutual consent)",
+   "selection": "Technical evaluation, then forward e-auction on licence fee",
+   "reserve_licence_fee_month_lakh": 2.5,
+   "reserve_licence_fee_year_lakh": 30.0,
+   "escalation_pct": 5.0,
+   "emd_lakh": 1.0,
+   "tender_fee_lakh": 0.059,
+   "security_deposit_basis": "3 months of the licence fee at the winning e-auction bid",
+   "payment_terms": "First 6 months in advance within 7 days of Work Order; thereafter half-yearly in advance",
+   "moratorium_days": 15,
+   "entry_tariff_inr": 20,
+   "free_entry": "children under 5; morning walkers 05:00-08:00 summer / 06:00-09:00 winter",
+   "show_tariff": "Musical Fountain & Laser Show at rates approved by ADA",
+   "penalty_range_inr": "\u20b95,000 to \u20b950,000 per violation; liquidated damages capped at 10% of total remittance",
+   "eligibility_turnover_cr": 1.0,
+   "eligibility_projects": "2 similar projects in last 5 years, each >= \u20b950 lakh",
+   "assets": "ADA owns all assets. No permanent structures permitted. Electricity paid direct to discom.",
+   "scope": [
+    "Musical fountains O&M",
+    "40-min Krishna Leela laser show O&M (content not to be altered)",
+    "6 kiosks 8x8 ft + 2 kiosks 10x10 ft (ready-to-eat + tea/coffee only, no cooking)",
+    "Parking",
+    "Horticulture over 19 acres",
+    "Ticket counter",
+    "Additional entertainment activities",
+    "Private events, photo and pre-wedding shoots"
+   ]
+  },
+  "bid_licence_year1": 36.0,
+  "capex_lines": [
+   {
+    "item": "Activity equipment (demountable \u2014 no permanent structures permitted)",
+    "amount": 45.0,
+    "life_years": 8
+   },
+   {
+    "item": "Kiosk fit-out, common seating, shade structures",
+    "amount": 18.0,
+    "life_years": 7
+   },
+   {
+    "item": "Ticketing, POS, CCTV and ICCC integration",
+    "amount": 12.0,
+    "life_years": 5
+   },
+   {
+    "item": "Signage, branding, wayfinding",
+    "amount": 6.0,
+    "life_years": 5
+   },
+   {
+    "item": "Uniforms, tools, horticulture kit, safety equipment",
+    "amount": 4.0,
+    "life_years": 3
+   },
+   {
+    "item": "Pre-operative and contingency",
+    "amount": 5.0,
+    "life_years": 5
+   }
+  ],
+  "mobilisation": {
+   "capex": 90.0,
+   "security_deposit": 9.0,
+   "advance_licence_fee_6m": 18.0,
+   "emd": 1.0,
+   "tender_fee": 0.059,
+   "total": 118.059
+  },
+  "years": [
+   {
+    "year": 1,
+    "revenue": {
+     "entry": 39.93220338983051,
+     "show": 63.05084745762713,
+     "fnb": 31.000000000000004,
+     "activities": 34.67796610169492,
+     "parking": 11.694915254237289,
+     "events": 16.0,
+     "total": 196.35593220338984,
+     "footfall_lakh": 3.1
+    },
+    "opex": {
+     "licence_fee": 36.0,
+     "manpower": 70.4,
+     "electricity": 26.0,
+     "water_horticulture": 9.0,
+     "show_amc": 14.0,
+     "repairs": 8.0,
+     "fnb_cogs": 16.12,
+     "activity_cost": 7.629152542372883,
+     "marketing": 8.836016949152542,
+     "insurance_statutory": 5.0,
+     "it_cctv": 3.5,
+     "corporate_overhead": 9.817796610169493,
+     "contingency": 3.0,
+     "total": 217.30296610169492
+    },
+    "ebitda": -20.94703389830508,
+    "ebitda_margin": -10.667889512300386,
+    "depreciation": 14.129761904761905,
+    "ebit": -35.076795803066986
+   },
+   {
+    "year": 2,
+    "revenue": {
+     "entry": 50.898305084745765,
+     "show": 85.93220338983052,
+     "fnb": 42.621428571428574,
+     "activities": 55.855932203389834,
+     "parking": 14.712957900492075,
+     "events": 20.0,
+     "total": 270.02082714988677,
+     "footfall_lakh": 3.9
+    },
+    "opex": {
+     "licence_fee": 37.800000000000004,
+     "manpower": 82.13181935483873,
+     "electricity": 28.315258064516122,
+     "water_horticulture": 9.584999999999999,
+     "show_amc": 14.91,
+     "repairs": 9.289548387096774,
+     "fnb_cogs": 22.16314285714286,
+     "activity_cost": 12.288305084745764,
+     "marketing": 12.150937221744904,
+     "insurance_statutory": 5.324999999999999,
+     "it_cctv": 3.7275,
+     "corporate_overhead": 13.501041357494339,
+     "contingency": 3.195,
+     "total": 254.38255232757942
+    },
+    "ebitda": 15.638274822307352,
+    "ebitda_margin": 5.7915068949946775,
+    "depreciation": 14.129761904761905,
+    "ebit": 1.5085129175454473
+   },
+   {
+    "year": 3,
+    "revenue": {
+     "entry": 58.169491525423744,
+     "show": 114.84745762711866,
+     "fnb": 52.25,
+     "activities": 73.08474576271188,
+     "parking": 16.599234554401317,
+     "events": 23.0,
+     "total": 337.9509294696556,
+     "footfall_lakh": 4.4
+    },
+    "opex": {
+     "licence_fee": 39.69,
+     "manpower": 92.43110090322583,
+     "electricity": 30.57193723790322,
+     "water_horticulture": 10.208025,
+     "show_amc": 15.879149999999997,
+     "repairs": 10.405599677419353,
+     "fnb_cogs": 27.17,
+     "activity_cost": 16.078644067796613,
+     "marketing": 15.207791826134502,
+     "insurance_statutory": 5.671124999999999,
+     "it_cctv": 3.9697874999999994,
+     "corporate_overhead": 16.89754647348278,
+     "contingency": 3.4026749999999995,
+     "total": 287.58338268596236
+    },
+    "ebitda": 50.36754678369323,
+    "ebitda_margin": 14.90380478098839,
+    "depreciation": 14.129761904761905,
+    "ebit": 36.23778487893132
+   },
+   {
+    "year": 4,
+    "revenue": {
+     "entry": 63.45762711864407,
+     "show": 129.76271186440675,
+     "fnb": 61.714285714285715,
+     "activities": 91.52542372881356,
+     "parking": 18.108255877528705,
+     "events": 26.0,
+     "total": 390.5683043036788,
+     "footfall_lakh": 4.8
+    },
+    "opex": {
+     "licence_fee": 41.6745,
+     "manpower": 102.79612435612904,
+     "electricity": 32.91370482247983,
+     "water_horticulture": 10.871546624999999,
+     "show_amc": 16.91129475,
+     "repairs": 11.518384166129032,
+     "fnb_cogs": 32.09142857142857,
+     "activity_cost": 20.135593220338983,
+     "marketing": 17.575573693665547,
+     "insurance_statutory": 6.039748124999999,
+     "it_cctv": 4.2278236875,
+     "corporate_overhead": 19.52841521518394,
+     "contingency": 3.6238488749999997,
+     "total": 319.907986107855
+    },
+    "ebitda": 70.66031819582383,
+    "ebitda_margin": 18.09166730049945,
+    "depreciation": 14.129761904761905,
+    "ebit": 56.53055629106193
+   },
+   {
+    "year": 5,
+    "revenue": {
+     "entry": 68.95762711864407,
+     "show": 157.11864406779662,
+     "fnb": 71.45625,
+     "activities": 104.74576271186442,
+     "parking": 19.428649535265176,
+     "events": 28.0,
+     "total": 449.70693343357027,
+     "footfall_lakh": 5.15
+    },
+    "opex": {
+     "licence_fee": 43.75822500000001,
+     "manpower": 113.63840299339358,
+     "electricity": 35.38353074293624,
+     "water_horticulture": 11.578197155624999,
+     "show_amc": 18.010528908749997,
+     "repairs": 12.673768499383062,
+     "fnb_cogs": 37.15725,
+     "activity_cost": 23.04406779661017,
+     "marketing": 20.23681200451066,
+     "insurance_statutory": 6.432331753124999,
+     "it_cctv": 4.502632227187499,
+     "corporate_overhead": 22.485346671678514,
+     "contingency": 3.859399051874999,
+     "total": 352.7604928050748
+    },
+    "ebitda": 96.94644062849545,
+    "ebitda_margin": 21.557693115446742,
+    "depreciation": 14.129761904761905,
+    "ebit": 82.81667872373355
+   },
+   {
+    "year": 6,
+    "revenue": {
+     "entry": 72.97457627118645,
+     "show": 166.27118644067795,
+     "fnb": 81.36071428571428,
+     "activities": 125.6271186440678,
+     "parking": 20.56041552761072,
+     "events": 30.0,
+     "total": 496.7940111692572,
+     "footfall_lakh": 5.45
+    },
+    "opex": {
+     "licence_fee": 45.94613625000001,
+     "manpower": 124.9374984265874,
+     "electricity": 37.98510028889843,
+     "water_horticulture": 12.330779970740622,
+     "show_amc": 19.181213287818743,
+     "repairs": 13.868812741284612,
+     "fnb_cogs": 42.30757142857143,
+     "activity_cost": 27.637966101694918,
+     "marketing": 22.355730502616574,
+     "insurance_statutory": 6.850433317078123,
+     "it_cctv": 4.795303321954686,
+     "corporate_overhead": 24.839700558462862,
+     "contingency": 4.110259990246874,
+     "total": 387.1465061859552
+    },
+    "ebitda": 109.64750498330199,
+    "ebitda_margin": 22.07101988311715,
+    "depreciation": 14.129761904761905,
+    "ebit": 95.51774307854008
+   },
+   {
+    "year": 7,
+    "revenue": {
+     "entry": 77.96610169491527,
+     "show": 196.3771186440678,
+     "fnb": 89.74107142857143,
+     "activities": 140.33898305084745,
+     "parking": 21.69218151995626,
+     "events": 32.0,
+     "total": 558.1154563383583,
+     "footfall_lakh": 5.75
+    },
+    "opex": {
+     "licence_fee": 48.24344306250001,
+     "manpower": 137.26163904576072,
+     "electricity": 40.7753784584468,
+     "water_horticulture": 13.132280668838762,
+     "show_amc": 20.42799215152696,
+     "repairs": 15.16566606272347,
+     "fnb_cogs": 46.66535714285715,
+     "activity_cost": 30.874576271186438,
+     "marketing": 25.11519553522612,
+     "insurance_statutory": 7.295711482688201,
+     "it_cctv": 5.10699803788174,
+     "corporate_overhead": 27.905772816917917,
+     "contingency": 4.37742688961292,
+     "total": 422.3474376261672
+    },
+    "ebitda": 135.76801871219106,
+    "ebitda_margin": 24.326152800520457,
+    "depreciation": 14.129761904761905,
+    "ebit": 121.63825680742916
+   }
+  ],
+  "year1_opex": 217.30296610169492,
+  "funding_ask": 335.3619661016949,
+  "peak_cash_deficit": 139.00603389830508,
+  "annual_depreciation": 14.129761904761905,
+  "financing": {
+   "ask": 335.3619661016949,
+   "true_capital_requirement": {
+    "mobilisation": 118.059,
+    "later_capex": 0,
+    "cumulative_operating_deficit": 20.94703389830508,
+    "total": 139.00603389830508
+   },
+   "opex_facility": 217.30296610169492,
+   "project_fcf": {
+    "t0": 118.059,
+    "terminal_inflow": 10.0,
+    "flows": [
+     -118.059,
+     -24.874152542372876,
+     9.860730049923255,
+     34.54908197456728,
+     48.71631303698477,
+     67.24813227889065,
+     75.83218899028182,
+     104.1961453835666
+    ],
+    "detail": [
+     {
+      "year": 1,
+      "ebitda": -20.94703389830508,
+      "tax": 0.0,
+      "maintenance_capex": 3.927118644067797,
+      "terminal_inflow": 0.0,
+      "fcf": -24.874152542372876
+     },
+     {
+      "year": 2,
+      "ebitda": 15.638274822307352,
+      "tax": 0.3771282293863618,
+      "maintenance_capex": 5.4004165429977355,
+      "terminal_inflow": 0.0,
+      "fcf": 9.860730049923255
+     },
+     {
+      "year": 3,
+      "ebitda": 50.36754678369323,
+      "tax": 9.05944621973283,
+      "maintenance_capex": 6.759018589393112,
+      "terminal_inflow": 0.0,
+      "fcf": 34.54908197456728
+     },
+     {
+      "year": 4,
+      "ebitda": 70.66031819582383,
+      "tax": 14.132639072765482,
+      "maintenance_capex": 7.811366086073576,
+      "terminal_inflow": 0.0,
+      "fcf": 48.71631303698477
+     },
+     {
+      "year": 5,
+      "ebitda": 96.94644062849545,
+      "tax": 20.704169680933386,
+      "maintenance_capex": 8.994138668671406,
+      "terminal_inflow": 0.0,
+      "fcf": 67.24813227889065
+     },
+     {
+      "year": 6,
+      "ebitda": 109.64750498330199,
+      "tax": 23.87943576963502,
+      "maintenance_capex": 9.935880223385144,
+      "terminal_inflow": 0.0,
+      "fcf": 75.83218899028182
+     },
+     {
+      "year": 7,
+      "ebitda": 135.76801871219106,
+      "tax": 30.40956420185729,
+      "maintenance_capex": 11.162309126767166,
+      "terminal_inflow": 10.0,
+      "fcf": 104.1961453835666
+     }
+    ],
+    "irr_pct": 18.73754591913893,
+    "npv_at_15pct": 23.72746831246328,
+    "payback_years": 4.7406455137569985,
+    "cumulative_fcf": 315.52843917184146
+   },
+   "cost_of_capital": {
+    "project_irr_pct": 18.73754591913893,
+    "all_in_cost_of_cgtmse_debt_pct": 12.5,
+    "equity_hurdle_pct": 22.0,
+    "spread_over_debt_pct": 6.237545919138931,
+    "clears_debt": true,
+    "clears_equity_hurdle": false,
+    "verdict": "Debt-fundable only: the project out-earns CGTMSE debt but not an equity hurdle. Third-party equity at this scale destroys value; fund it with the guaranteed facility and keep the upside."
+   },
+   "debt": {
+    "label": "CGTMSE composite facility \u2014 Geeta Govind Vatika",
+    "term_loan": 120.0,
+    "wc_limit": 217.30296610169492,
+    "total_limit": 337.3029661016949,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 7,
+    "tl_moratorium_years": 3,
+    "cgtmse": {
+     "agf_rate_pct": 1.0,
+     "agf_slab": "limit of Rs 3.37 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 252.97722457627117,
+     "uncovered_amount": 84.32574152542372,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 60.0,
+      "wc_interest": 6.9,
+      "agf": 3.373029661016949,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 24.073029661016953,
+      "cfads": -20.94703389830508,
+      "dscr": -0.870145311714794
+     },
+     {
+      "year": 2,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 45.0,
+      "wc_interest": 5.175,
+      "agf": 1.65,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 20.625,
+      "cfads": 15.638274822307352,
+      "dscr": 0.7582193853239928
+     },
+     {
+      "year": 3,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 30.0,
+      "wc_interest": 3.45,
+      "agf": 1.5,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 18.75,
+      "cfads": 50.36754678369323,
+      "dscr": 2.686269161796972
+     },
+     {
+      "year": 4,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 20.0,
+      "wc_interest": 2.3000000000000003,
+      "agf": 1.4,
+      "principal": 30.0,
+      "tl_closing": 90.0,
+      "debt_service": 47.5,
+      "cfads": 70.66031819582383,
+      "dscr": 1.4875856462278703
+     },
+     {
+      "year": 5,
+      "tl_opening": 90.0,
+      "tl_interest": 10.35,
+      "wc_outstanding": 12.0,
+      "wc_interest": 1.3800000000000001,
+      "agf": 1.02,
+      "principal": 30.0,
+      "tl_closing": 60.0,
+      "debt_service": 42.75,
+      "cfads": 96.94644062849545,
+      "dscr": 2.2677529971577886
+     },
+     {
+      "year": 6,
+      "tl_opening": 60.0,
+      "tl_interest": 6.9,
+      "wc_outstanding": 8.0,
+      "wc_interest": 0.92,
+      "agf": 0.68,
+      "principal": 30.0,
+      "tl_closing": 30.0,
+      "debt_service": 38.5,
+      "cfads": 109.64750498330199,
+      "dscr": 2.847987142423428
+     },
+     {
+      "year": 7,
+      "tl_opening": 30.0,
+      "tl_interest": 3.45,
+      "wc_outstanding": 5.0,
+      "wc_interest": 0.5750000000000001,
+      "agf": 0.35,
+      "principal": 30.0,
+      "tl_closing": 0.0,
+      "debt_service": 34.375,
+      "cfads": 135.76801871219106,
+      "dscr": 3.9496150898091944
+     }
+    ],
+    "min_dscr": -0.870145311714794,
+    "avg_dscr": 1.8753263015749215,
+    "min_dscr_post_moratorium": 1.4875856462278703,
+    "avg_dscr_post_moratorium": 2.6382352189045704,
+    "bankable": true,
+    "total_interest": 96.60000000000002,
+    "total_agf": 9.973029661016948,
+    "total_finance_cost": 106.57302966101696
+   },
+   "equity": {
+    "label": "Project-level equity \u2014 Geeta Govind Vatika",
+    "basis": "Sized to the true capital requirement, not the gross facility. Exit at year 5 valued as the discounted remaining concession cash flow, not an EBITDA multiple \u2014 the licence is a wasting asset.",
+    "investment": 139.00603389830508,
+    "stake_pct": 60.0,
+    "exit_year": 5,
+    "exit_equity_value": 152.28972606607994,
+    "exit_proceeds": 91.37383563964796,
+    "dividends": [
+     0,
+     0,
+     15,
+     28,
+     38
+    ],
+    "flows": [
+     -139.00603389830508,
+     0,
+     0,
+     15,
+     28,
+     129.37383563964795
+    ],
+    "irr_pct": 4.731191183964256,
+    "money_multiple": 1.240045707409754,
+    "stake_for_18pct": 100.0,
+    "stake_for_22pct": 100.0,
+    "stake_for_25pct": 100.0
+   },
+   "ccd": {
+    "label": "CCD converting at the end of year 3 \u2014 Geeta Govind Vatika",
+    "basis": "8% coupon to conversion, then 55% of project equity",
+    "principal": 139.00603389830508,
+    "coupon_pct": 8.0,
+    "conversion_year": 3,
+    "conversion_stake_pct": 55.0,
+    "coupon_paid_total": 33.36144813559322,
+    "exit_year": 5,
+    "exit_equity_value": 152.28972606607994,
+    "exit_proceeds": 83.75934933634397,
+    "flows": [
+     -139.00603389830508,
+     11.120482711864407,
+     11.120482711864407,
+     11.120482711864407,
+     0.0,
+     83.75934933634397
+    ],
+    "irr_pct": -4.010005586897025,
+    "money_multiple": 0.8425590903314397
+   },
+   "exit_equity_value": 152.28972606607994,
+   "exit_year": 5,
+   "exit_valuation": {
+    "dcf_remaining_term": 152.28972606607994,
+    "ebitda_multiple_crosscheck": 436.25898282822953,
+    "exit_year_ebitda": 96.94644062849545,
+    "ebitda_multiple": 4.5,
+    "discount_rate_pct": 15.0,
+    "used": 152.28972606607994,
+    "basis": "Discounted remaining concession cash flow. A licence that expires is a wasting asset, so an EBITDA multiple flatters it; the multiple is shown only as a cross-check."
+   },
+   "debt_optimised": {
+    "label": "Right-sized variant \u2014 working capital limit cut to peak drawdown",
+    "term_loan": 120.0,
+    "wc_limit": 90.0,
+    "total_limit": 210.0,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 7,
+    "tl_moratorium_years": 3,
+    "cgtmse": {
+     "agf_rate_pct": 1.0,
+     "agf_slab": "limit of Rs 2.10 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 157.5,
+     "uncovered_amount": 52.5,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 60.0,
+      "wc_interest": 6.9,
+      "agf": 2.1,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 22.800000000000004,
+      "cfads": -20.94703389830508,
+      "dscr": -0.918729556943205
+     },
+     {
+      "year": 2,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 45.0,
+      "wc_interest": 5.175,
+      "agf": 1.65,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 20.625,
+      "cfads": 15.638274822307352,
+      "dscr": 0.7582193853239928
+     },
+     {
+      "year": 3,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 30.0,
+      "wc_interest": 3.45,
+      "agf": 1.5,
+      "principal": 0.0,
+      "tl_closing": 120.0,
+      "debt_service": 18.75,
+      "cfads": 50.36754678369323,
+      "dscr": 2.686269161796972
+     },
+     {
+      "year": 4,
+      "tl_opening": 120.0,
+      "tl_interest": 13.8,
+      "wc_outstanding": 20.0,
+      "wc_interest": 2.3000000000000003,
+      "agf": 1.4,
+      "principal": 30.0,
+      "tl_closing": 90.0,
+      "debt_service": 47.5,
+      "cfads": 70.66031819582383,
+      "dscr": 1.4875856462278703
+     },
+     {
+      "year": 5,
+      "tl_opening": 90.0,
+      "tl_interest": 10.35,
+      "wc_outstanding": 12.0,
+      "wc_interest": 1.3800000000000001,
+      "agf": 1.02,
+      "principal": 30.0,
+      "tl_closing": 60.0,
+      "debt_service": 42.75,
+      "cfads": 96.94644062849545,
+      "dscr": 2.2677529971577886
+     },
+     {
+      "year": 6,
+      "tl_opening": 60.0,
+      "tl_interest": 6.9,
+      "wc_outstanding": 8.0,
+      "wc_interest": 0.92,
+      "agf": 0.68,
+      "principal": 30.0,
+      "tl_closing": 30.0,
+      "debt_service": 38.5,
+      "cfads": 109.64750498330199,
+      "dscr": 2.847987142423428
+     },
+     {
+      "year": 7,
+      "tl_opening": 30.0,
+      "tl_interest": 3.45,
+      "wc_outstanding": 5.0,
+      "wc_interest": 0.5750000000000001,
+      "agf": 0.35,
+      "principal": 30.0,
+      "tl_closing": 0.0,
+      "debt_service": 34.375,
+      "cfads": 135.76801871219106,
+      "dscr": 3.9496150898091944
+     }
+    ],
+    "min_dscr": -0.918729556943205,
+    "avg_dscr": 1.86838569511372,
+    "min_dscr_post_moratorium": 1.4875856462278703,
+    "avg_dscr_post_moratorium": 2.6382352189045704,
+    "bankable": true,
+    "total_interest": 96.60000000000002,
+    "total_agf": 8.7,
+    "total_finance_cost": 105.30000000000001
+   },
+   "agf_saving_optimised": 1.273029661016949,
+   "show_tariff_sensitivity": {
+    "year": 3,
+    "footfall_lakh": 4.4,
+    "show_conversion_pct": 28.0,
+    "value_per_rupee_of_tariff_lakh": 1.0440677966101697
+   },
+   "walk_away": {
+    "hurdle_pct": 12.5,
+    "multiple_of_base": 1.2518455917118734,
+    "licence_fee_year1": 45.06644130162744,
+    "licence_fee_month": 3.7555367751356203
+   },
+   "debt_capacity": {
+    "target_dscr": 1.3,
+    "max_total_limit": 345.69393946576326,
+    "max_term_loan": 138.2775757863053,
+    "max_wc_limit": 207.41636367945796,
+    "achieved_min_dscr": 1.3,
+    "facility": {
+     "label": "Debt capacity at the target DSCR",
+     "term_loan": 138.2775757863053,
+     "wc_limit": 207.41636367945796,
+     "total_limit": 345.69393946576326,
+     "rate_pct": 11.5,
+     "tl_tenor_years": 7,
+     "tl_moratorium_years": 3,
+     "cgtmse": {
+      "agf_rate_pct": 1.0,
+      "agf_slab": "limit of Rs 3.46 Cr",
+      "coverage_pct": 75.0,
+      "guaranteed_amount": 259.2704545993224,
+      "uncovered_amount": 86.42348486644082,
+      "within_ceiling": true
+     },
+     "schedule": [
+      {
+       "year": 1,
+       "tl_opening": 138.2775757863053,
+       "tl_interest": 15.90192121542511,
+       "wc_outstanding": 60.0,
+       "wc_interest": 6.9,
+       "agf": 3.4569393946576326,
+       "principal": 0.0,
+       "tl_closing": 138.2775757863053,
+       "debt_service": 26.258860610082742,
+       "cfads": -20.94703389830508,
+       "dscr": -0.797712978081842
+      },
+      {
+       "year": 2,
+       "tl_opening": 138.2775757863053,
+       "tl_interest": 15.90192121542511,
+       "wc_outstanding": 45.0,
+       "wc_interest": 5.175,
+       "agf": 1.832775757863053,
+       "principal": 0.0,
+       "tl_closing": 138.2775757863053,
+       "debt_service": 22.909696973288163,
+       "cfads": 15.638274822307352,
+       "dscr": 0.6826050488813094
+      },
+      {
+       "year": 3,
+       "tl_opening": 138.2775757863053,
+       "tl_interest": 15.90192121542511,
+       "wc_outstanding": 30.0,
+       "wc_interest": 3.45,
+       "agf": 1.6827757578630531,
+       "principal": 0.0,
+       "tl_closing": 138.2775757863053,
+       "debt_service": 21.034696973288163,
+       "cfads": 50.36754678369323,
+       "dscr": 2.394498330432555
+      },
+      {
+       "year": 4,
+       "tl_opening": 138.2775757863053,
+       "tl_interest": 15.90192121542511,
+       "wc_outstanding": 20.0,
+       "wc_interest": 2.3000000000000003,
+       "agf": 1.582775757863053,
+       "principal": 34.56939394657633,
+       "tl_closing": 103.70818183972898,
+       "debt_service": 54.35409091986449,
+       "cfads": 70.66031819582383,
+       "dscr": 1.3
+      },
+      {
+       "year": 5,
+       "tl_opening": 103.70818183972898,
+       "tl_interest": 11.926440911568832,
+       "wc_outstanding": 12.0,
+       "wc_interest": 1.3800000000000001,
+       "agf": 1.1570818183972897,
+       "principal": 34.56939394657633,
+       "tl_closing": 69.13878789315265,
+       "debt_service": 49.03291667654245,
+       "cfads": 96.94644062849545,
+       "dscr": 1.9771705866087104
+      },
+      {
+       "year": 6,
+       "tl_opening": 69.13878789315265,
+       "tl_interest": 7.950960607712555,
+       "wc_outstanding": 8.0,
+       "wc_interest": 0.92,
+       "agf": 0.7713878789315265,
+       "principal": 34.56939394657633,
+       "tl_closing": 34.56939394657633,
+       "debt_service": 44.21174243322041,
+       "cfads": 109.64750498330199,
+       "dscr": 2.4800539166471207
+      },
+      {
+       "year": 7,
+       "tl_opening": 34.56939394657633,
+       "tl_interest": 3.9754803038562776,
+       "wc_outstanding": 5.0,
+       "wc_interest": 0.5750000000000001,
+       "agf": 0.39569393946576326,
+       "principal": 34.56939394657633,
+       "tl_closing": 0.0,
+       "debt_service": 39.51556818989837,
+       "cfads": 135.76801871219106,
+       "dscr": 3.435810869775077
+      }
+     ],
+     "min_dscr": -0.797712978081842,
+     "avg_dscr": 1.6389179677518473,
+     "min_dscr_post_moratorium": 1.3,
+     "avg_dscr_post_moratorium": 2.298258843257727,
+     "bankable": true,
+     "total_interest": 108.1605666848381,
+     "total_agf": 10.87943030504137,
+     "total_finance_cost": 119.03999698987946
+    }
+   }
+  },
+  "scenarios": {
+   "downside": {
+    "note": "15% below the footfall and show-conversion base, 5% cost overrun, licence bid up to \u20b945 lakh",
+    "multipliers": {
+     "footfall": 0.85,
+     "yield": 0.85,
+     "opex": 1.05,
+     "licence": 1.25
+    },
+    "revenue_year1": 161.2635593220339,
+    "ebitda_year1": -64.4334868644068,
+    "revenue_stabilised": 366.41826629989066,
+    "ebitda_stabilised": 12.4821323177527,
+    "ebitda_margin_stabilised": 3.40652567455162,
+    "ebitda_final_year": 33.57939526822122,
+    "project_irr_pct": -27.97348702610179,
+    "payback_years": null,
+    "cumulative_fcf": -97.78742118568995
+   },
+   "base": {
+    "note": "As modelled: 3.10 lakh visits in year 1, 24% show conversion, \u20b936 lakh licence fee",
+    "multipliers": {},
+    "revenue_year1": 196.35593220338984,
+    "ebitda_year1": -20.94703389830508,
+    "revenue_stabilised": 449.70693343357027,
+    "ebitda_stabilised": 96.94644062849545,
+    "ebitda_margin_stabilised": 21.557693115446742,
+    "ebitda_final_year": 135.76801871219106,
+    "project_irr_pct": 18.73754591913893,
+    "payback_years": 4.7406455137569985,
+    "cumulative_fcf": 315.52843917184146
+   },
+   "upside": {
+    "note": "15% more footfall, 20% better show conversion, tight cost control",
+    "multipliers": {
+     "footfall": 1.15,
+     "yield": 1.2,
+     "opex": 0.98
+    },
+    "revenue_year1": 237.91101694915255,
+    "ebitda_year1": 13.226101355932201,
+    "revenue_stabilised": 549.1002615841991,
+    "ebitda_stabilised": 175.8099783372367,
+    "ebitda_margin_stabilised": 32.01782818860996,
+    "ebitda_final_year": 233.2468623568201,
+    "project_irr_pct": 45.889748408226296,
+    "payback_years": 2.8566848986333047,
+    "cumulative_fcf": 663.0998269683408
+   }
+  }
+ },
+ "rv": {
+  "rfp": {
+   "authority": "Bareilly Development Authority (BDA)",
+   "site": "Ramayan Vatika, Sector-2, Ramganga Nagar, Bareilly",
+   "area_sqm": 33000,
+   "area_acres": 8.15,
+   "term": "10 years + 5 years extendable",
+   "lock_in": "5 years in the initial term; 2 years in the extended term",
+   "lock_in_conflict": "Clause 9 of the Key Terms states a 7-year lock-in while Clause 14 and the Lock-in section state 5 years. To be resolved by pre-bid clarification.",
+   "selection": "Technically qualified + financially H1 (highest annual licence fee), sealed bid, with presentation",
+   "reserve_licence_fee_year_lakh": 30.0,
+   "escalation_pct": 5.0,
+   "payment_terms": "Quarterly in advance (\u20b97.5 lakh at reserve) by the 10th of the first month of each quarter",
+   "penal_interest": "1% per month / 12% p.a. on delayed licence fee",
+   "emd_lakh": 3.0,
+   "bid_fee_lakh": 0.15,
+   "performance_security_lakh": 30.0,
+   "performance_security_note": "Interest-free, valid until 3 months after the completion period",
+   "mortgage_prohibition": "The Vatika, wholly or partially, shall not be mortgaged, pledged, hypothecated or offered as security to any bank, FI, NBFC or third party.",
+   "shareholding_restriction": "No change in ownership pattern, shareholding structure or controlling interest during the lock-in without BDA's prior written approval.",
+   "min_manpower": {
+    "per_shift": {
+     "sweepers": 4,
+     "security": 5
+    },
+    "per_day": {
+     "mali_gardener": 8,
+     "site_manager": 1,
+     "electrician": 1,
+     "plumber": 1
+    }
+   },
+   "statutory": "EPF and ESI mandatory for all deployed staff; agreement compulsorily registered, stamp duty on operator",
+   "bda_free_use_days": 10,
+   "bda_indicative_revenue_cr": [
+    2.25,
+    2.3
+   ],
+   "bda_indicative_basis": "500 visitors/day; 300/day paying \u20b9125 for the show (60% conversion)",
+   "assets": [
+    "51-ft bronze Lord Ram statue by Ram Sutar",
+    "3D holographic laser and sound show projected on the statue",
+    "Six thematic vatikas (Ashoka, Kishkindha, Dronagiri, Panchvati, Dandakaranya, Chitrakoot)",
+    "Miyawaki forest of ~16,000 trees",
+    "Open-air theatre",
+    "Shabri Ashram",
+    "Marble statues, murals and fibre panels",
+    "Food court",
+    "Parking"
+   ],
+   "revenue_streams": [
+    "Entry ticketing",
+    "Toy train (optional, future)",
+    "Food court and vendor rentals",
+    "Parking",
+    "Cultural events, Ram Katha, laser shows",
+    "Souvenirs and merchandise",
+    "Photography charges",
+    "Theme-consistent advertising",
+    "School and educational packages"
+   ],
+   "tech_score": {
+    "experience": 30,
+    "financial_strength": 20,
+    "manpower": 20,
+    "om_plan": 15,
+    "technology": 15
+   }
+  },
+  "bid_licence_year1": 33.0,
+  "capex_lines": [
+   {
+    "item": "Computerised ticketing, POS, access control, CCTV",
+    "amount": 22.0,
+    "life_years": 5
+   },
+   {
+    "item": "Food court fit-out, seating, shade and kitchen equipment",
+    "amount": 26.0,
+    "life_years": 7
+   },
+   {
+    "item": "Theme-consistent activity and children's zone equipment (BDA approval required)",
+    "amount": 30.0,
+    "life_years": 8
+   },
+   {
+    "item": "Toy train and track (year 2 \u2014 optional revenue stream)",
+    "amount": 38.0,
+    "life_years": 10
+   },
+   {
+    "item": "Signage, wayfinding, thematic branding",
+    "amount": 8.0,
+    "life_years": 5
+   },
+   {
+    "item": "Housekeeping, horticulture and safety equipment",
+    "amount": 7.0,
+    "life_years": 3
+   },
+   {
+    "item": "Pre-operative, mobilisation and contingency",
+    "amount": 9.0,
+    "life_years": 5
+   }
+  ],
+  "mobilisation": {
+   "capex_year0": 102.0,
+   "capex_year2_toy_train": 38.0,
+   "performance_security": 30.0,
+   "emd": 3.0,
+   "bid_fee": 0.15,
+   "stamp_duty_registration": 8.0,
+   "advance_licence_fee_q1": 8.25,
+   "total": 151.4
+  },
+  "years": [
+   {
+    "year": 1,
+    "revenue": {
+     "entry": 24.610169491525426,
+     "show": 88.09322033898304,
+     "fnb": 16.0,
+     "parking": 7.4576271186440675,
+     "events": 11.0,
+     "ancillary": 7.0,
+     "toy_train": 0.0,
+     "total": 154.16101694915253,
+     "footfall_lakh": 1.65
+    },
+    "opex": {
+     "licence_fee": 33.0,
+     "manpower": 66.0,
+     "electricity": 22.0,
+     "water_consumables": 5.0,
+     "horticulture": 11.0,
+     "show_amc": 14.0,
+     "statue_upkeep": 7.0,
+     "repairs": 9.0,
+     "insurance": 6.0,
+     "marketing": 6.937245762711863,
+     "fnb_cogs": 3.52,
+     "it_cctv": 3.0,
+     "corporate_overhead": 6.166440677966101,
+     "contingency": 3.0,
+     "total": 195.62368644067797
+    },
+    "ebitda": -41.462669491525446,
+    "ebitda_margin": -26.895690176460906,
+    "depreciation": 17.597619047619048,
+    "ebit": -59.060288539144494
+   },
+   {
+    "year": 2,
+    "revenue": {
+     "entry": 32.06779661016949,
+     "show": 120.2542372881356,
+     "fnb": 20.0,
+     "parking": 9.717514124293785,
+     "events": 15.0,
+     "ancillary": 10.0,
+     "toy_train": 9.0,
+     "total": 216.03954802259886,
+     "footfall_lakh": 2.15
+    },
+    "opex": {
+     "licence_fee": 34.65,
+     "manpower": 77.04,
+     "electricity": 23.9625,
+     "water_consumables": 5.324999999999999,
+     "horticulture": 11.715,
+     "show_amc": 14.91,
+     "statue_upkeep": 7.455,
+     "repairs": 10.456363636363635,
+     "insurance": 6.39,
+     "marketing": 9.72177966101695,
+     "fnb_cogs": 4.4,
+     "it_cctv": 3.195,
+     "corporate_overhead": 8.641581920903954,
+     "contingency": 3.195,
+     "total": 221.05722521828451
+    },
+    "ebitda": -5.01767719568565,
+    "ebitda_margin": -2.322573455467873,
+    "depreciation": 21.39761904761905,
+    "ebit": -26.4152962433047
+   },
+   {
+    "year": 3,
+    "revenue": {
+     "entry": 43.76059322033899,
+     "show": 159.05084745762713,
+     "fnb": 24.0,
+     "parking": 11.525423728813559,
+     "events": 19.0,
+     "ancillary": 13.0,
+     "toy_train": 12.0,
+     "total": 282.3368644067797,
+     "footfall_lakh": 2.55
+    },
+    "opex": {
+     "licence_fee": 36.3825,
+     "manpower": 87.92832,
+     "electricity": 25.973752499999996,
+     "water_consumables": 5.671124999999999,
+     "horticulture": 12.476474999999997,
+     "show_amc": 15.879149999999997,
+     "statue_upkeep": 7.939574999999999,
+     "repairs": 11.878429090909089,
+     "insurance": 6.805349999999999,
+     "marketing": 12.705158898305084,
+     "fnb_cogs": 5.28,
+     "it_cctv": 3.4026749999999995,
+     "corporate_overhead": 11.293474576271187,
+     "contingency": 3.4026749999999995,
+     "total": 247.01866006548534
+    },
+    "ebitda": 35.31820434129435,
+    "ebitda_margin": 12.509242962480908,
+    "depreciation": 21.39761904761905,
+    "ebit": 13.920585293675298
+   },
+   {
+    "year": 4,
+    "revenue": {
+     "entry": 48.90889830508476,
+     "show": 181.6271186440678,
+     "fnb": 27.0,
+     "parking": 12.881355932203391,
+     "events": 22.0,
+     "ancillary": 15.0,
+     "toy_train": 14.0,
+     "total": 321.41737288135596,
+     "footfall_lakh": 2.85
+    },
+    "opex": {
+     "licence_fee": 38.20162500000001,
+     "manpower": 98.49345720000001,
+     "electricity": 28.024431300000003,
+     "water_consumables": 6.039748124999999,
+     "horticulture": 13.287445875,
+     "show_amc": 16.91129475,
+     "statue_upkeep": 8.455647375,
+     "repairs": 13.24352043409091,
+     "insurance": 7.2476977499999995,
+     "marketing": 14.463781779661018,
+     "fnb_cogs": 5.94,
+     "it_cctv": 3.6238488749999997,
+     "corporate_overhead": 12.856694915254238,
+     "contingency": 3.6238488749999997,
+     "total": 270.41304225400614
+    },
+    "ebitda": 51.004330627349816,
+    "ebitda_margin": 15.868566832626351,
+    "depreciation": 21.39761904761905,
+    "ebit": 29.606711579730767
+   },
+   {
+    "year": 5,
+    "revenue": {
+     "entry": 60.318644067796605,
+     "show": 208.06779661016952,
+     "fnb": 30.0,
+     "parking": 14.011299435028251,
+     "events": 25.0,
+     "ancillary": 17.0,
+     "toy_train": 16.0,
+     "total": 370.39774011299437,
+     "footfall_lakh": 3.1
+    },
+    "opex": {
+     "licence_fee": 40.111706250000005,
+     "manpower": 109.32038723400001,
+     "electricity": 30.167635922156247,
+     "water_consumables": 6.432331753124999,
+     "horticulture": 14.151129856874999,
+     "show_amc": 18.010528908749997,
+     "statue_upkeep": 9.005264454374998,
+     "repairs": 14.630630951198862,
+     "insurance": 7.718798103749998,
+     "marketing": 16.667898305084748,
+     "fnb_cogs": 6.6,
+     "it_cctv": 3.859399051874999,
+     "corporate_overhead": 14.815909604519774,
+     "contingency": 3.859399051874999,
+     "total": 295.3510194475847
+    },
+    "ebitda": 75.04672066540968,
+    "ebitda_margin": 20.261117317431733,
+    "depreciation": 21.39761904761905,
+    "ebit": 53.649101617790635
+   },
+   {
+    "year": 6,
+    "revenue": {
+     "entry": 64.21016949152542,
+     "show": 226.10593220338984,
+     "fnb": 33.0,
+     "parking": 14.915254237288135,
+     "events": 27.0,
+     "ancillary": 18.0,
+     "toy_train": 17.0,
+     "total": 400.23135593220337,
+     "footfall_lakh": 3.3
+    },
+    "opex": {
+     "licence_fee": 42.117291562500014,
+     "manpower": 120.33893849406003,
+     "electricity": 32.40254958977952,
+     "water_consumables": 6.850433317078123,
+     "horticulture": 15.07095329757187,
+     "show_amc": 19.181213287818743,
+     "statue_upkeep": 9.590606643909371,
+     "repairs": 16.03001396196281,
+     "insurance": 8.220519980493748,
+     "marketing": 18.010411016949153,
+     "fnb_cogs": 7.26,
+     "it_cctv": 4.110259990246874,
+     "corporate_overhead": 16.009254237288136,
+     "contingency": 4.110259990246874,
+     "total": 319.3027053699052
+    },
+    "ebitda": 80.92865056229817,
+    "ebitda_margin": 20.220467327903958,
+    "depreciation": 21.39761904761905,
+    "ebit": 59.53103151467913
+   },
+   {
+    "year": 7,
+    "revenue": {
+     "entry": 71.92372881355934,
+     "show": 255.8262711864407,
+     "fnb": 35.0,
+     "parking": 15.593220338983054,
+     "events": 29.0,
+     "ancillary": 19.0,
+     "toy_train": 18.0,
+     "total": 444.34322033898303,
+     "footfall_lakh": 3.45
+    },
+    "opex": {
+     "licence_fee": 44.223156140625015,
+     "manpower": 131.46397882197246,
+     "electricity": 34.727586657595836,
+     "water_consumables": 7.295711482688201,
+     "horticulture": 16.05056526191404,
+     "show_amc": 20.42799215152696,
+     "statue_upkeep": 10.21399607576348,
+     "repairs": 17.43011797864054,
+     "insurance": 8.75485377922584,
+     "marketing": 19.995444915254236,
+     "fnb_cogs": 7.7,
+     "it_cctv": 4.37742688961292,
+     "corporate_overhead": 17.773728813559323,
+     "contingency": 4.37742688961292,
+     "total": 344.8119858579918
+    },
+    "ebitda": 99.53123448099126,
+    "ebitda_margin": 22.399629368725446,
+    "depreciation": 21.39761904761905,
+    "ebit": 78.13361543337221
+   },
+   {
+    "year": 8,
+    "revenue": {
+     "entry": 75.96610169491525,
+     "show": 272.2881355932204,
+     "fnb": 37.0,
+     "parking": 16.271186440677965,
+     "events": 31.0,
+     "ancillary": 20.0,
+     "toy_train": 19.0,
+     "total": 471.5254237288136,
+     "footfall_lakh": 3.6
+    },
+    "opex": {
+     "licence_fee": 46.434313947656264,
+     "manpower": 143.5568639971717,
+     "electricity": 37.217977772211455,
+     "water_consumables": 7.769932729062933,
+     "horticulture": 17.093852003938455,
+     "show_amc": 21.755811641376216,
+     "statue_upkeep": 10.877905820688108,
+     "repairs": 18.94450870849708,
+     "insurance": 9.323919274875522,
+     "marketing": 21.21864406779661,
+     "fnb_cogs": 8.14,
+     "it_cctv": 4.661959637437761,
+     "corporate_overhead": 18.861016949152546,
+     "contingency": 4.661959637437761,
+     "total": 370.51866618730236
+    },
+    "ebitda": 101.00675754151126,
+    "ebitda_margin": 21.4212749638719,
+    "depreciation": 21.39761904761905,
+    "ebit": 79.60913849389222
+   },
+   {
+    "year": 9,
+    "revenue": {
+     "entry": 86.34813559322035,
+     "show": 297.442372881356,
+     "fnb": 39.0,
+     "parking": 16.8135593220339,
+     "events": 33.0,
+     "ancillary": 21.0,
+     "toy_train": 20.0,
+     "total": 513.6040677966103,
+     "footfall_lakh": 3.72
+    },
+    "opex": {
+     "licence_fee": 48.75602964503908,
+     "manpower": 156.08003257593168,
+     "electricity": 39.835745807960045,
+     "water_consumables": 8.274978356452024,
+     "horticulture": 18.204952384194453,
+     "show_amc": 23.16993939806567,
+     "statue_upkeep": 11.584969699032834,
+     "repairs": 20.500882742730052,
+     "insurance": 9.929974027742428,
+     "marketing": 23.11218305084746,
+     "fnb_cogs": 8.58,
+     "it_cctv": 4.964987013871214,
+     "corporate_overhead": 20.54416271186441,
+     "contingency": 4.964987013871214,
+     "total": 398.5038244276026
+    },
+    "ebitda": 115.10024336900767,
+    "ebitda_margin": 22.41030602868744,
+    "depreciation": 21.39761904761905,
+    "ebit": 93.70262432138863
+   },
+   {
+    "year": 10,
+    "revenue": {
+     "entry": 89.3656779661017,
+     "show": 313.8728813559323,
+     "fnb": 41.0,
+     "parking": 17.401129943502827,
+     "events": 35.0,
+     "ancillary": 22.0,
+     "toy_train": 21.0,
+     "total": 539.6396892655368,
+     "footfall_lakh": 3.85
+    },
+    "opex": {
+     "licence_fee": 51.193831127291034,
+     "manpower": 169.87363122762235,
+     "electricity": 42.654203436167606,
+     "water_consumables": 8.812851949621406,
+     "horticulture": 19.388274289167093,
+     "show_amc": 24.675985458939934,
+     "statue_upkeep": 12.337992729469967,
+     "repairs": 22.208386913045942,
+     "insurance": 10.575422339545685,
+     "marketing": 24.283786016949158,
+     "fnb_cogs": 9.02,
+     "it_cctv": 5.287711169772843,
+     "corporate_overhead": 21.585587570621474,
+     "contingency": 5.287711169772843,
+     "total": 427.18537539798734
+    },
+    "ebitda": 112.4543138675495,
+    "ebitda_margin": 20.838777448078854,
+    "depreciation": 21.39761904761905,
+    "ebit": 91.05669481993046
+   }
+  ],
+  "opex_year1": 195.62368644067797,
+  "opex_year2": 221.05722521828451,
+  "two_year_opex": 416.6809116589625,
+  "facility_ask": 416.6809116589625,
+  "net_drawdown_requirement": 235.8803466872111,
+  "annual_depreciation_full": 21.39761904761905,
+  "financing": {
+   "facility_ask": 416.6809116589625,
+   "true_capital_requirement": {
+    "mobilisation": 151.4,
+    "later_capex": 38.0,
+    "cumulative_operating_deficit": 46.480346687211096,
+    "total": 235.8803466872111
+   },
+   "opex_facility": 227.28091165896248,
+   "project_fcf": {
+    "t0": 189.4,
+    "terminal_inflow": 33.0,
+    "flows": [
+     -189.4,
+     -44.5458898305085,
+     -9.338468156137626,
+     26.191320729739928,
+     37.17430527479001,
+     54.22649045870214,
+     58.04126556498433,
+     71.11096621586854,
+     71.67396444346194,
+     81.40250593272832,
+     111.89734637725616
+    ],
+    "detail": [
+     {
+      "year": 1,
+      "ebitda": -41.462669491525446,
+      "tax": 0.0,
+      "maintenance_capex": 3.0832203389830504,
+      "terminal_inflow": 0.0,
+      "fcf": -44.5458898305085
+     },
+     {
+      "year": 2,
+      "ebitda": -5.01767719568565,
+      "tax": 0.0,
+      "maintenance_capex": 4.320790960451977,
+      "terminal_inflow": 0.0,
+      "fcf": -9.338468156137626
+     },
+     {
+      "year": 3,
+      "ebitda": 35.31820434129435,
+      "tax": 3.4801463234188246,
+      "maintenance_capex": 5.6467372881355935,
+      "terminal_inflow": 0.0,
+      "fcf": 26.191320729739928
+     },
+     {
+      "year": 4,
+      "ebitda": 51.004330627349816,
+      "tax": 7.401677894932692,
+      "maintenance_capex": 6.428347457627119,
+      "terminal_inflow": 0.0,
+      "fcf": 37.17430527479001
+     },
+     {
+      "year": 5,
+      "ebitda": 75.04672066540968,
+      "tax": 13.412275404447659,
+      "maintenance_capex": 7.407954802259887,
+      "terminal_inflow": 0.0,
+      "fcf": 54.22649045870214
+     },
+     {
+      "year": 6,
+      "ebitda": 80.92865056229817,
+      "tax": 14.882757878669782,
+      "maintenance_capex": 8.004627118644068,
+      "terminal_inflow": 0.0,
+      "fcf": 58.04126556498433
+     },
+     {
+      "year": 7,
+      "ebitda": 99.53123448099126,
+      "tax": 19.533403858343053,
+      "maintenance_capex": 8.886864406779662,
+      "terminal_inflow": 0.0,
+      "fcf": 71.11096621586854
+     },
+     {
+      "year": 8,
+      "ebitda": 101.00675754151126,
+      "tax": 19.902284623473054,
+      "maintenance_capex": 9.430508474576273,
+      "terminal_inflow": 0.0,
+      "fcf": 71.67396444346194
+     },
+     {
+      "year": 9,
+      "ebitda": 115.10024336900767,
+      "tax": 23.425656080347157,
+      "maintenance_capex": 10.272081355932205,
+      "terminal_inflow": 0.0,
+      "fcf": 81.40250593272832
+     },
+     {
+      "year": 10,
+      "ebitda": 112.4543138675495,
+      "tax": 22.764173704982614,
+      "maintenance_capex": 10.792793785310737,
+      "terminal_inflow": 33.0,
+      "fcf": 111.89734637725616
+     }
+    ],
+    "irr_pct": 11.441894247691378,
+    "npv_at_15pct": -43.705463789344435,
+    "payback_years": 6.951343787863387,
+    "cumulative_fcf": 457.83380701088527
+   },
+   "cost_of_capital": {
+    "project_irr_pct": 11.441894247691378,
+    "all_in_cost_of_cgtmse_debt_pct": 12.5,
+    "equity_hurdle_pct": 22.0,
+    "spread_over_debt_pct": -1.058105752308622,
+    "clears_debt": false,
+    "clears_equity_hurdle": false,
+    "verdict": "Below the cost of debt. Do not gear this project as modelled \u2014 re-bid the licence fee, renegotiate the manpower schedule, or stand down."
+   },
+   "debt": {
+    "label": "CGTMSE composite facility \u2014 Ramayan Vatika",
+    "term_loan": 189.4,
+    "wc_limit": 227.28091165896248,
+    "total_limit": 416.6809116589625,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 9,
+    "tl_moratorium_years": 4,
+    "cgtmse": {
+     "agf_rate_pct": 1.0,
+     "agf_slab": "limit of Rs 4.17 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 312.51068374422186,
+     "uncovered_amount": 104.17022791474062,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 110.0,
+      "wc_interest": 12.65,
+      "agf": 4.166809116589625,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 38.59780911658963,
+      "cfads": -41.462669491525446,
+      "dscr": -1.0742233935165113
+     },
+     {
+      "year": 2,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 150.0,
+      "wc_interest": 17.25,
+      "agf": 3.3939999999999997,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 42.425000000000004,
+      "cfads": -5.01767719568565,
+      "dscr": -0.11827170761781142
+     },
+     {
+      "year": 3,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 120.0,
+      "wc_interest": 13.8,
+      "agf": 3.094,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 38.675000000000004,
+      "cfads": 35.31820434129435,
+      "dscr": 0.9132050249849862
+     },
+     {
+      "year": 4,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 90.0,
+      "wc_interest": 10.35,
+      "agf": 2.7939999999999996,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 34.925,
+      "cfads": 51.004330627349816,
+      "dscr": 1.460396009372937
+     },
+     {
+      "year": 5,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 60.0,
+      "wc_interest": 6.9,
+      "agf": 2.494,
+      "principal": 37.88,
+      "tl_closing": 151.52,
+      "debt_service": 69.055,
+      "cfads": 75.04672066540968,
+      "dscr": 1.0867673689871793
+     },
+     {
+      "year": 6,
+      "tl_opening": 151.52,
+      "tl_interest": 17.4248,
+      "wc_outstanding": 40.0,
+      "wc_interest": 4.6000000000000005,
+      "agf": 1.9152,
+      "principal": 37.88,
+      "tl_closing": 113.64000000000001,
+      "debt_service": 61.82000000000001,
+      "cfads": 80.92865056229817,
+      "dscr": 1.3091014325832766
+     },
+     {
+      "year": 7,
+      "tl_opening": 113.64000000000001,
+      "tl_interest": 13.068600000000002,
+      "wc_outstanding": 25.0,
+      "wc_interest": 2.875,
+      "agf": 1.3864,
+      "principal": 37.88,
+      "tl_closing": 75.76000000000002,
+      "debt_service": 55.21000000000001,
+      "cfads": 99.53123448099126,
+      "dscr": 1.802775484169376
+     },
+     {
+      "year": 8,
+      "tl_opening": 75.76000000000002,
+      "tl_interest": 8.712400000000002,
+      "wc_outstanding": 15.0,
+      "wc_interest": 1.725,
+      "agf": 0.9076000000000002,
+      "principal": 37.88,
+      "tl_closing": 37.88000000000002,
+      "debt_service": 49.22500000000001,
+      "cfads": 101.00675754151126,
+      "dscr": 2.0519402243069833
+     },
+     {
+      "year": 9,
+      "tl_opening": 37.88000000000002,
+      "tl_interest": 4.356200000000002,
+      "wc_outstanding": 10.0,
+      "wc_interest": 1.1500000000000001,
+      "agf": 0.47880000000000017,
+      "principal": 37.88,
+      "tl_closing": 1.4210854715202004e-14,
+      "debt_service": 43.86500000000001,
+      "cfads": 115.10024336900767,
+      "dscr": 2.6239654250315203
+     }
+    ],
+    "min_dscr": -1.0742233935165113,
+    "avg_dscr": 1.117295096477993,
+    "min_dscr_post_moratorium": 1.0867673689871793,
+    "avg_dscr_post_moratorium": 1.774909987015667,
+    "bankable": false,
+    "total_interest": 223.76700000000005,
+    "total_agf": 20.63080911658962,
+    "total_finance_cost": 244.39780911658966
+   },
+   "equity": {
+    "label": "Project-level equity \u2014 Ramayan Vatika",
+    "basis": "Sized to the true capital requirement. Exit at year 7 valued as the discounted remaining cash flow over the balance of the 10+5 year concession.",
+    "investment": 235.8803466872111,
+    "stake_pct": 70.0,
+    "exit_year": 7,
+    "exit_equity_value": 219.1495331150635,
+    "exit_proceeds": 153.40467318054445,
+    "dividends": [
+     0,
+     0,
+     0,
+     10,
+     25,
+     32,
+     45
+    ],
+    "flows": [
+     -235.8803466872111,
+     0,
+     0,
+     0,
+     10,
+     25,
+     32,
+     198.40467318054445
+    ],
+    "irr_pct": 1.8106320523656911,
+    "money_multiple": 1.1251665384928575,
+    "stake_for_18pct": 100.0,
+    "stake_for_22pct": 100.0,
+    "stake_for_25pct": 100.0
+   },
+   "ccd": {
+    "label": "CCD converting at the end of year 4 \u2014 Ramayan Vatika",
+    "basis": "8% coupon to conversion, then 65% of project equity",
+    "principal": 235.8803466872111,
+    "coupon_pct": 8.0,
+    "conversion_year": 4,
+    "conversion_stake_pct": 65.0,
+    "coupon_paid_total": 75.48171093990756,
+    "exit_year": 7,
+    "exit_equity_value": 219.1495331150635,
+    "exit_proceeds": 142.44719652479128,
+    "flows": [
+     -235.8803466872111,
+     18.87042773497689,
+     18.87042773497689,
+     18.87042773497689,
+     18.87042773497689,
+     0.0,
+     0.0,
+     142.44719652479128
+    ],
+    "irr_pct": -1.4347728677967098,
+    "money_multiple": 0.9238959944114516
+   },
+   "exit_equity_value": 219.1495331150635,
+   "exit_year": 7,
+   "exit_valuation": {
+    "dcf_remaining_term": 219.1495331150635,
+    "ebitda_multiple_crosscheck": 497.6561724049563,
+    "exit_year_ebitda": 99.53123448099126,
+    "ebitda_multiple": 5.0,
+    "discount_rate_pct": 15.0,
+    "used": 219.1495331150635,
+    "basis": "Discounted remaining concession cash flow. A licence that expires is a wasting asset, so an EBITDA multiple flatters it; the multiple is shown only as a cross-check."
+   },
+   "debt_optimised": {
+    "label": "Right-sized variant \u2014 working capital limit cut to peak drawdown",
+    "term_loan": 189.4,
+    "wc_limit": 170.0,
+    "total_limit": 359.4,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 9,
+    "tl_moratorium_years": 4,
+    "cgtmse": {
+     "agf_rate_pct": 1.0,
+     "agf_slab": "limit of Rs 3.59 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 269.55,
+     "uncovered_amount": 89.85,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 110.0,
+      "wc_interest": 12.65,
+      "agf": 3.594,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 38.025000000000006,
+      "cfads": -41.462669491525446,
+      "dscr": -1.0904055093103338
+     },
+     {
+      "year": 2,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 150.0,
+      "wc_interest": 17.25,
+      "agf": 3.3939999999999997,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 42.425000000000004,
+      "cfads": -5.01767719568565,
+      "dscr": -0.11827170761781142
+     },
+     {
+      "year": 3,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 120.0,
+      "wc_interest": 13.8,
+      "agf": 3.094,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 38.675000000000004,
+      "cfads": 35.31820434129435,
+      "dscr": 0.9132050249849862
+     },
+     {
+      "year": 4,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 90.0,
+      "wc_interest": 10.35,
+      "agf": 2.7939999999999996,
+      "principal": 0.0,
+      "tl_closing": 189.4,
+      "debt_service": 34.925,
+      "cfads": 51.004330627349816,
+      "dscr": 1.460396009372937
+     },
+     {
+      "year": 5,
+      "tl_opening": 189.4,
+      "tl_interest": 21.781000000000002,
+      "wc_outstanding": 60.0,
+      "wc_interest": 6.9,
+      "agf": 2.494,
+      "principal": 37.88,
+      "tl_closing": 151.52,
+      "debt_service": 69.055,
+      "cfads": 75.04672066540968,
+      "dscr": 1.0867673689871793
+     },
+     {
+      "year": 6,
+      "tl_opening": 151.52,
+      "tl_interest": 17.4248,
+      "wc_outstanding": 40.0,
+      "wc_interest": 4.6000000000000005,
+      "agf": 1.9152,
+      "principal": 37.88,
+      "tl_closing": 113.64000000000001,
+      "debt_service": 61.82000000000001,
+      "cfads": 80.92865056229817,
+      "dscr": 1.3091014325832766
+     },
+     {
+      "year": 7,
+      "tl_opening": 113.64000000000001,
+      "tl_interest": 13.068600000000002,
+      "wc_outstanding": 25.0,
+      "wc_interest": 2.875,
+      "agf": 1.3864,
+      "principal": 37.88,
+      "tl_closing": 75.76000000000002,
+      "debt_service": 55.21000000000001,
+      "cfads": 99.53123448099126,
+      "dscr": 1.802775484169376
+     },
+     {
+      "year": 8,
+      "tl_opening": 75.76000000000002,
+      "tl_interest": 8.712400000000002,
+      "wc_outstanding": 15.0,
+      "wc_interest": 1.725,
+      "agf": 0.9076000000000002,
+      "principal": 37.88,
+      "tl_closing": 37.88000000000002,
+      "debt_service": 49.22500000000001,
+      "cfads": 101.00675754151126,
+      "dscr": 2.0519402243069833
+     },
+     {
+      "year": 9,
+      "tl_opening": 37.88000000000002,
+      "tl_interest": 4.356200000000002,
+      "wc_outstanding": 10.0,
+      "wc_interest": 1.1500000000000001,
+      "agf": 0.47880000000000017,
+      "principal": 37.88,
+      "tl_closing": 1.4210854715202004e-14,
+      "debt_service": 43.86500000000001,
+      "cfads": 115.10024336900767,
+      "dscr": 2.6239654250315203
+     }
+    ],
+    "min_dscr": -1.0904055093103338,
+    "avg_dscr": 1.1154970836120128,
+    "min_dscr_post_moratorium": 1.0867673689871793,
+    "avg_dscr_post_moratorium": 1.774909987015667,
+    "bankable": false,
+    "total_interest": 223.76700000000005,
+    "total_agf": 20.057999999999996,
+    "total_finance_cost": 243.82500000000005
+   },
+   "agf_saving_optimised": 0.5728091165896245,
+   "conversion_gap_value": {
+    "year": 5,
+    "footfall_lakh": 3.1,
+    "bda_conversion_pct": 60.0,
+    "modelled_conversion_pct": 48.0,
+    "show_tariff_gross": 165,
+    "value_lakh": 52.016949152542374
+   },
+   "walk_away": {
+    "hurdle_pct": 12.5,
+    "multiple_of_base": 1.0759093946808536,
+    "licence_fee_year1": 35.50501002446817,
+    "licence_fee_month": 2.9587508353723475
+   },
+   "debt_capacity": {
+    "target_dscr": 1.3,
+    "max_total_limit": 280.9971841437748,
+    "max_term_loan": 154.54845127907612,
+    "max_wc_limit": 126.44873286469867,
+    "achieved_min_dscr": 1.3000000000000003,
+    "facility": {
+     "label": "Debt capacity at the target DSCR",
+     "term_loan": 154.54845127907612,
+     "wc_limit": 126.44873286469867,
+     "total_limit": 280.9971841437748,
+     "rate_pct": 11.5,
+     "tl_tenor_years": 9,
+     "tl_moratorium_years": 4,
+     "cgtmse": {
+      "agf_rate_pct": 1.0,
+      "agf_slab": "limit of Rs 2.81 Cr",
+      "coverage_pct": 75.0,
+      "guaranteed_amount": 210.7478881078311,
+      "uncovered_amount": 70.2492960359437,
+      "within_ceiling": true
+     },
+     "schedule": [
+      {
+       "year": 1,
+       "tl_opening": 154.54845127907612,
+       "tl_interest": 17.773071897093754,
+       "wc_outstanding": 110.0,
+       "wc_interest": 12.65,
+       "agf": 2.809971841437748,
+       "principal": 0.0,
+       "tl_closing": 154.54845127907612,
+       "debt_service": 33.23304373853151,
+       "cfads": -41.462669491525446,
+       "dscr": -1.2476338254702874
+      },
+      {
+       "year": 2,
+       "tl_opening": 154.54845127907612,
+       "tl_interest": 17.773071897093754,
+       "wc_outstanding": 126.44873286469867,
+       "wc_interest": 14.541604279440348,
+       "agf": 2.809971841437748,
+       "principal": 0.0,
+       "tl_closing": 154.54845127907612,
+       "debt_service": 35.12464801797185,
+       "cfads": -5.01767719568565,
+       "dscr": -0.1428534513176704
+      },
+      {
+       "year": 3,
+       "tl_opening": 154.54845127907612,
+       "tl_interest": 17.773071897093754,
+       "wc_outstanding": 120.0,
+       "wc_interest": 13.8,
+       "agf": 2.7454845127907612,
+       "principal": 0.0,
+       "tl_closing": 154.54845127907612,
+       "debt_service": 34.318556409884515,
+       "cfads": 35.31820434129435,
+       "dscr": 1.0291284959504272
+      },
+      {
+       "year": 4,
+       "tl_opening": 154.54845127907612,
+       "tl_interest": 17.773071897093754,
+       "wc_outstanding": 90.0,
+       "wc_interest": 10.35,
+       "agf": 2.4454845127907614,
+       "principal": 0.0,
+       "tl_closing": 154.54845127907612,
+       "debt_service": 30.568556409884515,
+       "cfads": 51.004330627349816,
+       "dscr": 1.6685227114898131
+      },
+      {
+       "year": 5,
+       "tl_opening": 154.54845127907612,
+       "tl_interest": 17.773071897093754,
+       "wc_outstanding": 60.0,
+       "wc_interest": 6.9,
+       "agf": 2.145484512790761,
+       "principal": 30.909690255815224,
+       "tl_closing": 123.6387610232609,
+       "debt_service": 57.72824666569974,
+       "cfads": 75.04672066540968,
+       "dscr": 1.3000000000000003
+      },
+      {
+       "year": 6,
+       "tl_opening": 123.6387610232609,
+       "tl_interest": 14.218457517675004,
+       "wc_outstanding": 40.0,
+       "wc_interest": 4.6000000000000005,
+       "agf": 1.636387610232609,
+       "principal": 30.909690255815224,
+       "tl_closing": 92.72907076744568,
+       "debt_service": 51.36453538372284,
+       "cfads": 80.92865056229817,
+       "dscr": 1.575574468993329
+      },
+      {
+       "year": 7,
+       "tl_opening": 92.72907076744568,
+       "tl_interest": 10.663843138256253,
+       "wc_outstanding": 25.0,
+       "wc_interest": 2.875,
+       "agf": 1.1772907076744568,
+       "principal": 30.909690255815224,
+       "tl_closing": 61.819380511630456,
+       "debt_service": 45.625824101745934,
+       "cfads": 99.53123448099126,
+       "dscr": 2.181467106414031
+      },
+      {
+       "year": 8,
+       "tl_opening": 61.819380511630456,
+       "tl_interest": 7.109228758837503,
+       "wc_outstanding": 15.0,
+       "wc_interest": 1.725,
+       "agf": 0.7681938051163045,
+       "principal": 30.909690255815224,
+       "tl_closing": 30.90969025581523,
+       "debt_service": 40.51211281976903,
+       "cfads": 101.00675754151126,
+       "dscr": 2.4932483277500688
+      },
+      {
+       "year": 9,
+       "tl_opening": 30.90969025581523,
+       "tl_interest": 3.554614379418752,
+       "wc_outstanding": 10.0,
+       "wc_interest": 1.1500000000000001,
+       "agf": 0.40909690255815234,
+       "principal": 30.909690255815224,
+       "tl_closing": 7.105427357601002e-15,
+       "debt_service": 36.023401537792125,
+       "cfads": 115.10024336900767,
+       "dscr": 3.195151997188719
+      }
+     ],
+     "min_dscr": -1.2476338254702874,
+     "avg_dscr": 1.339178425666492,
+     "min_dscr_post_moratorium": 1.3000000000000003,
+     "avg_dscr_post_moratorium": 2.1490883800692293,
+     "bankable": true,
+     "total_interest": 193.00310755909663,
+     "total_agf": 16.9473662468293,
+     "total_finance_cost": 209.95047380592592
+    }
+   }
+  },
+  "scenarios": {
+   "downside": {
+    "note": "15% below base on footfall and show conversion, 5% cost overrun, licence bid up to \u20b944 lakh",
+    "multipliers": {
+     "footfall": 0.85,
+     "yield": 0.85,
+     "opex": 1.05,
+     "licence": 1.33
+    },
+    "revenue_year1": 124.90497881355931,
+    "ebitda_year1": -85.51966554555086,
+    "revenue_stabilised": 301.50943502824856,
+    "ebitda_stabilised": -7.023661221837983,
+    "ebitda_margin_stabilised": -2.32949964606578,
+    "ebitda_final_year": -4.36013454257818,
+    "project_irr_pct": -36.54201128835667,
+    "payback_years": null,
+    "cumulative_fcf": -238.66707627353182
+   },
+   "base": {
+    "note": "As modelled: 1.65 lakh visits in year 1, 42% show conversion, \u20b933 lakh licence fee",
+    "multipliers": {},
+    "revenue_year1": 154.16101694915253,
+    "ebitda_year1": -41.462669491525446,
+    "revenue_stabilised": 370.39774011299437,
+    "ebitda_stabilised": 75.04672066540968,
+    "ebitda_margin_stabilised": 20.261117317431733,
+    "ebitda_final_year": 112.4543138675495,
+    "project_irr_pct": 11.441894247691378,
+    "payback_years": 6.951343787863387,
+    "cumulative_fcf": 457.83380701088527
+   },
+   "bda_indicative": {
+    "note": "BDA's own indicative case: 500 visitors/day with 60% paying for the show",
+    "multipliers": {
+     "footfall": 1.1,
+     "yield": 1.4
+    },
+    "revenue_year1": 204.93813559322032,
+    "ebitda_year1": 2.5833940677965472,
+    "revenue_stabilised": 490.1873446327685,
+    "ebitda_stabilised": 178.72665378088305,
+    "ebitda_margin_stabilised": 36.46088699306975,
+    "ebitda_final_year": 267.02537696209015,
+    "project_irr_pct": 36.070168941369054,
+    "payback_years": 3.6441493602967197,
+    "cumulative_fcf": 1240.517280327627
+   }
+  }
+ },
+ "karnal": {
+  "facts": {
+   "site": "NH-1 Milestone 109, Gharaunda, Karnal (Delhi-Amritsar highway)",
+   "counterparty": "Sub-lease with A4A Highway Nest LLP",
+   "area_sqft": 22000,
+   "term_years": 15,
+   "minimum_guarantee_month_lakh": [
+    2.0,
+    3.0
+   ],
+   "rent_free": "Long rent-free build period",
+   "status": "Signed. Build-out is raise-dependent.",
+   "phase1_capex_cr": 4.0,
+   "build_months": 12,
+   "open_estimate": "September 2027",
+   "deck_revenue_fy2728_cr": [
+    0.5,
+    1.0
+   ],
+   "deck_revenue_fy2829_cr": [
+    3.0,
+    4.0
+   ],
+   "area_discrepancy": "index.html records ~22,000 sq ft; the Karnal assumption block in financials.html reads '~6 acres'. The two are not reconcilable and the footprint drives the revenue ceiling. To be confirmed against the signed sub-lease before this model is bid."
+  },
+  "capex_lines": [
+   {
+    "item": "Civil, site development, utilities, drainage",
+    "amount": 130.0,
+    "life_years": 15
+   },
+   {
+    "item": "Activity equipment \u2014 go-kart, zipline, obstacle course, soft play, arcade",
+    "amount": 190.0,
+    "life_years": 10
+   },
+   {
+    "item": "F&B outlet fit-out and kitchen equipment",
+    "amount": 35.0,
+    "life_years": 7
+   },
+   {
+    "item": "Ticketing, POS, CCTV, IT infrastructure",
+    "amount": 15.0,
+    "life_years": 5
+   },
+   {
+    "item": "Highway signage, branding, wayfinding",
+    "amount": 12.0,
+    "life_years": 5
+   },
+   {
+    "item": "Pre-operative, mobilisation and contingency",
+    "amount": 18.0,
+    "life_years": 5
+   }
+  ],
+  "capex_total": 400.0,
+  "years": [
+   {
+    "year": 1,
+    "revenue": 75.0,
+    "opex": {
+     "minimum_guarantee": 15.0,
+     "manpower": 39.0,
+     "electricity": 10.0,
+     "activity_consumables_amc": 14.0,
+     "repairs": 7.0,
+     "marketing": 9.0,
+     "admin_overhead": 9.0,
+     "insurance_statutory": 2.0,
+     "fnb_cogs": 8.25,
+     "total": 113.25
+    },
+    "ebitda": -38.25,
+    "ebitda_margin": -51.0,
+    "depreciation": 20.833333333333332,
+    "ebit": -59.08333333333333
+   },
+   {
+    "year": 2,
+    "revenue": 325.0,
+    "opex": {
+     "minimum_guarantee": 30.0,
+     "manpower": 78.0,
+     "electricity": 21.299999999999997,
+     "activity_consumables_amc": 29.82,
+     "repairs": 14.91,
+     "marketing": 19.169999999999998,
+     "admin_overhead": 19.169999999999998,
+     "insurance_statutory": 4.26,
+     "fnb_cogs": 35.75,
+     "total": 252.37999999999997
+    },
+    "ebitda": 72.62000000000003,
+    "ebitda_margin": 22.344615384615395,
+    "depreciation": 41.666666666666664,
+    "ebit": 30.95333333333337
+   },
+   {
+    "year": 3,
+    "revenue": 400.0,
+    "opex": {
+     "minimum_guarantee": 31.5,
+     "manpower": 83.46000000000001,
+     "electricity": 22.684499999999996,
+     "activity_consumables_amc": 31.758299999999995,
+     "repairs": 15.879149999999997,
+     "marketing": 20.41605,
+     "admin_overhead": 20.41605,
+     "insurance_statutory": 4.536899999999999,
+     "fnb_cogs": 44.0,
+     "total": 274.65094999999997
+    },
+    "ebitda": 125.34905000000003,
+    "ebitda_margin": 31.33726250000001,
+    "depreciation": 41.666666666666664,
+    "ebit": 83.68238333333338
+   },
+   {
+    "year": 4,
+    "revenue": 460.0,
+    "opex": {
+     "minimum_guarantee": 33.075,
+     "manpower": 89.3022,
+     "electricity": 24.158992499999997,
+     "activity_consumables_amc": 33.8225895,
+     "repairs": 16.91129475,
+     "marketing": 21.743093249999998,
+     "admin_overhead": 21.743093249999998,
+     "insurance_statutory": 4.8317985,
+     "fnb_cogs": 50.6,
+     "total": 296.18806175
+    },
+    "ebitda": 163.81193825000003,
+    "ebitda_margin": 35.611290923913046,
+    "depreciation": 41.666666666666664,
+    "ebit": 122.14527158333337
+   },
+   {
+    "year": 5,
+    "revenue": 510.0,
+    "opex": {
+     "minimum_guarantee": 34.728750000000005,
+     "manpower": 95.55335400000001,
+     "electricity": 25.729327012499997,
+     "activity_consumables_amc": 36.021057817499994,
+     "repairs": 18.010528908749997,
+     "marketing": 23.156394311249997,
+     "admin_overhead": 23.156394311249997,
+     "insurance_statutory": 5.145865402499999,
+     "fnb_cogs": 56.1,
+     "total": 317.60167176375
+    },
+    "ebitda": 192.39832823625,
+    "ebitda_margin": 37.725162399264704,
+    "depreciation": 41.666666666666664,
+    "ebit": 150.73166156958334
+   },
+   {
+    "year": 6,
+    "revenue": 550.0,
+    "opex": {
+     "minimum_guarantee": 36.465187500000006,
+     "manpower": 102.24208878000002,
+     "electricity": 27.40173326831249,
+     "activity_consumables_amc": 38.362426575637485,
+     "repairs": 19.181213287818743,
+     "marketing": 24.661559941481244,
+     "admin_overhead": 24.661559941481244,
+     "insurance_statutory": 5.480346653662498,
+     "fnb_cogs": 60.5,
+     "total": 338.9561159483937
+    },
+    "ebitda": 211.0438840516063,
+    "ebitda_margin": 38.37161528211024,
+    "depreciation": 41.666666666666664,
+    "ebit": 169.37721738493966
+   },
+   {
+    "year": 7,
+    "revenue": 588.0,
+    "opex": {
+     "minimum_guarantee": 38.28844687500001,
+     "manpower": 109.39903499460003,
+     "electricity": 29.182845930752805,
+     "activity_consumables_amc": 40.85598430305392,
+     "repairs": 20.42799215152696,
+     "marketing": 26.264561337677524,
+     "admin_overhead": 26.264561337677524,
+     "insurance_statutory": 5.836569186150561,
+     "fnb_cogs": 64.68,
+     "total": 361.19999611643937
+    },
+    "ebitda": 226.80000388356063,
+    "ebitda_margin": 38.571429231898065,
+    "depreciation": 41.666666666666664,
+    "ebit": 185.13333721689398
+   },
+   {
+    "year": 8,
+    "revenue": 625.0,
+    "opex": {
+     "minimum_guarantee": 40.20286921875001,
+     "manpower": 117.05696744422204,
+     "electricity": 31.079730916251734,
+     "activity_consumables_amc": 43.51162328275243,
+     "repairs": 21.755811641376216,
+     "marketing": 27.97175782462656,
+     "admin_overhead": 27.97175782462656,
+     "insurance_statutory": 6.215946183250347,
+     "fnb_cogs": 68.75,
+     "total": 384.5164643358559
+    },
+    "ebitda": 240.48353566414409,
+    "ebitda_margin": 38.47736570626306,
+    "depreciation": 41.666666666666664,
+    "ebit": 198.81686899747743
+   },
+   {
+    "year": 9,
+    "revenue": 660.0,
+    "opex": {
+     "minimum_guarantee": 42.213012679687516,
+     "manpower": 125.25095516531759,
+     "electricity": 33.0999134258081,
+     "activity_consumables_amc": 46.33987879613134,
+     "repairs": 23.16993939806567,
+     "marketing": 29.789922083227285,
+     "admin_overhead": 29.789922083227285,
+     "insurance_statutory": 6.619982685161619,
+     "fnb_cogs": 72.6,
+     "total": 408.87352631662634
+    },
+    "ebitda": 251.12647368337366,
+    "ebitda_margin": 38.04946570960207,
+    "depreciation": 41.666666666666664,
+    "ebit": 209.459807016707
+   },
+   {
+    "year": 10,
+    "revenue": 695.0,
+    "opex": {
+     "minimum_guarantee": 44.323663313671894,
+     "manpower": 134.01852202688983,
+     "electricity": 35.25140779848562,
+     "activity_consumables_amc": 49.35197091787987,
+     "repairs": 24.675985458939934,
+     "marketing": 31.72626701863706,
+     "admin_overhead": 31.72626701863706,
+     "insurance_statutory": 7.050281559697124,
+     "fnb_cogs": 76.45,
+     "total": 434.57436511283834
+    },
+    "ebitda": 260.42563488716166,
+    "ebitda_margin": 37.47131437225348,
+    "depreciation": 41.666666666666664,
+    "ebit": 218.758968220495
+   }
+  ],
+  "annual_depreciation": 41.666666666666664,
+  "financing": {
+   "project_cost": 400.0,
+   "true_capital_requirement": {
+    "mobilisation": 400.0,
+    "later_capex": 0,
+    "cumulative_operating_deficit": 38.25,
+    "total": 438.25
+   },
+   "project_fcf": {
+    "t0": 400.0,
+    "terminal_inflow": 0.0,
+    "flows": [
+     -400.0,
+     -39.75,
+     58.38166666666669,
+     96.42845416666668,
+     124.07562035416667,
+     144.51541284385416,
+     157.6995797053714,
+     168.75666957933714,
+     178.27931841477474,
+     185.5615219291969,
+     191.8358928320379
+    ],
+    "detail": [
+     {
+      "year": 1,
+      "ebitda": -38.25,
+      "tax": 0.0,
+      "maintenance_capex": 1.5,
+      "terminal_inflow": 0.0,
+      "fcf": -39.75
+     },
+     {
+      "year": 2,
+      "ebitda": 72.62000000000003,
+      "tax": 7.738333333333342,
+      "maintenance_capex": 6.5,
+      "terminal_inflow": 0.0,
+      "fcf": 58.38166666666669
+     },
+     {
+      "year": 3,
+      "ebitda": 125.34905000000003,
+      "tax": 20.920595833333344,
+      "maintenance_capex": 8.0,
+      "terminal_inflow": 0.0,
+      "fcf": 96.42845416666668
+     },
+     {
+      "year": 4,
+      "ebitda": 163.81193825000003,
+      "tax": 30.536317895833342,
+      "maintenance_capex": 9.200000000000001,
+      "terminal_inflow": 0.0,
+      "fcf": 124.07562035416667
+     },
+     {
+      "year": 5,
+      "ebitda": 192.39832823625,
+      "tax": 37.682915392395834,
+      "maintenance_capex": 10.200000000000001,
+      "terminal_inflow": 0.0,
+      "fcf": 144.51541284385416
+     },
+     {
+      "year": 6,
+      "ebitda": 211.0438840516063,
+      "tax": 42.344304346234914,
+      "maintenance_capex": 11.0,
+      "terminal_inflow": 0.0,
+      "fcf": 157.6995797053714
+     },
+     {
+      "year": 7,
+      "ebitda": 226.80000388356063,
+      "tax": 46.283334304223494,
+      "maintenance_capex": 11.76,
+      "terminal_inflow": 0.0,
+      "fcf": 168.75666957933714
+     },
+     {
+      "year": 8,
+      "ebitda": 240.48353566414409,
+      "tax": 49.70421724936936,
+      "maintenance_capex": 12.5,
+      "terminal_inflow": 0.0,
+      "fcf": 178.27931841477474
+     },
+     {
+      "year": 9,
+      "ebitda": 251.12647368337366,
+      "tax": 52.36495175417675,
+      "maintenance_capex": 13.200000000000001,
+      "terminal_inflow": 0.0,
+      "fcf": 185.5615219291969
+     },
+     {
+      "year": 10,
+      "ebitda": 260.42563488716166,
+      "tax": 54.68974205512375,
+      "maintenance_capex": 13.9,
+      "terminal_inflow": 0.0,
+      "fcf": 191.8358928320379
+     }
+    ],
+    "irr_pct": 19.472099073682326,
+    "npv_at_15pct": 105.83997685013469,
+    "payback_years": 5.103670827780202,
+    "cumulative_fcf": 1265.7841364920723
+   },
+   "cost_of_capital": {
+    "project_irr_pct": 19.472099073682326,
+    "all_in_cost_of_cgtmse_debt_pct": 12.5,
+    "equity_hurdle_pct": 22.0,
+    "spread_over_debt_pct": 6.972099073682326,
+    "clears_debt": true,
+    "clears_equity_hurdle": false,
+    "verdict": "Debt-fundable only: the project out-earns CGTMSE debt but not an equity hurdle. Third-party equity at this scale destroys value; fund it with the guaranteed facility and keep the upside."
+   },
+   "debt": {
+    "label": "CGTMSE term loan and working capital \u2014 Karnal Phase 1",
+    "term_loan": 300.0,
+    "wc_limit": 50.0,
+    "total_limit": 350.0,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 9,
+    "tl_moratorium_years": 2,
+    "cgtmse": {
+     "agf_rate_pct": 1.0,
+     "agf_slab": "limit of Rs 3.50 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 262.5,
+     "uncovered_amount": 87.5,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 300.0,
+      "tl_interest": 34.5,
+      "wc_outstanding": 25.0,
+      "wc_interest": 2.875,
+      "agf": 3.5,
+      "principal": 0.0,
+      "tl_closing": 300.0,
+      "debt_service": 40.875,
+      "cfads": -38.25,
+      "dscr": -0.9357798165137615
+     },
+     {
+      "year": 2,
+      "tl_opening": 300.0,
+      "tl_interest": 34.5,
+      "wc_outstanding": 40.0,
+      "wc_interest": 4.6000000000000005,
+      "agf": 3.4,
+      "principal": 0.0,
+      "tl_closing": 300.0,
+      "debt_service": 42.5,
+      "cfads": 72.62000000000003,
+      "dscr": 1.708705882352942
+     },
+     {
+      "year": 3,
+      "tl_opening": 300.0,
+      "tl_interest": 34.5,
+      "wc_outstanding": 35.0,
+      "wc_interest": 4.025,
+      "agf": 3.35,
+      "principal": 42.857142857142854,
+      "tl_closing": 257.14285714285717,
+      "debt_service": 84.73214285714286,
+      "cfads": 125.34905000000003,
+      "dscr": 1.4793565437302427
+     },
+     {
+      "year": 4,
+      "tl_opening": 257.14285714285717,
+      "tl_interest": 29.571428571428577,
+      "wc_outstanding": 30.0,
+      "wc_interest": 3.45,
+      "agf": 2.871428571428572,
+      "principal": 42.857142857142854,
+      "tl_closing": 214.2857142857143,
+      "debt_service": 78.75,
+      "cfads": 163.81193825000003,
+      "dscr": 2.080151596825397
+     },
+     {
+      "year": 5,
+      "tl_opening": 214.2857142857143,
+      "tl_interest": 24.642857142857146,
+      "wc_outstanding": 25.0,
+      "wc_interest": 2.875,
+      "agf": 2.3928571428571432,
+      "principal": 42.857142857142854,
+      "tl_closing": 171.42857142857144,
+      "debt_service": 72.76785714285714,
+      "cfads": 192.39832823625,
+      "dscr": 2.6440015659460125
+     },
+     {
+      "year": 6,
+      "tl_opening": 171.42857142857144,
+      "tl_interest": 19.714285714285715,
+      "wc_outstanding": 20.0,
+      "wc_interest": 2.3000000000000003,
+      "agf": 1.9142857142857144,
+      "principal": 42.857142857142854,
+      "tl_closing": 128.57142857142858,
+      "debt_service": 66.78571428571428,
+      "cfads": 211.0438840516063,
+      "dscr": 3.1600153761737846
+     },
+     {
+      "year": 7,
+      "tl_opening": 128.57142857142858,
+      "tl_interest": 14.785714285714288,
+      "wc_outstanding": 15.0,
+      "wc_interest": 1.725,
+      "agf": 1.435714285714286,
+      "principal": 42.857142857142854,
+      "tl_closing": 85.71428571428572,
+      "debt_service": 60.80357142857143,
+      "cfads": 226.80000388356063,
+      "dscr": 3.7300441167340366
+     },
+     {
+      "year": 8,
+      "tl_opening": 85.71428571428572,
+      "tl_interest": 9.857142857142858,
+      "wc_outstanding": 12.0,
+      "wc_interest": 1.3800000000000001,
+      "agf": 0.9771428571428572,
+      "principal": 42.857142857142854,
+      "tl_closing": 42.85714285714287,
+      "debt_service": 55.07142857142857,
+      "cfads": 240.48353566414409,
+      "dscr": 4.366756808428038
+     },
+     {
+      "year": 9,
+      "tl_opening": 42.85714285714287,
+      "tl_interest": 4.92857142857143,
+      "wc_outstanding": 10.0,
+      "wc_interest": 1.1500000000000001,
+      "agf": 0.5285714285714287,
+      "principal": 42.857142857142854,
+      "tl_closing": 1.4210854715202004e-14,
+      "debt_service": 49.464285714285715,
+      "cfads": 251.12647368337366,
+      "dscr": 5.076925099736074
+     }
+    ],
+    "min_dscr": -0.9357798165137615,
+    "avg_dscr": 2.590019685934752,
+    "min_dscr_post_moratorium": 1.4793565437302427,
+    "avg_dscr_post_moratorium": 3.2196073010819406,
+    "bankable": true,
+    "total_interest": 231.38,
+    "total_agf": 20.370000000000005,
+    "total_finance_cost": 251.75000000000006,
+    "promoter_contribution": 100.0,
+    "promoter_margin_pct": 25.0
+   },
+   "equity": {
+    "label": "Project-level equity \u2014 Karnal",
+    "basis": "Sized to the project cost plus the year-1 operating deficit \u2014 equity has to fund the ramp as well as the build. Exit at year 6 valued as the discounted cash flow over the balance of the 15-year sub-lease.",
+    "investment": 438.25,
+    "stake_pct": 45.0,
+    "exit_year": 6,
+    "exit_equity_value": 903.0707284051406,
+    "exit_proceeds": 406.3818277823133,
+    "dividends": [
+     0,
+     0,
+     25,
+     45,
+     60,
+     72
+    ],
+    "flows": [
+     -438.25,
+     0,
+     0,
+     25,
+     45,
+     60,
+     478.3818277823133
+    ],
+    "irr_pct": 6.019910457835068,
+    "money_multiple": 1.3882072510720211,
+    "stake_for_18pct": 100.0,
+    "stake_for_22pct": 100.0,
+    "stake_for_25pct": 100.0
+   },
+   "ccd": {
+    "label": "CCD converting at the end of year 3 \u2014 Karnal",
+    "basis": "9% coupon to conversion, then 38% of project equity",
+    "principal": 438.25,
+    "coupon_pct": 9.0,
+    "conversion_year": 3,
+    "conversion_stake_pct": 38.0,
+    "coupon_paid_total": 118.32750000000001,
+    "exit_year": 6,
+    "exit_equity_value": 903.0707284051406,
+    "exit_proceeds": 343.1668767939534,
+    "flows": [
+     -438.25,
+     39.4425,
+     39.4425,
+     39.4425,
+     0.0,
+     0.0,
+     343.1668767939534
+    ],
+    "irr_pct": 1.0479268368362684,
+    "money_multiple": 1.0530390799633849
+   },
+   "exit_equity_value": 903.0707284051406,
+   "exit_year": 6,
+   "exit_valuation": {
+    "dcf_remaining_term": 513.2422148294944,
+    "ebitda_multiple_crosscheck": 1266.263304309638,
+    "exit_year_ebitda": 211.0438840516063,
+    "ebitda_multiple": 6.0,
+    "discount_rate_pct": 15.0,
+    "used": 903.0707284051406,
+    "basis": "Discounted remaining concession cash flow. A licence that expires is a wasting asset, so an EBITDA multiple flatters it; the multiple is shown only as a cross-check.",
+    "beyond_model_horizon": 389.8285135756462
+   },
+   "debt_capacity": {
+    "target_dscr": 1.3,
+    "max_total_limit": 404.2863831070891,
+    "max_term_loan": 343.6434256410257,
+    "max_wc_limit": 60.64295746606336,
+    "achieved_min_dscr": 1.3,
+    "facility": {
+     "label": "Debt capacity at the target DSCR",
+     "term_loan": 343.6434256410257,
+     "wc_limit": 60.64295746606336,
+     "total_limit": 404.2863831070891,
+     "rate_pct": 11.5,
+     "tl_tenor_years": 9,
+     "tl_moratorium_years": 2,
+     "cgtmse": {
+      "agf_rate_pct": 1.0,
+      "agf_slab": "limit of Rs 4.04 Cr",
+      "coverage_pct": 75.0,
+      "guaranteed_amount": 303.21478733031677,
+      "uncovered_amount": 101.07159577677227,
+      "within_ceiling": true
+     },
+     "schedule": [
+      {
+       "year": 1,
+       "tl_opening": 343.6434256410257,
+       "tl_interest": 39.518993948717956,
+       "wc_outstanding": 25.0,
+       "wc_interest": 2.875,
+       "agf": 4.042863831070891,
+       "principal": 0.0,
+       "tl_closing": 343.6434256410257,
+       "debt_service": 46.436857779788845,
+       "cfads": -38.25,
+       "dscr": -0.8236991439297581
+      },
+      {
+       "year": 2,
+       "tl_opening": 343.6434256410257,
+       "tl_interest": 39.518993948717956,
+       "wc_outstanding": 40.0,
+       "wc_interest": 4.6000000000000005,
+       "agf": 3.836434256410257,
+       "principal": 0.0,
+       "tl_closing": 343.6434256410257,
+       "debt_service": 47.955428205128214,
+       "cfads": 72.62000000000003,
+       "dscr": 1.5143228351412001
+      },
+      {
+       "year": 3,
+       "tl_opening": 343.6434256410257,
+       "tl_interest": 39.518993948717956,
+       "wc_outstanding": 35.0,
+       "wc_interest": 4.025,
+       "agf": 3.7864342564102573,
+       "principal": 49.091917948717956,
+       "tl_closing": 294.5515076923078,
+       "debt_service": 96.42234615384618,
+       "cfads": 125.34905000000003,
+       "dscr": 1.3
+      },
+      {
+       "year": 4,
+       "tl_opening": 294.5515076923078,
+       "tl_interest": 33.87342338461539,
+       "wc_outstanding": 30.0,
+       "wc_interest": 3.45,
+       "agf": 3.245515076923078,
+       "principal": 49.091917948717956,
+       "tl_closing": 245.45958974358982,
+       "debt_service": 89.66085641025643,
+       "cfads": 163.81193825000003,
+       "dscr": 1.8270173273881571
+      },
+      {
+       "year": 5,
+       "tl_opening": 245.45958974358982,
+       "tl_interest": 28.22785282051283,
+       "wc_outstanding": 25.0,
+       "wc_interest": 2.875,
+       "agf": 2.7045958974358983,
+       "principal": 49.091917948717956,
+       "tl_closing": 196.36767179487185,
+       "debt_service": 82.89936666666668,
+       "cfads": 192.39832823625,
+       "dscr": 2.3208660810386164
+      },
+      {
+       "year": 6,
+       "tl_opening": 196.36767179487185,
+       "tl_interest": 22.582282256410263,
+       "wc_outstanding": 20.0,
+       "wc_interest": 2.3000000000000003,
+       "agf": 2.1636767179487184,
+       "principal": 49.091917948717956,
+       "tl_closing": 147.2757538461539,
+       "debt_service": 76.13787692307693,
+       "cfads": 211.0438840516063,
+       "dscr": 2.7718645775325026
+      },
+      {
+       "year": 7,
+       "tl_opening": 147.2757538461539,
+       "tl_interest": 16.936711692307696,
+       "wc_outstanding": 15.0,
+       "wc_interest": 1.725,
+       "agf": 1.622757538461539,
+       "principal": 49.091917948717956,
+       "tl_closing": 98.18383589743593,
+       "debt_service": 69.3763871794872,
+       "cfads": 226.80000388356063,
+       "dscr": 3.2691238777942524
+      },
+      {
+       "year": 8,
+       "tl_opening": 98.18383589743593,
+       "tl_interest": 11.291141128205131,
+       "wc_outstanding": 12.0,
+       "wc_interest": 1.3800000000000001,
+       "agf": 1.1018383589743592,
+       "principal": 49.091917948717956,
+       "tl_closing": 49.09191794871797,
+       "debt_service": 62.86489743589745,
+       "cfads": 240.48353566414409,
+       "dscr": 3.825402497623768
+      },
+      {
+       "year": 9,
+       "tl_opening": 49.09191794871797,
+       "tl_interest": 5.645570564102567,
+       "wc_outstanding": 10.0,
+       "wc_interest": 1.1500000000000001,
+       "agf": 0.5909191794871798,
+       "principal": 49.091917948717956,
+       "tl_closing": 1.4210854715202004e-14,
+       "debt_service": 56.478407692307705,
+       "cfads": 251.12647368337366,
+       "dscr": 4.446415611635184
+      }
+     ],
+     "min_dscr": -0.8236991439297581,
+     "avg_dscr": 2.2723681849137694,
+     "min_dscr_post_moratorium": 1.3,
+     "avg_dscr_post_moratorium": 2.8229557104303544,
+     "bankable": true,
+     "total_interest": 261.4939636923078,
+     "total_agf": 23.095035113122176,
+     "total_finance_cost": 284.5889988054299
+    }
+   }
+  },
+  "scenarios": {
+   "downside": {
+    "note": "25% below the revenue base \u2014 the low end of the deck's own FY28-29 range \u2014 with an 8% cost overrun",
+    "multipliers": {
+     "footfall": 0.75,
+     "opex": 1.08
+    },
+    "revenue_year1": 56.25,
+    "ebitda_year1": -63.83250000000001,
+    "revenue_stabilised": 382.5,
+    "ebitda_stabilised": 54.63719449515003,
+    "ebitda_margin_stabilised": 14.284233854941183,
+    "ebitda_final_year": 72.55118567813457,
+    "project_irr_pct": -4.581591732312519,
+    "payback_years": null,
+    "cumulative_fcf": 262.7442342389381
+   },
+   "base": {
+    "note": "As modelled: \u20b93.25 Cr in the first full year, within the deck's \u20b93\u20134 Cr range",
+    "multipliers": {},
+    "revenue_year1": 75.0,
+    "ebitda_year1": -38.25,
+    "revenue_stabilised": 510.0,
+    "ebitda_stabilised": 192.39832823625,
+    "ebitda_margin_stabilised": 37.725162399264704,
+    "ebitda_final_year": 260.42563488716166,
+    "project_irr_pct": 19.472099073682326,
+    "payback_years": 5.103670827780202,
+    "cumulative_fcf": 1265.7841364920723
+   },
+   "upside": {
+    "note": "Top of the deck's range at \u20b93.9 Cr in the first full year, with tight cost control",
+    "multipliers": {
+     "footfall": 1.2,
+     "opex": 0.97
+    },
+    "revenue_year1": 90.0,
+    "ebitda_year1": -21.453000000000003,
+    "revenue_stabilised": 612.0,
+    "ebitda_stabilised": 293.04297838916256,
+    "ebitda_margin_stabilised": 47.88283960607232,
+    "ebitda_final_year": 397.6315658405468,
+    "project_irr_pct": 30.655990326049498,
+    "payback_years": 3.852001646426997,
+    "cumulative_fcf": 1976.9982473973103
+   }
+  }
+ },
+ "consolidated": {
+  "phasing_note": "Geeta Govind Vatika awarded ~Oct 2026, Ramayan Vatika ~Jan 2027, Karnal opening ~Sep 2027. Existing-portfolio figures are the midpoints published in financials.html, extended two further years on the stated maturity path.",
+  "years": [
+   {
+    "fy": "FY26-27",
+    "parts": {
+     "existing": {
+      "revenue": 2400.0,
+      "ebitda": 550.0
+     },
+     "ggv": {
+      "revenue": 98.17796610169492,
+      "ebitda": -10.47351694915254
+     },
+     "rv": {
+      "revenue": 0.0,
+      "ebitda": 0.0
+     },
+     "karnal": {
+      "revenue": 0.0,
+      "ebitda": 0.0
+     }
+    },
+    "revenue": 2498.177966101695,
+    "ebitda": 539.5264830508474,
+    "ebitda_margin": 21.59679936224706
+   },
+   {
+    "fy": "FY27-28",
+    "parts": {
+     "existing": {
+      "revenue": 3300.0,
+      "ebitda": 800.0
+     },
+     "ggv": {
+      "revenue": 233.1883796766383,
+      "ebitda": -2.6543795379988637
+     },
+     "rv": {
+      "revenue": 154.16101694915253,
+      "ebitda": -41.462669491525446
+     },
+     "karnal": {
+      "revenue": 75.0,
+      "ebitda": -38.25
+     }
+    },
+    "revenue": 3762.3493966257906,
+    "ebitda": 717.6329509704756,
+    "ebitda_margin": 19.074064509108972
+   },
+   {
+    "fy": "FY28-29",
+    "parts": {
+     "existing": {
+      "revenue": 4350.0,
+      "ebitda": 1200.0
+     },
+     "ggv": {
+      "revenue": 303.9858783097712,
+      "ebitda": 33.00291080300029
+     },
+     "rv": {
+      "revenue": 216.03954802259886,
+      "ebitda": -5.01767719568565
+     },
+     "karnal": {
+      "revenue": 325.0,
+      "ebitda": 72.62000000000003
+     }
+    },
+    "revenue": 5195.02542633237,
+    "ebitda": 1300.6052336073149,
+    "ebitda_margin": 25.035589373920107
+   },
+   {
+    "fy": "FY29-30",
+    "parts": {
+     "existing": {
+      "revenue": 5100.0,
+      "ebitda": 1450.0
+     },
+     "ggv": {
+      "revenue": 364.25961688666723,
+      "ebitda": 60.51393248975853
+     },
+     "rv": {
+      "revenue": 282.3368644067797,
+      "ebitda": 35.31820434129435
+     },
+     "karnal": {
+      "revenue": 400.0,
+      "ebitda": 125.34905000000003
+     }
+    },
+    "revenue": 6146.596481293447,
+    "ebitda": 1671.181186831053,
+    "ebitda_margin": 27.18872455540438
+   },
+   {
+    "fy": "FY30-31",
+    "parts": {
+     "existing": {
+      "revenue": 5800.0,
+      "ebitda": 1690.0
+     },
+     "ggv": {
+      "revenue": 420.13761886862454,
+      "ebitda": 83.80337941215964
+     },
+     "rv": {
+      "revenue": 321.41737288135596,
+      "ebitda": 51.004330627349816
+     },
+     "karnal": {
+      "revenue": 460.0,
+      "ebitda": 163.81193825000003
+     }
+    },
+    "revenue": 7001.55499174998,
+    "ebitda": 1988.6196482895098,
+    "ebitda_margin": 28.402542729903928
+   }
+  ]
+ },
+ "company": {
+  "profile": {
+   "name": "Vision Amusement Park Pvt. Ltd.",
+   "cin": "U93000DL2011PTC212814",
+   "share_capital_lakh": 2.0,
+   "shares_outstanding": 20000,
+   "face_value_inr": 10,
+   "fy26": {
+    "revenue": 1629.0,
+    "ebitda": 237.0,
+    "pat": 66.0,
+    "net_worth": 258.0,
+    "reserves": 256.0,
+    "borrowings_short": 526.0,
+    "borrowings_long_related": 260.0,
+    "borrowings_total": 785.0,
+    "cash": 140.0,
+    "fdr": 222.0,
+    "gross_block": 613.0,
+    "net_block": 580.0,
+    "electricity_arrears": 214.0,
+    "finance_cost_total": 71.0,
+    "trade_payables": 4.0,
+    "other_current_liabilities": 209.0
+   },
+   "promoter_related_debt": {
+    "sanjeev_bewtra_and_team_buildcon_lt": 260.0,
+    "promoter_loans_fy26": 76.6,
+    "apoorv_babbar_huf": 59.5,
+    "geetika_jain": 13.0
+   },
+   "projections": {
+    "FY26-27": {
+     "revenue": 2400.0,
+     "ebitda": 550.0,
+     "pat": 300.0
+    },
+    "FY27-28": {
+     "revenue": 3300.0,
+     "ebitda": 800.0,
+     "pat": 525.0
+    },
+    "FY28-29": {
+     "revenue": 4350.0,
+     "ebitda": 1200.0,
+     "pat": 800.0
+    }
+   },
+   "existing_raise": {
+    "amount_cr": 10.0,
+    "pre_money_cr": 90.0,
+    "dilution_pct": 10.0
+   }
+  },
+  "msme": {
+   "investment_plant_machinery_cr": 6.13,
+   "turnover_cr": 16.29,
+   "classification": "small",
+   "headroom_investment_cr": 18.87,
+   "headroom_turnover_cr": 83.71000000000001,
+   "cgtmse_eligible": true
+  },
+  "related_party_conversion": {
+   "base": {
+    "borrowings": 785.0,
+    "net_worth": 258.0,
+    "debt_equity": 3.0426356589147288
+   },
+   "convert_lt_related_260": {
+    "converted": 260.0,
+    "borrowings": 525.0,
+    "net_worth": 518.0,
+    "debt_equity": 1.0135135135135136
+   },
+   "convert_lt_plus_promoter_409": {
+    "converted": 409.1,
+    "borrowings": 375.9,
+    "net_worth": 667.1,
+    "debt_equity": 0.5634837355718783
+   }
+  },
+  "exit_basis": {
+   "fy": "FY30-31",
+   "revenue": 7001.55499174998,
+   "ebitda": 1988.6196482895098,
+   "ev_revenue_multiple": 3.0,
+   "enterprise_value": 21004.66497524994,
+   "ev_ebitda_crosscheck": 21874.81613118461,
+   "net_debt": 800.0,
+   "equity_value": 20204.66497524994
+  },
+  "financing": {
+   "equity": {
+    "label": "VAPPL primary equity round",
+    "basis": "Exit FY30-31 at 3.0x revenue (Rs 210 Cr EV) less Rs 8 Cr net debt",
+    "investment": 1600.0,
+    "stake_pct": 15.09433962264151,
+    "exit_year": 5,
+    "exit_equity_value": 20204.66497524994,
+    "exit_proceeds": 3049.760750981123,
+    "dividends": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "flows": [
+     -1600.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     3049.760750981123
+    ],
+    "irr_pct": 13.770366639364518,
+    "money_multiple": 1.9061004693632018,
+    "stake_for_18pct": 18.116669666510425,
+    "stake_for_22pct": 21.402646696945215,
+    "stake_for_25pct": 24.16675805386704,
+    "pre_money": 9000.0,
+    "post_money": 10600.0,
+    "existing_round": {
+     "amount": 1000.0,
+     "pre_money": 9000.0,
+     "dilution_pct": 10.0
+    },
+    "pricing_sensitivity": {
+     "irr_18": {
+      "stake_pct": 18.116669666510425,
+      "post_money": 8831.645271744841,
+      "pre_money": 7231.645271744841
+     },
+     "irr_22": {
+      "stake_pct": 21.402646696945215,
+      "post_money": 7475.7109373223775,
+      "pre_money": 5875.7109373223775
+     },
+     "irr_25": {
+      "stake_pct": 24.16675805386704,
+      "post_money": 6620.6646188687955,
+      "pre_money": 5020.6646188687955
+     }
+    }
+   },
+   "debt": {
+    "label": "CGTMSE composite facility \u2014 VAPPL consolidated",
+    "term_loan": 650.0,
+    "wc_limit": 350.0,
+    "total_limit": 1000.0,
+    "rate_pct": 11.5,
+    "tl_tenor_years": 7,
+    "tl_moratorium_years": 1,
+    "cgtmse": {
+     "agf_rate_pct": 1.2,
+     "agf_slab": "limit of Rs 10.00 Cr",
+     "coverage_pct": 75.0,
+     "guaranteed_amount": 750.0,
+     "uncovered_amount": 250.0,
+     "within_ceiling": true
+    },
+    "schedule": [
+     {
+      "year": 1,
+      "tl_opening": 650.0,
+      "tl_interest": 74.75,
+      "wc_outstanding": 250.0,
+      "wc_interest": 28.75,
+      "agf": 12.0,
+      "principal": 0.0,
+      "tl_closing": 650.0,
+      "debt_service": 115.5,
+      "cfads": 539.5264830508474,
+      "dscr": 4.671224961479199
+     },
+     {
+      "year": 2,
+      "tl_opening": 650.0,
+      "tl_interest": 74.75,
+      "wc_outstanding": 300.0,
+      "wc_interest": 34.5,
+      "agf": 11.4,
+      "principal": 108.33333333333333,
+      "tl_closing": 541.6666666666666,
+      "debt_service": 228.98333333333335,
+      "cfads": 717.6329509704756,
+      "dscr": 3.1339964377486376
+     },
+     {
+      "year": 3,
+      "tl_opening": 541.6666666666666,
+      "tl_interest": 62.291666666666664,
+      "wc_outstanding": 280.0,
+      "wc_interest": 32.2,
+      "agf": 9.86,
+      "principal": 108.33333333333333,
+      "tl_closing": 433.3333333333333,
+      "debt_service": 212.685,
+      "cfads": 1300.6052336073149,
+      "dscr": 6.115171420679949
+     },
+     {
+      "year": 4,
+      "tl_opening": 433.3333333333333,
+      "tl_interest": 49.833333333333336,
+      "wc_outstanding": 240.0,
+      "wc_interest": 27.6,
+      "agf": 8.079999999999998,
+      "principal": 108.33333333333333,
+      "tl_closing": 325.0,
+      "debt_service": 193.84666666666666,
+      "cfads": 1671.181186831053,
+      "dscr": 8.62114998193273
+     },
+     {
+      "year": 5,
+      "tl_opening": 325.0,
+      "tl_interest": 37.375,
+      "wc_outstanding": 200.0,
+      "wc_interest": 23.0,
+      "agf": 6.3,
+      "principal": 108.33333333333333,
+      "tl_closing": 216.66666666666669,
+      "debt_service": 175.00833333333333,
+      "cfads": 1988.6196482895098,
+      "dscr": 11.362999752142334
+     },
+     {
+      "year": 6,
+      "tl_opening": 216.66666666666669,
+      "tl_interest": 24.91666666666667,
+      "wc_outstanding": 160.0,
+      "wc_interest": 18.400000000000002,
+      "agf": 4.52,
+      "principal": 108.33333333333333,
+      "tl_closing": 108.33333333333336,
+      "debt_service": 156.17000000000002,
+      "cfads": 2107.9368271868802,
+      "dscr": 13.497706519734136
+     },
+     {
+      "year": 7,
+      "tl_opening": 108.33333333333336,
+      "tl_interest": 12.458333333333337,
+      "wc_outstanding": 120.0,
+      "wc_interest": 13.8,
+      "agf": 2.7400000000000007,
+      "principal": 108.33333333333333,
+      "tl_closing": 2.842170943040401e-14,
+      "debt_service": 137.33166666666668,
+      "cfads": 2227.254006084251,
+      "dscr": 16.218065797528496
+     }
+    ],
+    "min_dscr": 3.1339964377486376,
+    "avg_dscr": 9.088616410177925,
+    "min_dscr_post_moratorium": 3.1339964377486376,
+    "avg_dscr_post_moratorium": 9.82484831829438,
+    "bankable": true,
+    "total_interest": 514.625,
+    "total_agf": 54.9,
+    "total_finance_cost": 569.525,
+    "combined_service": [
+     {
+      "year": 1,
+      "new_facility": 115.5,
+      "existing_debt": 70.43666666666667,
+      "total_debt_service": 185.93666666666667,
+      "cfads": 539.5264830508474,
+      "dscr": 2.901668039570001
+     },
+     {
+      "year": 2,
+      "new_facility": 228.98333333333335,
+      "existing_debt": 64.975,
+      "total_debt_service": 293.95833333333337,
+      "cfads": 717.6329509704756,
+      "dscr": 2.441274390261008
+     },
+     {
+      "year": 3,
+      "new_facility": 212.685,
+      "existing_debt": 59.513333333333335,
+      "total_debt_service": 272.1983333333333,
+      "cfads": 1300.6052336073149,
+      "dscr": 4.7781528184986986
+     },
+     {
+      "year": 4,
+      "new_facility": 193.84666666666666,
+      "existing_debt": 54.05166666666666,
+      "total_debt_service": 247.8983333333333,
+      "cfads": 1671.181186831053,
+      "dscr": 6.741397428372061
+     },
+     {
+      "year": 5,
+      "new_facility": 175.00833333333333,
+      "existing_debt": 48.589999999999996,
+      "total_debt_service": 223.59833333333333,
+      "cfads": 1988.6196482895098,
+      "dscr": 8.893714092783235
+     },
+     {
+      "year": 6,
+      "new_facility": 156.17000000000002,
+      "existing_debt": 43.12833333333333,
+      "total_debt_service": 199.29833333333335,
+      "cfads": 2107.9368271868802,
+      "dscr": 10.576791044515575
+     },
+     {
+      "year": 7,
+      "new_facility": 137.33166666666668,
+      "existing_debt": 37.666666666666664,
+      "total_debt_service": 174.99833333333333,
+      "cfads": 2227.254006084251,
+      "dscr": 12.727286961309638
+     }
+    ],
+    "min_dscr_combined": 2.441274390261008,
+    "avg_dscr_combined": 7.008612110758603,
+    "nbfc_refinance": 300.0,
+    "leverage": {
+     "covenant_assumed": 2.0,
+     "cases": [
+      {
+       "label": "No conversion",
+       "conversion": 0.0,
+       "retained_earnings": 0.0,
+       "net_worth": 258.0,
+       "borrowings": 1485.0,
+       "debt_equity": 5.755813953488372,
+       "max_facility_at_covenant": 31.0
+      },
+      {
+       "label": "Convert the Rs 2.60 Cr long-term related-party loans",
+       "conversion": 260.0,
+       "retained_earnings": 0.0,
+       "net_worth": 518.0,
+       "borrowings": 1225.0,
+       "debt_equity": 2.364864864864865,
+       "max_facility_at_covenant": 811.0
+      },
+      {
+       "label": "Convert all related-party and promoter debt",
+       "conversion": 409.1,
+       "retained_earnings": 0.0,
+       "net_worth": 667.1,
+       "borrowings": 1075.9,
+       "debt_equity": 1.6128016789087094,
+       "max_facility_at_covenant": 1258.3000000000002
+      },
+      {
+       "label": "Convert all, drawn in tranches as FY26-27 earnings retain",
+       "conversion": 409.1,
+       "retained_earnings": 300.0,
+       "net_worth": 967.1,
+       "borrowings": 1075.9,
+       "debt_equity": 1.112501292524041,
+       "max_facility_at_covenant": 1858.3000000000002
+      }
+     ],
+     "conversion_full": 409.1
+    }
+   },
+   "ccd": {
+    "label": "VAPPL compulsorily convertible debentures",
+    "basis": "8% coupon for 3 years, then conversion into 13% of the company",
+    "principal": 1200.0,
+    "coupon_pct": 8.0,
+    "conversion_year": 3,
+    "conversion_stake_pct": 13.0,
+    "coupon_paid_total": 288.0,
+    "exit_year": 5,
+    "exit_equity_value": 20204.66497524994,
+    "exit_proceeds": 2626.606446782492,
+    "flows": [
+     -1200.0,
+     96.0,
+     96.0,
+     96.0,
+     0.0,
+     2626.606446782492
+    ],
+    "irr_pct": 21.263587158173326,
+    "money_multiple": 2.4288387056520766,
+    "conversion_valuation_implied": 9230.76923076923,
+    "balance_sheet_note": "CCDs sit as borrowings until conversion. Layered on the FY26 position they take debt-to-equity from 3.04x to 7.69x, which breaches the leverage covenant on any CGTMSE facility taken in parallel. Convert the related-party debt first."
+   }
+  }
+ },
+ "cgtmse_allocation": {
+  "ceiling": 1000.0,
+  "ceiling_basis": "per borrower, aggregated across all member lending institutions",
+  "gross_demand": {
+   "Geeta Govind Vatika \u2014 composite": 337.3029661016949,
+   "Ramayan Vatika \u2014 composite": 416.6809116589625,
+   "Karnal Phase 1 \u2014 term loan + WC": 350.0,
+   "VAPPL \u2014 working capital and NBFC consolidation": 350.0
+  },
+  "total_gross_demand": 1453.9838777606574,
+  "excess_over_ceiling": 453.9838777606574,
+  "single_borrower_plan": {
+   "Karnal Phase 1 \u2014 term loan": 300.0,
+   "Ramayan Vatika \u2014 term loan + standby WC": 260.0,
+   "Geeta Govind Vatika \u2014 term loan + standby WC": 190.0,
+   "VAPPL \u2014 working capital, NBFC consolidation": 250.0
+  },
+  "single_borrower_plan_total": 1000.0,
+  "headroom": 0.0,
+  "residual_to_fund_outside_cgtmse": 453.9838777606574
+ }
+}

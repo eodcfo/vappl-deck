@@ -8,14 +8,25 @@ Live at: **[eodcfo.github.io/vappl-deck](https://eodcfo.github.io/vappl-deck)**
 |---|---|
 | `index.html` | 12-chapter investor deck · ~8 min read |
 | `financials.html` | Detailed financial model · 11 sections · linked from the deck |
+| `pf-index.html` | Project finance pack — portfolio hub, CGTMSE framework, capital plan |
+| `pf-geeta-govind-vatika.html` | Geeta Govind Vatika, Agra (ADA) — 1 year of opex as loan/investment |
+| `pf-ramayan-vatika.html` | Ramayan Vatika, Bareilly (BDA) — 2 years of opex as loan/investment |
+| `pf-karnal.html` | Karnal, NH-1 — ₹4 Cr Phase 1 build-out |
+| `pf-company.html` | VAPPL capital structure — equity, CGTMSE debt, debt-to-equity |
+| `model/pf_model.py` | The financial model behind all five project-finance decks |
+| `model/render.py` | Renders the decks from the model · **edit the model, not the HTML** |
 
 ---
 
 ## What this is
 
-Two self-contained HTML files — no build step, no dependencies, no framework. Pure HTML + embedded CSS + vanilla JS, designed to be read in a browser, shared as a link, or printed to PDF.
+Self-contained HTML files — no build step, no dependencies, no framework. Pure HTML + embedded CSS + vanilla JS, designed to be read in a browser, shared as a link, or printed to PDF.
 
 The deck makes the case for a ₹10 Cr equity raise at a ₹90 Cr pre-money valuation — the first institutional capital in the company's history. The financial model provides the full supporting detail: audited actuals (FY22–25), provisional FY25-26, three-year projections, balance sheet, cost structure, borrowings, assumptions, and risk register.
+
+The **project finance pack** (`pf-*.html`) sits alongside them: three new projects, each modelled under equity, CGTMSE-guaranteed debt and convertible debt, plus the company-level capital structure. Unlike the two hand-edited files above, those five decks are **generated from a model** — see the section below.
+
+**The pack is deliberately separate from the fundraise deck.** `index.html` and `financials.html` are the materials submitted to investors and must stay untouched. There are no links in either direction: the deck has no awareness of the pack, and the pack navigates only within itself, so a lender reading it cannot click through to the equity pitch. Share `pf-index.html` directly with anyone who should see the project finance work.
 
 ---
 
@@ -94,9 +105,68 @@ A standalone 11-section model linked from Chapter 12 of the deck. All figures so
 
 ---
 
+## Project finance pack (`pf-*.html`)
+
+> **Separate from the fundraise deck by design.** No links run in either direction. Nothing in this pack
+> is reachable from `index.html` or `financials.html` (neither was modified), and the pack navigates only
+> within itself — a lender reading it cannot click through to the ₹90 Cr equity pitch. Circulate
+> `pf-index.html` on its own. The Karnal deck cites `index.html` and `financials.html` by name where it
+> flags the footprint discrepancy between them; those are plain-text citations, not links.
+
+Five decks covering the three new projects and the company-level capital structure. Each project is
+modelled under all three financing structures the brief asked for — **equity**, **debt under CGTMSE**,
+and **debt converted to equity (CCD)** — with the recommendation stated and the arithmetic shown.
+
+| Deck | Ask | Project IRR | Recommendation |
+|---|---|---|---|
+| Geeta Govind Vatika · ADA · 7+4 yrs | ₹3.35 Cr (mobilisation + 1 yr opex) | 18.7% | CGTMSE composite facility |
+| Ramayan Vatika · BDA · 10+5 yrs | ₹4.17 Cr (2 yrs opex) | 11.4% | Bid at reserve; facility drawn to ₹2.81 Cr |
+| Karnal · private sub-lease · 15 yrs | ₹4.00 Cr (Phase 1 capex) | 19.5% | CGTMSE term loan — take to a bank first |
+| VAPPL company | ₹10 Cr CGTMSE + ₹6–8 Cr equity | — | Convert all ₹4.09 Cr promoter debt, then debt, then equity |
+
+### The four findings that shaped the pack
+
+1. **The CGTMSE ceiling doubled to ₹10 Cr on 1 April 2025**, and the MSME Small Enterprise thresholds
+   rose to ₹25 Cr investment / ₹100 Cr turnover on the same date. VAPPL qualifies as a **Small
+   Enterprise** with wide headroom. Collateral-free guaranteed debt at ~12.5% all-in is now available
+   at a scale that did not exist when the ₹10 Cr equity round was designed.
+2. **The ceiling is per borrower, not per project.** Gross demand across the four uses is ₹14.5 Cr
+   against a ₹10 Cr ceiling. The hub sets out the allocation and the routes for the ₹4.5 Cr residual.
+3. **No project clears an equity hurdle at project level; two clear guaranteed debt comfortably.**
+   A single park generating ₹1–2.5 Cr of mature EBITDA cannot pay a 22% return on its capital *and*
+   leave an operator's margin. Equity belongs at company level; the projects should be debt-funded.
+4. **At VAPPL's current gearing, the company cannot borrow at all.** At 3.04× debt-to-equity, a
+   conventional 2.0× covenant supports a new facility of only **₹0.31 Cr**. Converting the ₹2.60 Cr of
+   long-term related-party loans lifts that to ₹8.11 Cr; converting **all ₹4.09 Cr** of related-party
+   and promoter debt lifts it to ₹12.58 Cr, which is what makes the full ₹10 Cr ceiling reachable. The
+   conversion costs no cash and involves no third party. It is the first step in the plan.
+
+Two contractual constraints materially shape the structures: Ramayan Vatika's RFP **prohibits any
+mortgage or charge over the asset** (which is why CGTMSE fits) and **bars changes in shareholding
+during the lock-in without BDA's written approval** (which gates both the equity and CCD routes).
+
+### Regenerating the decks
+
+Every figure in the five decks is computed, not typed. Nothing is hard-coded into the markup.
+
+```bash
+python3 model/pf_model.py    # writes model/pf_model.json + prints a summary
+python3 model/render.py      # regenerates all five pf-*.html files
+```
+
+To change an assumption — a winning licence fee, footfall, an interest rate — edit `model/pf_model.py`
+and re-run both. `model/pf_model.json` holds every computed value for line-by-line checking or export.
+
+**Verify before relying on the CGTMSE numbers.** Scheme parameters are revised by circular and vary
+between member lending institutions. The fee slabs, coverage percentages and ceiling reflect the
+position published after the April 2025 revisions, checked against public sources in August 2026.
+Confirm the current operative circular with the lender before use.
+
+---
+
 ## Design system
 
-Both files share the same design language:
+All seven HTML files share the same design language:
 
 - **Typography:** Clash Display (display numbers + titles) · DM Sans (body, UI, tables) · Fraunces italic (pull quotes only)
 - **Palette:** White canvas `#FFFFFF` · blue `#2B66EA` · terracotta `#C8553D` · green `#10B981` · ink `#0A1426`
@@ -108,7 +178,10 @@ Both files share the same design language:
 
 ## Development
 
-No build process. Edit either HTML file directly.
+`index.html` and `financials.html` have no build process — edit them directly. The five `pf-*.html`
+decks are **generated**; edit `model/pf_model.py` (assumptions and calculations) or `model/render.py`
+(prose and layout) and re-run both scripts. Changes made directly to a `pf-*.html` file will be
+overwritten on the next render.
 
 ```bash
 # View locally
