@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vision Amusement Park — Company Capital Structure · E-O-D Parks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2B66EA;--blue-mid:#275AC7;--blue-deep:#2A51A3;--blue-navy:#1A315D;
+  --terracotta:#C8553D;--terracotta-soft:rgba(200,85,61,0.08);
+  --green:#10B981;--green-soft:rgba(16,185,129,0.08);
+  --amber:#D97706;--amber-soft:rgba(217,119,6,0.08);
+  --black:#0A0A0A;--ink:#0A1426;--ink-soft:#3B4660;--ink-mute:#6E7689;
+  --canvas:#FFFFFF;--paper:#F8F9FA;--rule:#E8E8ED;--rule-strong:#1A1F2E;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+.topbar__inner{max-width:1280px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
+.brand__mark{font-family:"DM Sans",sans-serif;font-weight:700;font-size:13px;letter-spacing:-0.02em;background:var(--ink);color:var(--canvas);padding:5px 9px 4px;border-radius:4px;line-height:1;display:inline-flex;align-items:center;gap:6px;}
+.brand__mark::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);}
+.brand__name{font-size:12px;font-weight:500;color:var(--ink-soft);}
+.topbar__right{display:flex;align-items:center;gap:12px;}
+.topbar__badge{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mute);font-weight:500;}
+.back-link{font-size:12px;font-weight:600;color:var(--blue);text-decoration:none;padding:6px 12px;border:1px solid rgba(43,102,234,0.25);border-radius:5px;white-space:nowrap;}
+.back-link:hover{background:rgba(43,102,234,0.05);}
+@media(max-width:760px){.topbar__badge{display:none;}.brand__name{display:none;}}
+.layout{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:64px;padding:48px 24px 120px;}
+@media(max-width:1100px){.layout{display:block;padding:24px 20px 80px;}}
+.rail{position:sticky;top:80px;align-self:start;font-size:13px;}
+.rail__label{font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px;font-weight:500;}
+.rail__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1px;}
+.rail__item a{display:flex;gap:12px;align-items:baseline;padding:6px 0 6px 14px;margin-left:-14px;color:var(--ink-soft);text-decoration:none;line-height:1.4;border-left:2px solid transparent;transition:all .15s ease;}
+.rail__item a:hover{color:var(--ink);}
+.rail__item--active a{color:var(--ink);font-weight:500;border-left-color:var(--blue);}
+.rail__num{font-size:10.5px;letter-spacing:0.06em;color:var(--ink-mute);min-width:16px;font-variant-numeric:tabular-nums;}
+.rail__item--active .rail__num{color:var(--blue);font-weight:600;}
+.rail__sep{margin:14px 0 10px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;border-top:1px solid var(--rule);padding-top:12px;}
+@media(max-width:1100px){.rail{display:none;}}
+.main{max-width:820px;}
+.sec-head{margin:64px 0 24px;display:flex;align-items:baseline;gap:14px;}
+.sec-head:first-child{margin-top:0;}
+.sec-num{font-size:11px;letter-spacing:0.08em;color:var(--blue);font-weight:600;font-variant-numeric:tabular-nums;}
+.sec-title{font-weight:700;font-size:clamp(20px,2.2vw,26px);letter-spacing:-0.015em;color:var(--ink);margin:0;}
+.lede{font-size:15px;color:var(--ink-soft);line-height:1.65;margin:0 0 22px;}
+.fin-cover{padding:40px 0 36px;border-bottom:2px solid var(--rule-strong);margin-bottom:56px;}
+.fin-cover__eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:20px;}
+.fin-cover__title{font-family:"Clash Display","DM Sans",sans-serif;font-weight:500;font-size:clamp(34px,5vw,54px);line-height:1.04;letter-spacing:-0.025em;color:var(--black);margin:0 0 16px;}
+.fin-cover__sub{font-style:italic;font-family:"Fraunces",Georgia,serif;color:var(--ink-soft);font-size:clamp(16px,2vw,20px);margin:0 0 32px;max-width:620px;line-height:1.5;}
+.fin-cover__meta{font-size:12px;color:var(--ink-mute);line-height:1.8;}
+.fin-cover__meta b{color:var(--ink);font-weight:600;}
+.cover-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px;padding-top:28px;border-top:1px solid var(--rule);}
+@media(max-width:640px){.cover-kpi-grid{grid-template-columns:repeat(2,1fr);}}
+.cover-kpi__label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:500;margin-bottom:5px;}
+.cover-kpi__num{font-family:"Clash Display","DM Sans",sans-serif;font-weight:600;font-size:clamp(21px,2.5vw,27px);line-height:1;color:var(--black);font-variant-numeric:tabular-nums;}
+.cover-kpi__num .small{font-size:0.5em;color:var(--ink-mute);margin-left:2px;font-weight:400;}
+.cover-kpi__sub{font-size:11px;color:var(--ink-mute);margin-top:5px;line-height:1.4;}
+.fin{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums;margin:0 0 8px;}
+.fin th{font-weight:500;text-align:left;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);padding:12px 14px 10px 0;border-bottom:1px solid var(--rule-strong);white-space:nowrap;}
+.fin th.r,.fin td.r{text-align:right;padding-right:0;}
+.fin th.c,.fin td.c{text-align:center;}
+.fin td{padding:13px 14px 13px 0;border-bottom:1px solid var(--rule);color:var(--ink);vertical-align:baseline;}
+.fin tr:last-child td{border-bottom:none;}
+.fin tr.sub td{background:linear-gradient(to right,rgba(43,102,234,0.04),transparent 60%);}
+.fin tr.sub td:first-child{font-weight:600;}
+.fin tr.total td{background:linear-gradient(to right,var(--terracotta-soft),transparent 60%);border-top:1px solid rgba(200,85,61,0.15);}
+.fin tr.total td:first-child{font-weight:700;}
+.fin tr.dim td{color:var(--ink-mute);}
+.fin .label{font-weight:600;font-size:14px;}
+.fin .meta{display:block;font-size:11.5px;color:var(--ink-mute);margin-top:2px;font-weight:400;line-height:1.45;}
+.fin .pos{color:var(--green);font-weight:600;}
+.fin .neg{color:var(--terracotta);font-weight:600;}
+.fin .muted{color:var(--ink-mute);font-weight:400;}
+.fin-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 8px;}
+@media(max-width:640px){.fin{font-size:12.5px;}}
+.note{background:var(--paper);border-left:3px solid var(--rule-strong);padding:14px 18px;border-radius:0 6px 6px 0;margin:18px 0;font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.note b{color:var(--ink);}
+.note.blue{border-left-color:var(--blue);background:rgba(43,102,234,0.04);}
+.note.terra{border-left-color:var(--terracotta);background:var(--terracotta-soft);}
+.note.green{border-left-color:var(--green);background:var(--green-soft);}
+.note.amber{border-left-color:var(--amber);background:var(--amber-soft);}
+.note__label{display:block;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+.note.blue .note__label{color:var(--blue);} .note.terra .note__label{color:var(--terracotta);}
+.note.green .note__label{color:var(--green);} .note.amber .note__label{color:var(--amber);}
+.verdict{border:1px solid var(--rule);border-radius:10px;padding:22px 24px;margin:24px 0;background:var(--paper);}
+.verdict--go{border-color:rgba(16,185,129,0.35);background:var(--green-soft);}
+.verdict--caution{border-color:rgba(217,119,6,0.35);background:var(--amber-soft);}
+.verdict--stop{border-color:rgba(200,85,61,0.35);background:var(--terracotta-soft);}
+.verdict__label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--ink-mute);margin-bottom:8px;}
+.verdict__head{font-family:"Clash Display","DM Sans",sans-serif;font-weight:600;font-size:22px;line-height:1.15;letter-spacing:-0.02em;color:var(--black);margin-bottom:10px;}
+.verdict__body{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+.verdict__body b{color:var(--ink);}
+.opt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0;}
+@media(max-width:820px){.opt-grid{grid-template-columns:1fr;}}
+.opt-card{border:1px solid var(--rule);border-radius:9px;padding:20px 18px;background:var(--canvas);}
+.opt-card--pick{border-color:rgba(16,185,129,0.4);background:var(--green-soft);}
+.opt-card__tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;}
+.opt-card--pick .opt-card__tag{color:var(--green);}
+.opt-card__name{font-weight:700;font-size:15px;letter-spacing:-0.01em;margin-bottom:12px;color:var(--ink);}
+.opt-card__num{font-family:"Clash Display","DM Sans",sans-serif;font-weight:600;font-size:30px;line-height:1;color:var(--black);margin-bottom:3px;font-variant-numeric:tabular-nums;}
+.opt-card__cap{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:12px;}
+.opt-card__list{list-style:none;padding:0;margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+.opt-card__list li{padding:5px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:10px;}
+.opt-card__list li b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0;}
+@media(max-width:760px){.bento{grid-template-columns:repeat(2,1fr);}}
+.bento__cell{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:16px 16px 14px;}
+.bento__label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:6px;}
+.bento__num{font-family:"Clash Display","DM Sans",sans-serif;font-weight:600;font-size:24px;line-height:1;color:var(--black);font-variant-numeric:tabular-nums;}
+.bento__sub{font-size:11.5px;color:var(--ink-mute);margin-top:5px;line-height:1.45;}
+.risk-row{display:grid;grid-template-columns:190px 84px 1fr;gap:16px;padding:17px 0;border-bottom:1px solid var(--rule);align-items:start;}
+.risk-row:last-child{border-bottom:none;}
+@media(max-width:640px){.risk-row{grid-template-columns:1fr;gap:6px;padding-bottom:18px;}}
+.risk-factor{font-weight:600;font-size:14px;color:var(--ink);}
+.risk-desc{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+.risk-sev{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:12px;white-space:nowrap;}
+.sev-h{background:#FEE2E2;color:#B91C1C;} .sev-m{background:var(--amber-soft);color:var(--amber);}
+.sev-mh{background:#FEF3C7;color:#92400E;} .sev-l{background:#EEF9F5;color:var(--green);}
+.assm-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assm-table td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:baseline;}
+.assm-table tr:last-child td{border-bottom:none;}
+.assm-table td:first-child{font-weight:600;color:var(--ink);width:210px;}
+.assm-table td:nth-child(2){color:var(--ink-soft);padding-right:16px;}
+.assm-table td:nth-child(3){color:var(--blue-deep);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.assm-block{margin-bottom:30px;}
+.assm-block__label{font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);font-weight:700;margin-bottom:12px;}
+.cav-list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:12px;}
+.cav-list li{display:flex;gap:12px;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+.cav-num{font-weight:700;color:var(--terracotta);flex-shrink:0;min-width:18px;}
+.deck-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:24px 0;}
+@media(max-width:760px){.deck-grid{grid-template-columns:1fr;}}
+.deck-card{display:block;text-decoration:none;color:inherit;border:1px solid var(--rule);border-radius:10px;padding:22px 20px;transition:all .15s ease;background:var(--canvas);}
+.deck-card:hover{border-color:var(--blue);box-shadow:0 3px 14px rgba(43,102,234,0.09);transform:translateY(-1px);}
+.deck-card__tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:9px;}
+.deck-card__name{font-family:"Clash Display","DM Sans",sans-serif;font-weight:600;font-size:21px;letter-spacing:-0.02em;color:var(--black);margin-bottom:7px;line-height:1.15;}
+.deck-card__desc{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:14px;}
+.deck-card__foot{font-size:11.5px;color:var(--ink-mute);border-top:1px solid var(--rule);padding-top:11px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.deck-card__foot b{color:var(--ink);font-weight:600;}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:rgba(43,102,234,0.08);color:var(--blue-deep);}
+.tag--green{background:var(--green-soft);color:var(--green);}
+.tag--amber{background:var(--amber-soft);color:var(--amber);}
+.tag--terra{background:var(--terracotta-soft);color:var(--terracotta);}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-mute);line-height:1.7;}
+.footer b{color:var(--ink);}
+@media print{
+  .topbar,.rail{display:none!important;}
+  .layout{display:block;padding:0;max-width:none;}
+  .main{max-width:none;}
+  .fin th,.fin td{font-size:9pt;}
+  section{page-break-inside:avoid;}
+  .sec-head{margin-top:20pt;}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">EOD</span>
+      <span class="brand__name">E-O-D Parks · Vision Amusement Park Pvt. Ltd.</span>
+    </a>
+    <div class="topbar__right">
+      <span class="topbar__badge">Company capital structure</span>
+      <a class="back-link" href="pf-index.html">Project finance</a>
+      <a class="back-link" href="financials.html">Financial model</a>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="rail">
+    <div class="rail__label">Sections</div>
+    <ol class="rail__list">
+<li class="rail__item rail__item--active"><a href="#s01"><span class="rail__num">01</span><span>Where the company stands</span></a></li>
+<li class="rail__item"><a href="#s02"><span class="rail__num">02</span><span>MSME status and CGTMSE eligibility</span></a></li>
+<li class="rail__item"><a href="#s03"><span class="rail__num">03</span><span>Fix the balance sheet first</span></a></li>
+<li class="rail__item"><a href="#s04"><span class="rail__num">04</span><span>The consolidated plan</span></a></li>
+<li class="rail__item"><a href="#s05"><span class="rail__num">05</span><span>Option A · Equity</span></a></li>
+<li class="rail__item"><a href="#s06"><span class="rail__num">06</span><span>Option B · Debt under CGTMSE</span></a></li>
+<li class="rail__item"><a href="#s07"><span class="rail__num">07</span><span>Option C · Debt converted to equity</span></a></li>
+<li class="rail__item"><a href="#s08"><span class="rail__num">08</span><span>Which option, and why</span></a></li>
+<li class="rail__item"><a href="#s09"><span class="rail__num">09</span><span>Conditions precedent and risks</span></a></li>
+    </ol>
+    <div class="rail__sep">Other decks</div>
+    <ol class="rail__list">
+<li class="rail__item"><a href="pf-index.html"><span class="rail__num">→</span><span>Portfolio hub</span></a></li>
+<li class="rail__item"><a href="pf-geeta-govind-vatika.html"><span class="rail__num">→</span><span>Geeta Govind Vatika</span></a></li>
+<li class="rail__item"><a href="pf-ramayan-vatika.html"><span class="rail__num">→</span><span>Ramayan Vatika</span></a></li>
+<li class="rail__item"><a href="pf-karnal.html"><span class="rail__num">→</span><span>Karnal</span></a></li>
+    </ol>
+  </aside>
+  <main class="main">
+
+<div class="fin-cover">
+  <div class="fin-cover__eyebrow">Project finance · 04 of 04</div>
+  <h1 class="fin-cover__title">Vision Amusement Park</h1>
+  <p class="fin-cover__sub">Three ways to fund the company rather than the projects — equity, guaranteed
+  debt, and debt that becomes equity. One of them is materially cheaper than the headline round, and one
+  balance-sheet move has to happen before any of them.</p>
+  <div class="fin-cover__meta">
+    <b>Vision Amusement Park Pvt. Ltd.</b> · CIN U93000DL2011PTC212814<br>
+    FY25-26 revenue <b>₹16.29 Cr</b> · EBITDA ₹2.37 Cr · net worth ₹2.58 Cr · borrowings ₹7.85 Cr<br>
+    MSME classification <b>Small Enterprise</b> · CGTMSE eligible
+  </div>
+  <div class="cover-kpi-grid">
+    <div><div class="cover-kpi__label">FY30-31 revenue</div><div class="cover-kpi__num">₹70 Cr</div><div class="cover-kpi__sub">Seven parks, including all three new projects</div></div>
+    <div><div class="cover-kpi__label">Equity at ₹90 Cr pre</div><div class="cover-kpi__num">13.8%</div><div class="cover-kpi__sub">Investor IRR over five years</div></div>
+    <div><div class="cover-kpi__label">CGTMSE ceiling</div><div class="cover-kpi__num">₹10 Cr</div><div class="cover-kpi__sub">Per borrower, aggregated across all lenders</div></div>
+    <div><div class="cover-kpi__label">D/E after conversion</div><div class="cover-kpi__num">0.56×</div><div class="cover-kpi__sub">From 3.04× today, converting all ₹4.09 Cr of related-party debt</div></div>
+  </div>
+</div><section id="s01">
+  <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Where the company stands</h2></div>
+
+<p class="lede">The company financial model carries the full history. This section takes only what
+determines whether VAPPL can borrow, and at what price.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">FY25-26 position</th><th class="r">Amount</th><th class="">What a credit committee sees</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Revenue</span></td><td class="r ">₹16.29 Cr</td><td class=" ">All-time high, +27% year on year, four parks operating</td></tr><tr class=""><td class=" "><span class="label">EBITDA</span></td><td class="r ">₹2.37 Cr</td><td class=" ">14.5% margin — a ramp year, below the 36% single-park benchmark of FY22-23</td></tr><tr class=""><td class=" "><span class="label">Net worth</span></td><td class="r ">₹2.58 Cr</td><td class=" pos">Positive and improving. Was negative ₹1.30 Cr in FY22-23</td></tr><tr class=""><td class=" "><span class="label">Total borrowings</span></td><td class="r ">₹7.85 Cr</td><td class=" ">₹5.26 Cr short-term across 13 facilities, ₹2.60 Cr long-term from related parties</td></tr><tr class=""><td class=" "><span class="label">Debt to equity</span></td><td class="r neg">3.04×</td><td class=" neg">Too high. Most banks want under 2× for an unsecured facility</td></tr><tr class=""><td class=" "><span class="label">Interest coverage</span></td><td class="r ">4.7×</td><td class=" ">Adequate but thin against a 13-facility NBFC book</td></tr><tr class=""><td class=" "><span class="label">Current ratio</span></td><td class="r neg">~0.50×</td><td class=" neg">Below 1.0 every year — structurally dependent on revolving credit</td></tr><tr class=""><td class=" "><span class="label">Electricity arrears</span></td><td class="r neg">₹2.14 Cr</td><td class=" neg">Accumulated across parks, sitting in other current liabilities. A red flag on any sanction note</td></tr><tr class=""><td class=" "><span class="label">Cash and FDR</span></td><td class="r pos">₹3.62 Cr</td><td class=" ">₹2.22 Cr of FDR earning ₹9.2 lakh a year, not to be liquidated</td></tr></tbody></table></div>
+<div class="note terra"><span class="note__label">Four things stand between VAPPL and a bank sanction</span><b>One:</b> debt to equity at 3.04×. <b>Two:</b> thirteen separate NBFC and bank facilities, which reads as distress borrowing regardless of how it arose. <b>Three:</b> ₹2.14 Cr of electricity arrears — a utility default is the single item most likely to stop a sanction note in its tracks. <b>Four:</b> a current ratio below 1.0 in every year on record. Sections 03 and 09 deal with all four. <b>None of the financing options in this deck should be taken to a lender before they are fixed.</b></div>
+</section>
+
+<section id="s02">
+  <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">MSME status and CGTMSE eligibility</h2></div>
+
+<p class="lede">CGTMSE covers micro and small enterprises only. VAPPL's eligibility is not marginal —
+but it has an expiry date, and the date is inside this plan.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Test</th><th class="r">VAPPL</th><th class="r">Small Enterprise limit</th><th class="r">Headroom</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Investment in plant and machinery</span><span class="meta">FY26 gross block; land and building excluded by definition</span></td><td class="r ">₹6.13 Cr</td><td class="r ">₹25 Cr</td><td class="r pos">₹18.87 Cr</td></tr><tr class=""><td class=" "><span class="label">Annual turnover</span><span class="meta">FY25-26 provisional</span></td><td class="r ">₹16.29 Cr</td><td class="r ">₹100 Cr</td><td class="r pos">₹83.71 Cr</td></tr><tr class="total"><td class=" ">Classification</td><td class="r pos">Small Enterprise</td><td class="r "></td><td class="r pos">CGTMSE eligible</td></tr></tbody></table></div>
+<div class="note blue"><span class="note__label">The thresholds moved in VAPPL&#x27;s favour on 1 April 2025</span>The Small Enterprise limits were raised from ₹10 Cr to <b>₹25 Cr</b> of investment and from ₹50 Cr to <b>₹100 Cr</b> of turnover, and the CGTMSE guarantee ceiling was doubled from ₹5 Cr to <b>₹10 Cr</b> per borrower. Both changes landed after the ₹10 crore equity round was designed. A guaranteed, collateral-free ₹10 crore facility is available to VAPPL today that was not available when the round was structured — which is the reason this pack exists.</div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">CGTMSE parameter</th><th class="">Position</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Scheme</span></td><td class=" ">CGS-I — the standard scheme for banks and NBFCs</td></tr><tr class=""><td class=" "><span class="label">Guarantee ceiling</span></td><td class=" "><b>₹10 Cr per borrower</b><span class="meta">per borrower, aggregated across all member lending institutions. ₹20 Cr for DPIIT-recognised startups.</span></td></tr><tr class=""><td class=" "><span class="label">Coverage extent</span></td><td class=" ">75% for a Small Enterprise; up to 85% for micro, women-owned, SC/ST, NER, Aspirational District or ZED-certified units</td></tr><tr class=""><td class=" "><span class="label">Collateral and guarantees</span></td><td class=" ">Nil collateral on the guaranteed portion. Third-party guarantee is <b>not</b> permitted; the personal guarantee of directors is.</td></tr><tr class=""><td class=" "><span class="label">Hybrid security</span></td><td class=" ">Permitted — collateral may be taken on a portion, with the balance guaranteed</td></tr><tr class=""><td class=" "><span class="label">Interest rate</span></td><td class=" ">MLI rate not to exceed ~3% over its EBLR/MCLR</td></tr><tr class=""><td class=" "><span class="label">Guarantee fee basis</span></td><td class=" ">On the sanctioned amount in year 1, on the outstanding principal at start of the year thereafter</td></tr><tr class=""><td class=" "><span class="label">Fee concession</span></td><td class=" ">10% for women, SC/ST, differently-abled, Agniveer and transgender borrowers, and for NER, J&K, Ladakh, Aspirational District, Credit Deficient District or ZED-certified units</td></tr></tbody></table></div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Facility size</th><th class="r">Standard annual guarantee fee</th></tr></thead><tbody><tr class=""><td class=" ">Up to ₹10 lakh</td><td class="r ">0.37%</td></tr><tr class=""><td class=" ">Above ₹10 lakh and up to ₹50 lakh</td><td class="r ">0.55%</td></tr><tr class=""><td class=" ">Above ₹50 lakh and up to ₹1 crore</td><td class="r ">0.60%</td></tr><tr class=""><td class=" ">Above ₹1 crore and up to ₹2 crore</td><td class="r ">0.85%</td></tr><tr class=""><td class=" ">Above ₹2 crore and up to ₹5 crore</td><td class="r ">1.00%</td></tr><tr class="sub"><td class=" ">Above ₹5 crore and up to ₹8 crore</td><td class="r ">1.10%</td></tr><tr class="sub"><td class=" ">Above ₹8 crore and up to ₹10 crore</td><td class="r ">1.20%</td></tr></tbody></table></div>
+<div class="note amber"><span class="note__label">Eligibility expires, and the plan is what expires it</span>The consolidated plan in section 04 reaches <b>₹70 Cr</b> of revenue by FY30-31. The Small Enterprise turnover ceiling is ₹100 Cr. VAPPL stays comfortably inside it across this plan — but a Medium Enterprise is not eligible for CGTMSE at all. <b>The guarantee is available now and will not be available forever.</b> A facility sanctioned while the company qualifies keeps its cover for its full tenor; one applied for after the threshold is crossed does not exist. That is a timing argument for drawing the facility early, not for growing slowly.</div>
+<div class="note blue"><span class="note__label">Two eligibility items to confirm before applying</span><b>Udyam registration.</b> CGTMSE cover requires a live Udyam registration matching the borrowing entity. Confirm VAPPL's registration exists, is current, and reflects the revised April 2025 classification.<br><br><b>Activity code.</b> Amusement and recreation services fall within the service enterprises CGTMSE covers, but the registered NIC code on the Udyam certificate is what the lender's system checks. Confirm it before the application, not after a rejection.</div>
+</section>
+
+<section id="s03">
+  <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Fix the balance sheet first</h2></div>
+
+<p class="lede">Before raising anything, there is a free move available. Roughly ₹4 crore of VAPPL's
+₹7.85 crore of borrowings is money the promoters and related parties have already put in. Converting it
+into equity costs no cash and transforms the balance sheet a lender is asked to lend against.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Related-party and promoter debt</th><th class="r">Amount</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Sanjeev Bewtra and Team Buildcon</span><span class="meta">Long-term related-party loans, unchanged since FY24-25</span></td><td class="r ">₹260 L</td></tr><tr class=""><td class=" "><span class="label">Promoter loans</span><span class="meta">Added during FY25-26</span></td><td class="r ">₹76.6 L</td></tr><tr class=""><td class=" "><span class="label">Apoorv Babbar HUF</span></td><td class="r ">₹59.5 L</td></tr><tr class=""><td class=" "><span class="label">Geetika Jain</span></td><td class="r ">₹13 L</td></tr><tr class="total"><td class=" ">Total convertible related-party debt</td><td class="r ">₹409.1 L</td></tr></tbody></table></div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class=""></th><th class="r">Today</th><th class="r">Convert the ₹2.60 Cr long-term</th><th class="r">Convert all related-party debt</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Total borrowings</span></td><td class="r ">₹7.85 Cr</td><td class="r pos">₹5.25 Cr</td><td class="r pos">₹3.76 Cr</td></tr><tr class=""><td class=" "><span class="label">Net worth</span></td><td class="r ">₹2.58 Cr</td><td class="r pos">₹5.18 Cr</td><td class="r pos">₹6.67 Cr</td></tr><tr class="total"><td class=" ">Debt to equity</td><td class="r neg">3.04×</td><td class="r pos">1.01×</td><td class="r pos">0.56×</td></tr><tr class=""><td class=" "><span class="label">Cash cost of doing it</span></td><td class="r ">—</td><td class="r pos">Nil</td><td class="r pos">Nil</td></tr></tbody></table></div>
+<div class="note green"><span class="note__label">This is the single highest-leverage action in the entire pack</span>Converting related-party loans into equity moves debt to equity from <b>3.04×</b> to 1.01× or 0.56× depending on how much is converted, and lifts net worth from ₹2.58 Cr to ₹5.18 Cr or ₹6.67 Cr. No cash moves. No third party is involved. It converts a balance sheet that a credit committee declines into one it can work with, and it does so before a single rupee of external money is raised. <b>Do this first.</b></div>
+<div style="margin:30px 0 10px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);font-weight:700;">
+  How much conversion the ₹10 crore facility actually needs</div>
+<p class="lede" style="margin-bottom:16px;">A lender does not size a facility off today's balance sheet — it
+sizes it off where gearing lands <em>after</em> the money is drawn. Assuming a conventional 2.0× debt-to-equity
+covenant, that calculation decides how much of the CGTMSE ceiling VAPPL can reach at all.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Conversion</th><th class="r">D/E once ₹10 Cr is drawn</th><th class="r">Largest facility inside a 2.0× covenant</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">No conversion</span><span class="meta">Net worth ₹2.58 Cr · borrowings ₹14.85 Cr</span></td><td class="r neg">5.76×</td><td class="r neg">₹0.31 Cr</td></tr><tr class=""><td class=" "><span class="label">Convert the ₹2.60 Cr long-term related-party loans</span><span class="meta">Net worth ₹5.18 Cr · borrowings ₹12.25 Cr</span></td><td class="r neg">2.36×</td><td class="r neg">₹8.11 Cr</td></tr><tr class=""><td class=" "><span class="label">Convert all related-party and promoter debt</span><span class="meta">Net worth ₹6.67 Cr · borrowings ₹10.76 Cr</span></td><td class="r pos">1.61×</td><td class="r pos">₹12.58 Cr</td></tr><tr class=""><td class=" "><span class="label">Convert all, drawn in tranches as FY26-27 earnings retain</span><span class="meta">Net worth ₹9.67 Cr · borrowings ₹10.76 Cr</span></td><td class="r pos">1.11×</td><td class="r pos">₹18.58 Cr</td></tr></tbody></table></div>
+<div class="note terra"><span class="note__label">Converting only the ₹2.60 crore is not enough</span>With ₹2.60 Cr converted, gearing after a full drawdown lands at <b>2.36×</b> — outside a 2.0× covenant — and the largest facility that stays inside it is ₹8.11 Cr, not ₹10 Cr. Converting <b>all ₹4.09 Cr</b> of related-party and promoter debt takes post-drawdown gearing to 1.61× and lifts the covenant-constrained capacity to <b>₹12.58 Cr</b> — comfortably above the CGTMSE ceiling. <b>Convert the whole amount, not the long-term portion only.</b> Without any conversion the company can support a new facility of ₹0.31 Cr — which is to say, it cannot borrow at all.</div>
+<div class="note amber"><span class="note__label">How to do it, and what it costs in dilution</span>A rights issue under section 62(1)(a) of the Companies Act to existing holders, subscribed by set-off against the loans, or a preferential allotment under section 62(1)(c) with a registered-valuer report. Either route needs a board and shareholder resolution and a PAS-3 filing. Because the lenders are the promoters themselves, <b>the dilution is internal</b> — the promoter group's economic position is unchanged; only the form of its claim changes, from a creditor's to a shareholder's. The cost is the loss of interest deductibility on that portion, which against the improvement in borrowing capacity is not close.</div>
+</section>
+
+<section id="s04">
+  <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">The consolidated plan</h2></div>
+
+<p class="lede">The existing four parks plus all three new projects, phased on the award and opening
+dates assumed in each project deck. Existing-portfolio figures are the midpoints already published in
+the company financial model, extended two further years on the stated maturity path.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class=""></th><th class="r">FY26-27</th><th class="r">FY27-28</th><th class="r">FY28-29</th><th class="r">FY29-30</th><th class="r">FY30-31</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Existing four parks</span><span class="meta">EMV, EAC, DME, ESP — midpoints from the company financial model</span></td><td class="r ">24.00</td><td class="r ">33.00</td><td class="r ">43.50</td><td class="r ">51.00</td><td class="r ">58.00</td></tr><tr class=""><td class=" "><span class="label">Geeta Govind Vatika</span><span class="meta">Award assumed October 2026</span></td><td class="r ">0.98</td><td class="r ">2.33</td><td class="r ">3.04</td><td class="r ">3.64</td><td class="r ">4.20</td></tr><tr class=""><td class=" "><span class="label">Ramayan Vatika</span><span class="meta">Award assumed January 2027</span></td><td class="r muted">0.00</td><td class="r ">1.54</td><td class="r ">2.16</td><td class="r ">2.82</td><td class="r ">3.21</td></tr><tr class=""><td class=" "><span class="label">Karnal</span><span class="meta">Opening September 2027</span></td><td class="r muted">0.00</td><td class="r ">0.75</td><td class="r ">3.25</td><td class="r ">4.00</td><td class="r ">4.60</td></tr><tr class="total"><td class=" ">Consolidated revenue</td><td class="r ">24.98</td><td class="r ">37.62</td><td class="r ">51.95</td><td class="r ">61.47</td><td class="r ">70.02</td></tr><tr class="sub"><td class=" ">Consolidated EBITDA</td><td class="r pos">5.40</td><td class="r pos">7.18</td><td class="r pos">13.01</td><td class="r pos">16.71</td><td class="r pos">19.89</td></tr><tr class="dim"><td class=" ">EBITDA margin</td><td class="r muted">21.6%</td><td class="r muted">19.1%</td><td class="r muted">25.0%</td><td class="r muted">27.2%</td><td class="r muted">28.4%</td></tr></tbody></table></div>
+<div class="bento"><div class="bento__cell"><div class="bento__label">FY30-31 revenue</div><div class="bento__num">₹70 Cr</div><div class="bento__sub">From ₹16.29 Cr in FY25-26</div></div><div class="bento__cell"><div class="bento__label">FY30-31 EBITDA</div><div class="bento__num">₹20 Cr</div><div class="bento__sub">28.4% margin</div></div><div class="bento__cell"><div class="bento__label">New projects&#x27; share</div><div class="bento__num">17%</div><div class="bento__sub">Of FY30-31 revenue</div></div></div>
+<div class="note blue"><span class="note__label">What this does to concentration risk</span>EMV was 73% of consolidated revenue in FY25-26. By FY30-31 the three new projects alone contribute 17% of revenue, across three additional cities and two additional government relationships (ADA already known, BDA new). The revenue-concentration risk flagged as High in the company financial model's risk register is materially reduced by this plan — which is itself part of the credit case.</div>
+<div class="note amber"><span class="note__label">And what it does to the cost base</span>Three new sites add roughly 100 people to the establishment, two of them with contractually mandated minimum staffing. The FY30-31 margin of 28.4% already reflects that. <b>These are volume businesses with fixed obligations — growth here buys diversification, not operating leverage.</b> The operating leverage sits in the existing estate, where EMV runs a 32.5% net margin at maturity.</div>
+</section>
+
+<section id="s05">
+  <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">Option A · Equity</h2></div>
+
+<p class="lede">The existing round is ₹10 crore at a ₹90 crore pre-money for 10%. Funding all three new
+projects with equity would take it to roughly ₹16 crore. Here is what that returns to the person writing
+the cheque.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Term</th><th class="r">Existing round</th><th class="r">Expanded round</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Amount</span></td><td class="r ">₹10.00 Cr</td><td class="r ">₹16.00 Cr</td></tr><tr class=""><td class=" "><span class="label">Pre-money</span></td><td class="r ">₹90 Cr</td><td class="r ">₹90 Cr</td></tr><tr class=""><td class=" "><span class="label">Dilution</span></td><td class="r ">10.0%</td><td class="r ">15.1%</td></tr><tr class=""><td class=" "><span class="label">Implied multiple</span><span class="meta">On FY25-26 revenue of ₹16.29 Cr</span></td><td class="r ">5.5×</td><td class="r ">5.5×</td></tr></tbody></table></div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Exit basis</th><th class="r">Value</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Exit year</span></td><td class="r ">FY30-31 — five years from a September 2026 close</td></tr><tr class=""><td class=" "><span class="label">Revenue at exit</span></td><td class="r ">₹70 Cr</td></tr><tr class=""><td class=" "><span class="label">EBITDA at exit</span></td><td class="r ">₹20 Cr</td></tr><tr class=""><td class=" "><span class="label">Enterprise value</span><span class="meta">At 3.0× revenue — the company model&rsquo;s own peer frame is 3&ndash;5&times; at this maturity</span></td><td class="r ">₹210 Cr</td></tr><tr class=""><td class=" "><span class="label">Cross-check</span><span class="meta">At 11× EBITDA</span></td><td class="r muted">₹219 Cr</td></tr><tr class=""><td class=" "><span class="label">Less net debt</span></td><td class="r muted">₹-8 Cr</td></tr><tr class="total"><td class=" ">Equity value at exit</td><td class="r ">₹202 Cr</td></tr><tr class=""><td class=" 15.1% of exit equity value">Investor proceeds</td><td class="r ">₹30 Cr</td></tr><tr class="total"><td class=" ">Investor IRR over five years</td><td class="r neg">13.8%</td></tr><tr class="total"><td class=" ">Money multiple</td><td class="r ">1.91×</td></tr></tbody></table></div>
+<div class="note terra"><span class="note__label">₹90 crore pre-money prices most of the growth in</span>On this plan — which already includes all three new projects, an all-time-high revenue line and a margin reaching 28.4% — an investor entering at ₹90 crore pre-money earns <b>13.8%</b> over five years. That is a respectable return for a family office or a strategic investor. It is <b>below what an institutional growth fund underwrites to</b>, which is typically 22–25%. This is not an argument that the valuation is wrong — it is an argument about who the right counterparty is, and about how long the round is likely to take to close.</div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Investor hurdle</th><th class="r">Stake required</th><th class="r">Implied post-money</th><th class="r">Implied pre-money</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">18% — family office, strategic</span></td><td class="r ">18.1%</td><td class="r ">₹88 Cr</td><td class="r ">₹72 Cr</td></tr><tr class=""><td class=" "><span class="label">22% — lower-quartile growth fund</span></td><td class="r ">21.4%</td><td class="r ">₹75 Cr</td><td class="r ">₹59 Cr</td></tr><tr class=""><td class=" "><span class="label">25% — institutional growth equity</span></td><td class="r ">24.2%</td><td class="r ">₹66 Cr</td><td class="r ">₹50 Cr</td></tr><tr class=""><td class=" ">At the asking price of ₹90 Cr pre</td><td class="r ">15.1%</td><td class="r ">₹106 Cr</td><td class="r ">13.8% investor IRR</td></tr></tbody></table></div>
+<div class="note blue"><span class="note__label">Which is exactly why the other two options matter</span>Debt at 11.50% plus a 1.20% guarantee fee costs VAPPL about 12.70% a year. Equity at ₹90 crore pre-money costs 15.1% of a company the promoters believe is worth far more than ₹90 crore in five years' time. <b>When you believe your own projections, debt is the cheaper capital — and the ₹10 crore CGTMSE ceiling now covers most of what the round was for.</b></div>
+</section>
+
+<section id="s06">
+  <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Option B · Debt under CGTMSE</h2></div>
+
+<p class="lede">A single collateral-free composite facility at company level: a term loan for the
+project build-outs and a working-capital limit that consolidates the NBFC book.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Term</th><th class="">Structure</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Scheme</span></td><td class=" ">CGTMSE CGS-I · at the ₹10 Cr ceiling</td></tr><tr class=""><td class=" "><span class="label">Term loan</span><span class="meta">Karnal build-out, DME outdoor, EAC Phase 2, ESP activation, project mobilisation</span></td><td class=" ">₹6.50 Cr</td></tr><tr class=""><td class=" "><span class="label">Working capital limit</span><span class="meta">Four-park operating cycle plus ₹3.00 Cr of NBFC consolidation</span></td><td class=" ">₹3.50 Cr</td></tr><tr class="sub"><td class=" ">Total facility</td><td class=" ">₹10.00 Cr</td></tr><tr class=""><td class=" "><span class="label">Interest rate</span><span class="meta">Repo-linked, scheduled bank</span></td><td class=" ">11.50%</td></tr><tr class=""><td class=" "><span class="label">Annual guarantee fee</span><span class="meta">Slab for a facility above ₹8 Cr and up to ₹10 Cr</span></td><td class=" ">1.20%</td></tr><tr class=""><td class=" "><span class="label">All-in cost</span></td><td class=" ">12.70%</td></tr><tr class=""><td class=" "><span class="label">Tenor / moratorium</span></td><td class=" ">7 years / 1-year principal moratorium</td></tr><tr class=""><td class=" "><span class="label">Guarantee coverage</span></td><td class=" ">75% · ₹7.50 Cr guaranteed, ₹2.50 Cr at the lender&rsquo;s risk</td></tr><tr class=""><td class=" "><span class="label">Security</span></td><td class=" ">Nil collateral. Hypothecation of assets financed. Personal guarantee of directors permitted; third-party guarantee is not.</td></tr><tr class="total"><td class=" ">Total finance cost over seven years</td><td class=" ">₹5.70 Cr</td></tr></tbody></table></div>
+<div style="margin:26px 0 10px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);font-weight:700;">Debt service against the consolidated plan, ₹ crore</div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class=""></th><th class="r">New facility</th><th class="r">Existing debt</th><th class="r">Total service</th><th class="r">EBITDA</th><th class="r">DSCR</th></tr></thead><tbody><tr class=""><td class=" ">Year 1 <span class="muted">· moratorium</span></td><td class="r ">1.16</td><td class="r muted">0.70</td><td class="r ">1.86</td><td class="r ">5.40</td><td class="r pos">2.90×</td></tr><tr class=""><td class=" ">Year 2</td><td class="r ">2.29</td><td class="r muted">0.65</td><td class="r ">2.94</td><td class="r ">7.18</td><td class="r pos">2.44×</td></tr><tr class=""><td class=" ">Year 3</td><td class="r ">2.13</td><td class="r muted">0.60</td><td class="r ">2.72</td><td class="r ">13.01</td><td class="r pos">4.78×</td></tr><tr class=""><td class=" ">Year 4</td><td class="r ">1.94</td><td class="r muted">0.54</td><td class="r ">2.48</td><td class="r ">16.71</td><td class="r pos">6.74×</td></tr><tr class=""><td class=" ">Year 5</td><td class="r ">1.75</td><td class="r muted">0.49</td><td class="r ">2.24</td><td class="r ">19.89</td><td class="r pos">8.89×</td></tr><tr class=""><td class=" ">Year 6</td><td class="r ">1.56</td><td class="r muted">0.43</td><td class="r ">1.99</td><td class="r ">19.00</td><td class="r pos">9.53×</td></tr><tr class=""><td class=" ">Year 7</td><td class="r ">1.37</td><td class="r muted">0.38</td><td class="r ">1.75</td><td class="r ">21.00</td><td class="r pos">12.00×</td></tr></tbody></table></div>
+<div class="bento"><div class="bento__cell"><div class="bento__label">Minimum DSCR</div><div class="bento__num">2.44×</div><div class="bento__sub">Including the existing ₹7.85 Cr book, not just the new facility</div></div><div class="bento__cell"><div class="bento__label">Average DSCR</div><div class="bento__num">6.76×</div><div class="bento__sub">Across the seven-year term</div></div><div class="bento__cell"><div class="bento__label">Cost vs equity</div><div class="bento__num">12.70%</div><div class="bento__sub">Against 15.1% of the company</div></div></div>
+<div class="note green"><span class="note__label">This clears comfortably — which is the point</span>Minimum DSCR of <b>2.44×</b> against a 1.30× threshold, <em>including</em> the existing borrowings. The consolidated EBITDA line carries the service several times over. A ₹10 crore collateral-free facility at 12.70% all-in costs <b>₹5.70 Cr</b> over seven years — against 15.1% of a company whose equity this plan values at ₹202 Cr in FY30-31, or ₹30 Cr. <b>The debt is roughly a fifth of the cost of the equity, on the company's own projections.</b></div>
+<div class="note amber"><span class="note__label">Three conditions the sanction will carry</span><b>Leverage.</b> Post-conversion debt to equity of 1.01× is acceptable; the 3.04× position today is not. Section 03 is a condition precedent, not a suggestion. <b>Consolidation.</b> ₹3.00 Cr of the facility is earmarked to retire NBFC borrowings — a lender will want the thirteen facilities reduced to a countable number and will covenant against re-borrowing. <b>Arrears.</b> The ₹2.14 Cr electricity liability must be cleared or formally rescheduled with the discom before sanction.</div>
+</section>
+
+<section id="s07">
+  <div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title">Option C · Debt converted to equity</h2></div>
+
+<p class="lede">Money in as debt at a coupon, converting into equity on a fixed formula three years out.
+At company level — unlike at project level — this is genuinely competitive with both alternatives.</p>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Term</th><th class="r">Structure</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Principal</span></td><td class="r ">₹12.00 Cr</td></tr><tr class=""><td class=" "><span class="label">Coupon</span><span class="meta">Annual, until conversion</span></td><td class="r ">8.0%</td></tr><tr class=""><td class=" "><span class="label">Conversion</span></td><td class="r ">End of year 3 — compulsory</td></tr><tr class=""><td class=" "><span class="label">Conversion stake</span></td><td class="r ">13.0%</td></tr><tr class=""><td class=" "><span class="label">Implied conversion valuation</span><span class="meta">Post-money at conversion</span></td><td class="r ">₹92 Cr</td></tr><tr class=""><td class=" "><span class="label">Coupon paid to conversion</span></td><td class="r ">₹2.88 Cr</td></tr><tr class=""><td class=" "><span class="label">Exit</span></td><td class="r ">FY30-31 at ₹202 Cr of equity value</td></tr><tr class="total"><td class=" ">Investor IRR</td><td class="r pos">21.3%</td></tr><tr class="total"><td class=" ">Money multiple</td><td class="r ">2.43×</td></tr></tbody></table></div>
+<div class="note green"><span class="note__label">The best risk-adjusted structure for an outside investor</span><b>21.3%</b> against 13.8% for straight equity at the same valuation, on the same exit. The difference comes from three years of coupon and from entering as a creditor rather than a shareholder while the three new projects are still unproven. For VAPPL the trade is symmetrical: dilution is deferred three years, and if the projects deliver, 13.0% converted at a ₹92 Cr implied valuation is cheaper than 15.1% sold today at ₹90 crore pre-money.</div>
+<div class="note terra"><span class="note__label">The covenant problem — and it is not optional</span>CCDs sit as borrowings until conversion. Layered on the FY26 position they take debt-to-equity from 3.04x to 7.69x, which breaches the leverage covenant on any CGTMSE facility taken in parallel. Convert the related-party debt first.</div>
+<div class="note blue"><span class="note__label">How to structure it so both can coexist</span><b>Convert the related-party debt first</b> (section 03), taking gearing to 1.01×. <b>Then</b> the CCD sits on a base that can carry it. Alternatively, negotiate the CGTMSE facility's leverage covenant to <b>exclude compulsorily convertible instruments</b> from the debt numerator — standard practice, since a CCD that must convert is quasi-equity, and Indian accounting standards and most lenders will accept the treatment if it is agreed in the sanction letter rather than argued later.</div>
+<div class="note amber"><span class="note__label">Compliance checklist for a CCD issue</span>Private placement under section 42 of the Companies Act with a PAS-4 offer letter and PAS-3 return; a board and special resolution under section 62(1)(c); a registered-valuer report under rule 13 of the Share Capital and Debentures Rules; a debenture trust deed if the issue is to more than 500 persons; and — if any part of the money is foreign — a <b>conversion formula fixed on the date of issue</b> and pricing not below the fair value determined by an internationally accepted methodology. An optionally convertible debenture would be treated as external commercial borrowing instead, with a different and far more restrictive regime. <b>Compulsory conversion is what makes this instrument work; make sure the documents say so.</b></div>
+</section>
+
+<section id="s08">
+  <div class="sec-head"><span class="sec-num">08</span><h2 class="sec-title">Which option, and why</h2></div>
+
+<div class="opt-grid"><div class="opt-card"><div class="opt-card__tag">Option A</div><div class="opt-card__name">Equity</div><div class="opt-card__num">13.8%</div><div class="opt-card__cap">Investor IRR</div><ul class="opt-card__list"><li><span>Capital in</span><b>₹16.00 Cr</b></li><li><span>Stake offered</span><b>15%</b></li><li><span>Money multiple</span><b>1.91×</b></li><li><span>Stake for a 22% IRR</span><b>21%</b></li></ul></div><div class="opt-card opt-card--pick"><div class="opt-card__tag">Option B</div><div class="opt-card__name">Debt · CGTMSE</div><div class="opt-card__num">3.13×</div><div class="opt-card__cap">Minimum DSCR</div><ul class="opt-card__list"><li><span>Facility</span><b>₹10.00 Cr</b></li><li><span>Term loan / WC</span><b>₹6.50 Cr / ₹3.50 Cr</b></li><li><span>All-in rate</span><b>11.50% + 1.20% AGF</b></li><li><span>Total finance cost</span><b>₹5.70 Cr</b></li></ul></div><div class="opt-card"><div class="opt-card__tag">Option C</div><div class="opt-card__name">Debt → equity (CCD)</div><div class="opt-card__num">21.3%</div><div class="opt-card__cap">Investor IRR</div><ul class="opt-card__list"><li><span>Principal</span><b>₹12.00 Cr</b></li><li><span>Coupon to conversion</span><b>8.0% · yr 3</b></li><li><span>Stake on conversion</span><b>13%</b></li><li><span>Money multiple</span><b>2.43×</b></li></ul></div></div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class=""></th><th class="r">A · Equity</th><th class="r">B · CGTMSE debt</th><th class="r">C · CCD</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Money in</span></td><td class="r ">₹16.00 Cr</td><td class="r ">₹10.00 Cr</td><td class="r ">₹12.00 Cr</td></tr><tr class=""><td class=" "><span class="label">Cost to VAPPL</span></td><td class="r ">15.1% forever</td><td class="r pos">₹5.70 Cr over 7 yrs</td><td class="r ">₹2.88 Cr + 13.0%</td></tr><tr class=""><td class=" "><span class="label">Cost in FY30-31 money</span><span class="meta">Value of what is given up at the modelled exit</span></td><td class="r neg">₹30 Cr</td><td class="r pos">₹5.70 Cr</td><td class="r ">₹29 Cr</td></tr><tr class=""><td class=" "><span class="label">Return to the funder</span></td><td class="r ">13.8%</td><td class="r ">12.70%</td><td class="r pos">21.3%</td></tr><tr class=""><td class=" "><span class="label">Repaid?</span></td><td class="r neg">Never</td><td class="r pos">Yes, over 7 years</td><td class="r ">Converts</td></tr><tr class=""><td class=" "><span class="label">Dilution</span></td><td class="r neg">15.1% immediately</td><td class="r pos">None</td><td class="r ">13.0% in year 3</td></tr><tr class=""><td class=" "><span class="label">Effect on gearing</span></td><td class="r pos">Improves</td><td class="r ">D/E to 1.61× once drawn, after converting all ₹4.09 Cr</td><td class="r neg">Worsens until conversion</td></tr><tr class=""><td class=" "><span class="label">Time to close</span></td><td class="r neg">4–8 months</td><td class="r pos">6–12 weeks after conditions precedent</td><td class="r ">3–6 months</td></tr><tr class=""><td class=" "><span class="label">Collateral</span></td><td class="r pos">None</td><td class="r pos">None — CGTMSE cover</td><td class="r pos">None</td></tr><tr class=""><td class=" "><span class="label">Constrained by</span></td><td class="r ">Valuation and investor appetite</td><td class="r ">The ₹10 Cr per-borrower ceiling</td><td class="r ">Valuation and covenant headroom</td></tr></tbody></table></div>
+<div class="verdict verdict--go">
+  <div class="verdict__label">Recommendation</div>
+  <div class="verdict__head">All three, in sequence — not one instead of the others</div>
+  <div class="verdict__body">
+    <b>Step 1 — now, no external party.</b> Convert <b>all ₹4.09 Cr</b> of related-party
+    and promoter debt to equity — not the ₹2.60 Cr long-term portion alone. Gearing falls from
+    3.04× to 0.56×, and post-drawdown gearing to
+    1.61×, which is what makes the full ₹10 Cr facility reachable
+    inside a 2.0× covenant. Clear the
+    ₹2.14 Cr of electricity arrears. Consolidate the thirteen NBFC facilities into a
+    countable number. None of this requires anyone's permission and all of it is a precondition to what follows.<br><br>
+    <b>Step 2 — the cheap capital.</b> A ₹10.00 Cr CGTMSE composite facility at
+    12.70% all-in, covering Karnal's build-out, the DME and EAC deployments, and the two concession
+    mobilisations. Total cost ₹5.70 Cr over seven years, against
+    ₹30 Cr for the equivalent equity. Take the Karnal facility to
+    the bank first — it is the cleanest credit and it establishes the CGTMSE track record.<br><br>
+    <b>Step 3 — the equity, smaller and later.</b> With ₹10.00 Cr of guaranteed debt in place,
+    the equity round does not need to be ₹16.00 Cr. It needs to cover what debt cannot: the
+    portion of the portfolio above the CGTMSE ceiling, the working-capital cushion, and the balance-sheet
+    strength that keeps the facility covenanted. A round of <b>₹6–8 crore</b> does that at materially less
+    dilution than 15.1% — and if the counterparty wants a better entry than
+    13.8%, the CCD in Option C gets them to 21.3% without repricing the company.
+  </div>
+</div>
+<div class="note terra"><span class="note__label">The constraint that shapes everything</span>Gross CGTMSE demand across all four uses is <b>₹14.54 Cr</b> against a <b>₹10 Cr per-borrower ceiling</b> — an excess of ₹4.54 Cr that has to be funded another way. The portfolio hub sets out how to allocate the ceiling across the four uses and what the options are for the residual.</div>
+</section>
+
+<section id="s09">
+  <div class="sec-head"><span class="sec-num">09</span><h2 class="sec-title">Conditions precedent and risks</h2></div>
+
+<div style="margin:0 0 14px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;">Conditions precedent to any lender approach</div>
+<div class="fin-scroll"><table class="fin"><thead><tr><th class="">Action</th><th class="">Why it matters</th><th class="">Owner</th></tr></thead><tbody><tr class=""><td class=" "><span class="label">Convert all ₹4.09 Cr of related-party and promoter debt to equity</span></td><td class=" ">Takes D/E from 3.04× to 0.56×, and to 1.61× once the facility is drawn. Converting only the ₹2.60 Cr long-term portion caps the facility at ₹8.11 Cr under a 2.0× covenant; converting nothing caps it at ₹0.31 Cr.</td><td class=" ">Board</td></tr><tr class=""><td class=" "><span class="label">Clear the ₹2.14 Cr electricity arrears</span></td><td class=" ">A live utility default is the single item most likely to stop a sanction note.</td><td class=" ">Finance</td></tr><tr class=""><td class=" "><span class="label">Consolidate the NBFC book</span></td><td class=" ">Thirteen facilities read as distress borrowing. Reduce to a countable number before applying.</td><td class=" ">Finance</td></tr><tr class=""><td class=" "><span class="label">Confirm Udyam registration and NIC code</span></td><td class=" ">CGTMSE cover requires a live registration on the correct activity code for the borrowing entity.</td><td class=" ">Compliance</td></tr><tr class=""><td class=" "><span class="label">Complete the FY25-26 audit</span></td><td class=" ">Provisional accounts carry a ₹54.5 lakh depreciation placeholder against an estimated ₹1.0–1.1 Cr. Lenders will want audited numbers. Expected August 2026.</td><td class=" ">HMBA & Associates</td></tr><tr class=""><td class=" "><span class="label">Obtain BDA consent for any change of control</span></td><td class=" ">Ramayan Vatika's lock-in bars shareholding changes without prior written approval. Applies to the equity round and to CCD conversion.</td><td class=" ">Board</td></tr></tbody></table></div>
+<div style="margin:38px 0 14px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;">Risks to the capital plan</div>
+<div class="risk-grid"><div class="risk-row"><div class="risk-factor">Leverage covenant</div><div><span class="risk-sev sev-h">High</span></div><div class="risk-desc">At 3.04× today, a 2.0× covenant supports a new facility of only ₹0.31 Cr. Converting all ₹4.09 Cr of related-party debt lifts that to ₹12.58 Cr. <b>Mitigation:</b> convert in full before applying; negotiate the covenant to exclude compulsorily convertible instruments if a CCD runs in parallel; draw in tranches as retained earnings build.</div></div><div class="risk-row"><div class="risk-factor">CGTMSE ceiling</div><div><span class="risk-sev sev-h">High</span></div><div class="risk-desc">₹14.54 Cr of demand against a ₹10 Cr per-borrower ceiling. <b>Mitigation:</b> the allocation plan in the portfolio hub; hybrid security for the residual; SPV structuring if the group is willing to accept separate borrowers.</div></div><div class="risk-row"><div class="risk-factor">MSME threshold</div><div><span class="risk-sev sev-m">Medium</span></div><div class="risk-desc">Cover is available to micro and small enterprises only. This plan reaches ₹70 Cr of revenue against a ₹100 Cr ceiling — comfortable, but the direction of travel is one-way. <b>Mitigation:</b> draw the facility while eligible; cover runs for the sanctioned tenor.</div></div><div class="risk-row"><div class="risk-factor">Electricity arrears</div><div><span class="risk-sev sev-mh">Medium–High</span></div><div class="risk-desc">₹2.14 Cr accumulated across parks. Resolution is described as in progress. <b>Mitigation:</b> settle or formally reschedule before any sanction application.</div></div><div class="risk-row"><div class="risk-factor">FY26 audit outcome</div><div><span class="risk-sev sev-m">Medium</span></div><div class="risk-desc">Depreciation moves from a ₹54.5 lakh placeholder to an estimated ₹1.0–1.1 Cr, reducing PAT and therefore net worth. EBITDA and DSCR are unaffected. <b>Mitigation:</b> present EBITDA-based coverage; disclose the adjustment proactively rather than have a lender find it.</div></div><div class="risk-row"><div class="risk-factor">Execution across three new sites at once</div><div><span class="risk-sev sev-mh">Medium–High</span></div><div class="risk-desc">Two tender processes and a construction project running in parallel with four operating parks. FY24-25 showed what simultaneous launches cost. <b>Mitigation:</b> the sequencing in the portfolio hub; the Agra cluster shares management with Geeta Govind Vatika; Karnal is a build, not an operation, until 2027.</div></div><div class="risk-row"><div class="risk-factor">Valuation gap</div><div><span class="risk-sev sev-m">Medium</span></div><div class="risk-desc">₹90 Cr pre-money returns 13.8% to a five-year investor against a 22–25% institutional hurdle. <b>Mitigation:</b> the CCD structure closes the gap without repricing; target family offices and strategics rather than growth funds; reduce the round size using the debt.</div></div></div>
+<div class="footer"><b>Confidentiality:</b> Prepared for Vision Amusement Park Pvt. Ltd. and its prospective lenders and investors. Contains forward-looking statements and management estimates; all projections are subject to risk and to the assumptions set out in each deck. Not an offer to sell or a solicitation of an offer to buy any security. Every figure is generated by <b>model/pf_model.py</b> and rendered by <b>model/render.py</b> — edit the model, not the HTML.</div>
+</section>
+
+  </main>
+</div>
+<script>
+(function(){
+  const sections = document.querySelectorAll('section[id]');
+  const items = document.querySelectorAll('.rail__item');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        items.forEach(i=>i.classList.remove('rail__item--active'));
+        const link = document.querySelector('.rail__item a[href="#'+en.target.id+'"]');
+        if(link) link.closest('.rail__item').classList.add('rail__item--active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>
