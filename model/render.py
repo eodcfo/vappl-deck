@@ -1273,7 +1273,7 @@ formula fixed the day the instrument is issued.</p>
     {rs(dc["max_total_limit"])}, which is what the project services at a 1.30× coverage floor. The binding
     condition sits earlier than the financing, though: the model solves the break-even licence fee at
     <b>{lakh(wa["licence_fee_year1"],1)} a year</b> against BDA's
-    {lakh(r["reserve_licence_fee_year_lakh"],0)} reserve. That is
+    {lakh(r["reserve_licence_fee_year_lakh"],0)} reserve — leaving only
     {pct((wa["licence_fee_year1"]/r["reserve_licence_fee_year_lakh"] - 1) * 100, 0)} of headroom in a sealed
     highest-bid process. <b>Bid at or barely above reserve, or do not bid.</b> On a contract with a five-year
     lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.
