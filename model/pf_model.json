@@ -389,6 +389,7 @@
    "opex_facility": 217.30296610169492,
    "project_fcf": {
     "t0": 118.059,
+    "terminal_inflow": 10.0,
     "flows": [
      -118.059,
      -24.874152542372876,
@@ -405,6 +406,7 @@
       "ebitda": -20.94703389830508,
       "tax": 0.0,
       "maintenance_capex": 3.927118644067797,
+      "terminal_inflow": 0.0,
       "fcf": -24.874152542372876
      },
      {
@@ -412,6 +414,7 @@
       "ebitda": 15.638274822307352,
       "tax": 0.3771282293863618,
       "maintenance_capex": 5.4004165429977355,
+      "terminal_inflow": 0.0,
       "fcf": 9.860730049923255
      },
      {
@@ -419,6 +422,7 @@
       "ebitda": 50.36754678369323,
       "tax": 9.05944621973283,
       "maintenance_capex": 6.759018589393112,
+      "terminal_inflow": 0.0,
       "fcf": 34.54908197456728
      },
      {
@@ -426,6 +430,7 @@
       "ebitda": 70.66031819582383,
       "tax": 14.132639072765482,
       "maintenance_capex": 7.811366086073576,
+      "terminal_inflow": 0.0,
       "fcf": 48.71631303698477
      },
      {
@@ -433,6 +438,7 @@
       "ebitda": 96.94644062849545,
       "tax": 20.704169680933386,
       "maintenance_capex": 8.994138668671406,
+      "terminal_inflow": 0.0,
       "fcf": 67.24813227889065
      },
      {
@@ -440,6 +446,7 @@
       "ebitda": 109.64750498330199,
       "tax": 23.87943576963502,
       "maintenance_capex": 9.935880223385144,
+      "terminal_inflow": 0.0,
       "fcf": 75.83218899028182
      },
      {
@@ -447,6 +454,7 @@
       "ebitda": 135.76801871219106,
       "tax": 30.40956420185729,
       "maintenance_capex": 11.162309126767166,
+      "terminal_inflow": 10.0,
       "fcf": 104.1961453835666
      }
     ],
@@ -763,6 +771,12 @@
     "total_finance_cost": 105.30000000000001
    },
    "agf_saving_optimised": 1.273029661016949,
+   "show_tariff_sensitivity": {
+    "year": 3,
+    "footfall_lakh": 4.4,
+    "show_conversion_pct": 28.0,
+    "value_per_rupee_of_tariff_lakh": 1.0440677966101697
+   },
    "walk_away": {
     "hurdle_pct": 12.5,
     "multiple_of_base": 1.2518455917118734,
@@ -1432,6 +1446,7 @@
    "opex_facility": 227.28091165896248,
    "project_fcf": {
     "t0": 189.4,
+    "terminal_inflow": 33.0,
     "flows": [
      -189.4,
      -44.5458898305085,
@@ -1451,6 +1466,7 @@
       "ebitda": -41.462669491525446,
       "tax": 0.0,
       "maintenance_capex": 3.0832203389830504,
+      "terminal_inflow": 0.0,
       "fcf": -44.5458898305085
      },
      {
@@ -1458,6 +1474,7 @@
       "ebitda": -5.01767719568565,
       "tax": 0.0,
       "maintenance_capex": 4.320790960451977,
+      "terminal_inflow": 0.0,
       "fcf": -9.338468156137626
      },
      {
@@ -1465,6 +1482,7 @@
       "ebitda": 35.31820434129435,
       "tax": 3.4801463234188246,
       "maintenance_capex": 5.6467372881355935,
+      "terminal_inflow": 0.0,
       "fcf": 26.191320729739928
      },
      {
@@ -1472,6 +1490,7 @@
       "ebitda": 51.004330627349816,
       "tax": 7.401677894932692,
       "maintenance_capex": 6.428347457627119,
+      "terminal_inflow": 0.0,
       "fcf": 37.17430527479001
      },
      {
@@ -1479,6 +1498,7 @@
       "ebitda": 75.04672066540968,
       "tax": 13.412275404447659,
       "maintenance_capex": 7.407954802259887,
+      "terminal_inflow": 0.0,
       "fcf": 54.22649045870214
      },
      {
@@ -1486,6 +1506,7 @@
       "ebitda": 80.92865056229817,
       "tax": 14.882757878669782,
       "maintenance_capex": 8.004627118644068,
+      "terminal_inflow": 0.0,
       "fcf": 58.04126556498433
      },
      {
@@ -1493,6 +1514,7 @@
       "ebitda": 99.53123448099126,
       "tax": 19.533403858343053,
       "maintenance_capex": 8.886864406779662,
+      "terminal_inflow": 0.0,
       "fcf": 71.11096621586854
      },
      {
@@ -1500,6 +1522,7 @@
       "ebitda": 101.00675754151126,
       "tax": 19.902284623473054,
       "maintenance_capex": 9.430508474576273,
+      "terminal_inflow": 0.0,
       "fcf": 71.67396444346194
      },
      {
@@ -1507,6 +1530,7 @@
       "ebitda": 115.10024336900767,
       "tax": 23.425656080347157,
       "maintenance_capex": 10.272081355932205,
+      "terminal_inflow": 0.0,
       "fcf": 81.40250593272832
      },
      {
@@ -1514,6 +1538,7 @@
       "ebitda": 112.4543138675495,
       "tax": 22.764173704982614,
       "maintenance_capex": 10.792793785310737,
+      "terminal_inflow": 33.0,
       "fcf": 111.89734637725616
      }
     ],
@@ -1888,6 +1913,14 @@
     "total_finance_cost": 243.82500000000005
    },
    "agf_saving_optimised": 0.5728091165896245,
+   "conversion_gap_value": {
+    "year": 5,
+    "footfall_lakh": 3.1,
+    "bda_conversion_pct": 60.0,
+    "modelled_conversion_pct": 48.0,
+    "show_tariff_gross": 165,
+    "value_lakh": 52.016949152542374
+   },
    "walk_away": {
     "hurdle_pct": 12.5,
     "multiple_of_base": 1.0759093946808536,
@@ -2048,7 +2081,7 @@
   },
   "scenarios": {
    "downside": {
-    "note": "15% below base on footfall and show conversion, 5% cost overrun, licence bid up to \u20b940 lakh",
+    "note": "15% below base on footfall and show conversion, 5% cost overrun, licence bid up to \u20b944 lakh",
     "multipliers": {
      "footfall": 0.85,
      "yield": 0.85,
@@ -2367,6 +2400,7 @@
    },
    "project_fcf": {
     "t0": 400.0,
+    "terminal_inflow": 0.0,
     "flows": [
      -400.0,
      -39.75,
@@ -2386,6 +2420,7 @@
       "ebitda": -38.25,
       "tax": 0.0,
       "maintenance_capex": 1.5,
+      "terminal_inflow": 0.0,
       "fcf": -39.75
      },
      {
@@ -2393,6 +2428,7 @@
       "ebitda": 72.62000000000003,
       "tax": 7.738333333333342,
       "maintenance_capex": 6.5,
+      "terminal_inflow": 0.0,
       "fcf": 58.38166666666669
      },
      {
@@ -2400,6 +2436,7 @@
       "ebitda": 125.34905000000003,
       "tax": 20.920595833333344,
       "maintenance_capex": 8.0,
+      "terminal_inflow": 0.0,
       "fcf": 96.42845416666668
      },
      {
@@ -2407,6 +2444,7 @@
       "ebitda": 163.81193825000003,
       "tax": 30.536317895833342,
       "maintenance_capex": 9.200000000000001,
+      "terminal_inflow": 0.0,
       "fcf": 124.07562035416667
      },
      {
@@ -2414,6 +2452,7 @@
       "ebitda": 192.39832823625,
       "tax": 37.682915392395834,
       "maintenance_capex": 10.200000000000001,
+      "terminal_inflow": 0.0,
       "fcf": 144.51541284385416
      },
      {
@@ -2421,6 +2460,7 @@
       "ebitda": 211.0438840516063,
       "tax": 42.344304346234914,
       "maintenance_capex": 11.0,
+      "terminal_inflow": 0.0,
       "fcf": 157.6995797053714
      },
      {
@@ -2428,6 +2468,7 @@
       "ebitda": 226.80000388356063,
       "tax": 46.283334304223494,
       "maintenance_capex": 11.76,
+      "terminal_inflow": 0.0,
       "fcf": 168.75666957933714
      },
      {
@@ -2435,6 +2476,7 @@
       "ebitda": 240.48353566414409,
       "tax": 49.70421724936936,
       "maintenance_capex": 12.5,
+      "terminal_inflow": 0.0,
       "fcf": 178.27931841477474
      },
      {
@@ -2442,6 +2484,7 @@
       "ebitda": 251.12647368337366,
       "tax": 52.36495175417675,
       "maintenance_capex": 13.200000000000001,
+      "terminal_inflow": 0.0,
       "fcf": 185.5615219291969
      },
      {
@@ -2449,6 +2492,7 @@
       "ebitda": 260.42563488716166,
       "tax": 54.68974205512375,
       "maintenance_capex": 13.9,
+      "terminal_inflow": 0.0,
       "fcf": 191.8358928320379
      }
     ],
@@ -3240,8 +3284,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 108.33333333333336,
       "debt_service": 156.17000000000002,
-      "cfads": 1900.0,
-      "dscr": 12.166229109303963
+      "cfads": 2107.9368271868802,
+      "dscr": 13.497706519734136
      },
      {
       "year": 7,
@@ -3253,14 +3297,14 @@
       "principal": 108.33333333333333,
       "tl_closing": 2.842170943040401e-14,
       "debt_service": 137.33166666666668,
-      "cfads": 2100.0,
-      "dscr": 15.291447711744073
+      "cfads": 2227.254006084251,
+      "dscr": 16.218065797528496
      }
     ],
     "min_dscr": 3.1339964377486376,
-    "avg_dscr": 8.766031339290127,
+    "avg_dscr": 9.088616410177925,
     "min_dscr_post_moratorium": 3.1339964377486376,
-    "avg_dscr_post_moratorium": 9.448499068925281,
+    "avg_dscr_post_moratorium": 9.82484831829438,
     "bankable": true,
     "total_interest": 514.625,
     "total_agf": 54.9,
@@ -3311,20 +3355,20 @@
       "new_facility": 156.17000000000002,
       "existing_debt": 43.12833333333333,
       "total_debt_service": 199.29833333333335,
-      "cfads": 1900.0,
-      "dscr": 9.533446508166149
+      "cfads": 2107.9368271868802,
+      "dscr": 10.576791044515575
      },
      {
       "year": 7,
       "new_facility": 137.33166666666668,
       "existing_debt": 37.666666666666664,
       "total_debt_service": 174.99833333333333,
-      "cfads": 2100.0,
-      "dscr": 12.00011428680273
+      "cfads": 2227.254006084251,
+      "dscr": 12.727286961309638
      }
     ],
     "min_dscr_combined": 2.441274390261008,
-    "avg_dscr_combined": 6.755681080636269,
+    "avg_dscr_combined": 7.008612110758603,
     "nbfc_refinance": 300.0,
     "leverage": {
      "covenant_assumed": 2.0,

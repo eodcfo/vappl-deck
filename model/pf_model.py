@@ -685,13 +685,15 @@ def project_fcf(years, t0_outflow, terminal_inflow=0.0, maint_capex_pct=0.02):
         rev = y["revenue"]["total"] if isinstance(y["revenue"], dict) else y["revenue"]
         maint = rev * maint_capex_pct
         fcf = ebitda - tax - maint
-        if i == len(years) - 1:
-            fcf += terminal_inflow
+        term = terminal_inflow if i == len(years) - 1 else 0.0
+        fcf += term
         flows.append(fcf)
         detail.append({"year": y["year"], "ebitda": ebitda, "tax": tax,
-                       "maintenance_capex": maint, "fcf": fcf})
+                       "maintenance_capex": maint, "terminal_inflow": term,
+                       "fcf": fcf})
     r = irr(flows)
-    return {"t0": t0_outflow, "flows": flows, "detail": detail,
+    return {"t0": t0_outflow, "terminal_inflow": terminal_inflow,
+            "flows": flows, "detail": detail,
             "irr_pct": r * 100 if r is not None else None,
             "npv_at_15pct": npv(0.15, flows),
             "payback_years": payback_year(flows),
@@ -935,6 +937,12 @@ def main():
     ggv["financing"]["agf_saving_optimised"] = (
         g_debt["total_agf"] - ggv["financing"]["debt_optimised"]["total_agf"])
 
+    # What one rupee on the ADA-approved show tariff is worth in a full year
+    _g3 = ggv["years"][2]["revenue"]
+    ggv["financing"]["show_tariff_sensitivity"] = {
+        "year": 3, "footfall_lakh": _g3["footfall_lakh"], "show_conversion_pct": 28.0,
+        "value_per_rupee_of_tariff_lakh": _g3["footfall_lakh"] * 1e5 * 0.28 / 1.18 / 1e5,
+    }
     ggv["financing"]["walk_away"] = max_licence_fee(
         build_ggv, GGV_BID_LICENCE_YEAR_1, g_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     ggv["financing"]["debt_capacity"] = debt_capacity(
@@ -990,6 +998,15 @@ def main():
     rv["financing"]["agf_saving_optimised"] = (
         r_debt["total_agf"] - rv["financing"]["debt_optimised"]["total_agf"])
 
+    # What the gap between BDA's 60% show conversion and the modelled rate is worth
+    _r5 = rv["years"][4]["revenue"]
+    _gap = 0.60 - 0.48
+    rv["financing"]["conversion_gap_value"] = {
+        "year": 5, "footfall_lakh": _r5["footfall_lakh"],
+        "bda_conversion_pct": 60.0, "modelled_conversion_pct": 48.0,
+        "show_tariff_gross": 165,
+        "value_lakh": _r5["footfall_lakh"] * 1e5 * _gap * 165 / 1.18 / 1e5,
+    }
     rv["financing"]["walk_away"] = max_licence_fee(
         build_rv, RV_BID_LICENCE_YEAR_1, r_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     rv["financing"]["debt_capacity"] = debt_capacity(
@@ -997,7 +1014,7 @@ def main():
 
     rv["scenarios"] = run_scenarios(build_rv, [
         ("downside", {"footfall": 0.85, "yield": 0.85, "opex": 1.05, "licence": 1.33},
-         "15% below base on footfall and show conversion, 5% cost overrun, licence bid up to ₹40 lakh"),
+         "15% below base on footfall and show conversion, 5% cost overrun, licence bid up to ₹44 lakh"),
         ("base", {}, "As modelled: 1.65 lakh visits in year 1, 42% show conversion, ₹33 lakh licence fee"),
         ("bda_indicative", {"footfall": 1.10, "yield": 1.40},
          "BDA's own indicative case: 500 visitors/day with 60% paying for the show"),
@@ -1217,7 +1234,8 @@ def build_company(consol):
                                  "irr_25": premoney_for(0.25)}
 
     # --- Option 2: CGTMSE debt ------------------------------------------------
-    cfads = [r["ebitda"] for r in consol["years"]] + [1900.0, 2100.0]
+    _last = consol["years"][-1]["ebitda"]
+    cfads = [r["ebitda"] for r in consol["years"]] + [_last * 1.06, _last * 1.12]
     wc_util = [250.0, 300.0, 280.0, 240.0, 200.0, 160.0, 120.0]
     debt = composite_facility(term_loan=650.0, wc_limit=350.0, wc_utilisation=wc_util,
                               rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=1,

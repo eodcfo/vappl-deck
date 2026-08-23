@@ -371,7 +371,8 @@ def opt_cards(fin, currency_label="Facility"):
             ("Stake for a 22% IRR", pct(eq["stake_for_22pct"], 0)),
         ]))
     cards.append(('opt-card' + (' opt-card--pick' if pick == 'debt' else ''),
-        "Option B", "Debt · CGTMSE", num(db["min_dscr_post_moratorium"]) + "×", "Minimum DSCR", [
+        "Option B", "Debt · CGTMSE", num(db["min_dscr_post_moratorium"]) + "×",
+        "Minimum DSCR · this facility", [
             (currency_label, rs(db["total_limit"])),
             ("Term loan / WC", f'{rs(db["term_loan"])} / {rs(db["wc_limit"])}'),
             ("All-in rate", f'{num(db["rate_pct"])}% + {num(db["cgtmse"]["agf_rate_pct"])}% AGF'),
@@ -450,25 +451,34 @@ def verdict_block(coc, extra=""):
             f'<div class="verdict__head">{e(head)}</div>'
             f'<div class="verdict__body">Project IRR <b>{pct(coc["project_irr_pct"])}</b> against an '
             f'all-in CGTMSE cost of debt of <b>{pct(coc["all_in_cost_of_cgtmse_debt_pct"],2)}</b> '
-            f'({pct(coc["spread_over_debt_pct"],1,sign=True)}) and an equity hurdle of '
+            f'({coc["spread_over_debt_pct"]:+.1f} percentage points) and an equity hurdle of '
             f'<b>{pct(coc["equity_hurdle_pct"],0)}</b>. {e(coc["verdict"])} {extra}</div></div>')
 
-def fcf_table(fcf, years_label="Year"):
+def fcf_table(fcf, years_label="Year", terminal_label="Deposits refunded at expiry"):
+    has_term = fcf.get("terminal_inflow", 0.0) > 0
+    heads = ["", "EBITDA", "Tax", "Maint. capex"] + (["Refunds"] if has_term else []) + ["Free cash flow"]
+    blanks = [("", "")] * (len(heads) - 2)
     rows = [row((f'<span class="label">Capital deployed</span>'
                  f'<span class="meta">Mobilisation, deposits and advance licence fee</span>', ""),
-                ("", ""), ("", ""), ("", ""),
-                (cr(-fcf["t0"]), "neg"), cls_="sub")]
+                *blanks, (cr(-fcf["t0"]), "neg"), cls_="sub")]
     for d in fcf["detail"]:
-        rows.append(row(
-            (f'{years_label} {d["year"]}', ""),
-            (cr(d["ebitda"]), cls(d["ebitda"])),
-            (cr(-d["tax"]), "muted"),
-            (cr(-d["maintenance_capex"]), "muted"),
-            (cr(d["fcf"]), cls(d["fcf"])),
-        ))
-    rows.append(row(("Cumulative free cash flow", ""), ("", ""), ("", ""), ("", ""),
+        cells = [(f'{years_label} {d["year"]}', ""),
+                 (cr(d["ebitda"]), cls(d["ebitda"])),
+                 (cr(-d["tax"]), "muted"),
+                 (cr(-d["maintenance_capex"]), "muted")]
+        if has_term:
+            t = d.get("terminal_inflow", 0.0)
+            cells.append((cr(t) if t else '<span class="muted">—</span>', "pos" if t else ""))
+        cells.append((cr(d["fcf"]), cls(d["fcf"])))
+        rows.append(row(*cells))
+    rows.append(row(("Cumulative free cash flow", ""), *blanks,
                     (cr(fcf["cumulative_fcf"]), cls(fcf["cumulative_fcf"])), cls_="total"))
-    return table(["", "EBITDA", "Tax", "Maint. capex", "Free cash flow"], rows)
+    out = table(heads, rows)
+    if has_term:
+        out += note("blue", "", f'The <b>Refunds</b> column is the {terminal_label.lower()} — '
+                    f'{rs(fcf["terminal_inflow"])} returned in the final year. It is cash, but it is a return '
+                    "of capital rather than something the operation earned, so it is shown separately.")
+    return out
 
 # ============================================================================
 # DECK 1 — GEETA GOVIND VATIKA
@@ -552,8 +562,8 @@ instrument is appropriate.</p>
 {note("terra","This is a liquidity requirement, not a capital requirement",
   f"Of the {rs(f['ask'])} asked for, only <b>{rs(cap['total'])}</b> is capital that the project consumes and "
   f"does not return — {rs(mob['capex'])} of mobilisation capex, {rs(mob['security_deposit'])} of deposit, "
-  f"{rs(mob['advance_licence_fee_6m'])} of advance licence fee, and {rs(cap['cumulative_operating_deficit'])} "
-  "of year-1 operating deficit. The remaining balance is working capital: it is drawn to pay wages and the "
+  f"{rs(mob['advance_licence_fee_6m'])} of advance licence fee, {rs(mob['emd'] + mob['tender_fee'])} of EMD "
+  f"and tender fee, and {rs(cap['cumulative_operating_deficit'])} of year-1 operating deficit. The remaining balance is working capital: it is drawn to pay wages and the "
   "electricity bill, and it comes back out of the gate. <b>Equity does not come back. A revolving limit does.</b> "
   "That single distinction is why Option B below is the recommendation.")}
 {table(["Mobilisation capex", "Amount"], capex_rows)}
@@ -569,8 +579,12 @@ instrument is appropriate.</p>
 {note("amber","On the licence fee bid",
   f"This model assumes a winning bid of <b>{lakh(g['bid_licence_year1'],0)} a year</b> — ₹3.0 lakh a month, "
   f"20% above ADA's ₹2.5 lakh reserve. The forward e-auction is the single largest uncontrolled variable in the "
-  "project. Section 07 runs the downside at a ₹45 lakh bid. <b>Above roughly ₹52 lakh a year the project stops "
-  "clearing its cost of debt</b> — that is the walk-away number to carry into the auction room.")}"""
+  f"project. Section 07 runs the downside at a {lakh(g['bid_licence_year1']*1.25,0)} bid. Solving the model for "
+  f"the licence fee at which the project IRR falls to its own {pct(f['walk_away']['hurdle_pct'],2)} cost of "
+  f"guaranteed debt gives <b>{lakh(f['walk_away']['licence_fee_year1'],1)} a year — "
+  f"{lakh(f['walk_away']['licence_fee_month'],2)} a month</b>. That is the walk-away number for the auction "
+  f"room: about {pct((f['walk_away']['licence_fee_month']/r['reserve_licence_fee_month_lakh']-1)*100,0)} above "
+  "ADA's reserve, and not a rupee more.")}"""
     S.append(("02", "s02", "What the money is for", body))
 
     # 03 revenue
@@ -611,8 +625,9 @@ target. All figures are net of GST; the tariffs quoted below are the gross gate 
   "The year-1 revenue here is roughly four times Subhash Park's run rate on roughly four times the asset.")}
 {note("terra","The tariff you do not control",
   "ADA fixes the gate at ₹20 and approves every other rate, with ten days' notice required for any revision. "
-  "<b>The show ticket is the only meaningful pricing lever, and E-O-D does not hold it.</b> Every rupee of the "
-  "show tariff is worth roughly ₹7.4 lakh a year at year-3 volumes. Secure written agreement on the show tariff "
+  "<b>The show ticket is the only meaningful pricing lever, and E-O-D does not hold it.</b> Every rupee on the "
+  f"show tariff is worth about {lakh(f['show_tariff_sensitivity']['value_per_rupee_of_tariff_lakh'],2)} a year "
+  "at year-3 volumes. Secure written agreement on the show tariff "
   "and its escalation path before the auction, not after the work order.")}"""
     S.append(("03", "s03", "Revenue model", body))
 
@@ -821,7 +836,7 @@ then automatic conversion into equity on a formula fixed the day it is issued.</
   <div class="verdict__body">
     The project earns <b>{pct(f["project_fcf"]["irr_pct"])}</b> against an all-in cost of guaranteed debt of
     <b>{pct(f["cost_of_capital"]["all_in_cost_of_cgtmse_debt_pct"], 2)}</b>. That
-    <b>{pct(f["cost_of_capital"]["spread_over_debt_pct"], 1, sign=True)}</b> spread belongs to E-O-D, and debt is
+    <b>{f["cost_of_capital"]["spread_over_debt_pct"]:+.1f} percentage point</b> spread belongs to E-O-D, and debt is
     the only instrument that lets E-O-D keep it. Equity at project level needs
     {pct(eq["stake_for_22pct"], 0)} of the project to clear a normal hurdle, which is more than the project is
     worth giving away. Specifically: <b>term loan {rs(db["term_loan"])}</b> over {db["tl_tenor_years"]} years
@@ -1007,8 +1022,9 @@ The gap between those two numbers is the whole question.</p>
   f"A lender will size on debt service coverage, not on the borrower's stated need. On the base case this "
   f"project services <b>{rs(dc['max_total_limit'])}</b> — a term loan of {rs(dc['max_term_loan'])} and a "
   f"working-capital limit of {rs(dc['max_wc_limit'])} — at a 1.30× floor. The recommended structure in section "
-  f"11 therefore sanctions the full {rs(f['facility_ask'])} as a <b>limit</b>, with only "
-  f"{rs(cap['total'])} of it expected to be drawn, and the balance available but uncommitted.")}"""
+  f"11 therefore sanctions the full {rs(f['facility_ask'])} as a <b>limit</b>, commits "
+  f"{rs(dc['max_total_limit'])} of it, and leaves the balance available but uncommitted. Expected peak "
+  f"drawdown is lower still, at {rs(cap['total'])}.")}"""
     S.append(("02", "s02", "What the money is for", body))
 
     rev_keys = [("entry", "Entry ticketing", "₹20–25 adult, ₹10 child, under-5 free. Computerised, auditable, BDA-approved rates."),
@@ -1031,7 +1047,8 @@ single assumption BDA's number rests on is the one most likely to be wrong.</p>
   f"BDA's ₹{bda_hi:.2f} crore assumes <b>{e(r['bda_indicative_basis'])}</b>. A 60% conversion from gate to a "
   "₹125 evening show is extraordinary — it implies three in five visitors, including morning walkers, families "
   "with small children and school groups, buy the show. This model starts at <b>42%</b> and reaches 52% by year "
-  "10. That single assumption is worth roughly ₹40 lakh a year at year-5 volumes and is the difference between "
+  f"10. That single assumption is worth about {lakh(f['conversion_gap_value']['value_lakh'],0)} a year at "
+  "year-5 volumes and is the difference between "
   "the base case and the BDA case in section 07. <b>Everything about whether to bid turns on it.</b> Ask BDA for "
   "the show's commissioning date, seating capacity, number of daily slots and any footfall data from the "
   "soft-launch period.")}
@@ -1116,7 +1133,7 @@ direct consequence of a fixed manpower floor meeting a ramping revenue line.</p>
 <p class="lede">The project consumes {rs(cap["total"])} of capital and returns
 {rs(f["project_fcf"]["cumulative_fcf"])} over ten years. That is a real return — it is simply not
 a large enough one to pay for the money that funds it.</p>
-{fcf_table(f["project_fcf"])}
+{fcf_table(f["project_fcf"], terminal_label="Performance security and EMD refunded at expiry")}
 {bento([
   ("Project IRR", pct(f["project_fcf"]["irr_pct"]), "Unlevered, ten-year term, no extension value"),
   ("Payback", f'{num(f["project_fcf"]["payback_years"],1)} yrs', "Against a five-year contractual lock-in"),
@@ -1448,8 +1465,10 @@ working-capital component to separate out — the money buys assets that stay bo
 the FY27-28 stub half-year, ₹3.00–4.00 crore in the first full year. The midpoint is used throughout.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], pl_rows)}
 {note("amber","Why the margin here looks better than the concessions",
-  f"Karnal reaches {pct(yrs[4]['ebitda_margin'],1)} EBITDA by year 5 against 24.3% at Geeta Govind Vatika and "
-  f"{pct(M['rv']['years'][-1]['ebitda_margin'],1)} at Ramayan Vatika. Three structural reasons: rent is a "
+  f"Karnal reaches {pct(yrs[4]['ebitda_margin'],1)} EBITDA by year 5 against "
+  f"{pct(M['ggv']['years'][4]['ebitda_margin'],1)} at Geeta Govind Vatika and "
+  f"{pct(M['rv']['years'][4]['ebitda_margin'],1)} at Ramayan Vatika in the same year. Three structural "
+  "reasons: rent is a "
   "negotiated minimum guarantee rather than an auctioned licence fee escalating 5% a year; there is no "
   "contractual manpower floor, so payroll flexes with the season; and there is no obligation to maintain "
   "nineteen acres of someone else's horticulture or restore a bronze statue. <b>Owning your own small site "
@@ -1699,7 +1718,9 @@ determines whether VAPPL can borrow, and at what price.</p>
   row(label_cell("Net worth"), (rs(fy["net_worth"]), ""), ('Positive and improving. Was negative ₹1.30 Cr in FY22-23', "pos")),
   row(label_cell("Total borrowings"), (rs(fy["borrowings_total"]), ""), (f'{rs(fy["borrowings_short"])} short-term across 13 facilities, {rs(fy["borrowings_long_related"])} long-term from related parties', "")),
   row(label_cell("Debt to equity"), (num(rpc["base"]["debt_equity"]) + "×", "neg"), ('Too high. Most banks want under 2× for an unsecured facility', "neg")),
-  row(label_cell("Interest coverage"), ("4.7×", ""), ('Adequate but thin against a 13-facility NBFC book', "")),
+  row(label_cell("Interest coverage", "EBITDA ÷ the statutory P&L finance-cost line (₹0.51 Cr), as in the company financial model"),
+      ("4.7×", ""),
+      (f'On total finance cost including bank charges ({rs(fy["finance_cost_total"])}) it is {num(fy["ebitda"]/fy["finance_cost_total"])}×. Either way, thin against a 13-facility NBFC book', "")),
   row(label_cell("Current ratio"), ("~0.50×", "neg"), ('Below 1.0 every year — structurally dependent on revolving credit', "neg")),
   row(label_cell("Electricity arrears"), (rs(fy["electricity_arrears"]), "neg"), ('Accumulated across parks, sitting in other current liabilities. A red flag on any sanction note', "neg")),
   row(label_cell("Cash and FDR"), (rs(fy["cash"] + fy["fdr"]), "pos"), ('₹2.22 Cr of FDR earning ₹9.2 lakh a year, not to be liquidated', "")),
@@ -1724,7 +1745,8 @@ but it has an expiry date, and the date is inside this plan.</p>
   row(label_cell("Annual turnover", "FY25-26 provisional"),
       (f'₹{ms["turnover_cr"]:.2f} Cr', ""), (f'₹{lim["turnover_cr"]:.0f} Cr', ""),
       (f'₹{ms["headroom_turnover_cr"]:.2f} Cr', "pos")),
-  row(("Classification", ""), (ms["classification"].title() + " Enterprise", "pos"), ("", ""), ("CGTMSE eligible", "pos"), cls_="total"),
+  row(("Classification", ""), (ms["classification"].title() + " Enterprise", "pos"),
+      ("Both tests cleared", "muted"), ("CGTMSE eligible", "pos"), cls_="total"),
 ], aligns=["l","r","r","r"])}
 {note("blue","The thresholds moved in VAPPL's favour on 1 April 2025",
   f"The Small Enterprise limits were raised from ₹10 Cr to <b>₹{lim['investment_cr']:.0f} Cr</b> of investment "
@@ -1923,7 +1945,7 @@ project build-outs and a working-capital limit that consolidates the NBFC book.<
 {bento([
   ("Minimum DSCR", num(db["min_dscr_combined"]) + "×", "Including the existing ₹7.85 Cr book, not just the new facility"),
   ("Average DSCR", num(db["avg_dscr_combined"]) + "×", "Across the seven-year term"),
-  ("Cost vs equity", pct(db["rate_pct"] + db["cgtmse"]["agf_rate_pct"], 2), f'Against {pct(eq["stake_pct"],1)} of the company'),
+  ("Total cost of the debt", rs(db["total_finance_cost"]), f'Over seven years, against {rs(ex["equity_value"] * eq["stake_pct"] / 100, 0)} for the equity that would replace it'),
 ])}
 {note("green","This clears comfortably — which is the point",
   f"Minimum DSCR of <b>{num(db['min_dscr_combined'])}×</b> against a 1.30× threshold, <em>including</em> the "
@@ -1935,9 +1957,12 @@ project build-outs and a working-capital limit that consolidates the NBFC book.<
   f"{rs(ex['equity_value'] * eq['stake_pct'] / 100, 0)}. <b>The debt is roughly a fifth of the cost of the "
   "equity, on the company's own projections.</b>")}
 {note("amber","Three conditions the sanction will carry",
-  f"<b>Leverage.</b> Post-conversion debt to equity of {num(rpc['convert_lt_related_260']['debt_equity'])}× is "
-  f"acceptable; the {num(rpc['base']['debt_equity'])}× position today is not. Section 03 is a condition "
-  f"precedent, not a suggestion. <b>Consolidation.</b> {rs(db['nbfc_refinance'])} of the facility is earmarked "
+  f"<b>Leverage.</b> The {num(rpc['base']['debt_equity'])}× position today supports a new facility of "
+  f"{rs(lev['cases'][0]['max_facility_at_covenant'])} under a 2.0× covenant. Converting all "
+  f"{rs(lev['conversion_full'])} of related-party debt lifts that to "
+  f"{rs(lev['cases'][2]['max_facility_at_covenant'])} and leaves post-drawdown gearing at "
+  f"{num(lev['cases'][2]['debt_equity'])}×. Section 03 is a condition precedent, not a suggestion — and the "
+  f"{rs(260)} long-term portion alone is not enough. <b>Consolidation.</b> {rs(db['nbfc_refinance'])} of the facility is earmarked "
   "to retire NBFC borrowings — a lender will want the thirteen facilities reduced to a countable number and "
   "will covenant against re-borrowing. <b>Arrears.</b> The "
   f"{rs(fy['electricity_arrears'])} electricity liability must be cleared or formally rescheduled with the "
@@ -1968,8 +1993,9 @@ At company level — unlike at project level — this is genuinely competitive w
 {note("terra","The covenant problem — and it is not optional",
   f"{e(cc['balance_sheet_note'])}")}
 {note("blue","How to structure it so both can coexist",
-  f"<b>Convert the related-party debt first</b> (section 03), taking gearing to "
-  f"{num(rpc['convert_lt_related_260']['debt_equity'])}×. <b>Then</b> the CCD sits on a base that can carry it. "
+  f"<b>Convert all {rs(lev['conversion_full'])} of the related-party debt first</b> (section 03), taking "
+  f"gearing to {num(rpc['convert_lt_plus_promoter_409']['debt_equity'])}×. <b>Then</b> the CCD sits on a base "
+  "that can carry it. "
   "Alternatively, negotiate the CGTMSE facility's leverage covenant to <b>exclude compulsorily convertible "
   "instruments</b> from the debt numerator — standard practice, since a CCD that must convert is quasi-equity, "
   "and Indian accounting standards and most lenders will accept the treatment if it is agreed in the sanction "
@@ -2097,7 +2123,8 @@ def deck_index():
 
     total_ask = gf["ask"] + vf["facility_ask"] + kf["project_cost"]
     total_capital = (gf["true_capital_requirement"]["total"] +
-                     vf["true_capital_requirement"]["total"] + kf["project_cost"])
+                     vf["true_capital_requirement"]["total"] +
+                     kf["true_capital_requirement"]["total"])
 
     cover = f"""
 <div class="fin-cover">
@@ -2112,7 +2139,7 @@ def deck_index():
     Prepared {e(M["meta"]["prepared"])} · all figures generated from <b>model/pf_model.py</b>
   </div>
   <div class="cover-kpi-grid">
-    {kpi("Total funding sought", rs(total_ask, 1), sub="Across the three projects, as briefed")}
+    {kpi("Total funding sought", rs(total_ask, 1), sub="Across the three projects as briefed. Karnal is shown at total project cost; its guaranteed facility is smaller")}
     {kpi("True capital at risk", rs(total_capital, 1), sub="The balance is revolving liquidity")}
     {kpi("CGTMSE ceiling", rs(alloc["ceiling"], 0), sub="Per borrower, across all lenders — the binding constraint")}
     {kpi("Gross demand", rs(alloc["total_gross_demand"], 1), sub=f'{rs(alloc["excess_over_ceiling"],1)} over the ceiling')}
@@ -2166,7 +2193,7 @@ it is how much capital each genuinely consumes, and what it earns on it.</p>
   row(label_cell("Lock-in"), ("None", "pos"), ("5 years", "neg"), ("None", "pos")),
   row(label_cell("Funding sought"), (rs(gf["ask"]), ""), (rs(vf["facility_ask"]), ""), (rs(kf["project_cost"]), "")),
   row(label_cell("True capital at risk"), (rs(gf["true_capital_requirement"]["total"]), ""),
-      (rs(vf["true_capital_requirement"]["total"]), ""), (rs(kf["project_cost"]), "")),
+      (rs(vf["true_capital_requirement"]["total"]), ""), (rs(kf["true_capital_requirement"]["total"]), "")),
   row(label_cell("Year 1 revenue"), (rs(g["years"][0]["revenue"]["total"]), ""), (rs(v["years"][0]["revenue"]["total"]), ""), (rs(k["years"][0]["revenue"]), "")),
   row(label_cell("Stabilised revenue", "Year 5"), (rs(g["years"][4]["revenue"]["total"]), ""), (rs(v["years"][4]["revenue"]["total"]), ""), (rs(k["years"][4]["revenue"]), "")),
   row(label_cell("Stabilised EBITDA margin"), (pct(g["years"][4]["ebitda_margin"], 1), ""), (pct(v["years"][4]["ebitda_margin"], 1), ""), (pct(k["years"][4]["ebitda_margin"], 1), "")),
@@ -2298,9 +2325,9 @@ sequence. It is not a choice between equity and debt — it is an order of opera
       (rs(alloc["single_borrower_plan"]["Geeta Govind Vatika — term loan + standby WC"]), ""),
       (f'Walk-away licence fee {lakh(gf["walk_away"]["licence_fee_year1"],1)} a year', "")),
   row(label_cell("4 · On award", "Bid at reserve, or do not bid"),
-      ("CGTMSE facility for Ramayan Vatika, drawn to what the project services", ""),
+      ("CGTMSE facility for Ramayan Vatika, within the ceiling allocation", ""),
       (rs(alloc["single_borrower_plan"]["Ramayan Vatika — term loan + standby WC"]), ""),
-      (f'Walk-away licence fee {lakh(vf["walk_away"]["licence_fee_year1"],1)} a year', "")),
+      (f'Walk-away licence fee {lakh(vf["walk_away"]["licence_fee_year1"],1)} a year<span class="meta">The project services {rs(vf["debt_capacity"]["max_total_limit"])} at a 1.30× floor; the ceiling allocation is {rs(260)}.</span>', "")),
   row(label_cell("5 · Parallel", "Consolidation the lender will require in any case"),
       ("CGTMSE working capital, retiring ₹3 Cr of NBFC borrowings", ""),
       (rs(alloc["single_borrower_plan"]["VAPPL — working capital, NBFC consolidation"]), ""),
@@ -2328,9 +2355,11 @@ sequence. It is not a choice between equity and debt — it is an order of opera
     The conclusion follows: <b>fund the projects with the guarantee, keep the spread, and use equity only
     for what the ceiling cannot reach</b> — at which point the round is ₹6–8 crore rather than ₹16 crore,
     and the dilution roughly halves. The one thing that has to happen first costs nothing:
-    convert {rs(260)} of promoter debt into equity and take gearing from
-    {num(c["related_party_conversion"]["base"]["debt_equity"])}× to
-    {num(c["related_party_conversion"]["convert_lt_related_260"]["debt_equity"])}×.
+    convert {rs(cf["debt"]["leverage"]["conversion_full"])} of related-party and promoter debt into equity,
+    taking gearing from {num(c["related_party_conversion"]["base"]["debt_equity"])}× to
+    {num(c["related_party_conversion"]["convert_lt_plus_promoter_409"]["debt_equity"])}×. Convert only the
+    {rs(260)} long-term portion and a 2.0× covenant caps the facility at
+    {rs(cf["debt"]["leverage"]["cases"][1]["max_facility_at_covenant"])} instead of {rs(1000,0)}.
   </div>
 </div>"""
     S.append(("04", "s04", "The recommended sequence", body))
@@ -2343,7 +2372,8 @@ inconsistent in the source documents, or dependent on a third party — and each
       ("Sizes the entire Karnal revenue thesis and determines whether the outdoor activity stack physically fits", ""),
       ("The executed sub-lease with A4A Highway Nest LLP", "")),
   row(label_cell("Ramayan Vatika show conversion", "42% assumed here against BDA's 60%"),
-      ("The difference between an 11.4% and a 24%+ project IRR — the whole bid decision", ""),
+      (f'The difference between a {pct(vf["project_fcf"]["irr_pct"])} and a '
+       f'{pct(M["rv"]["scenarios"]["bda_indicative"]["project_irr_pct"])} project IRR — the whole bid decision', ""),
       ("BDA — slot capacity, commissioning date, soft-launch footfall", "")),
   row(label_cell("Ramayan Vatika lock-in", "7 years in clause 9 against 5 years in clause 14"),
       ("A seven-year lock-in on a project with a seven-year payback changes the risk materially", ""),
