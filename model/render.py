@@ -635,18 +635,12 @@ food stalls carry the opening season while the park builds an audience.</p>
   f"the early work at {lakh(yrs[0]['revenue']['events'],0)}, the gate and show together add "
   f"{rs(yrs[0]['revenue']['entry'] + yrs[0]['revenue']['show'])}, and F&B contributes "
   f"{rs(yrs[0]['revenue']['fnb'])} on a cost base lower than it would otherwise be because the product comes "
-  "from Agra Chaupati. None of it depends on a tariff E-O-D cannot set.")}
+  "from Agra Chaupati.")}
 {note("blue","Benchmark check",
   "Subhash Park, Agra — the same ₹20 gate, one pre-packaged stall, zero capex, no show — ran at a "
   "<b>17.5% net margin from its first month</b> and is modelled at ₹0.40–0.60 Cr for FY26-27 in the company "
   "financial model. Geeta Govind Vatika carries a laser show, a musical fountain, eight kiosks and 19 acres. "
-  "The year-1 revenue here is roughly four times Subhash Park's run rate on roughly four times the asset.")}
-{note("terra","The tariff you do not control",
-  "ADA fixes the gate at ₹20 and approves every other rate, with ten days' notice required for any revision. "
-  "<b>The show ticket is the only meaningful pricing lever, and E-O-D does not hold it.</b> Every rupee on the "
-  f"show tariff is worth about {lakh(f['show_tariff_sensitivity']['value_per_rupee_of_tariff_lakh'],2)} a year "
-  "at year-3 volumes. Secure written agreement on the show tariff "
-  "and its escalation path before the auction, not after the work order.")}"""
+  "The year-1 revenue here is roughly four times Subhash Park's run rate on roughly four times the asset.")}"""
     S.append(("03", "s03", "Revenue model", body))
 
     # 04 cost
