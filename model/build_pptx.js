@@ -173,11 +173,11 @@ function buildGGV() {
 
   L.cover(slide(p), {
     eyebrow: "Project finance · 01 of 04", title: "Geeta Govind\nVatika",
-    sub: "A 19-acre cultural park in Taj Nagri Phase-II, five minutes from the park E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build — and one year of operating expenditure to fund before it pays for itself.",
-    meta: "Agra Development Authority · Licence-fee model · 7 + 4 years\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
+    sub: "Nineteen acres in Taj Nagri Phase-II, next door to the park E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build. One crore to open the doors — and from there it pays for itself at the gate.",
+    meta: "Agra Development Authority · Licence-fee model · 7 + 4 years · 19 acres\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
     stats: [
-      { label: "Funding ask", value: cr(f.ask), sub: "Mobilisation plus one year of operating cost" },
-      { label: "True capital at risk", value: cr(cap.total), sub: "The rest is revolving liquidity" },
+      { label: "Funding ask", value: cr(f.ask), sub: "Mobilisation only — operating cost met from collections" },
+      { label: "Year 1 EBITDA", value: cr(yrs[0].ebitda), sub: "Positive from the opening season" },
       { label: "Project IRR", value: pc(f.project_fcf.irr_pct), sub: `Payback ${f.project_fcf.payback_years.toFixed(1)} years` },
       { label: "Year 7 EBITDA", value: cr(yrs[6].ebitda), sub: `${pc(yrs[6].ebitda_margin)} margin` },
     ],
@@ -186,7 +186,7 @@ function buildGGV() {
   // 01 the project
   let s = slide(p);
   let y = L.head(s, "01", "The project",
-    "ADA has built a ₹4.0–4.2 crore themed park and now wants an operator. Everything physical already exists — the musical fountains, the 40-minute Krishna Leela laser show, eight kiosks, the Tulsi forest. The winning bidder pays a monthly licence fee and keeps what it collects at the gate.");
+    "Nineteen acres in Taj Nagri Phase-II, built and fitted out by ADA, now looking for an operator. The asset is already there — musical fountains, a 40-minute Krishna Leela laser show, an open-air amphitheatre, a waterbody, eight kiosks and a Tulsi forest. The operator pays a monthly licence fee and keeps what it collects at the gate.");
   y = L.table(s, y, ["Term", "What the RFP says"], [
     { cells: ["Authority", r.authority] },
     { cells: ["Contract period", r.term] },
@@ -198,8 +198,8 @@ function buildGGV() {
     { cells: ["Gate tariff", `₹${r.entry_tariff_inr} entry. Fountain and laser show at rates approved by ADA`] },
     { cells: ["Asset position", r.assets], emphasis: "total" },
   ], { colW: [3.0, L.W - 2 * L.M - 3.0], rowH: 0.36, fontSize: 11 });
-  L.verdict(s, y, "note", "Why E-O-D wins this on the technical bid",
-    "ADA asks for ₹1 crore average turnover and two similar projects above ₹50 lakh. VAPPL turned over ₹16.29 Cr in FY25-26 and runs four parks — two of them on concessions granted by ADA itself. The competitive question is the auction, not the qualification.", 0.98);
+  L.verdict(s, y, "note", "What the Agra cluster does to the commercials",
+    "The site adjoins Agra Chaupati and is a short drive from Subhash Park, both already operating. Overhead is charged at 5% of revenue rather than a standalone rate; food and beverage is supplied from the Chaupati kitchens, so the site needs counters rather than a built kitchen and runs at 44% cost of goods instead of 52%; and marketing reaches an audience already visiting the cluster.", 1.16);
   L.foot(s, NAME);
 
   // 02 the ask
@@ -518,8 +518,8 @@ function buildRV() {
       body: "Every asset returned in handover condition, BDA's decision binding. A bronze statue and a Miyawaki forest over fifteen years. Mitigation: photographed joint handover report on day one; accrue a provision annually." },
     { title: "Lock-in conflict unresolved", color: C.blue,
       body: "Clause 9 states seven years where clause 14 states five. A seven-year lock-in materially worsens the risk. Settle by pre-bid query before anything is committed." },
-    { title: "Bid dates are blank", color: C.blue,
-      body: "The data sheet's key-dates table has no bid start, end, pre-bid meeting or technical-opening dates. Confirm the live schedule on etender.up.nic.in before planning submission." },
+    { title: "Restoration at handover", color: C.amber,
+      body: "Every asset returned in handover condition, BDA's decision binding. A bronze statue and a Miyawaki forest over fifteen years. Mitigation: a photographed joint handover report on day one and a restoration provision accrued annually." },
   ], { cols: 2, rowH: 1.26 });
   L.foot(s, NAME);
 

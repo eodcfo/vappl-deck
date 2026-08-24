@@ -9,7 +9,7 @@ Live at: **[eodcfo.github.io/vappl-deck](https://eodcfo.github.io/vappl-deck)**
 | `index.html` | 12-chapter investor deck · ~8 min read |
 | `financials.html` | Detailed financial model · 11 sections · linked from the deck |
 | `pf-index.html` | Project finance pack — portfolio hub, CGTMSE framework, capital plan |
-| `pf-geeta-govind-vatika.html` | Geeta Govind Vatika, Agra (ADA) — 1 year of opex as loan/investment |
+| `pf-geeta-govind-vatika.html` | Geeta Govind Vatika, Agra (ADA) — ₹1 Cr mobilisation, opex self-funded |
 | `pf-ramayan-vatika.html` | Ramayan Vatika, Bareilly (BDA) — 2 years of opex as loan/investment |
 | `pf-karnal.html` | Karnal, NH-1 — ₹4 Cr Phase 1 build-out |
 | `pf-company.html` | VAPPL capital structure — equity, CGTMSE debt, debt-to-equity |
@@ -119,7 +119,7 @@ and **debt converted to equity (CCD)** — with the recommendation stated and th
 
 | Deck | Ask | Project IRR | Recommendation |
 |---|---|---|---|
-| Geeta Govind Vatika · ADA · 7+4 yrs | ₹3.35 Cr (mobilisation + 1 yr opex) | 18.7% | CGTMSE composite facility |
+| Geeta Govind Vatika · ADA · 7+4 yrs | ₹1.00 Cr (mobilisation only) | 43.3% | CGTMSE composite facility |
 | Ramayan Vatika · BDA · 10+5 yrs | ₹4.17 Cr (2 yrs opex) | 11.4% | Bid at reserve; facility drawn to ₹2.81 Cr |
 | Karnal · private sub-lease · 15 yrs | ₹4.00 Cr (Phase 1 capex) | 19.5% | CGTMSE term loan — take to a bank first |
 | VAPPL company | ₹10 Cr CGTMSE + ₹6–8 Cr equity | — | Convert all ₹4.09 Cr promoter debt, then debt, then equity |
@@ -130,11 +130,12 @@ and **debt converted to equity (CCD)** — with the recommendation stated and th
    rose to ₹25 Cr investment / ₹100 Cr turnover on the same date. VAPPL qualifies as a **Small
    Enterprise** with wide headroom. Collateral-free guaranteed debt at ~12.5% all-in is now available
    at a scale that did not exist when the ₹10 Cr equity round was designed.
-2. **The ceiling is per borrower, not per project.** Gross demand across the four uses is ₹14.5 Cr
-   against a ₹10 Cr ceiling. The hub sets out the allocation and the routes for the ₹4.5 Cr residual.
-3. **No project clears an equity hurdle at project level; two clear guaranteed debt comfortably.**
-   A single park generating ₹1–2.5 Cr of mature EBITDA cannot pay a 22% return on its capital *and*
-   leave an operator's margin. Equity belongs at company level; the projects should be debt-funded.
+2. **The ceiling is per borrower, not per project.** Gross demand across the four uses is ₹12.2 Cr
+   against a ₹10 Cr ceiling. The hub sets out the allocation and the routes for the residual.
+3. **Every project out-earns guaranteed debt; none is worth funding with equity.** Geeta Govind Vatika
+   returns 43.3% unlevered against a 12.1% cost of CGTMSE debt — a 31-point spread that debt lets E-O-D
+   keep. Equity there would cost 45–49% of the project to raise ₹1 Cr a guaranteed facility provides with
+   no dilution at all.
 4. **At VAPPL's current gearing, the company cannot borrow at all.** At 3.04× debt-to-equity, a
    conventional 2.0× covenant supports a new facility of only **₹0.31 Cr**. Converting the ₹2.60 Cr of
    long-term related-party loans lifts that to ₹8.11 Cr; converting **all ₹4.09 Cr** of related-party

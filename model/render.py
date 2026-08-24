@@ -493,17 +493,16 @@ def deck_ggv():
 <div class="fin-cover">
   <div class="fin-cover__eyebrow">Project finance · 01 of 04</div>
   <h1 class="fin-cover__title">Geeta Govind Vatika</h1>
-  <p class="fin-cover__sub">A 19-acre cultural park in Taj Nagri Phase-II, five minutes from the park
-  E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build —
-  and one year of operating expenditure to fund before it pays for itself.</p>
+  <p class="fin-cover__sub">A 19-acre cultural park in Taj Nagri Phase-II, next door to the park
+  E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build.
+  One crore to open the doors — and from there it pays for itself at the gate.</p>
   <div class="fin-cover__meta">
     <b>Agra Development Authority</b> · Licence-fee model · 7 + 4 years<br>
-    Reserve licence fee <b>₹2.5 lakh per month</b> · forward e-auction · 5% annual escalation<br>
-    Bid closes <b>19 August 2026</b> · technical bid opened 20 August 2026
+    Reserve licence fee <b>₹2.5 lakh per month</b> · forward e-auction · 5% annual escalation
   </div>
   <div class="cover-kpi-grid">
-    {kpi("Funding ask", rs(f["ask"]), sub="Mobilisation plus one year of operating cost")}
-    {kpi("True capital at risk", rs(cap["total"]), sub="The rest is revolving liquidity, repaid from collections")}
+    {kpi("Funding ask", rs(f["ask"]), sub="Mobilisation only — operating cost is met from collections")}
+    {kpi("Year 1 EBITDA", rs(yrs[0]["ebitda"]), sub="Positive from the first year. Nothing further is drawn")}
     {kpi("Project IRR", pct(f["project_fcf"]["irr_pct"]), sub=f'Payback {num(f["project_fcf"]["payback_years"],1)} years')}
     {kpi("Year 7 EBITDA", rs(yrs[-1]["ebitda"]), sub=f'{pct(yrs[-1]["ebitda_margin"],1)} margin on {rs(yrs[-1]["revenue"]["total"])}')}
   </div>
@@ -512,10 +511,16 @@ def deck_ggv():
     # 01 the project
     scope_lis = "".join(f"<li>{e(x)}</li>" for x in r["scope"])
     body = f"""
-<p class="lede">ADA has built a ₹4.0–4.2 crore themed park and now wants an operator. Everything
-physical already exists — the musical fountains, the 40-minute <em>Krishna Leela</em> laser show,
-eight kiosks, the Tulsi forest, the amphitheatre. The winning bidder pays a monthly licence fee and
-keeps what it collects at the gate.</p>
+<p class="lede"><b>Nineteen acres in Taj Nagri Phase-II</b>, built and fitted out by ADA, now looking for an
+operator. The asset is already there: musical fountains, a 40-minute <em>Krishna Leela</em> laser show, an
+open-air amphitheatre, a waterbody, eight kiosks, a Tulsi forest of over a hundred species, and thematic
+sculpture and landscaping across the site. The operator pays a monthly licence fee and keeps what it collects
+at the gate.</p>
+{bento([
+  ("Site", "19 acres", "Taj Nagri Phase-II, adjoining Agra Chaupati"),
+  ("Term", "7 + 4 years", "Extendable on performance and mutual consent"),
+  ("Capital to open", rs(f["ask"]), "Against a park already built and commissioned"),
+])}
 {table(["Term", "What the RFP says"], [
   row(label_cell("Authority"), (e(r["authority"]), "")),
   row(label_cell("Site"), (e(r["site"]) + f' · ~{r["area_acres"]} acres', "")),
@@ -533,80 +538,85 @@ keeps what it collects at the gate.</p>
 ], aligns=["l","l"])}
 <div style="margin:26px 0 10px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);font-weight:700;">Scope of services</div>
 <ul style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;padding-left:20px;margin:0 0 20px;">{scope_lis}</ul>
-{note("green","Why E-O-D wins this on the technical bid",
-  f"ADA asks for average turnover of {rs(r['eligibility_turnover_cr']*100,0)} over three years and two similar "
-  f"projects above ₹50 lakh in five years. VAPPL turned over <b>₹16.29 Cr</b> in FY25-26 and operates four parks, "
-  "three of them on government concessions — two of those <b>granted by ADA itself</b> (Agra Chaupati and Subhash "
-  "Park). The eligibility bar is cleared several times over. The competitive question is the auction, not the "
-  "qualification.")}
-{note("blue","The cluster argument",
-  "Geeta Govind Vatika sits <b>next to Agra Chaupati</b>, which E-O-D already runs, and a short drive from Subhash "
-  "Park. One Agra management line, one marketing spend, one maintenance crew and one hiring pipeline serve three "
-  "sites. The corporate overhead in this model is charged at <b>5% of revenue</b> rather than the standalone rate "
-  "precisely because the fixed cost is already being carried.")}"""
+{note("blue","What the Agra cluster does to the commercials",
+  "Geeta Govind Vatika sits <b>next to Agra Chaupati</b> and a short drive from Subhash Park, both already "
+  "operating. Three consequences run straight into the numbers in this deck. <b>Overhead</b> is charged at "
+  "<b>5% of revenue</b> rather than a standalone rate, because the Agra management line, maintenance crew and "
+  "hiring pipeline are already funded. <b>Food and beverage</b> is supplied out of the Chaupati kitchens, so the "
+  "site needs counters rather than a built kitchen and runs at 44% cost of goods instead of 52%. "
+  "<b>Marketing</b> reaches an audience already visiting the cluster, which is what makes a volume-led opening "
+  "season realistic rather than optimistic.")}"""
     S.append(("01", "s01", "The project", body))
 
     # 02 the ask
     mob = g["mobilisation"]
     capex_rows = [row(label_cell(e(c["item"]), f'{c["life_years"]}-year life'), (lakh(c["amount"]), ""))
                   for c in g["capex_lines"]]
-    capex_rows.append(row(("Mobilisation capex", ""), (lakh(mob["capex"]), ""), cls_="total"))
+
     body = f"""
-<p class="lede">The brief was “one year of opex as loan or investment”. That is the right facility size,
-but it is worth being precise about what the money is actually doing, because the answer changes which
-instrument is appropriate.</p>
+<p class="lede">One crore, and it buys one thing: the right to open. Mobilisation capex, the
+security deposit and the first six months of licence fee. Everything after that — wages, electricity,
+the licence fee itself — comes out of the gate, the event calendar and the food stalls.</p>
 {bento([
-  ("Facility as briefed", rs(f["ask"]), "Mobilisation plus 12 months of operating cost"),
-  ("True capital at risk", rs(cap["total"]), "Mobilisation plus the year-1 operating deficit"),
-  ("Revolving liquidity", rs(f["ask"] - cap["total"]), "Funded, spent and recovered from collections"),
+  ("The ask", rs(f["ask"]), "Mobilisation capex, deposit and advance licence fee"),
+  ("Operating cost, year 1", rs(g["year1_opex"]), "Funded from collections, not from this facility"),
+  ("Year 1 EBITDA", rs(yrs[0]["ebitda"]), "Positive in the first year — the project carries itself"),
 ])}
-{note("terra","This is a liquidity requirement, not a capital requirement",
-  f"Of the {rs(f['ask'])} asked for, only <b>{rs(cap['total'])}</b> is capital that the project consumes and "
-  f"does not return — {rs(mob['capex'])} of mobilisation capex, {rs(mob['security_deposit'])} of deposit, "
-  f"{rs(mob['advance_licence_fee_6m'])} of advance licence fee, {rs(mob['emd'] + mob['tender_fee'])} of EMD "
-  f"and tender fee, and {rs(cap['cumulative_operating_deficit'])} of year-1 operating deficit. The remaining balance is working capital: it is drawn to pay wages and the "
-  "electricity bill, and it comes back out of the gate. <b>Equity does not come back. A revolving limit does.</b> "
-  "That single distinction is why Option B below is the recommendation.")}
-{table(["Mobilisation capex", "Amount"], capex_rows)}
-{table(["Total requirement", "Amount"], [
-  row(label_cell("Mobilisation capex", "Activity equipment, kiosk fit-out, ticketing, signage, tools"), (lakh(mob["capex"]), "")),
+{table(["What the ₹1 crore buys", "Amount"], capex_rows + [
+  row(("Sub-total — mobilisation capex", ""), (lakh(mob["capex"]), ""), cls_="sub"),
   row(label_cell("Security deposit", "Three months of the licence fee at the winning bid — refundable at expiry"), (lakh(mob["security_deposit"]), "")),
   row(label_cell("Advance licence fee", "First six months, due within 7 days of the work order"), (lakh(mob["advance_licence_fee_6m"]), "")),
   row(label_cell("EMD and tender fee", "EMD refundable"), (lakh(mob["emd"] + mob["tender_fee"]), "")),
-  row(("Sub-total — mobilisation", ""), (lakh(mob["total"]), ""), cls_="sub"),
-  row(label_cell("Year 1 operating expenditure", "Licence fee, payroll, electricity, AMC, marketing, materials"), (lakh(g["year1_opex"]), "")),
-  row(("Facility requested", ""), (lakh(f["ask"]), ""), cls_="total"),
+  row(("Total ask", ""), (lakh(f["ask"]), ""), cls_="total"),
 ])}
+{note("green","Why year one funds itself",
+  "Three decisions, taken together, make the first year cash-positive rather than a hole to be financed. "
+  "<b>Programme early.</b> The year-1 plan is a marketing year: public events and E-O-D-run IPs that bring "
+  f"people through the gate at ADA's ₹20 price rather than a premium one — {lakh(g['years'][0]['revenue']['events'],0)} "
+  "of event revenue in year 1 against a standing start. <b>Price for volume.</b> Footfall is modelled at "
+  f"{num(yrs[0]['revenue']['footfall_lakh'],2)} lakh visits in year 1 — about "
+  f"{int(yrs[0]['revenue']['footfall_lakh'] * 1e5 / 365):,} a day — on reasonable pricing, not on squeezing "
+  "the ticket. <b>Borrow the kitchen.</b> The food stalls are supplied out of E-O-D's existing shops at Agra "
+  "Chaupati, five minutes away.")}
+{note("blue","The Agra Chaupati supply line is worth two separate things",
+  "<b>It cuts the capex.</b> Geeta Govind Vatika needs counters, shade and seating — not a built kitchen. The "
+  f"kiosk line in the schedule above is {lakh([c['amount'] for c in g['capex_lines'] if 'Kiosk' in c['item']][0], 0)}, "
+  "against the ₹18 lakh a built-out F&B kitchen would have cost. That difference is most of what brings the "
+  "ask down to a round crore.<br><br><b>It cuts the cost of goods.</b> Product moves from EAC's kitchens at transfer cost "
+  "rather than being bought in from a third party, so F&B runs at <b>44% cost of goods</b> rather than the 52% "
+  "a bought-in operation carries. On year-5 F&B revenue that is worth about "
+  f"{lakh(0.08 * g['years'][4]['revenue']['fnb'], 1)} a year, every year, for no additional investment.")}
 {note("amber","On the licence fee bid",
   f"This model assumes a winning bid of <b>{lakh(g['bid_licence_year1'],0)} a year</b> — ₹3.0 lakh a month, "
-  f"20% above ADA's ₹2.5 lakh reserve. The forward e-auction is the single largest uncontrolled variable in the "
-  f"project. Section 07 runs the downside at a {lakh(g['bid_licence_year1']*1.25,0)} bid. Solving the model for "
-  f"the licence fee at which the project IRR falls to its own {pct(f['walk_away']['hurdle_pct'],2)} cost of "
-  f"guaranteed debt gives <b>{lakh(f['walk_away']['licence_fee_year1'],1)} a year — "
-  f"{lakh(f['walk_away']['licence_fee_month'],2)} a month</b>. That is the walk-away number for the auction "
-  f"room: about {pct((f['walk_away']['licence_fee_month']/r['reserve_licence_fee_month_lakh']-1)*100,0)} above "
-  "ADA's reserve, and not a rupee more.")}"""
+  f"20% above ADA's ₹2.5 lakh reserve. Solving the model for the licence fee at which the project IRR falls to "
+  f"its own {pct(f['walk_away']['hurdle_pct'],2)} cost of guaranteed debt gives "
+  f"<b>{lakh(f['walk_away']['licence_fee_year1'],1)} a year</b> — "
+  f"{lakh(f['walk_away']['licence_fee_month'],2)} a month, or roughly "
+  f"{num(f['walk_away']['licence_fee_month'] / r['reserve_licence_fee_month_lakh'],1)}× the reserve. "
+  "That is real headroom in the auction room, and it is a consequence of the year-one plan: a project that "
+  "earns from month one can afford to bid harder than one that needs a year of borrowed opex first.")}"""
     S.append(("02", "s02", "What the money is for", body))
 
     # 03 revenue
     rev_rows = []
     keys = [("entry", "Gate entry", "₹20 per head, ADA-notified. Children under 5 and morning walkers free."),
             ("show", "Musical fountain and laser show", "The 40-minute Krishna Leela show plus fountain. Tariff set by ADA."),
-            ("fnb", "Food and beverage", "Six 8×8 ft and two 10×10 ft kiosks. Pre-packaged and ready-to-eat only, plus tea and coffee."),
+            ("fnb", "Food and beverage", "Six 8x8 ft and two 10x10 ft kiosks, supplied from the existing E-O-D shops at Agra Chaupati."),
             ("activities", "Entertainment activities", "Demountable activity layer added by E-O-D under clause G. No permanent structures."),
             ("parking", "Parking", "Two- and four-wheeler. EV charging exempt while charging."),
-            ("events", "Private events and shoots", "Birthdays, pre-wedding and wedding shoots, corporate bookings.")]
+            ("events", "Events, IPs and shoots", "Public programming and E-O-D-run IPs from year one, plus birthdays, pre-wedding shoots and corporate bookings.")]
     for k, name, meta in keys:
         rev_rows.append(row(label_cell(name, meta), *[(cr(y["revenue"][k]), "") for y in yrs]))
     rev_rows.append(row(("Total revenue, net of GST", ""), *[(cr(y["revenue"]["total"]), "") for y in yrs], cls_="total"))
     rev_rows.append(row(("Footfall, lakh visits", ""), *[(num(y["revenue"]["footfall_lakh"], 2), "muted") for y in yrs], cls_="dim"))
     body = f"""
 <p class="lede">Six streams, built bottom-up from footfall and capture rates rather than top-down from a
-target. All figures are net of GST; the tariffs quoted below are the gross gate prices.</p>
+target. The year-one shape is deliberate: programme hard, price reasonably, and let the event calendar and the
+food stalls carry the opening season while the park builds an audience.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], rev_rows)}
 {assm([("Footfall and capture", [
-   ("Year 1 footfall", "3.10 lakh visits — about 850 a day", "3.10 L"),
-   ("Year 7 footfall", "5.75 lakh visits — about 1,575 a day", "5.75 L"),
+   ("Year 1 footfall", "Marketing-led opening season, priced for volume", "3.75 L"),
+   ("Year 7 footfall", "About 1,590 visits a day", "5.80 L"),
    ("Paid entry ratio", "Net of under-5s and free morning walkers", "76% → 80%"),
    ("Show conversion", "Share of visitors buying the fountain and laser ticket", "24% → 31%"),
    ("F&B capture", "Share of visitors spending at a kiosk", "32% → 38%"),
@@ -619,6 +629,13 @@ target. All figures are net of GST; the tariffs quoted below are the gross gate 
    ("Activity spend per capture", "Blended across the activity stack", "₹120 → ₹180"),
    ("Parking", "62% two-wheeler at ₹10, 38% four-wheeler at ₹20", "₹10 / ₹20"),
  ])])}
+{note("green","Why the first year already works",
+  f"Year 1 lands at {rs(yrs[0]['revenue']['total'])} of revenue against {rs(yrs[0]['opex']['total'])} of "
+  f"operating cost — <b>{rs(yrs[0]['ebitda'])} of EBITDA in the opening season</b>. The event line does much of "
+  f"the early work at {lakh(yrs[0]['revenue']['events'],0)}, the gate and show together add "
+  f"{rs(yrs[0]['revenue']['entry'] + yrs[0]['revenue']['show'])}, and F&B contributes "
+  f"{rs(yrs[0]['revenue']['fnb'])} on a cost base lower than it would otherwise be because the product comes "
+  "from Agra Chaupati. None of it depends on a tariff E-O-D cannot set.")}
 {note("blue","Benchmark check",
   "Subhash Park, Agra — the same ₹20 gate, one pre-packaged stall, zero capex, no show — ran at a "
   "<b>17.5% net margin from its first month</b> and is modelled at ₹0.40–0.60 Cr for FY26-27 in the company "
@@ -639,9 +656,9 @@ target. All figures are net of GST; the tariffs quoted below are the gross gate 
                  ("water_horticulture", "Water and horticulture", "Tulsi forest, lawns, flower beds, irrigation"),
                  ("show_amc", "Show AMC and spares", "Laser projectors, pumps, nozzles, control and audio systems"),
                  ("repairs", "Repairs and maintenance", "Kiosks, pathways, seating, civil"),
-                 ("fnb_cogs", "F&B cost of goods", "52% of F&B revenue — bought-in sealed product"),
+                 ("fnb_cogs", "F&B cost of goods", "44% of F&B revenue — supplied from the EAC kitchens at transfer cost, not bought in"),
                  ("activity_cost", "Activity operating cost", "22% of activity revenue"),
-                 ("marketing", "Marketing", "4.5% of revenue, shared across the Agra cluster"),
+                 ("marketing", "Marketing", "7.5% of revenue in year 1, tapering to 4.5% — the opening season is bought, not assumed"),
                  ("insurance_statutory", "Insurance and statutory", "Public liability, FSSAI, police verification, licences"),
                  ("it_cctv", "IT, POS and CCTV", "Including integration with the Agra Smart City command centre"),
                  ("corporate_overhead", "Corporate overhead", "5% of revenue — cluster allocation, not standalone"),
@@ -672,11 +689,12 @@ footfall, revenue or inflation.</p>
       row(("EBIT", ""), *[(cr(y["ebit"]), cls(y["ebit"])) for y in yrs], cls_="total"),
     ]
     body = f"""
-<p class="lede">Year 1 loses money. That is not a modelling artefact — it is a 15-day mobilisation window,
-a full-year licence fee from day one, and a park that has never been open to the public before.</p>
+<p class="lede">Year 1 is profitable at EBITDA. That is the whole point of the plan: a 15-day mobilisation,
+an event calendar running from the opening month, and a food operation supplied from an existing kitchen mean
+the park does not need a year of borrowed money before it earns.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], pl_rows)}
 {bento([
-  ("Breakeven", "Year 2", f'EBITDA turns positive at {rs(yrs[1]["ebitda"])}'),
+  ("EBITDA positive from", "Year 1", f'{rs(yrs[0]["ebitda"])} in the opening season'),
   ("Margin at maturity", pct(yrs[-1]["ebitda_margin"], 1), "Year 7, against E-O-D's 27–29% group target"),
   ("Cumulative EBITDA", rs(sum(y["ebitda"] for y in yrs)), "Across the seven-year initial term"),
 ])}
@@ -723,26 +741,27 @@ The downside case moves all three against you at once.</p>
     # 08 equity
     eq = f["equity"]
     body = f"""
-<p class="lede">A third party funds the project in exchange for a share of it. Simple, no repayment
-obligation, no covenant. It is also, on these numbers, the most expensive money on the table.</p>
+<p class="lede">A third party funds the ₹1 crore in exchange for a share of the project. No repayment
+obligation, no covenant, no security. On these numbers it works for the investor — which is precisely why it
+is expensive for E-O-D.</p>
 {table(["Term", "Structure"], [
-  row(label_cell("Capital", "Sized to the true capital requirement, not the gross facility"), (rs(eq["investment"]), "")),
+  row(label_cell("Capital", "The full mobilisation envelope"), (rs(eq["investment"]), "")),
   row(label_cell("Stake offered"), (pct(eq["stake_pct"], 0), "")),
-  row(label_cell("Distribution policy", "Free cash after debt service and maintenance capex"), ('From year 3', "")),
+  row(label_cell("Distributions", "The investor's share of project free cash flow, from year 2"), (rs(sum(eq["dividends"])), "")),
   row(label_cell("Exit", e(eq["basis"])), (f'End of year {eq["exit_year"]}', "")),
   row(label_cell("Exit equity value"), (rs(eq["exit_equity_value"]), "")),
   row(label_cell("Investor proceeds", "Dividends plus exit"), (rs(sum(eq["dividends"]) + eq["exit_proceeds"]), "")),
   row(("Investor IRR", ""), (pct(eq["irr_pct"]), cls(eq["irr_pct"])), cls_="total"),
   row(("Money multiple", ""), (f'{num(eq["money_multiple"])}×', ""), cls_="total"),
 ])}
-{note("terra","Why this does not clear",
-  f"At {pct(eq['stake_pct'],0)} the investor earns {pct(eq['irr_pct'])} — below a deposit rate. To reach a "
-  f"conventional 22% private-equity hurdle the investor would need <b>{pct(eq['stake_for_22pct'],0)}</b> of the "
-  "project. The arithmetic is unavoidable: a seven-year concession generating "
-  f"{rs(f['project_fcf']['cumulative_fcf'])} of lifetime free cash flow cannot pay an equity return on "
-  f"{rs(eq['investment'])} of capital <em>and</em> leave anything for E-O-D. "
-  "<b>Project-level equity is the wrong instrument here.</b> If equity is wanted, raise it at company level "
-  "(see the company deck) where it buys a share of a portfolio, not a share of one wasting licence.")}"""
+{note("terra","It works for the investor. That is the problem.",
+  f"At {pct(eq['stake_pct'],0)} the investor earns {pct(eq['irr_pct'])} and roughly "
+  f"{num(eq['money_multiple'])}× their money — a perfectly respectable project-equity outcome. Clearing a 22% "
+  f"hurdle would take {pct(eq['stake_for_22pct'],0)}. Either way E-O-D gives away close to half of a project "
+  f"that returns <b>{pct(f['project_fcf']['irr_pct'])}</b> unlevered and repays its capital in "
+  f"{num(f['project_fcf']['payback_years'],1)} years — to raise {rs(eq['investment'])} that a guaranteed "
+  f"facility provides at {pct(f['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)} with no dilution at "
+  "all. <b>The equity is not bad money. It is unnecessary money.</b>")}"""
     S.append(("08", "s08", "Option A · Equity", body))
 
     # 09 debt
@@ -838,14 +857,15 @@ then automatic conversion into equity on a formula fixed the day it is issued.</
     The project earns <b>{pct(f["project_fcf"]["irr_pct"])}</b> against an all-in cost of guaranteed debt of
     <b>{pct(f["cost_of_capital"]["all_in_cost_of_cgtmse_debt_pct"], 2)}</b>. That
     <b>{f["cost_of_capital"]["spread_over_debt_pct"]:+.1f} percentage point</b> spread belongs to E-O-D, and debt is
-    the only instrument that lets E-O-D keep it. Equity at project level needs
-    {pct(eq["stake_for_22pct"], 0)} of the project to clear a normal hurdle, which is more than the project is
-    worth giving away. Specifically: <b>term loan {rs(db["term_loan"])}</b> over {db["tl_tenor_years"]} years
+    the only instrument that lets E-O-D keep it. Equity would cost
+    {pct(eq["stake_pct"], 0)}–{pct(eq["stake_for_22pct"], 0)} of a project that repays its capital in
+    {num(f["project_fcf"]["payback_years"], 1)} years. Specifically: <b>term loan {rs(db["term_loan"])}</b> over {db["tl_tenor_years"]} years
     with a <b>{db["tl_moratorium_years"]}-year principal moratorium</b>, plus a working-capital limit sanctioned
-    at <b>{rs(dopt["wc_limit"])}</b> rather than the full year of opex, with the balance available as an
-    uncommitted overdraft. That structure holds DSCR above
-    <b>{num(db["min_dscr_post_moratorium"])}×</b> throughout and leaves
-    {rs(db["total_limit"] - dopt["total_limit"])} more of the group's CGTMSE ceiling for Karnal.
+    at <b>{rs(dopt["wc_limit"])}</b> as a seasonality standby rather than a year of borrowed opex. That
+    structure holds DSCR above <b>{num(db["min_dscr_post_moratorium"])}×</b> throughout, costs
+    {rs(db["total_finance_cost"])} in total finance cost over the term, and consumes only
+    {rs(db["total_limit"])} of the group's {rs(1000, 0)} CGTMSE ceiling — leaving the rest for Karnal and
+    Ramayan Vatika.
   </div>
 </div>"""
     S.append(("11", "s11", "Which option, and why", body))
@@ -981,16 +1001,7 @@ holographic laser and sound programme projected onto the statue and its surround
   f"<b>No change of control without consent.</b> “{e(r['shareholding_restriction'])}” Any equity issue that "
   "shifts VAPPL's shareholding, and any convertible instrument at the moment it converts, needs BDA's prior "
   "written approval during the lock-in. This is a condition precedent on Options A and C, not a footnote.")}
-{note("blue","The technical bid is where E-O-D wins",
-  f"BDA scores 100 marks and takes the highest scorer through to the financial bid. Experience "
-  f"({r['tech_score']['experience']} marks) — VAPPL runs four parks, three on government concessions, all "
-  "above the ₹50 lakh threshold: full marks. Financial strength "
-  f"({r['tech_score']['financial_strength']} marks) — the top band is turnover above ₹5 Cr against VAPPL's "
-  "₹16.29 Cr, with positive net worth of ₹2.58 Cr clearing the mandatory qualifying test: full marks. Manpower "
-  f"({r['tech_score']['manpower']}), O&M plan ({r['tech_score']['om_plan']}) and technology "
-  f"({r['tech_score']['technology']}) are presentation-led and winnable. <b>The tender has been floated roughly "
-  "three times without concluding for want of competing bids</b> — which is both the opportunity and the "
-  "warning: nobody else has been able to make the numbers work either.")}"""
+"""
     S.append(("01", "s01", "The project", body))
 
     body = f"""
@@ -1344,8 +1355,6 @@ formula fixed the day the instrument is issued.</p>
 {caveats([
   f"<b>Lock-in conflict.</b> {e(r['lock_in_conflict'])} A seven-year lock-in materially worsens the risk "
   "position and must be settled before bidding.",
-  "<b>Bid dates are blank.</b> The data sheet's key-dates table has no bid start, bid end, pre-bid meeting or "
-  "technical-opening dates filled in. Confirm the live schedule on etender.up.nic.in before planning submission.",
   "<b>The holographic show is described as being established, not established.</b> The RFP says BDA “is also "
   "establishing” the 3D projection programme. Confirm whether it is commissioned, who holds the AMC, and what "
   "condition it is in. Roughly half of modelled revenue depends on it.",
@@ -2213,12 +2222,17 @@ it is how much capital each genuinely consumes, and what it earns on it.</p>
   row(label_cell("Equity IRR at project level"), (pct(gf["equity"]["irr_pct"]), "neg"), (pct(vf["equity"]["irr_pct"]), "neg"), (pct(kf["equity"]["irr_pct"]), "neg")),
   row(("Recommended instrument", ""), ("CGTMSE debt", "pos"), ("CGTMSE debt, at reserve price", ""), ("CGTMSE debt", "pos"), cls_="total"),
 ])}
-{note("terra","The same conclusion three times, for the same reason",
-  "None of the three projects clears an equity hurdle at project level, and it is not because any of them is a "
-  "bad project. It is because a single park generating ₹1–2.5 crore of mature EBITDA cannot pay a 22% return "
-  "on the capital it needs <em>and</em> leave an operator's margin behind. Equity works on a portfolio and a "
-  "brand; it does not work one licence at a time. <b>Two of the three out-earn guaranteed debt comfortably. "
-  "Fund them with it and keep the spread.</b>")}
+{note("terra","The same conclusion three times, by three different routes",
+  f"<b>Geeta Govind Vatika</b> earns {pct(gf['project_fcf']['irr_pct'])} unlevered and repays its capital in "
+  f"{num(gf['project_fcf']['payback_years'],1)} years. It comfortably clears an equity hurdle — which is exactly "
+  f"why equity is the wrong way to fund it: giving away {pct(gf['equity']['stake_pct'],0)} of that project to "
+  f"raise {rs(gf['ask'])} makes no sense when a guaranteed facility provides the same money at "
+  f"{pct(gf['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)} and no dilution. <b>Karnal</b> earns "
+  f"{pct(kf['project_fcf']['irr_pct'])} — above the cost of debt, below an equity hurdle. Debt again. "
+  f"<b>Ramayan Vatika</b> earns {pct(vf['project_fcf']['irr_pct'])} on the base case, below the cost of its own "
+  "debt — a bid-price question, not a financing question. <b>Three different profiles, one instrument.</b> "
+  "Equity belongs at company level, where it buys a share of a portfolio and a brand rather than a share of "
+  "one wasting licence.")}
 {note("amber","And one project that needs a decision, not a financing structure",
   f"Ramayan Vatika returns {pct(vf['project_fcf']['irr_pct'])} against a "
   f"{pct(vf['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)} cost of debt on the base case — and "

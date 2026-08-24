@@ -181,7 +181,7 @@ GGV_RFP = {
 GGV_BID_LICENCE_YEAR_1 = 36.0     # base case: Rs 3.0 lakh/month, 20% over the Rs 2.5 lakh reserve
 
 # Footfall in lakh visits per licence year
-GGV_FOOTFALL = [3.10, 3.90, 4.40, 4.80, 5.15, 5.45, 5.75]
+GGV_FOOTFALL = [3.75, 4.35, 4.75, 5.05, 5.30, 5.55, 5.80]
 
 def ggv_revenue(year_idx):
     """Bottom-up revenue for licence year (1-indexed), in lakh, net of GST."""
@@ -211,7 +211,9 @@ def ggv_revenue(year_idx):
     park_gross = vehicles * (0.62 * 10 + 0.38 * 20)
     parking = park_gross / 1.18
 
-    events = [16.0, 20.0, 23.0, 26.0, 28.0, 30.0, 32.0][y]
+    # Public IPs and ticketed community events, front-loaded: the year-1 plan builds
+    # the audience through programming rather than through price.
+    events = [30.0, 34.0, 36.0, 38.0, 40.0, 42.0, 44.0][y]
 
     return {"entry": entry, "show": show, "fnb": fnb, "activities": act,
             "parking": parking, "events": events,
@@ -229,9 +231,9 @@ def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
     water_hort = 9.0 * infl                               # fixed to the 19-acre area
     show_amc   = 14.0 * infl
     rm         = 8.0 * infl * scale
-    fnb_cogs   = 0.52 * rev["fnb"]
+    fnb_cogs   = 0.44 * rev["fnb"]   # supplied from the EAC kitchens, not bought in
     act_cost   = 0.22 * rev["activities"]
-    marketing  = 0.045 * rev["total"]
+    marketing  = [0.075, 0.065, 0.055, 0.050, 0.045, 0.045, 0.045][y] * rev["total"]
     insurance  = 5.0 * infl
     it_cctv    = 3.5 * infl
     overhead   = 0.050 * rev["total"]                     # Agra cluster allocation (shared with EAC/ESP)
@@ -246,12 +248,12 @@ def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
             "corporate_overhead": overhead, "contingency": contingency, "total": total}
 
 GGV_CAPEX = [
-    ("Activity equipment (demountable — no permanent structures permitted)", 45.0, 8),
-    ("Kiosk fit-out, common seating, shade structures", 18.0, 7),
+    ("Activity equipment (demountable — no permanent structures permitted)", 40.0, 8),
+    ("Kiosk counters, common seating, shade structures", 8.0, 7),
     ("Ticketing, POS, CCTV and ICCC integration", 12.0, 5),
-    ("Signage, branding, wayfinding", 6.0, 5),
+    ("Signage, branding, wayfinding", 5.0, 5),
     ("Uniforms, tools, horticulture kit, safety equipment", 4.0, 3),
-    ("Pre-operative and contingency", 5.0, 5),
+    ("Pre-operative and contingency", 3.0, 5),
 ]
 
 def build_ggv():
@@ -276,7 +278,7 @@ def build_ggv():
         "total": capex_total + sec_dep + adv_licence + GGV_RFP["emd_lakh"] + GGV_RFP["tender_fee_lakh"],
     }
     year1_opex = years[0]["opex"]["total"]
-    ask = mobilisation["total"] + year1_opex
+    ask = mobilisation["total"]      # opex is self-funded from collections
     peak_deficit = mobilisation["total"] + max(0.0, -years[0]["ebitda"])
     return {"rfp": GGV_RFP, "bid_licence_year1": GGV_BID_LICENCE_YEAR_1,
             "capex_lines": [{"item": n, "amount": a, "life_years": l} for n, a, l in GGV_CAPEX],
@@ -730,15 +732,19 @@ def residual_dcf(fcf_detail, exit_year, discount=0.15, terminal_inflow=0.0):
     return v
 
 def stake_for_target_irr(investment, exit_year, exit_equity_value, target_irr,
-                         dividends=None):
-    """Ownership percentage an investor must hold to clear a target IRR."""
-    div = dividends or [0.0] * exit_year
+                         distributable=None):
+    """
+    Ownership percentage an investor must hold to clear a target IRR.
+    distributable is the PROJECT cash paid out each year; the investor receives
+    its stake share of it, so dividends scale with the stake being solved for.
+    """
+    dist = distributable or [0.0] * exit_year
     lo, hi = 0.0, 100.0
     for _ in range(200):
         mid = (lo + hi) / 2
         flows = [-investment]
         for y in range(1, exit_year + 1):
-            f = div[y - 1] if y - 1 < len(div) else 0.0
+            f = (dist[y - 1] if y - 1 < len(dist) else 0.0) * mid / 100.0
             if y == exit_year:
                 f += exit_equity_value * mid / 100.0
             flows.append(f)
@@ -750,9 +756,14 @@ def stake_for_target_irr(investment, exit_year, exit_equity_value, target_irr,
     return hi
 
 def equity_option(investment, stake_pct, exit_year, exit_equity_value,
-                  dividends=None, label="", basis=""):
-    div = dividends or [0.0] * exit_year
+                  distributable=None, label="", basis=""):
+    """
+    distributable: project cash distributed to equity each year. The investor
+    receives its stake share, so its dividends move with the stake.
+    """
+    dist = distributable or [0.0] * exit_year
     proceeds = exit_equity_value * stake_pct / 100.0
+    div = [d * stake_pct / 100.0 for d in dist]
     flows = [-investment]
     for y in range(1, exit_year + 1):
         f = div[y - 1] if y - 1 < len(div) else 0.0
@@ -763,24 +774,30 @@ def equity_option(investment, stake_pct, exit_year, exit_equity_value,
     return {"label": label, "basis": basis, "investment": investment,
             "stake_pct": stake_pct, "exit_year": exit_year,
             "exit_equity_value": exit_equity_value, "exit_proceeds": proceeds,
-            "dividends": div, "flows": flows,
+            "distributable": dist, "dividends": div, "flows": flows,
             "irr_pct": r * 100 if r is not None else None,
             "money_multiple": sum(flows[1:]) / investment if investment else None,
-            "stake_for_18pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.18, div),
-            "stake_for_22pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.22, div),
-            "stake_for_25pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.25, div)}
+            "stake_for_18pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.18, dist),
+            "stake_for_22pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.22, dist),
+            "stake_for_25pct": stake_for_target_irr(investment, exit_year, exit_equity_value, 0.25, dist)}
 
 def ccd_option(principal, coupon_pct, conversion_year, conversion_stake_pct,
-               exit_year, exit_equity_value, label="", basis=""):
+               exit_year, exit_equity_value, distributable=None, label="", basis=""):
     """
     Compulsorily convertible debenture. Coupon runs to conversion; the instrument
     then converts at a formula fixed on the day of issue and exits as equity.
-    Sits as DEBT on the balance sheet until conversion — see the covenant note.
+    After conversion the holder is a shareholder and takes its stake share of
+    distributions. Sits as DEBT on the balance sheet until conversion.
     """
+    dist = distributable or [0.0] * exit_year
     proceeds = exit_equity_value * conversion_stake_pct / 100.0
     flows = [-principal]
     for y in range(1, exit_year + 1):
-        f = principal * coupon_pct / 100.0 if y <= conversion_year else 0.0
+        if y <= conversion_year:
+            f = principal * coupon_pct / 100.0                 # coupon phase
+        else:
+            f = (dist[y - 1] if y - 1 < len(dist) else 0.0) \
+                * conversion_stake_pct / 100.0                  # equity phase
         if y == exit_year:
             f += proceeds
         flows.append(f)
@@ -790,7 +807,7 @@ def ccd_option(principal, coupon_pct, conversion_year, conversion_stake_pct,
             "conversion_stake_pct": conversion_stake_pct,
             "coupon_paid_total": principal * coupon_pct / 100.0 * conversion_year,
             "exit_year": exit_year, "exit_equity_value": exit_equity_value,
-            "exit_proceeds": proceeds, "flows": flows,
+            "exit_proceeds": proceeds, "distributable": dist, "flows": flows,
             "irr_pct": r * 100 if r is not None else None,
             "money_multiple": sum(flows[1:]) / principal if principal else None}
 
@@ -901,10 +918,10 @@ def main():
     g_opex1 = ggv["year1_opex"]
     g_ask = ggv["funding_ask"]                       # mobilisation + one year of opex, as briefed
     g_cfads = [y["ebitda"] for y in ggv["years"]]
-    g_wc_util = [60.0, 45.0, 30.0, 20.0, 12.0, 8.0, 5.0]
+    g_wc_util = [18.0, 14.0, 10.0, 8.0, 6.0, 5.0, 4.0]
     g_debt = composite_facility(
-        term_loan=120.0, wc_limit=g_opex1, wc_utilisation=g_wc_util,
-        rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=3, cfads=g_cfads,
+        term_loan=80.0, wc_limit=20.0, wc_utilisation=g_wc_util,
+        rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=1, cfads=g_cfads,
         label="CGTMSE composite facility \u2014 Geeta Govind Vatika")
     g_fcf = project_fcf(ggv["years"], g_mob,
                         terminal_inflow=ggv["mobilisation"]["security_deposit"] + GGV_RFP["emd_lakh"])
@@ -919,21 +936,22 @@ def main():
         "cost_of_capital": cost_of_capital_view(g_fcf["irr_pct"], DEBT_RATE_BANK * 100,
                                                 g_debt["cgtmse"]["agf_rate_pct"]),
         "debt": g_debt,
-        "equity": equity_option(g_cap["total"], 60.0, g_exit_year, g_exit_val,
-                                dividends=[0, 0, 15, 28, 38],
+        "equity": equity_option(g_cap["total"], 45.0, g_exit_year, g_exit_val,
+                                distributable=[max(0.0, d["fcf"]) for d in g_fcf["detail"][:g_exit_year]],
                                 label="Project-level equity \u2014 Geeta Govind Vatika",
                                 basis=("Sized to the true capital requirement, not the gross facility. "
                                        "Exit at year 5 valued as the discounted remaining concession "
                                        "cash flow, not an EBITDA multiple \u2014 the licence is a wasting asset.")),
-        "ccd": ccd_option(g_cap["total"], 8.0, 3, 55.0, g_exit_year, g_exit_val,
+        "ccd": ccd_option(g_cap["total"], 8.0, 3, 38.0, g_exit_year, g_exit_val,
+                          distributable=[max(0.0, d["fcf"]) for d in g_fcf["detail"][:g_exit_year]],
                           label="CCD converting at the end of year 3 \u2014 Geeta Govind Vatika",
-                          basis="8% coupon to conversion, then 55% of project equity"),
+                          basis="8% coupon to conversion, then 38% of project equity"),
         "exit_equity_value": g_exit_val, "exit_year": g_exit_year, "exit_valuation": g_exit,
     }
     ggv["financing"]["debt_optimised"] = composite_facility(
-        term_loan=120.0, wc_limit=90.0, wc_utilisation=g_wc_util,
-        rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=3, cfads=g_cfads,
-        label="Right-sized variant \u2014 working capital limit cut to peak drawdown")
+        term_loan=80.0, wc_limit=20.0, wc_utilisation=g_wc_util,
+        rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=1, cfads=g_cfads,
+        label="As proposed \u2014 the standby limit is already at peak drawdown")
     ggv["financing"]["agf_saving_optimised"] = (
         g_debt["total_agf"] - ggv["financing"]["debt_optimised"]["total_agf"])
 
@@ -946,12 +964,12 @@ def main():
     ggv["financing"]["walk_away"] = max_licence_fee(
         build_ggv, GGV_BID_LICENCE_YEAR_1, g_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     ggv["financing"]["debt_capacity"] = debt_capacity(
-        g_cfads, DEBT_RATE_BANK, 7, 3, 0.60, g_wc_util)
+        g_cfads, DEBT_RATE_BANK, 7, 1, 0.20, g_wc_util)
 
     ggv["scenarios"] = run_scenarios(build_ggv, [
         ("downside", {"footfall": 0.85, "yield": 0.85, "opex": 1.05, "licence": 1.25},
-         "15% below the footfall and show-conversion base, 5% cost overrun, licence bid up to ₹45 lakh"),
-        ("base", {}, "As modelled: 3.10 lakh visits in year 1, 24% show conversion, ₹36 lakh licence fee"),
+         "15% below the footfall and show-conversion base, 5% cost overrun, licence bid 25% above the modelled fee"),
+        ("base", {}, "As modelled: 3.75 lakh visits in the opening season, 24% show conversion, ₹36 lakh licence fee"),
         ("upside", {"footfall": 1.15, "yield": 1.20, "opex": 0.98},
          "15% more footfall, 20% better show conversion, tight cost control"),
     ], terminal_inflow=ggv["mobilisation"]["security_deposit"] + GGV_RFP["emd_lakh"])
@@ -981,12 +999,13 @@ def main():
                                                 r_debt["cgtmse"]["agf_rate_pct"]),
         "debt": r_debt,
         "equity": equity_option(r_cap["total"], 70.0, r_exit_year, r_exit_val,
-                                dividends=[0, 0, 0, 10, 25, 32, 45],
+                                distributable=[max(0.0, d["fcf"]) for d in r_fcf["detail"][:r_exit_year]],
                                 label="Project-level equity \u2014 Ramayan Vatika",
                                 basis=("Sized to the true capital requirement. Exit at year 7 valued as "
                                        "the discounted remaining cash flow over the balance of the "
                                        "10+5 year concession.")),
         "ccd": ccd_option(r_cap["total"], 8.0, 4, 65.0, r_exit_year, r_exit_val,
+                          distributable=[max(0.0, d["fcf"]) for d in r_fcf["detail"][:r_exit_year]],
                           label="CCD converting at the end of year 4 \u2014 Ramayan Vatika",
                           basis="8% coupon to conversion, then 65% of project equity"),
         "exit_equity_value": r_exit_val, "exit_year": r_exit_year, "exit_valuation": r_exit,
@@ -1050,12 +1069,13 @@ def main():
                                                 k_debt["cgtmse"]["agf_rate_pct"]),
         "debt": k_debt,
         "equity": equity_option(k_cap["total"], 45.0, k_exit_year, k_exit_val,
-                                dividends=[0, 0, 25, 45, 60, 72],
+                                distributable=[max(0.0, d["fcf"]) for d in k_fcf["detail"][:k_exit_year]],
                                 label="Project-level equity \u2014 Karnal",
                                 basis=("Sized to the project cost plus the year-1 operating deficit \u2014 equity has to "
                                        "fund the ramp as well as the build. Exit at year 6 valued as the discounted "
                                        "cash flow over the balance of the 15-year sub-lease.")),
         "ccd": ccd_option(k_cap["total"], 9.0, 3, 38.0, k_exit_year, k_exit_val,
+                          distributable=[max(0.0, d["fcf"]) for d in k_fcf["detail"][:k_exit_year]],
                           label="CCD converting at the end of year 3 \u2014 Karnal",
                           basis="9% coupon to conversion, then 38% of project equity"),
         "exit_equity_value": k_exit_val, "exit_year": k_exit_year, "exit_valuation": k_exit,
@@ -1218,6 +1238,7 @@ def build_company(consol):
     raise_amt = 1600.0
     stake = raise_amt / (pre_money + raise_amt) * 100
     eq = equity_option(raise_amt, stake, 5, exit_equity_value,
+                       distributable=[0.0] * 5,
                        label="VAPPL primary equity round",
                        basis=f"Exit FY30-31 at {ev_revenue_multiple:.1f}x revenue "
                              f"(Rs {ev/CR:.0f} Cr EV) less Rs {net_debt_at_exit/CR:.0f} Cr net debt")
