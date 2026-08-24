@@ -199,6 +199,15 @@ function table(s, y, headers, rows, opts = {}) {
     });
     hh += tall;
   });
+  // Same guard the callout panels get: a table that runs past the footer line is
+  // clipped in the rendered deck, so fail the build rather than ship it.
+  const roomT = H - 0.54 - y;
+  if (hh > roomT + 0.02) {
+    OVERFLOWS.push({ slide: CURRENT.slide, deck: CURRENT.deck,
+                     headline: `table: ${String(headers[0] || "").slice(0, 40) || headers.length + " cols"}`,
+                     need: +hh.toFixed(2), room: +roomT.toFixed(2),
+                     short: +(hh - roomT).toFixed(2) });
+  }
   return y + hh + 0.18;
 }
 
