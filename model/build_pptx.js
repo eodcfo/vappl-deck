@@ -90,17 +90,17 @@ function sectionScenarios(p, scen, name, lede, noteKind, noteHead, noteBody, num
     { name: "Project IRR", labels: order.map(k => nm[k]),
       values: order.map(k => scen[k].project_irr_pct == null ? 0
                              : +scen[k].project_irr_pct.toFixed(1)) },
-  ], { h: 2.15, axisTitle: "Project IRR, %", fmt: '0.0"%"',
+  ], { h: 1.85, axisTitle: "Project IRR, %", fmt: '0.0"%"',
        colors: order.map(k => k === "base" ? C.blue
                              : (scen[k].project_irr_pct || 0) < 0 ? C.terra : C.green) });
-  L.table(s, y + 0.05, ["", ...order.map(k => nm[k])], [
+  y = L.table(s, y + 0.05, ["", ...order.map(k => nm[k])], [
     { cells: ["Year 1 EBITDA", ...order.map(k => cr(scen[k].ebitda_year1))] },
     { cells: ["Stabilised revenue", ...order.map(k => cr(scen[k].revenue_stabilised))] },
     { cells: ["Stabilised EBITDA margin", ...order.map(k => pc(scen[k].ebitda_margin_stabilised))] },
     { cells: ["Payback", ...order.map(k => scen[k].payback_years
         ? `${scen[k].payback_years.toFixed(1)} yrs` : "Not within term")], emphasis: "total" },
-  ], { colW: [3.6, ...Array(order.length).fill((L.W - 2 * L.M - 3.6) / order.length)], rowH: 0.32 });
-  if (noteHead) L.verdict(s, y + 0.16, noteKind, noteHead, noteBody);
+  ], { colW: [3.6, ...Array(order.length).fill((L.W - 2 * L.M - 3.6) / order.length)], rowH: 0.28, fontSize: 10.5 });
+  if (noteHead) L.verdict(s, y + 0.14, noteKind, noteHead, noteBody);
   L.foot(s, name);
   return s;
 }
@@ -172,7 +172,7 @@ function buildGGV() {
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
 
-  L.cover(p.addSlide(), {
+  L.cover(slide(p), {
     eyebrow: "Project finance · Geeta Govind Vatika", title: "Geeta Govind\nVatika",
     sub: "Nineteen acres in Taj Nagri Phase-II, built and commissioned by the Agra Development Authority. Seven years of operating rights, extendable by four. A ₹1 crore facility to mobilise; operating cost met from collections.",
     meta: "Agra Development Authority · Licence-fee model · 7 + 4 years · 19 acres\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
@@ -185,15 +185,12 @@ function buildGGV() {
   });
 
   // 01 the project
-  let s = p.addSlide();
+  let s = slide(p);
   let y = L.head(s, "01", "The project",
     "Nineteen acres in Taj Nagri Phase-II, built and fitted out by ADA. The asset is already in place: musical fountains, a 40-minute Krishna Leela laser show, an open-air amphitheatre, a waterbody, eight kiosks and a Tulsi forest. The operator pays a monthly licence fee and retains gate collections.");
-  y = L.stats(s, y, [
-    { label: "Site", value: "19 acres", small: true, sub: "Taj Nagri Phase-II, adjoining Agra Chaupati" },
-    { label: "Term", value: "7 + 4 years", small: true, sub: "Extendable on performance and mutual consent" },
-    { label: "Facility sought", value: cr(f.ask), sub: "Against a park already built and commissioned" },
-  ], { h: 1.24 });
-  L.table(s, y, ["Term", "Position"], [
+  // The site, term and facility all appear on the cover; repeating them here costs
+  // the room the adjacency argument needs, which is the part a lender has not seen.
+  y = L.table(s, y, ["Term", "Position"], [
     { cells: ["Authority", r.authority] },
     { cells: ["Contract period", r.term] },
     { cells: ["Selection", "Technical evaluation, then forward e-auction on the licence fee"] },
@@ -205,11 +202,11 @@ function buildGGV() {
     { cells: ["Asset position", r.assets], emphasis: "total" },
   ], { colW: [2.6, L.W - 2 * L.M - 2.6], rowH: 0.30, fontSize: 10.5 });
   L.footnote(s, y + 0.04, "Why this site and not another",
-    "Geeta Govind Vatika and Agra Chaupati, which E-O-D already runs, sit on one block of roughly 25 acres and share a grille boundary, with internal pathways and gates between them. F&B is supplied from kitchens that already exist next door, so this site needs counters rather than a built kitchen; private events sell into a customer base E-O-D already serves. The two specialise instead of competing: Chaupati the food and adventure destination, Geeta Govind Vatika the event and show destination.");
+    "One block of roughly 25 acres with Agra Chaupati, which E-O-D already runs: a shared grille boundary, internal pathways and gates. F&B comes from kitchens next door, so this site needs counters not a built kitchen, and private events sell into a customer base E-O-D already serves. The two specialise rather than compete — Chaupati food and adventure, Geeta Govind Vatika events and shows.");
   L.foot(s, NAME);
 
   // 02 the ask
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "The ask",
     "The facility covers mobilisation only: capital equipment, the security deposit and the first six months of licence fee. Operating cost from month one is met from gate, event and F&B collections.");
   const capexRows = g.capex_lines.map(c => ({
@@ -229,7 +226,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 02b year-one operating position
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "02", "The ask · year one",
     "No part of operating cost is financed. The opening season is met from gate, event and F&B collections.");
   y = L.stats(s, y, [
@@ -249,7 +246,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 03 revenue
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "03", "Revenue model",
     "Seven streams. The first five are footfall multiplied by a capture rate and a tariff, net of GST; the two event lines are booked directly. Every rate is derived in section 08.");
   const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"],
@@ -273,12 +270,12 @@ function buildGGV() {
       sub: `Year 1, net of GST. Year 7: ₹${Math.round(rev(yrs[6]) / yrs[6].revenue.footfall_lakh)}` },
     { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA. No escalation" },
   ], { h: 1.10 });
-  L.footnote(s, y2 + 0.04, "Subhash Park is trading ahead of its own plan",
-    `Same city, same ₹20 gate, one stall, no show, no capex. ${lk(sp.fy2627_revenue_to_date_lakh, 0)} booked in FY26-27 to date — ${sp.fy2627_months_elapsed} months, before the season — against ${lk(sp.company_model_fy2627_lakh[0], 0)}–${lk(sp.company_model_fy2627_lakh[1], 0)} in the company model for the full year, and expected to cross ${cr(sp.fy2627_run_rate_expectation_lakh)} on the run rate.`);
+  L.footnote(s, y2 + 0.04, "Reference point — Subhash Park, the zero-capex proof point",
+    `Same city, same ₹20 gate, one stall, no show, no capex. ${lk(sp.fy2627_revenue_to_date_lakh, 0)} booked in FY26-27 to date — ${sp.fy2627_months_elapsed} months, before the season — and expected to cross ${cr(sp.fy2627_run_rate_expectation_lakh)} for the year on the current run rate.`);
   L.foot(s, NAME);
 
   // 04 cost
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "04", "Cost model",
     "Licence fee on a contracted rate, payroll with footfall, the rest with inflation or revenue.");
   const CK = [["licence_fee", "Licence fee to ADA"], ["manpower", "Payroll"],
@@ -299,7 +296,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 05 projection
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "05", "Seven-year projection",
     "The initial term, extension years excluded. Two steps drive the shape: more operators from year 2, and the year-3 reinvestment landing in year 4.");
   y = L.chart(s, p, y, "bar", [
@@ -314,7 +311,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 05b the reinvestment and the cash that pays for it
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "05", "The year-3 reinvestment",
     `At the end of year 3 the project spends ${cr(gc.total)} of its own accumulated cash. No second facility, no equity.`);
   y = L.table(s, y, ["Cash after debt service", "Opening", ...cw.detail.map(x => `Yr ${x.year}`)], [
@@ -337,7 +334,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 06 cash flow and returns
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "06", "Project cash flow and returns",
     "Unlevered free cash flow. Capital deployed is the mobilisation envelope; operating cost is not financed, so it is not a capital item.");
   y = L.table(s, y, ["₹ crore", "EBITDA", "Tax", "Maint. capex", "Reinvestment", "Refunds", "Free cash flow"],
@@ -358,7 +355,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 07 the facility
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "07", "The facility",
     `A CGTMSE-guaranteed composite facility of ${cr(db.total_limit)}: a term loan against mobilisation and a small revolving limit for within-year seasonality. No collateral, and no charge over ADA's assets.`);
   y = L.table(s, y, ["Term", "Structure"], [
@@ -377,7 +374,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 07b repayment schedule
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "07", "The facility · repayment and cover");
   y = L.table(s, y, ["₹ crore", "TL o/s", "TL int.", "WC drawn", "WC int.", "AGF", "Principal", "Debt service", "CFADS", "DSCR"],
     db.schedule.map(x => ({ cells: [`Year ${x.year}${x.principal === 0 ? " · moratorium" : ""}`,
@@ -397,7 +394,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 08a assumptions — revenue
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "08", "Assumptions and method · revenue",
     "Every figure is computed from the inputs below.");
   L.table(s, y, ["Input", "Basis", "Value"], [
@@ -423,7 +420,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 08b assumptions — cost, capital, facility
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "08", "Assumptions and method · cost and facility");
   L.table(s, y, ["Input", "Basis", "Value"], [
     { cells: ["Licence fee", "Winning bid, contracted escalation", `${lk(g.bid_licence_year1, 0)}, +5% a year`] },
@@ -446,7 +443,7 @@ function buildGGV() {
   L.foot(s, NAME);
 
   // 09 risks
-  s = p.addSlide();
+  s = slide(p);
   y = L.head(s, "09", "Risks and open items");
   L.itemList(s, y, [
     { title: "Licence fee at auction", color: C.terra,

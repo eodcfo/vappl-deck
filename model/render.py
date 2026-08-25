@@ -648,17 +648,15 @@ beverage collections.</p>
 tariff, net of GST; the two event lines are booked directly. The derivation of every rate is in
 section 08.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], rev_rows)}
-{note("green","Reference point — and it is trading ahead of its own plan",
+{note("green","Reference point — the zero-capex proof point",
   f"Subhash Park, Agra is the closest thing the group has to a controlled test of these assumptions: same "
   f"city, the same {'₹20'} gate, one pre-packaged stall, no show, no capex. It opened in {e(sp['opened'])} and "
   f"recorded a {pct(sp['net_margin_first_four_months_pct'],1)} net margin in its first four months.<br><br>"
   f"<b>{lakh(sp['fy2627_revenue_to_date_lakh'],0)} of revenue is booked in FY26-27 to date</b> — "
   f"{sp['fy2627_months_elapsed']} months, and the season has not started. On the current run rate the site is "
-  f"expected to cross {rs(sp['fy2627_run_rate_expectation_lakh'])} for the year, against the "
-  f"{lakh(sp['company_model_fy2627_lakh'][0],0)}–{lakh(sp['company_model_fy2627_lakh'][1],0)} the company "
-  "model carries for FY26-27.<br><br>"
-  "That is the floor case running ahead of plan. Geeta Govind Vatika carries a laser show, a musical "
-  "fountain, eight kiosks and nineteen acres, and is modelled at "
+  f"expected to cross {rs(sp['fy2627_run_rate_expectation_lakh'])} for the year.<br><br>"
+  "That is a ₹20 gate with one stall and no capex clearing a crore. Geeta Govind Vatika carries a laser "
+  "show, a musical fountain, eight kiosks and nineteen acres, and is modelled at "
   f"{rs(yrs[0]['revenue']['total'])} in its opening year.")}"""
     S.append(("03", "s03", "Revenue model", body))
 
