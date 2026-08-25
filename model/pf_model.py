@@ -947,16 +947,10 @@ def main():
         "cost_of_capital": cost_of_capital_view(g_fcf["irr_pct"], DEBT_RATE_BANK * 100,
                                                 g_debt["cgtmse"]["agf_rate_pct"]),
         "debt": g_debt,
-        "equity": equity_option(g_cap["total"], 45.0, g_exit_year, g_exit_val,
-                                distributable=[max(0.0, d["fcf"]) for d in g_fcf["detail"][:g_exit_year]],
-                                label="Project-level equity \u2014 Geeta Govind Vatika",
-                                basis=("Sized to the true capital requirement, not the gross facility. "
-                                       "Exit at year 5 valued as the discounted remaining concession "
-                                       "cash flow, not an EBITDA multiple \u2014 the licence is a wasting asset.")),
-        "ccd": ccd_option(g_cap["total"], 8.0, 3, 38.0, g_exit_year, g_exit_val,
-                          distributable=[max(0.0, d["fcf"]) for d in g_fcf["detail"][:g_exit_year]],
-                          label="CCD converting at the end of year 3 \u2014 Geeta Govind Vatika",
-                          basis="8% coupon to conversion, then 38% of project equity"),
+        # Geeta Govind Vatika is offered on debt only. No equity or CCD option is
+        # computed for it, so nothing downstream can quote a stake or a dilution
+        # figure for a project that is not on offer that way.
+        "instruments": ["debt"],
         "exit_equity_value": g_exit_val, "exit_year": g_exit_year, "exit_valuation": g_exit,
     }
     ggv["financing"]["debt_optimised"] = composite_facility(

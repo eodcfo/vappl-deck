@@ -2069,9 +2069,9 @@ def deck_index():
 <div class="fin-cover">
   <div class="fin-cover__eyebrow">Project finance · Portfolio</div>
   <h1 class="fin-cover__title">Three projects,<br>one balance sheet</h1>
-  <p class="fin-cover__sub">Geeta Govind Vatika, Ramayan Vatika and Karnal, each modelled as equity,
-  guaranteed debt, and debt that converts to equity — plus the company-level view that ties them
-  together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.</p>
+  <p class="fin-cover__sub">Geeta Govind Vatika on guaranteed debt; Ramayan Vatika and Karnal each
+  modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view
+  that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.</p>
   <div class="fin-cover__meta">
     <b>{e(c["profile"]["name"])}</b> · CIN {e(c["profile"]["cin"])} ·
     MSME classification <b>{c["msme"]["classification"].title()} Enterprise</b><br>
@@ -2148,15 +2148,17 @@ it is how much capital each genuinely consumes, and what it earns on it.</p>
       (rs(vf["debt_capacity"]["max_total_limit"]), ""), (rs(kf["debt_capacity"]["max_total_limit"]), "")),
   row(label_cell("Assets a lender can charge"), ("None — ADA owns everything", "neg"),
       ("None — expressly prohibited", "neg"), ("Yes — E-O-D owns the fit-out", "pos")),
-  row(label_cell("Equity IRR at project level"), (pct(gf["equity"]["irr_pct"]), "neg"), (pct(vf["equity"]["irr_pct"]), "neg"), (pct(kf["equity"]["irr_pct"]), "neg")),
+  row(label_cell("Equity IRR at project level"), ("Not offered — debt only", "muted"),
+      (pct(vf["equity"]["irr_pct"]), "neg"), (pct(kf["equity"]["irr_pct"]), "neg")),
   row(("Recommended instrument", ""), ("CGTMSE debt", "pos"), ("CGTMSE debt, at reserve price", ""), ("CGTMSE debt", "pos"), cls_="total"),
 ])}
 {note("terra","The same conclusion three times, by three different routes",
   f"<b>Geeta Govind Vatika</b> earns {pct(gf['project_fcf']['irr_pct'])} unlevered and repays its capital in "
-  f"{num(gf['project_fcf']['payback_years'],1)} years. It comfortably clears an equity hurdle — which is exactly "
-  f"why equity is the wrong way to fund it: giving away {pct(gf['equity']['stake_pct'],0)} of that project to "
-  f"raise {rs(gf['ask'])} makes no sense when a guaranteed facility provides the same money at "
-  f"{pct(gf['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)} and no dilution. <b>Karnal</b> earns "
+  f"{num(gf['project_fcf']['payback_years'],1)} years on {rs(gf['true_capital_requirement']['total'])} of capital "
+  f"at risk. It is offered on debt only: a guaranteed facility supplies the whole {rs(gf['ask'])} at "
+  f"{pct(gf['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)}, with no collateral and no dilution, so there "
+  "is nothing an equity or convertible structure would buy that the facility does not already provide. "
+  f"<b>Karnal</b> earns "
   f"{pct(kf['project_fcf']['irr_pct'])} — above the cost of debt, below an equity hurdle. Debt again. "
   f"<b>Ramayan Vatika</b> earns {pct(vf['project_fcf']['irr_pct'])} on the base case, below the cost of its own "
   "debt — a bid-price question, not a financing question. <b>Three different profiles, one instrument.</b> "

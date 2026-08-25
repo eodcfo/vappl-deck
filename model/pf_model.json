@@ -588,71 +588,9 @@
     "total_agf": 2.2860000000000005,
     "total_finance_cost": 45.181000000000004
    },
-   "equity": {
-    "label": "Project-level equity \u2014 Geeta Govind Vatika",
-    "basis": "Sized to the true capital requirement, not the gross facility. Exit at year 5 valued as the discounted remaining concession cash flow, not an EBITDA multiple \u2014 the licence is a wasting asset.",
-    "investment": 58.059,
-    "stake_pct": 45.0,
-    "exit_year": 5,
-    "exit_equity_value": 154.50196198739658,
-    "exit_proceeds": 69.52588289432846,
-    "distributable": [
-     7.108347896977266,
-     27.0997435921854,
-     49.49080349594528,
-     59.1428550514621,
-     75.44923975061955
-    ],
-    "dividends": [
-     3.19875655363977,
-     12.19488461648343,
-     22.270861573175374,
-     26.614284773157948,
-     33.952157887778796
-    ],
-    "flows": [
-     -58.059,
-     3.19875655363977,
-     12.19488461648343,
-     22.270861573175374,
-     26.614284773157948,
-     103.47804078210726
-    ],
-    "irr_pct": 29.393660213099793,
-    "money_multiple": 2.8894198711408015,
-    "stake_for_18pct": 31.109599058794085,
-    "stake_for_22pct": 35.60426482665769,
-    "stake_for_25pct": 39.24360366409565
-   },
-   "ccd": {
-    "label": "CCD converting at the end of year 3 \u2014 Geeta Govind Vatika",
-    "basis": "8% coupon to conversion, then 38% of project equity",
-    "principal": 58.059,
-    "coupon_pct": 8.0,
-    "conversion_year": 3,
-    "conversion_stake_pct": 38.0,
-    "coupon_paid_total": 13.934159999999999,
-    "exit_year": 5,
-    "exit_equity_value": 154.50196198739658,
-    "exit_proceeds": 58.71074555521071,
-    "distributable": [
-     7.108347896977266,
-     27.0997435921854,
-     49.49080349594528,
-     59.1428550514621,
-     75.44923975061955
-    ],
-    "flows": [
-     -58.059,
-     4.6447199999999995,
-     4.6447199999999995,
-     4.6447199999999995,
-     22.474284919555597,
-     87.38145666044613
-    ],
-    "irr_pct": 18.85799388459418,
-    "money_multiple": 2.1321397471537873
-   },
+   "instruments": [
+    "debt"
+   ],
    "exit_equity_value": 154.50196198739658,
    "exit_year": 5,
    "exit_valuation": {

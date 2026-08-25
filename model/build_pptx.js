@@ -981,7 +981,7 @@ function buildHub() {
 
   L.cover(slide(p), {
     eyebrow: "Project finance · Portfolio", title: "Three projects,\none balance sheet",
-    sub: "Geeta Govind Vatika, Ramayan Vatika and Karnal, each modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.",
+    sub: "Geeta Govind Vatika on guaranteed debt; Ramayan Vatika and Karnal each modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.",
     meta: `${c.profile.name} · CIN ${c.profile.cin} · MSME classification Small Enterprise\nPrepared ${M.meta.prepared} · every figure generated from model/pf_model.py`,
     stats: [
       { label: "Total funding sought", value: cr(totalAsk, 1), sub: "Across the three projects, as briefed" },
@@ -1011,11 +1011,11 @@ function buildHub() {
         { text: pp(kf.cost_of_capital.spread_over_debt_pct), color: C.green }] },
     { cells: ["Minimum DSCR at the size asked", xx(gf.debt.min_dscr_post_moratorium), xx(vf.debt.min_dscr_post_moratorium), xx(kf.debt.min_dscr_post_moratorium)] },
     { cells: ["Assets a lender can charge", "None — ADA owns all", "None — expressly barred", "Yes — E-O-D owns fit-out"] },
-    { cells: ["Equity IRR at project level", pc(gf.equity.irr_pct), pc(vf.equity.irr_pct), pc(kf.equity.irr_pct)] },
+    { cells: ["Equity IRR at project level", "Not offered — debt only", pc(vf.equity.irr_pct), pc(kf.equity.irr_pct)] },
     { cells: ["Recommended instrument", "CGTMSE debt", "CGTMSE debt, at reserve", "CGTMSE debt"], emphasis: "total" },
-  ], { colW: [4.0, ...Array(3).fill((L.W - 2 * L.M - 4.0) / 3)], rowH: 0.30, fontSize: 10.5 });
-  L.verdict(s, y, "stop", "The same conclusion three times, for the same reason",
-    "None of the three clears an equity hurdle at project level, and not because any is a bad project: a single park generating ₹1–2.5 crore of mature EBITDA cannot pay a 22% return and still leave an operator's margin. Equity works on a portfolio and a brand, not one licence at a time. Two of the three out-earn guaranteed debt comfortably — fund them with it and keep the spread.");
+  ], { colW: [4.2, ...Array(3).fill((L.W - 2 * L.M - 4.2) / 3)], rowH: 0.28, fontSize: 10 });
+  L.verdict(s, y, "stop", "One instrument, three different routes to it",
+    `Geeta Govind Vatika is offered on debt only: a guaranteed facility supplies the whole ${cr(gf.ask)} at ${pc(gf.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)}, no collateral and no dilution, so there is nothing an equity structure would buy that it does not already provide. Karnal earns ${pc(kf.project_fcf.irr_pct)} and Ramayan Vatika ${pc(vf.project_fcf.irr_pct)}; neither clears an equity hurdle at project level. A single park generating ₹1–2.5 crore of mature EBITDA cannot pay a 22% return and leave an operator's margin. Equity belongs at company level, where it buys a portfolio rather than one wasting licence.`);
   L.foot(s, NAME);
 
   // 02 CGTMSE framework
