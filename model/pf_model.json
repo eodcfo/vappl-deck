@@ -164,18 +164,18 @@
      "repairs": 8.0,
      "fnb_cogs": 16.499999999999996,
      "activity_cost": 0.0,
-     "events_cost": 11.120000000000001,
+     "events_cost": 8.200000000000001,
      "marketing": 17.59598824494259,
      "insurance_statutory": 5.0,
      "it_cctv": 3.5,
      "corporate_overhead": 11.730658829961728,
      "contingency": 3.0,
-     "total": 231.84664707490433
+     "total": 228.9266470749043
     },
-    "ebitda": 2.766529524330224,
-    "ebitda_margin": 1.1791876161567858,
+    "ebitda": 5.68652952433024,
+    "ebitda_margin": 2.4237894933087882,
     "depreciation": 5.542857142857143,
-    "ebit": -2.776327618526919,
+    "ebit": 0.14367238147309713,
     "growth_capex": 0.0
    },
    {
@@ -203,18 +203,18 @@
      "repairs": 8.99712,
      "fnb_cogs": 20.917285714285715,
      "activity_cost": 0.0,
-     "events_cost": 13.52,
+     "events_cost": 10.0,
      "marketing": 19.041467595485432,
      "insurance_statutory": 5.324999999999999,
      "it_cctv": 3.7275,
      "corporate_overhead": 14.647282765758025,
      "contingency": 3.195,
-     "total": 259.2896840755292
+     "total": 255.7696840755292
     },
-    "ebitda": 33.6559712396313,
-    "ebitda_margin": 11.488810511090566,
+    "ebitda": 37.17597123963128,
+    "ebitda_margin": 12.690398565439095,
     "depreciation": 5.542857142857143,
-    "ebit": 28.113114096774154,
+    "ebit": 31.633114096774136,
     "growth_capex": 0.0
    },
    {
@@ -242,18 +242,18 @@
      "repairs": 9.920687999999998,
      "fnb_cogs": 24.818749999999998,
      "activity_cost": 0.0,
-     "events_cost": 15.520000000000001,
+     "events_cost": 11.5,
      "marketing": 19.374660589803174,
      "insurance_statutory": 5.671124999999999,
      "it_cctv": 3.9697874999999994,
      "corporate_overhead": 17.613327808911976,
      "contingency": 3.4026749999999995,
-     "total": 284.3698516653819
+     "total": 280.3498516653818
     },
-    "ebitda": 67.89670451285764,
-    "ebitda_margin": 19.274240861656857,
+    "ebitda": 71.91670451285773,
+    "ebitda_margin": 20.41542214313112,
     "depreciation": 5.542857142857143,
-    "ebit": 62.353847370000494,
+    "ebit": 66.37384737000059,
     "growth_capex": 40.0
    },
    {
@@ -281,18 +281,18 @@
      "repairs": 10.836113435999998,
      "fnb_cogs": 28.568571428571424,
      "activity_cost": 13.48093220338983,
-     "events_cost": 18.16,
+     "events_cost": 13.5,
      "marketing": 22.664676247754436,
      "insurance_statutory": 6.039748124999999,
      "it_cctv": 4.2278236875,
      "corporate_overhead": 22.664676247754436,
      "contingency": 3.6238488749999997,
-     "total": 328.79027264715353
+     "total": 324.1302726471535
     },
-    "ebitda": 124.50325230793516,
-    "ebitda_margin": 27.46636460784889,
+    "ebitda": 129.16325230793518,
+    "ebitda_margin": 28.494396058433086,
     "depreciation": 12.057142857142857,
-    "ebit": 112.4461094507923,
+    "ebit": 117.10610945079233,
     "growth_capex": 0.0
    },
    {
@@ -320,18 +320,18 @@
      "repairs": 11.780601194789998,
      "fnb_cogs": 32.3565,
      "activity_cost": 16.90250847457627,
-     "events_cost": 20.16,
+     "events_cost": 15.0,
      "marketing": 23.55072248086386,
      "insurance_statutory": 6.432331753124999,
      "it_cctv": 4.502632227187499,
      "corporate_overhead": 26.16746942318207,
      "contingency": 3.859399051874999,
-     "total": 359.3468327389745
+     "total": 354.1868327389745
     },
-    "ebitda": 164.00255572466688,
-    "ebitda_margin": 31.337106594528986,
+    "ebitda": 169.1625557246669,
+    "ebitda_margin": 32.32306360790161,
     "depreciation": 12.057142857142857,
-    "ebit": 151.94541286752403,
+    "ebit": 157.10541286752405,
     "growth_capex": 0.0
    },
    {
@@ -359,18 +359,18 @@
      "repairs": 12.802089782955596,
      "fnb_cogs": 36.455571428571425,
      "activity_cost": 20.932906779661014,
-     "events_cost": 21.76,
+     "events_cost": 16.200000000000003,
      "marketing": 25.82834895376084,
      "insurance_statutory": 6.850433317078123,
      "it_cctv": 4.795303321954686,
      "corporate_overhead": 28.698165504178714,
      "contingency": 4.110259990246874,
-     "total": 392.1374981428378
+     "total": 386.57749814283784
     },
-    "ebitda": 181.82581194073646,
-    "ebitda_margin": 31.678995633755925,
+    "ebitda": 187.3858119407364,
+    "ebitda_margin": 32.647698667960384,
     "depreciation": 12.057142857142857,
-    "ebit": 169.7686690835936,
+    "ebit": 175.32866908359355,
     "growth_capex": 0.0
    },
    {
@@ -398,25 +398,30 @@
      "repairs": 13.906598847534736,
      "fnb_cogs": 39.82942857142856,
      "activity_cost": 24.525152542372883,
-     "events_cost": 23.360000000000003,
+     "events_cost": 17.4,
      "marketing": 28.83807764820745,
      "insurance_statutory": 7.295711482688201,
      "it_cctv": 5.10699803788174,
      "corporate_overhead": 32.042308498008275,
      "contingency": 4.37742688961292,
-     "total": 426.7038592589019
+     "total": 420.74385925890186
     },
-    "ebitda": 214.14231070126363,
-    "ebitda_margin": 33.41555598507744,
+    "ebitda": 220.10231070126366,
+    "ebitda_margin": 34.345576367405776,
     "depreciation": 12.057142857142857,
-    "ebit": 202.08516784412078,
+    "ebit": 208.0451678441208,
     "growth_capex": 0.0
    }
   ],
-  "year1_opex": 231.84664707490433,
+  "year1_opex": 228.9266470749043,
   "funding_ask": 100.0,
   "peak_cash_deficit": 58.059,
   "annual_depreciation": 5.542857142857143,
+  "cost_ratios": {
+   "public_event_delivery_pct": 20.0,
+   "private_event_delivery_pct": 10.0,
+   "fnb_cogs_pct": 44.0
+  },
   "growth_capex": {
    "year": 3,
    "lines": [
@@ -452,96 +457,96 @@
     "cumulative_operating_deficit": 0.0,
     "total": 58.059
    },
-   "opex_facility": 231.84664707490433,
+   "opex_facility": 228.9266470749043,
    "project_fcf": {
     "t0": 58.059,
     "terminal_inflow": 10.0,
     "flows": [
      -58.059,
-     -1.9257340076544676,
-     20.76877960913455,
-     5.262911546792722,
-     87.32585444613531,
-     115.54921473851303,
-     127.90437846816656,
-     160.80409534103012
+     0.9583478969772745,
+     23.408779609134537,
+     8.277911546792794,
+     90.82085444613531,
+     119.41921473851306,
+     132.07437846816651,
+     165.27409534103015
     ],
     "detail": [
      {
       "year": 1,
-      "ebitda": 2.766529524330224,
-      "tax": 0.0,
+      "ebitda": 5.68652952433024,
+      "tax": 0.03591809536827428,
       "maintenance_capex": 4.6922635319846915,
       "growth_capex": 0.0,
       "terminal_inflow": 0.0,
-      "fcf": -1.9257340076544676
+      "fcf": 0.9583478969772745
      },
      {
       "year": 2,
-      "ebitda": 33.6559712396313,
-      "tax": 7.028278524193539,
+      "ebitda": 37.17597123963128,
+      "tax": 7.908278524193534,
       "maintenance_capex": 5.85891310630321,
       "growth_capex": 0.0,
       "terminal_inflow": 0.0,
-      "fcf": 20.76877960913455
+      "fcf": 23.408779609134537
      },
      {
       "year": 3,
-      "ebitda": 67.89670451285764,
-      "tax": 15.588461842500124,
+      "ebitda": 71.91670451285773,
+      "tax": 16.593461842500147,
       "maintenance_capex": 7.04533112356479,
       "growth_capex": 40.0,
       "terminal_inflow": 0.0,
-      "fcf": 5.262911546792722
+      "fcf": 8.277911546792794
      },
      {
       "year": 4,
-      "ebitda": 124.50325230793516,
-      "tax": 28.111527362698077,
+      "ebitda": 129.16325230793518,
+      "tax": 29.276527362698083,
       "maintenance_capex": 9.065870499101774,
       "growth_capex": 0.0,
       "terminal_inflow": 0.0,
-      "fcf": 87.32585444613531
+      "fcf": 90.82085444613531
      },
      {
       "year": 5,
-      "ebitda": 164.00255572466688,
-      "tax": 37.98635321688101,
+      "ebitda": 169.1625557246669,
+      "tax": 39.27635321688101,
       "maintenance_capex": 10.466987769272828,
       "growth_capex": 0.0,
       "terminal_inflow": 0.0,
-      "fcf": 115.54921473851303
+      "fcf": 119.41921473851306
      },
      {
       "year": 6,
-      "ebitda": 181.82581194073646,
-      "tax": 42.4421672708984,
+      "ebitda": 187.3858119407364,
+      "tax": 43.83216727089839,
       "maintenance_capex": 11.479266201671486,
       "growth_capex": 0.0,
       "terminal_inflow": 0.0,
-      "fcf": 127.90437846816656
+      "fcf": 132.07437846816651
      },
      {
       "year": 7,
-      "ebitda": 214.14231070126363,
-      "tax": 50.521291961030194,
+      "ebitda": 220.10231070126366,
+      "tax": 52.0112919610302,
       "maintenance_capex": 12.816923399203311,
       "growth_capex": 0.0,
       "terminal_inflow": 10.0,
-      "fcf": 160.80409534103012
+      "fcf": 165.27409534103015
      }
     ],
-    "irr_pct": 52.38935319823212,
-    "npv_at_15pct": 182.55710975325536,
-    "payback_years": 3.3888085958857723,
-    "cumulative_fcf": 515.6895001421178,
-    "cumulative_fcf_net_of_capital": 457.63050014211785
+    "irr_pct": 55.48086894152219,
+    "npv_at_15pct": 196.44923398643624,
+    "payback_years": 3.279825169032825,
+    "cumulative_fcf": 540.2335820467497,
+    "cumulative_fcf_net_of_capital": 482.17458204674966
    },
    "cost_of_capital": {
-    "project_irr_pct": 52.38935319823212,
+    "project_irr_pct": 55.48086894152219,
     "all_in_cost_of_cgtmse_debt_pct": 12.1,
     "equity_hurdle_pct": 22.0,
-    "spread_over_debt_pct": 40.28935319823212,
+    "spread_over_debt_pct": 43.38086894152219,
     "clears_debt": true,
     "clears_equity_hurdle": true,
     "verdict": "Equity-fundable: the project out-earns a private-equity hurdle."
@@ -573,8 +578,8 @@
       "principal": 0.0,
       "tl_closing": 58.0,
       "debt_service": 11.18,
-      "cfads": 2.766529524330224,
-      "dscr": 0.24745344582560144
+      "cfads": 5.68652952433024,
+      "dscr": 0.5086341256109338
      },
      {
       "year": 2,
@@ -586,8 +591,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 48.333333333333336,
       "debt_service": 19.830666666666666,
-      "cfads": 33.6559712396313,
-      "dscr": 1.6971679170122689
+      "cfads": 37.17597123963128,
+      "dscr": 1.8746707745393305
      },
      {
       "year": 3,
@@ -599,8 +604,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 38.66666666666667,
       "debt_service": 17.692999999999998,
-      "cfads": 67.89670451285764,
-      "dscr": 3.837489657653176
+      "cfads": 71.91670451285773,
+      "dscr": 4.064698158190117
      },
      {
       "year": 4,
@@ -612,8 +617,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 29.000000000000007,
       "debt_service": 15.918333333333333,
-      "cfads": 124.50325230793516,
-      "dscr": 7.821374870145649
+      "cfads": 129.16325230793518,
+      "dscr": 8.114119085411067
      },
      {
       "year": 5,
@@ -625,8 +630,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 19.333333333333343,
       "debt_service": 14.264666666666667,
-      "cfads": 164.00255572466688,
-      "dscr": 11.497117987895514
+      "cfads": 169.1625557246669,
+      "dscr": 11.858850941113257
      },
      {
       "year": 6,
@@ -638,8 +643,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 9.666666666666677,
       "debt_service": 12.853000000000002,
-      "cfads": 181.82581194073646,
-      "dscr": 14.146565933302453
+      "cfads": 187.3858119407364,
+      "dscr": 14.57914976587072
      },
      {
       "year": 7,
@@ -651,14 +656,14 @@
       "principal": 9.666666666666666,
       "tl_closing": 1.0658141036401503e-14,
       "debt_service": 11.441333333333334,
-      "cfads": 214.14231070126363,
-      "dscr": 18.71655203658638
+      "cfads": 220.10231070126366,
+      "dscr": 19.237470344475902
      }
     ],
-    "min_dscr": 0.24745344582560144,
-    "avg_dscr": 8.280531692631579,
-    "min_dscr_post_moratorium": 1.6971679170122689,
-    "avg_dscr_post_moratorium": 9.61937806709924,
+    "min_dscr": 0.5086341256109338,
+    "avg_dscr": 8.605370456458761,
+    "min_dscr_post_moratorium": 1.8746707745393305,
+    "avg_dscr_post_moratorium": 9.954826511600066,
     "bankable": true,
     "total_interest": 42.89500000000001,
     "total_agf": 2.2860000000000005,
@@ -667,15 +672,15 @@
    "instruments": [
     "debt"
    ],
-   "exit_equity_value": 240.3736337084474,
+   "exit_equity_value": 247.37968285778575,
    "exit_year": 5,
    "exit_valuation": {
-    "dcf_remaining_term": 240.3736337084474,
-    "ebitda_multiple_crosscheck": 738.0115007610009,
-    "exit_year_ebitda": 164.00255572466688,
+    "dcf_remaining_term": 247.37968285778575,
+    "ebitda_multiple_crosscheck": 761.231500761001,
+    "exit_year_ebitda": 169.1625557246669,
     "ebitda_multiple": 4.5,
     "discount_rate_pct": 15.0,
-    "used": 240.3736337084474,
+    "used": 247.37968285778575,
     "basis": "Discounted remaining concession cash flow. A licence that expires is a wasting asset, so an EBITDA multiple flatters it; the multiple is shown only as a cross-check."
    },
    "debt_optimised": {
@@ -705,8 +710,8 @@
       "principal": 0.0,
       "tl_closing": 58.0,
       "debt_service": 11.18,
-      "cfads": 2.766529524330224,
-      "dscr": 0.24745344582560144
+      "cfads": 5.68652952433024,
+      "dscr": 0.5086341256109338
      },
      {
       "year": 2,
@@ -718,8 +723,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 48.333333333333336,
       "debt_service": 19.830666666666666,
-      "cfads": 33.6559712396313,
-      "dscr": 1.6971679170122689
+      "cfads": 37.17597123963128,
+      "dscr": 1.8746707745393305
      },
      {
       "year": 3,
@@ -731,8 +736,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 38.66666666666667,
       "debt_service": 17.692999999999998,
-      "cfads": 67.89670451285764,
-      "dscr": 3.837489657653176
+      "cfads": 71.91670451285773,
+      "dscr": 4.064698158190117
      },
      {
       "year": 4,
@@ -744,8 +749,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 29.000000000000007,
       "debt_service": 15.918333333333333,
-      "cfads": 124.50325230793516,
-      "dscr": 7.821374870145649
+      "cfads": 129.16325230793518,
+      "dscr": 8.114119085411067
      },
      {
       "year": 5,
@@ -757,8 +762,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 19.333333333333343,
       "debt_service": 14.264666666666667,
-      "cfads": 164.00255572466688,
-      "dscr": 11.497117987895514
+      "cfads": 169.1625557246669,
+      "dscr": 11.858850941113257
      },
      {
       "year": 6,
@@ -770,8 +775,8 @@
       "principal": 9.666666666666666,
       "tl_closing": 9.666666666666677,
       "debt_service": 12.853000000000002,
-      "cfads": 181.82581194073646,
-      "dscr": 14.146565933302453
+      "cfads": 187.3858119407364,
+      "dscr": 14.57914976587072
      },
      {
       "year": 7,
@@ -783,14 +788,14 @@
       "principal": 9.666666666666666,
       "tl_closing": 1.0658141036401503e-14,
       "debt_service": 11.441333333333334,
-      "cfads": 214.14231070126363,
-      "dscr": 18.71655203658638
+      "cfads": 220.10231070126366,
+      "dscr": 19.237470344475902
      }
     ],
-    "min_dscr": 0.24745344582560144,
-    "avg_dscr": 8.280531692631579,
-    "min_dscr_post_moratorium": 1.6971679170122689,
-    "avg_dscr_post_moratorium": 9.61937806709924,
+    "min_dscr": 0.5086341256109338,
+    "avg_dscr": 8.605370456458761,
+    "min_dscr_post_moratorium": 1.8746707745393305,
+    "avg_dscr_post_moratorium": 9.954826511600066,
     "bankable": true,
     "total_interest": 42.89500000000001,
     "total_agf": 2.2860000000000005,
@@ -808,202 +813,202 @@
     "detail": [
      {
       "year": 1,
-      "ebitda": 2.766529524330224,
-      "tax": 0.0,
+      "ebitda": 5.68652952433024,
+      "tax": 0.03591809536827428,
       "maintenance_capex": 4.6922635319846915,
       "growth_capex": 0.0,
       "debt_service": 11.18,
-      "net": -13.105734007654467,
-      "closing_cash": 28.835265992345533
+      "net": -10.221652103022725,
+      "closing_cash": 31.719347896977276
      },
      {
       "year": 2,
-      "ebitda": 33.6559712396313,
-      "tax": 7.028278524193539,
+      "ebitda": 37.17597123963128,
+      "tax": 7.908278524193534,
       "maintenance_capex": 5.85891310630321,
       "growth_capex": 0.0,
       "debt_service": 19.830666666666666,
-      "net": 0.9381129424678853,
-      "closing_cash": 29.77337893481342
+      "net": 3.5781129424678717,
+      "closing_cash": 35.29746083944515
      },
      {
       "year": 3,
-      "ebitda": 67.89670451285764,
-      "tax": 15.588461842500124,
+      "ebitda": 71.91670451285773,
+      "tax": 16.593461842500147,
       "maintenance_capex": 7.04533112356479,
       "growth_capex": 40.0,
       "debt_service": 17.692999999999998,
-      "net": -12.430088453207276,
-      "closing_cash": 17.343290481606143
+      "net": -9.415088453207204,
+      "closing_cash": 25.882372386237947
      },
      {
       "year": 4,
-      "ebitda": 124.50325230793516,
-      "tax": 28.111527362698077,
+      "ebitda": 129.16325230793518,
+      "tax": 29.276527362698083,
       "maintenance_capex": 9.065870499101774,
       "growth_capex": 0.0,
       "debt_service": 15.918333333333333,
-      "net": 71.40752111280197,
-      "closing_cash": 88.75081159440812
+      "net": 74.90252111280198,
+      "closing_cash": 100.78489349903992
      },
      {
       "year": 5,
-      "ebitda": 164.00255572466688,
-      "tax": 37.98635321688101,
+      "ebitda": 169.1625557246669,
+      "tax": 39.27635321688101,
       "maintenance_capex": 10.466987769272828,
       "growth_capex": 0.0,
       "debt_service": 14.264666666666667,
-      "net": 101.28454807184636,
-      "closing_cash": 190.03535966625446
+      "net": 105.15454807184639,
+      "closing_cash": 205.93944157088632
      },
      {
       "year": 6,
-      "ebitda": 181.82581194073646,
-      "tax": 42.4421672708984,
+      "ebitda": 187.3858119407364,
+      "tax": 43.83216727089839,
       "maintenance_capex": 11.479266201671486,
       "growth_capex": 0.0,
       "debt_service": 12.853000000000002,
-      "net": 115.05137846816655,
-      "closing_cash": 305.086738134421
+      "net": 119.2213784681665,
+      "closing_cash": 325.16082003905285
      },
      {
       "year": 7,
-      "ebitda": 214.14231070126363,
-      "tax": 50.521291961030194,
+      "ebitda": 220.10231070126366,
+      "tax": 52.0112919610302,
       "maintenance_capex": 12.816923399203311,
       "growth_capex": 0.0,
       "debt_service": 11.441333333333334,
-      "net": 139.36276200769677,
-      "closing_cash": 444.4495001421178
+      "net": 143.8327620076968,
+      "closing_cash": 468.9935820467497
      }
     ],
-    "lowest_balance": 17.343290481606143,
-    "closing_cash": 444.4495001421178,
+    "lowest_balance": 25.882372386237947,
+    "closing_cash": 468.9935820467497,
     "self_funding": true
    },
    "debt_capacity": {
     "target_dscr": 1.3,
-    "max_total_limit": 134.75138334609653,
-    "max_term_loan": 78.15580234073599,
-    "max_wc_limit": 56.59558100536054,
-    "achieved_min_dscr": 1.3000000000000003,
+    "max_total_limit": 150.84018867612266,
+    "max_term_loan": 87.48730943215115,
+    "max_wc_limit": 63.352879243971515,
+    "achieved_min_dscr": 1.3,
     "facility": {
      "label": "Debt capacity at the target DSCR",
-     "term_loan": 78.15580234073599,
-     "wc_limit": 56.59558100536054,
-     "total_limit": 134.75138334609653,
+     "term_loan": 87.48730943215115,
+     "wc_limit": 63.352879243971515,
+     "total_limit": 150.84018867612266,
      "rate_pct": 11.5,
      "tl_tenor_years": 7,
      "tl_moratorium_years": 1,
      "cgtmse": {
       "agf_rate_pct": 0.85,
-      "agf_slab": "limit of Rs 1.35 Cr",
+      "agf_slab": "limit of Rs 1.51 Cr",
       "coverage_pct": 75.0,
-      "guaranteed_amount": 101.0635375095724,
-      "uncovered_amount": 33.68784583652413,
+      "guaranteed_amount": 113.13014150709199,
+      "uncovered_amount": 37.710047169030666,
       "within_ceiling": true
      },
      "schedule": [
       {
        "year": 1,
-       "tl_opening": 78.15580234073599,
-       "tl_interest": 8.987917269184639,
+       "tl_opening": 87.48730943215115,
+       "tl_interest": 10.061040584697382,
        "wc_outstanding": 34.0,
        "wc_interest": 3.91,
-       "agf": 1.1453867584418205,
+       "agf": 1.2821416037470426,
        "principal": 0.0,
-       "tl_closing": 78.15580234073599,
-       "debt_service": 14.043304027626458,
-       "cfads": 2.766529524330224,
-       "dscr": 0.19699990250782967
+       "tl_closing": 87.48730943215115,
+       "debt_service": 15.253182188444425,
+       "cfads": 5.68652952433024,
+       "dscr": 0.37280938849850404
       },
       {
        "year": 2,
-       "tl_opening": 78.15580234073599,
-       "tl_interest": 8.987917269184639,
+       "tl_opening": 87.48730943215115,
+       "tl_interest": 10.061040584697382,
        "wc_outstanding": 26.0,
        "wc_interest": 2.99,
-       "agf": 0.8853243198962559,
-       "principal": 13.025967056789332,
-       "tl_closing": 65.12983528394666,
-       "debt_service": 25.889208645870227,
-       "cfads": 33.6559712396313,
-       "dscr": 1.3000000000000003
+       "agf": 0.9646421301732847,
+       "principal": 14.581218238691859,
+       "tl_closing": 72.90609119345929,
+       "debt_service": 28.596900953562525,
+       "cfads": 37.17597123963128,
+       "dscr": 1.3
       },
       {
        "year": 3,
-       "tl_opening": 65.12983528394666,
-       "tl_interest": 7.489931057653866,
+       "tl_opening": 72.90609119345929,
+       "tl_interest": 8.384200487247819,
        "wc_outstanding": 18.0,
        "wc_interest": 2.0700000000000003,
-       "agf": 0.7066035999135467,
-       "principal": 13.025967056789332,
-       "tl_closing": 52.10386822715733,
-       "debt_service": 23.292501714356746,
-       "cfads": 67.89670451285764,
-       "dscr": 2.9149597301954175
+       "agf": 0.7727017751444039,
+       "principal": 14.581218238691859,
+       "tl_closing": 58.32487295476743,
+       "debt_service": 25.808120501084083,
+       "cfads": 71.91670451285773,
+       "dscr": 2.7865920925871697
       },
       {
        "year": 4,
-       "tl_opening": 52.10386822715733,
-       "tl_interest": 5.991944846123093,
+       "tl_opening": 58.32487295476743,
+       "tl_interest": 6.7073603897982546,
        "wc_outstanding": 13.0,
        "wc_interest": 1.495,
-       "agf": 0.5533828799308373,
-       "principal": 13.025967056789332,
-       "tl_closing": 39.077901170367994,
-       "debt_service": 21.06629478284326,
-       "cfads": 124.50325230793516,
-       "dscr": 5.910068837037858
+       "agf": 0.6062614201155231,
+       "principal": 14.581218238691859,
+       "tl_closing": 43.74365471607557,
+       "debt_service": 23.389840048605635,
+       "cfads": 129.16325230793518,
+       "dscr": 5.522194766596326
       },
       {
        "year": 5,
-       "tl_opening": 39.077901170367994,
-       "tl_interest": 4.493958634592319,
+       "tl_opening": 43.74365471607557,
+       "tl_interest": 5.03052029234869,
        "wc_outstanding": 9.0,
        "wc_interest": 1.0350000000000001,
-       "agf": 0.40866215994812793,
-       "principal": 13.025967056789332,
-       "tl_closing": 26.05193411357866,
-       "debt_service": 18.96358785132978,
-       "cfads": 164.00255572466688,
-       "dscr": 8.648287286689083
+       "agf": 0.4483210650866423,
+       "principal": 14.581218238691859,
+       "tl_closing": 29.162436477383707,
+       "debt_service": 21.095059596127193,
+       "cfads": 169.1625557246669,
+       "dscr": 8.019060337507801
       },
       {
        "year": 6,
-       "tl_opening": 26.05193411357866,
-       "tl_interest": 2.995972423061546,
+       "tl_opening": 29.162436477383707,
+       "tl_interest": 3.3536801948991264,
        "wc_outstanding": 7.0,
        "wc_interest": 0.805,
-       "agf": 0.2809414399654186,
-       "principal": 13.025967056789332,
-       "tl_closing": 13.025967056789328,
-       "debt_service": 17.107880919816296,
-       "cfads": 181.82581194073646,
-       "dscr": 10.628190176968388
+       "agf": 0.30738071005776146,
+       "principal": 14.581218238691859,
+       "tl_closing": 14.581218238691848,
+       "debt_service": 19.047279143648748,
+       "cfads": 187.3858119407364,
+       "dscr": 9.837930684352866
       },
       {
        "year": 7,
-       "tl_opening": 13.025967056789328,
-       "tl_interest": 1.497986211530773,
+       "tl_opening": 14.581218238691848,
+       "tl_interest": 1.6768400974495625,
        "wc_outstanding": 5.0,
        "wc_interest": 0.5750000000000001,
-       "agf": 0.15322071998270925,
-       "principal": 13.025967056789332,
-       "tl_closing": -3.552713678800501e-15,
-       "debt_service": 15.252173988302815,
-       "cfads": 214.14231070126363,
-       "dscr": 14.040117222993487
+       "agf": 0.1664403550288807,
+       "principal": 14.581218238691859,
+       "tl_closing": -1.0658141036401503e-14,
+       "debt_service": 16.999498691170302,
+       "cfads": 220.10231070126366,
+       "dscr": 12.947576555041994
       }
      ],
-     "min_dscr": 0.19699990250782967,
-     "avg_dscr": 6.234089022341723,
-     "min_dscr_post_moratorium": 1.3000000000000003,
-     "avg_dscr_post_moratorium": 7.240270542314039,
+     "min_dscr": 0.37280938849850404,
+     "avg_dscr": 5.826594832083523,
+     "min_dscr_post_moratorium": 1.3,
+     "avg_dscr_post_moratorium": 6.735559072681027,
      "bankable": true,
-     "total_interest": 53.32562771133088,
-     "total_agf": 4.133521878078717,
-     "total_finance_cost": 57.45914958940959
+     "total_interest": 58.15468263113823,
+     "total_agf": 4.547889059353539,
+     "total_finance_cost": 62.70257169049176
     }
    }
   },
@@ -1017,27 +1022,27 @@
      "licence": 1.25
     },
     "revenue_year1": 197.19662383816294,
-    "ebitda_year1": -43.50257054059597,
+    "ebitda_year1": -40.436570540595966,
     "revenue_stabilised": 434.50765816019685,
-    "ebitda_stabilised": 70.9700586048499,
-    "ebitda_margin_stabilised": 16.333442523280965,
-    "ebitda_final_year": 101.80613381019862,
-    "project_irr_pct": 3.9652952912729242,
-    "payback_years": 6.567590447732036,
-    "cumulative_fcf": 92.11457131256407
+    "ebitda_stabilised": 76.3880586048499,
+    "ebitda_margin_stabilised": 17.580371063721667,
+    "ebitda_final_year": 108.06413381019865,
+    "project_irr_pct": 7.154579976340755,
+    "payback_years": 6.262375940849579,
+    "cumulative_fcf": 119.61459500414253
    },
    "base": {
     "note": "As modelled: 3.75 lakh visits in the opening season, 24% show conversion, \u20b936 lakh licence fee",
     "multipliers": {},
     "revenue_year1": 234.61317659923455,
-    "ebitda_year1": 2.766529524330224,
+    "ebitda_year1": 5.68652952433024,
     "revenue_stabilised": 523.3493884636414,
-    "ebitda_stabilised": 164.00255572466688,
-    "ebitda_margin_stabilised": 31.337106594528986,
-    "ebitda_final_year": 214.14231070126363,
-    "project_irr_pct": 52.38935319823212,
-    "payback_years": 3.3888085958857723,
-    "cumulative_fcf": 515.6895001421178
+    "ebitda_stabilised": 169.1625557246669,
+    "ebitda_margin_stabilised": 32.32306360790161,
+    "ebitda_final_year": 220.10231070126366,
+    "project_irr_pct": 55.48086894152219,
+    "payback_years": 3.279825169032825,
+    "cumulative_fcf": 540.2335820467497
    },
    "upside": {
     "note": "15% more footfall, 20% better show conversion, tight cost control",
@@ -1047,14 +1052,14 @@
      "opex": 0.98
     },
     "revenue_year1": 279.84752597047566,
-    "ebitda_year1": 40.302999039092384,
+    "ebitda_year1": 43.164599039092394,
     "revenue_stabilised": 632.079593343357,
-    "ebitda_stabilised": 254.48917865190663,
-    "ebitda_margin_stabilised": 40.262204528040115,
-    "ebitda_final_year": 325.71465369350136,
-    "project_irr_pct": 93.17625434952788,
-    "payback_years": 1.5838858075208027,
-    "cumulative_fcf": 893.5246729164592
+    "ebitda_stabilised": 259.54597865190664,
+    "ebitda_margin_stabilised": 41.06223035599832,
+    "ebitda_final_year": 331.5554536935014,
+    "project_irr_pct": 96.1540370201692,
+    "payback_years": 1.5202512131313999,
+    "cumulative_fcf": 916.8976729164594
    }
   }
  },
@@ -3082,7 +3087,7 @@
      },
      "ggv": {
       "revenue": 117.30658829961727,
-      "ebitda": 1.383264762165112
+      "ebitda": 2.84326476216512
      },
      "rv": {
       "revenue": 0.0,
@@ -3094,8 +3099,8 @@
      }
     },
     "revenue": 2517.3065882996175,
-    "ebitda": 551.3832647621651,
-    "ebitda_margin": 21.903699268296588
+    "ebitda": 552.8432647621651,
+    "ebitda_margin": 21.961697765848932
    },
    {
     "fy": "FY27-28",
@@ -3106,7 +3111,7 @@
      },
      "ggv": {
       "revenue": 263.7794159571975,
-      "ebitda": 18.21125038198076
+      "ebitda": 21.43125038198076
      },
      "rv": {
       "revenue": 154.16101694915253,
@@ -3118,8 +3123,8 @@
      }
     },
     "revenue": 3792.94043290635,
-    "ebitda": 738.4985808904553,
-    "ebitda_margin": 19.470344814368172
+    "ebitda": 741.7185808904553,
+    "ebitda_margin": 19.555239371953743
    },
    {
     "fy": "FY28-29",
@@ -3130,7 +3135,7 @@
      },
      "ggv": {
       "revenue": 322.6061057467,
-      "ebitda": 50.77633787624447
+      "ebitda": 54.54633787624451
      },
      "rv": {
       "revenue": 216.03954802259886,
@@ -3142,8 +3147,8 @@
      }
     },
     "revenue": 5213.645653769298,
-    "ebitda": 1318.378660680559,
-    "ebitda_margin": 25.287078336967795
+    "ebitda": 1322.148660680559,
+    "ebitda_margin": 25.359388583009817
    },
    {
     "fy": "FY29-30",
@@ -3154,7 +3159,7 @@
      },
      "ggv": {
       "revenue": 402.78004056666407,
-      "ebitda": 96.1999784103964
+      "ebitda": 100.53997841039646
      },
      "rv": {
       "revenue": 282.3368644067797,
@@ -3166,8 +3171,8 @@
      }
     },
     "revenue": 6185.1169049734435,
-    "ebitda": 1706.8672327516908,
-    "ebitda_margin": 27.596361701412654
+    "ebitda": 1711.207232751691,
+    "ebitda_margin": 27.66653014069486
    },
    {
     "fy": "FY30-31",
@@ -3178,7 +3183,7 @@
      },
      "ggv": {
       "revenue": 488.32145670936507,
-      "ebitda": 144.25290401630102
+      "ebitda": 149.16290401630104
      },
      "rv": {
       "revenue": 321.41737288135596,
@@ -3190,8 +3195,8 @@
      }
     },
     "revenue": 7069.738829590721,
-    "ebitda": 2049.069172893651,
-    "ebitda_margin": 28.983661522504573
+    "ebitda": 2053.979172893651,
+    "ebitda_margin": 29.05311246147631
    }
   ]
  },
@@ -3279,10 +3284,10 @@
   "exit_basis": {
    "fy": "FY30-31",
    "revenue": 7069.738829590721,
-   "ebitda": 2049.069172893651,
+   "ebitda": 2053.979172893651,
    "ev_revenue_multiple": 3.0,
    "enterprise_value": 21209.216488772163,
-   "ev_ebitda_crosscheck": 22539.76090183016,
+   "ev_ebitda_crosscheck": 22593.77090183016,
    "net_debt": 800.0,
    "equity_value": 20409.216488772163
   },
@@ -3374,8 +3379,8 @@
       "principal": 0.0,
       "tl_closing": 650.0,
       "debt_service": 115.5,
-      "cfads": 551.3832647621651,
-      "dscr": 4.773881080191906
+      "cfads": 552.8432647621651,
+      "dscr": 4.786521772832598
      },
      {
       "year": 2,
@@ -3387,8 +3392,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 541.6666666666666,
       "debt_service": 228.98333333333335,
-      "cfads": 738.4985808904553,
-      "dscr": 3.225119357553484
+      "cfads": 741.7185808904553,
+      "dscr": 3.2391815163714472
      },
      {
       "year": 3,
@@ -3400,8 +3405,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 433.3333333333333,
       "debt_service": 212.685,
-      "cfads": 1318.378660680559,
-      "dscr": 6.19873832513134
+      "cfads": 1322.148660680559,
+      "dscr": 6.216464069777178
      },
      {
       "year": 4,
@@ -3413,8 +3418,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 325.0,
       "debt_service": 193.84666666666666,
-      "cfads": 1706.8672327516908,
-      "dscr": 8.805244176247674
+      "cfads": 1711.207232751691,
+      "dscr": 8.827633005906856
      },
      {
       "year": 5,
@@ -3426,8 +3431,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 216.66666666666669,
       "debt_service": 175.00833333333333,
-      "cfads": 2049.069172893651,
-      "dscr": 11.708409158956151
+      "cfads": 2053.979172893651,
+      "dscr": 11.736464965822492
      },
      {
       "year": 6,
@@ -3439,8 +3444,8 @@
       "principal": 108.33333333333333,
       "tl_closing": 108.33333333333336,
       "debt_service": 156.17000000000002,
-      "cfads": 2172.01332326727,
-      "dscr": 13.908006168068578
+      "cfads": 2177.21792326727,
+      "dscr": 13.941332671238202
      },
      {
       "year": 7,
@@ -3452,14 +3457,14 @@
       "principal": 108.33333333333333,
       "tl_closing": 2.842170943040401e-14,
       "debt_service": 137.33166666666668,
-      "cfads": 2294.957473640889,
-      "dscr": 16.7110581946933
+      "cfads": 2300.4566736408897,
+      "dscr": 16.751101399101127
      }
     ],
-    "min_dscr": 3.225119357553484,
-    "avg_dscr": 9.33292235154892,
-    "min_dscr_post_moratorium": 3.225119357553484,
-    "avg_dscr_post_moratorium": 10.092762563441754,
+    "min_dscr": 3.2391815163714472,
+    "avg_dscr": 9.356957057292844,
+    "min_dscr_post_moratorium": 3.2391815163714472,
+    "avg_dscr_post_moratorium": 10.11869627136955,
     "bankable": true,
     "total_interest": 514.625,
     "total_agf": 54.9,
@@ -3470,60 +3475,60 @@
       "new_facility": 115.5,
       "existing_debt": 70.43666666666667,
       "total_debt_service": 185.93666666666667,
-      "cfads": 551.3832647621651,
-      "dscr": 2.965435890870539
+      "cfads": 552.8432647621651,
+      "dscr": 2.973288026902521
      },
      {
       "year": 2,
       "new_facility": 228.98333333333335,
       "existing_debt": 64.975,
       "total_debt_service": 293.95833333333337,
-      "cfads": 738.4985808904553,
-      "dscr": 2.5122559803502376
+      "cfads": 741.7185808904553,
+      "dscr": 2.5232099137308186
      },
      {
       "year": 3,
       "new_facility": 212.685,
       "existing_debt": 59.513333333333335,
       "total_debt_service": 272.1983333333333,
-      "cfads": 1318.378660680559,
-      "dscr": 4.843448688813521
+      "cfads": 1322.148660680559,
+      "dscr": 4.857298883830635
      },
      {
       "year": 4,
       "new_facility": 193.84666666666666,
       "existing_debt": 54.05166666666666,
       "total_debt_service": 247.8983333333333,
-      "cfads": 1706.8672327516908,
-      "dscr": 6.885351788374364
+      "cfads": 1711.207232751691,
+      "dscr": 6.90285896537569
      },
      {
       "year": 5,
       "new_facility": 175.00833333333333,
       "existing_debt": 48.589999999999996,
       "total_debt_service": 223.59833333333333,
-      "cfads": 2049.069172893651,
-      "dscr": 9.164062819014681
+      "cfads": 2053.979172893651,
+      "dscr": 9.18602183779091
      },
      {
       "year": 6,
       "new_facility": 156.17000000000002,
       "existing_debt": 43.12833333333333,
       "total_debt_service": 199.29833333333335,
-      "cfads": 2172.01332326727,
-      "dscr": 10.898301490733004
+      "cfads": 2177.21792326727,
+      "dscr": 10.924416109520585
      },
      {
       "year": 7,
       "new_facility": 137.33166666666668,
       "existing_debt": 37.666666666666664,
       "total_debt_service": 174.99833333333333,
-      "cfads": 2294.957473640889,
-      "dscr": 13.114167603353684
+      "cfads": 2300.4566736408897,
+      "dscr": 13.145591902632727
      }
     ],
-    "min_dscr_combined": 2.5122559803502376,
-    "avg_dscr_combined": 7.197574894501434,
+    "min_dscr_combined": 2.5232099137308186,
+    "avg_dscr_combined": 7.216097948540555,
     "nbfc_refinance": 300.0,
     "leverage": {
      "covenant_assumed": 2.0,

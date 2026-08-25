@@ -153,7 +153,13 @@ Every figure in the five decks is computed, not typed. Nothing is hard-coded int
 ```bash
 python3 model/pf_model.py    # writes model/pf_model.json + prints a summary
 python3 model/render.py      # regenerates all five pf-*.html files
+node   model/build_pptx.js   # regenerates the five pptx/*.pptx decks
+soffice --headless --convert-to pdf --outdir pdf pptx/*.pptx   # regenerates pdf/
 ```
+
+`pptx/` and `pdf/` are generated artefacts and are never edited by hand — a hand edit is lost on the
+next build and silently disagrees with the model. `build_pptx.js` fails the build rather than shipping
+a slide whose text overflows its box, so a clean run means every panel and table fits.
 
 To change an assumption — a winning licence fee, footfall, an interest rate — edit `model/pf_model.py`
 and re-run both. `model/pf_model.json` holds every computed value for line-by-line checking or export.
