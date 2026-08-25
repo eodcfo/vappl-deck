@@ -619,6 +619,18 @@ COMPANY = {
         "FY28-29": {"revenue": 4350.0, "ebitda": 1200.0, "pat": 800.0},
     },
     "existing_raise": {"amount_cr": 10.0, "pre_money_cr": 90.0, "dilution_pct": 10.0},
+    # Subhash Park is the closest thing the group has to a controlled experiment for
+    # Geeta Govind Vatika: same city, same Rs 20 gate, one pre-packaged stall, no
+    # show, no capex. Actuals are tracking well ahead of the company model, which is
+    # why the project deck cites the trading position rather than the projection.
+    "subhash_park": {
+        "opened": "November 2025",
+        "fy2627_revenue_to_date_lakh": 27.0,
+        "fy2627_months_elapsed": 5,           # 1 Apr to end Aug 2026, before the season
+        "fy2627_run_rate_expectation_lakh": 100.0,
+        "company_model_fy2627_lakh": [40.0, 60.0],
+        "net_margin_first_four_months_pct": 17.5,
+    },
 }
 
 def company_msme_status():
