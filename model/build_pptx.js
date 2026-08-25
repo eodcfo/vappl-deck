@@ -167,7 +167,7 @@ function sectionCompare(p, f, name, rows, rec) {
 function buildGGV() {
   const g = M.ggv, f = g.financing, r = g.rfp, db = f.debt, yrs = g.years;
   const mob = g.mobilisation, fc = f.project_fcf, dc = f.debt_capacity;
-  const gc = g.growth_capex, cw = f.cash_waterfall;
+  const gc = g.growth_capex, cw = f.cash_waterfall, sp = M.company.profile.subhash_park;
   const p = newDeck("Geeta Govind Vatika — Project Finance",
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
@@ -264,15 +264,17 @@ function buildGGV() {
   ], { h: 3.0, axisTitle: "₹ crore", labelPos: "ctr",
        colors: [C.blue, C.terra, C.green, C.amber, "8A93A6", "6B3FA0"],
        extra: { barGrouping: "stacked" } });
-  L.stats(s, y + 0.05, [
+  const y2 = L.stats(s, y + 0.05, [
     { label: "Year 1 footfall", value: `${yrs[0].revenue.footfall_lakh.toFixed(2)} L`,
       sub: `About ${Math.round(yrs[0].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day` },
     { label: "Year 7 footfall", value: `${yrs[6].revenue.footfall_lakh.toFixed(2)} L`,
       sub: `About ${Math.round(yrs[6].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day` },
     { label: "Revenue per visit", value: `₹${Math.round(rev(yrs[0]) / yrs[0].revenue.footfall_lakh)}`,
       sub: `Year 1, net of GST. Year 7: ₹${Math.round(rev(yrs[6]) / yrs[6].revenue.footfall_lakh)}` },
-    { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA. No escalation modelled" },
-  ], { h: 1.26 });
+    { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA. No escalation" },
+  ], { h: 1.10 });
+  L.footnote(s, y2 + 0.04, "Subhash Park is trading ahead of its own plan",
+    `Same city, same ₹20 gate, one stall, no show, no capex. ${lk(sp.fy2627_revenue_to_date_lakh, 0)} booked in FY26-27 to date — ${sp.fy2627_months_elapsed} months, before the season — against ${lk(sp.company_model_fy2627_lakh[0], 0)}–${lk(sp.company_model_fy2627_lakh[1], 0)} in the company model for the full year, and expected to cross ${cr(sp.fy2627_run_rate_expectation_lakh)} on the run rate.`);
   L.foot(s, NAME);
 
   // 04 cost
