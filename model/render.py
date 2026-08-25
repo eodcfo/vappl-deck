@@ -569,9 +569,9 @@ across the site. The operator pays a monthly licence fee and retains gate collec
   row(label_cell("Asset position"), (e(r["assets"]), "")),
 ], aligns=["l","l"])}
 {note("blue","Why this site and not another",
-  "Geeta Govind Vatika shares a boundary with Agra Chaupati, which E-O-D already operates. The two sit on "
-  "the same block of roughly 25 acres, with internal pathways and gates between them, so a visitor can move "
-  "from one to the other without leaving the estate.<br><br>"
+  "Geeta Govind Vatika and Agra Chaupati, which E-O-D already operates, sit on the same block of roughly 25 "
+  "acres and share a grille boundary. Internal pathways and gates run between them, so a visitor moves from "
+  "one to the other without leaving the estate or passing through a public road.<br><br>"
   "That adjacency is worth something specific rather than general. <b>Food and beverage</b> is supplied from "
   "kitchens that already exist next door, so this site needs counters rather than a built kitchen. "
   "<b>Private events</b> — weddings, corporate offsites, birthdays, shoots — can be sold to a customer base "
