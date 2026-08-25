@@ -477,7 +477,10 @@ def verdict_block(coc, extra=""):
 
 def fcf_table(fcf, years_label="Year", terminal_label="Deposits refunded at expiry"):
     has_term = fcf.get("terminal_inflow", 0.0) > 0
-    heads = ["", "EBITDA", "Tax", "Maint. capex"] + (["Refunds"] if has_term else []) + ["Free cash flow"]
+    has_growth = any(d.get("growth_capex", 0.0) for d in fcf["detail"])
+    heads = (["", "EBITDA", "Tax", "Maint. capex"]
+             + (["Reinvestment"] if has_growth else [])
+             + (["Refunds"] if has_term else []) + ["Free cash flow"])
     blanks = [("", "")] * (len(heads) - 2)
     rows = [row((f'<span class="label">Capital deployed</span>'
                  f'<span class="meta">Mobilisation, deposits and advance licence fee</span>', ""),
@@ -487,6 +490,9 @@ def fcf_table(fcf, years_label="Year", terminal_label="Deposits refunded at expi
                  (cr(d["ebitda"]), cls(d["ebitda"])),
                  (cr(-d["tax"]), "muted"),
                  (cr(-d["maintenance_capex"]), "muted")]
+        if has_growth:
+            gx = d.get("growth_capex", 0.0)
+            cells.append((cr(-gx) if gx else '<span class="muted">—</span>', "muted"))
         if has_term:
             t = d.get("terminal_inflow", 0.0)
             cells.append((cr(t) if t else '<span class="muted">—</span>', "pos" if t else ""))
@@ -512,6 +518,8 @@ def deck_ggv():
     g = M["ggv"]; f = g["financing"]; r = g["rfp"]; db = f["debt"]
     yrs = g["years"]; mob = g["mobilisation"]; fc = f["project_fcf"]
     dc = f["debt_capacity"]
+    gc = g["growth_capex"]           # the year-3 reinvestment, funded from operating cash
+    cw = f["cash_waterfall"]
     S = []
 
     cover = f"""
@@ -560,6 +568,19 @@ across the site. The operator pays a monthly licence fee and retains gate collec
   row(label_cell("Gate tariff"), (f'₹{r["entry_tariff_inr"]} entry. Fountain and laser show at rates approved by ADA. Free: {e(r["free_entry"])}.', "")),
   row(label_cell("Asset position"), (e(r["assets"]), "")),
 ], aligns=["l","l"])}
+{note("blue","Why this site and not another",
+  "Geeta Govind Vatika shares a boundary with Agra Chaupati, which E-O-D already operates. The two sit on "
+  "the same block of roughly 25 acres, with internal pathways and gates between them, so a visitor can move "
+  "from one to the other without leaving the estate.<br><br>"
+  "That adjacency is worth something specific rather than general. <b>Food and beverage</b> is supplied from "
+  "kitchens that already exist next door, so this site needs counters rather than a built kitchen. "
+  "<b>Private events</b> — weddings, corporate offsites, birthdays, shoots — can be sold to a customer base "
+  "E-O-D already serves, from the opening month rather than after a venue has proved itself. And the two "
+  "sites specialise instead of competing: Agra Chaupati is the food and adventure destination, Geeta Govind "
+  "Vatika the event and show destination, which is why the private events line in section 03 grows faster "
+  "than the gate.<br><br>"
+  "Management, marketing and back office are shared across the Agra cluster, which is why corporate overhead "
+  "is carried at an allocation rather than a standalone rate.")}
 <div style="margin:26px 0 10px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);font-weight:700;">Scope of services</div>
 <ul style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;padding-left:20px;margin:0 0 20px;">{scope_lis}</ul>"""
     S.append(("01", "s01", "The project", body))
@@ -580,11 +601,13 @@ beverage collections.</p>
   row(label_cell("Opening-season working capital", "Timing float: six months of licence fee is paid in advance, and payroll and electricity run ahead of collections through the first season"), (lakh(mob["working_capital"]), "")),
   row(("Total facility sought", ""), (lakh(f["ask"]), ""), cls_="total"),
 ])}
-{note("blue","No activity is bought",
-  "Every activity on site is brought in by a vendor on rent or revenue share. None of it is funded from this "
-  "facility, none of it appears as capital expenditure, and the vendor carries its own operating cost. E-O-D "
-  f"books its share of the vendor's takings — modelled at {pct(GGV_SHARE*100,0)} — rather than the gross "
-  "spend, which is why the activity line in section 03 is small relative to the footfall it serves.")}
+{note("blue","Nothing in this facility buys an attraction",
+  "Every activity on site at opening is brought in by an operator on rent or revenue share. None of it is "
+  "funded here, none of it appears as capital expenditure, and the operator carries its own running cost. "
+  f"E-O-D books its share of the takings — modelled at {pct(GGV_SHARE*100,0)} — rather than the gross spend, "
+  "which is why the activity line in section 03 is small relative to the footfall it serves. E-O-D does build "
+  f"attractions of its own at the end of year 3, set out in section 05, but that is {rs(gc['total'])} of "
+  "reinvested operating cash — it is not part of this ask and it does not depend on the lender.")}
 {table(["Year 1 operating position", "Amount"], [
   row(label_cell("Revenue", "Net of GST"), (lakh(yrs[0]["revenue"]["total"]), "")),
   row(label_cell("Operating cost", "Licence fee, payroll, electricity, AMC, materials, marketing, overhead"), (lakh(-yrs[0]["opex"]["total"]), "")),
@@ -592,10 +615,12 @@ beverage collections.</p>
 ])}
 {note("blue","How year one is funded",
   f"Year 1 operating cost is {rs(g['year1_opex'])} against {rs(yrs[0]['revenue']['total'])} of revenue, leaving "
-  f"{rs(yrs[0]['ebitda'])} of EBITDA. No part of operating cost is financed. Three inputs carry the "
-  "opening season, and each is set out with its basis in section 08:<br><br>"
-  f"<b>Event programming.</b> {lakh(yrs[0]['revenue']['events'],0)} of event and IP revenue in year 1, "
-  "against a standing start.<br>"
+  f"{rs(yrs[0]['ebitda'])} of EBITDA. The opening season covers its own operating cost from collections, but "
+  "only just — which is what the standby working capital limit is there to absorb, and why the year-1 plan is "
+  "built on volume rather than price. Three inputs carry it, each with its basis in section 08:<br><br>"
+  f"<b>Event programming.</b> {lakh(yrs[0]['revenue']['events_public'],0)} of public events and IPs and "
+  f"{lakh(yrs[0]['revenue']['events_private'],0)} of private bookings and shoots, against a standing start. "
+  "The private line starts from the customers Agra Chaupati already serves next door.<br>"
   f"<b>Footfall.</b> {num(yrs[0]['revenue']['footfall_lakh'],2)} lakh visits — about "
   f"{int(yrs[0]['revenue']['footfall_lakh'] * 1e5 / 365):,} a day — at ADA's ₹20 gate.<br>"
   "<b>Food and beverage supply.</b> Product is supplied from the existing E-O-D shops at Agra Chaupati, so "
@@ -608,17 +633,19 @@ beverage collections.</p>
     keys = [("entry", "Gate entry", "₹20 per head, ADA-notified. Children under 5 and morning walkers free."),
             ("show", "Musical fountain and laser show", "40-minute Krishna Leela show plus fountain. Tariff approved by ADA."),
             ("fnb", "Food and beverage", "Six 8×8 ft and two 10×10 ft kiosks, supplied from Agra Chaupati."),
-            ("activities", "Vendor-operated activities", "Demountable activity layer under clause G. No permanent structures."),
+            ("activities", "Activity layer", "Operator-run on revenue share. Part E-O-D-owned from year 4, after the year-3 build."),
             ("parking", "Parking", "Two- and four-wheeler. EV charging exempt while charging."),
-            ("events", "Events, IPs and shoots", "Public programming and E-O-D-run IPs, birthdays, pre-wedding shoots, corporate bookings.")]
+            ("events_public", "Public events and IPs", "Ticketed community programming and E-O-D's own IPs."),
+            ("events_private", "Private events and shoots", "Weddings, corporate offsites, birthdays, pre-wedding and film shoots.")]
     for k, name, meta in keys:
         rev_rows.append(row(label_cell(name, meta), *[(cr(y["revenue"][k]), "") for y in yrs]))
     rev_rows.append(row(("Total revenue, net of GST", ""), *[(cr(y["revenue"]["total"]), "") for y in yrs], cls_="total"))
     rev_rows.append(row(("Footfall, lakh visits", ""), *[(num(y["revenue"]["footfall_lakh"], 2), "muted") for y in yrs], cls_="dim"))
     rev_rows.append(row(("Revenue per visit, ₹", ""), *[(num(y["revenue"]["total"] / y["revenue"]["footfall_lakh"], 0), "muted") for y in yrs], cls_="dim"))
     body = f"""
-<p class="lede">Six streams. Each is built from footfall multiplied by a capture rate and a tariff, net
-of GST. The derivation of every rate is in section 08.</p>
+<p class="lede">{eng(len(keys)).capitalize()} streams. The first five are footfall multiplied by a capture rate and a
+tariff, net of GST; the two event lines are booked directly. The derivation of every rate is in
+section 08.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], rev_rows)}
 {note("blue","Reference point",
   "Subhash Park, Agra — a ₹20 gate, one pre-packaged stall, no show, zero capex — recorded a 17.5% net "
@@ -635,6 +662,8 @@ of GST. The derivation of every rate is in section 08.</p>
                  ("show_amc", "Show AMC and routine spares", "Servicing and consumable spares for the laser projectors, pumps, nozzles, control and audio. Does not cover replacing a unit that reaches end of life"),
                  ("repairs", "Repairs and maintenance", "Kiosks, pathways, seating, civil"),
                  ("fnb_cogs", "F&B cost of goods", "44% of F&B revenue — supplied from the EAC kitchens at transfer cost"),
+                 ("events_cost", "Event delivery", "Artists, stage and sound hire and permissions on public IPs; consumables on private bookings. Manning, power and housekeeping sit in their own lines and are not charged again here"),
+                 ("activity_cost", "Owned activity operating cost", "From year 4 only, on the part of the activity layer E-O-D operates itself. Nil while every activity is operator-run"),
                  ("marketing", "Marketing", "7.5% of revenue in year 1, tapering to 4.5%"),
                  ("insurance_statutory", "Insurance and statutory", "Public liability, FSSAI, police verification, licences"),
                  ("it_cctv", "IT, POS and CCTV", "Including integration with the Agra Smart City command centre"),
@@ -665,18 +694,43 @@ footfall; the rest move with inflation, revenue or the activity they support.</p
       row(label_cell("Operating cost", ""), *[(cr(-y["opex"]["total"]), "muted") for y in yrs]),
       row(("EBITDA", ""), *[(cr(y["ebitda"]), cls(y["ebitda"])) for y in yrs], cls_="sub"),
       row(("EBITDA margin", ""), *[(pct(y["ebitda_margin"], 1), "muted") for y in yrs], cls_="dim"),
-      row(label_cell("Depreciation", f'Straight line on mobilisation capex — {lakh(g["annual_depreciation"],1)} a year'), *[(cr(-y["depreciation"]), "muted") for y in yrs]),
+      row(label_cell("Depreciation", f'Straight line. {lakh(g["annual_depreciation"],1)} a year on mobilisation capex, plus {lakh(gc["annual_depreciation"],1)} from year 4 on the year-3 build'), *[(cr(-y["depreciation"]), "muted") for y in yrs]),
       row(("EBIT", ""), *[(cr(y["ebit"]), cls(y["ebit"])) for y in yrs], cls_="total"),
     ]
     body = f"""
 <p class="lede">Seven years, the initial term. The four extension years are excluded from every figure in
-this deck.</p>
+this deck. Two steps drive the shape: more operators signed from year 2, and the reinvestment at the end of
+year 3 that lands in year 4.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], pl_rows)}
 {bento([
-  ("EBITDA positive from", "Year 1", f'{rs(yrs[0]["ebitda"])} in the opening season'),
-  ("Margin, year 7", pct(yrs[-1]["ebitda_margin"], 1), "Against E-O-D's 27–29% group target for FY28-29"),
+  ("EBITDA positive from", "Year 1", f'{rs(yrs[0]["ebitda"])} in the opening season — thin by design'),
+  ("Margin, year 7", pct(yrs[-1]["ebitda_margin"], 1), "On a mature revenue base weighted to events"),
   ("Cumulative EBITDA", rs(sum(y["ebitda"] for y in yrs)), "Across the seven-year initial term"),
 ])}
+{note("blue","The two steps in this curve",
+  f"<b>Year 2 — more operators.</b> The activity layer is signed on revenue share, so it grows by adding "
+  "operators rather than by adding capital. Once the site has a season of proven footfall behind it, more of "
+  f"them will take space: activity capture goes from {pct(11,0)} of visitors in year 1 to {pct(15,0)} in year "
+  f"2. Event bookings move with it, and neither step costs the lender anything.<br><br>"
+  f"<b>Year 4 — the year-3 build.</b> At the end of year 3 the project reinvests {rs(gc['total'])} of its own "
+  f"accumulated cash: {lakh(gc['lines'][0]['amount'],0)} on a second laser and projection show and "
+  f"{lakh(gc['lines'][1]['amount'],0)} on demountable activity installations E-O-D owns and runs itself. "
+  f"From year 4 an evening visit has two ticketed shows rather than one — show conversion steps from "
+  f"{pct(28,0)} to {pct(34,0)} — and E-O-D books the owned activities gross instead of at a "
+  f"{pct(GGV_SHARE*100,0)} share. That is the whole of the year-4 jump.")}
+{table(["Cash after debt service", "Opening"] + [f"Yr {y['year']}" for y in yrs], [
+  row(label_cell("EBITDA"), ("", ""), *[(cr(x["ebitda"]), "") for x in cw["detail"]]),
+  row(label_cell("Tax, maintenance capex"), ("", ""), *[(cr(-(x["tax"] + x["maintenance_capex"])), "muted") for x in cw["detail"]]),
+  row(label_cell("Debt service", "Interest, guarantee fee and principal"), ("", ""), *[(cr(-x["debt_service"]), "muted") for x in cw["detail"]]),
+  row(label_cell("Reinvestment", "The year-3 build"), ("", ""), *[(cr(-x["growth_capex"]) if x["growth_capex"] else '<span class="muted">—</span>', "muted") for x in cw["detail"]]),
+  row(("Closing cash", ""), (cr(cw["opening_cash"]), ""), *[(cr(x["closing_cash"]), cls(x["closing_cash"])) for x in cw["detail"]], cls_="total"),
+])}
+{note("green","The reinvestment needs no new money",
+  f"The row above is the account balance, not a return measure. It opens at {rs(cw['opening_cash'])} — the "
+  "part of the facility not spent on mobilisation — and is struck after tax, maintenance capex and the full "
+  f"debt service. It never goes below {rs(cw['lowest_balance'])}, which is where it sits at the end of year 3 "
+  f"once the {rs(gc['total'])} build is paid for. No second facility, no equity, and no call on the lender "
+  "beyond the one facility in section 07.")}
 {note("blue","On the extension years",
   "ADA may extend by four years on performance and mutual consent, with the right to revise the licence fee "
   "for the extended term. Years 8 to 11 would run a mature revenue line against an established cost base. "
@@ -774,10 +828,11 @@ into the tables.</p>
    ("Paid entry ratio", "Net of under-5s and free morning walkers", "76% → 80%"),
  ]),
  ("Revenue — capture rates", [
-   ("Show conversion", "Share of visitors buying the fountain and laser ticket", "24% → 31%"),
+   ("Show conversion", "Share of visitors buying a show ticket. Steps up in year 4 when the second show opens", "24% → 28%, then 34% → 38%"),
    ("F&B capture", "Share of visitors spending at a kiosk", "32% → 38%"),
-   ("Activity capture", "Share of visitors using a vendor-operated activity", "11% → 16%"),
-   ("Activity revenue share", "E-O-D books its share of vendor takings, not the gross spend. No capital and no operating cost carried", f"{pct(GGV_SHARE*100,0)}"),
+   ("Activity capture", "Share of visitors using an activity. Rises from year 2 as more operators sign", "11% → 15% → 22%"),
+   ("Activity revenue share", "On the operator-run part E-O-D books a share of takings, not the gross spend, and carries no capital and no operating cost", f"{pct(GGV_SHARE*100,0)}"),
+   ("Owned share of the activity layer", "E-O-D-owned from year 4, booked gross and carrying its own cost. Nil before the year-3 build", f"{pct(gc['owned_activity_fraction_pct'][3],0)} → {pct(gc['owned_activity_fraction_pct'][6],0)}"),
    ("Vehicle occupancy", "Visitors per vehicle, for the parking line", "3.1"),
  ]),
  ("Revenue — tariffs, gross of GST", [
@@ -786,7 +841,8 @@ into the tables.</p>
    ("F&B spend per capture", "Ready-to-eat and pre-packaged only; no cooking permitted on site", "₹35 → ₹46"),
    ("Activity spend per capture", "Visitor spend at the vendor, before E-O-D's share is applied", "₹120 → ₹180"),
    ("Parking", "62% two-wheeler at ₹10, 38% four-wheeler at ₹20", "₹10 / ₹20"),
-   ("Events and IPs", "Public programming and E-O-D-run IPs from the opening month, plus private events, photo and pre-wedding shoots", f"{lakh(g['years'][0]['revenue']['events'],0)} → {lakh(g['years'][6]['revenue']['events'],0)}"),
+   ("Public events and IPs", "Ticketed community programming and E-O-D's own IPs, from the opening month", f"{lakh(yrs[0]['revenue']['events_public'],0)} → {lakh(yrs[6]['revenue']['events_public'],0)}"),
+   ("Private events and shoots", "Weddings, corporate offsites, birthdays, pre-wedding and film shoots. Seeded by the customers Agra Chaupati already serves", f"{lakh(yrs[0]['revenue']['events_private'],0)} → {lakh(yrs[6]['revenue']['events_private'],0)}"),
    ("GST treatment", "Revenue is stated net. Entry, show, activities and parking at 18%; F&B at 12%", "Net of GST"),
  ]),
  ("Cost", [
@@ -794,12 +850,16 @@ into the tables.</p>
    ("Payroll", "31 heads at year-1 footfall. Scales at 0.35× the rate of footfall growth", "+7% a year, plus scale"),
    ("Cost inflation", "Applied to electricity, horticulture, AMC, repairs, insurance, IT, contingency", "6.5% a year"),
    ("F&B cost of goods", "Supplied from the EAC kitchens at transfer cost, not bought in", "44% of F&B revenue"),
+   ("Public event delivery", "Artists, external stage and sound hire, permissions. Manning, power and housekeeping are already in their own lines and are not charged again", f"{pct(28,0)} of public event revenue"),
+   ("Private event delivery", "Consumables only. The client brings its own caterer and decorator, and a shoot is a location fee against a site already staffed", f"{pct(12,0)} of private event revenue"),
+   ("Owned activity operating cost", "Manning, power and consumables on the E-O-D-run part of the activity layer, from year 4", f"{pct(gc['owned_activity_cost_ratio_pct'],0)} of what it takes"),
    ("Marketing", "Front-loaded for the opening season, then normalised", "7.5% → 4.5% of revenue"),
    ("Corporate overhead", "Agra cluster allocation, not a standalone rate", "5% of revenue"),
  ]),
  ("Capital and returns", [
-   ("Depreciation", "Straight line over the lives shown in section 02", f"{lakh(g['annual_depreciation'],1)} a year"),
+   ("Depreciation", "Straight line over the lives shown in section 02, plus the year-3 build from year 4", f"{lakh(g['annual_depreciation'],1)} → {lakh(g['annual_depreciation'] + gc['annual_depreciation'],1)} a year"),
    ("Maintenance capex", "Deducted in the free cash flow, not in EBITDA", "2% of revenue"),
+   ("Year-3 reinvestment", "Second show and owned activity installations, paid for out of accumulated operating cash. Not part of the facility, and deferrable if the cash is not there", f"{lakh(gc['total'],0)} in year {gc['year']}"),
    ("Tax", "On EBIT where positive; nil where negative", f"{pct(M['meta']['tax_rate_pct'],0)}"),
    ("Terminal value", "Refund of the security deposit and EMD in year 7. No going-concern or extension value", "Deposits only"),
    ("Discount rate", "For the NPV in section 06", "15%"),
@@ -831,12 +891,25 @@ into the tables.</p>
   ("Laser and fountain asset condition", "Medium–High", "sev-mh",
    "The agency inherits equipment of unknown age and must replace anything reaching end of life at its own "
    "cost, with the onus of proving irreparability also on the agency. Not provided for in the cost model."),
-  ("Activity vendor availability", "Medium", "sev-m",
-   f"The activity line is E-O-D's {pct(GGV_SHARE*100,0)} share of vendor takings, not own-operated revenue. It "
-   "depends on vendors taking space on rent or revenue share, and on ADA approving the activity concept within "
-   "15 days of the work order. Clause 3.3.2 bars permanent construction, so anything installed must be "
-   f"demountable. The line is {rs(yrs[2]['revenue']['activities'])} in year 3 — small enough that its loss does "
-   "not threaten debt service, and it carries no capital at risk."),
+  ("Event revenue concentration", "Medium", "sev-m",
+   f"Public and private events together are {pct((yrs[6]['revenue']['events_public'] + yrs[6]['revenue']['events_private']) / yrs[6]['revenue']['total'] * 100, 0)} of year-7 revenue, and they carry the "
+   "highest margin in the model because manning and power are already paid for by the gate. That cuts both "
+   "ways: a year without a wedding season, or an ADA restriction on private bookings, takes contribution out "
+   "faster than any other line. <b>Mitigation:</b> the private line is sold into an existing Agra Chaupati "
+   "customer base rather than won cold, and event capacity is demountable, so it is not a stranded asset."),
+  ("Year-3 reinvestment is discretionary", "Medium", "sev-m",
+   f"The year-4 step in this deck depends on {rs(gc['total'])} being spent at the end of year 3 on a second "
+   "show and owned activity installations. It is funded from accumulated operating cash, not from this "
+   f"facility, and the balance never falls below {rs(cw['lowest_balance'])} in the model. If the cash is not "
+   "there, the build is deferred and years 4 to 7 run closer to the year-3 line — the facility is still "
+   "serviced, because the coverage ratios in section 07 are struck before this spend, not after it."),
+  ("Activity operator availability", "Medium", "sev-m",
+   f"Through year 3 the whole activity line is E-O-D's {pct(GGV_SHARE*100,0)} share of operator takings, not "
+   "own-operated revenue, so it depends on operators taking space and on ADA approving the concept within 15 "
+   "days of the work order. Clause 3.3.2 bars permanent construction, so anything installed — by an operator "
+   f"or by E-O-D in year 3 — must be demountable. The line is {rs(yrs[2]['revenue']['activities'])} in year 3, "
+   "small enough that losing it does not threaten debt service, and until the year-3 build it carries no "
+   "capital at risk."),
   ("Electricity arrears", "Medium", "sev-m",
    "Electricity is paid direct to the discom monthly. VAPPL carries ₹2.14 Cr of accumulated arrears across the "
    "existing estate, which is a condition precedent to any lender sanction."),

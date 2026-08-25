@@ -167,6 +167,7 @@ function sectionCompare(p, f, name, rows, rec) {
 function buildGGV() {
   const g = M.ggv, f = g.financing, r = g.rfp, db = f.debt, yrs = g.years;
   const mob = g.mobilisation, fc = f.project_fcf, dc = f.debt_capacity;
+  const gc = g.growth_capex, cw = f.cash_waterfall;
   const p = newDeck("Geeta Govind Vatika — Project Finance",
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
@@ -202,7 +203,9 @@ function buildGGV() {
     { cells: ["Security deposit", r.security_deposit_basis] },
     { cells: ["Gate tariff", `₹${r.entry_tariff_inr} entry. Fountain and laser show at rates approved by ADA`] },
     { cells: ["Asset position", r.assets], emphasis: "total" },
-  ], { colW: [2.6, L.W - 2 * L.M - 2.6], rowH: 0.34, fontSize: 10.5 });
+  ], { colW: [2.6, L.W - 2 * L.M - 2.6], rowH: 0.30, fontSize: 10.5 });
+  L.footnote(s, y + 0.04, "Why this site and not another",
+    "Geeta Govind Vatika shares a boundary with Agra Chaupati, which E-O-D already runs — one block of roughly 25 acres, with internal pathways and gates between them. F&B is supplied from kitchens that already exist next door, so this site needs counters rather than a built kitchen; private events sell into a customer base E-O-D already serves. The two specialise instead of competing: Chaupati the food and adventure destination, Geeta Govind Vatika the event and show destination.");
   L.foot(s, NAME);
 
   // 02 the ask
@@ -233,11 +236,12 @@ function buildGGV() {
     { label: "Year 1 revenue", value: cr(rev(yrs[0])), sub: "Net of GST" },
     { label: "Year 1 operating cost", value: cr(yrs[0].opex.total), sub: "Not financed — met from collections" },
     { label: "Year 1 EBITDA", value: cr(yrs[0].ebitda), color: C.green, tint: "EDFAF4", line: C.green,
-      sub: "The opening season carries itself" },
+      sub: "Covers its own operating cost — thin, which is what the standby limit absorbs" },
   ], { h: 1.5 });
   y = L.table(s, y + 0.1, ["Year 1 revenue by stream", "₹ crore", "Share"],
     [["entry", "Gate entry"], ["show", "Fountain and laser show"], ["fnb", "Food and beverage"],
-     ["activities", "Activity layer"], ["parking", "Parking"], ["events", "Events, IPs and shoots"]]
+     ["activities", "Activity layer"], ["parking", "Parking"],
+     ["events_public", "Public events and IPs"], ["events_private", "Private events and shoots"]]
       .map(([k, nm]) => ({ cells: [nm, crN(yrs[0].revenue[k]),
         pc(yrs[0].revenue[k] / rev(yrs[0]) * 100, 0)] }))
       .concat([{ cells: ["Total, net of GST", crN(rev(yrs[0])), "100%"], emphasis: "total" }]),
@@ -247,16 +251,19 @@ function buildGGV() {
   // 03 revenue
   s = p.addSlide();
   y = L.head(s, "03", "Revenue model",
-    "Six streams. Each is footfall multiplied by a capture rate and a tariff, net of GST. Every rate is derived in section 08.");
+    "Seven streams. The first five are footfall multiplied by a capture rate and a tariff, net of GST; the two event lines are booked directly. Every rate is derived in section 08.");
   const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"],
-             ["fnb", "Food and beverage"], ["activities", "Vendor-operated activities"]];
+             ["fnb", "Food and beverage"], ["activities", "Activity layer"]];
   y = L.chart(s, p, y, "bar", [
     ...K.map(([k, n]) => ({ name: n, labels: yrs.map(v => `Yr ${v.year}`),
                             values: yrs.map(v => +crN(v.revenue[k])) })),
-    { name: "Parking, events and shoots", labels: yrs.map(v => `Yr ${v.year}`),
-      values: yrs.map(v => +crN(v.revenue.parking + v.revenue.events)) },
+    { name: "Parking", labels: yrs.map(v => `Yr ${v.year}`),
+      values: yrs.map(v => +crN(v.revenue.parking)) },
+    { name: "Events, IPs and shoots", labels: yrs.map(v => `Yr ${v.year}`),
+      values: yrs.map(v => +crN(v.revenue.events)) },
   ], { h: 3.0, axisTitle: "₹ crore", labelPos: "ctr",
-       colors: [C.blue, C.terra, C.green, C.amber, "8A93A6"], extra: { barGrouping: "stacked" } });
+       colors: [C.blue, C.terra, C.green, C.amber, "8A93A6", "6B3FA0"],
+       extra: { barGrouping: "stacked" } });
   L.stats(s, y + 0.05, [
     { label: "Year 1 footfall", value: `${yrs[0].revenue.footfall_lakh.toFixed(2)} L`,
       sub: `About ${Math.round(yrs[0].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day` },
@@ -271,10 +278,11 @@ function buildGGV() {
   // 04 cost
   s = p.addSlide();
   y = L.head(s, "04", "Cost model",
-    "The licence fee escalates on a contracted rate; payroll scales with footfall; the rest move with inflation, revenue or the activity they support.");
+    "Licence fee on a contracted rate, payroll with footfall, the rest with inflation or revenue.");
   const CK = [["licence_fee", "Licence fee to ADA"], ["manpower", "Payroll"],
               ["electricity", "Electricity"], ["show_amc", "Show AMC and spares"],
               ["water_horticulture", "Water and horticulture"], ["fnb_cogs", "F&B cost of goods"],
+              ["events_cost", "Event delivery"], ["activity_cost", "Owned activity cost"],
               ["marketing", "Marketing"], ["corporate_overhead", "Corporate overhead"]];
   y = L.table(s, y, ["₹ crore", ...yrs.map(v => `Yr ${v.year}`)],
     [...CK.map(([k, n]) => ({ cells: [n, ...yrs.map(v => crN(v.opex[k]))] })),
@@ -283,37 +291,61 @@ function buildGGV() {
      { cells: ["Revenue", ...yrs.map(v => crN(rev(v)))], emphasis: "sub" },
      { cells: ["EBITDA", ...yrs.map(v => crN(v.ebitda))], emphasis: "sub" },
      { cells: ["EBITDA margin", ...yrs.map(v => pc(v.ebitda_margin, 0))], emphasis: "total" }],
-    { colW: [3.5, ...Array(7).fill((L.W - 2 * L.M - 3.5) / 7)], rowH: 0.28, fontSize: 10 });
+    { colW: [3.2, ...Array(7).fill((L.W - 2 * L.M - 3.2) / 7)], rowH: 0.20, fontSize: 8.5 });
   L.footnote(s, y + 0.04, "What the show AMC line does and does not cover",
-    "The line covers servicing and consumable spares only. End-of-life replacement of a laser projector, pump or control unit falls on the agency under the RFP, and no provision for it is carried here — the age and condition of the installed equipment are not known. Open item, section 09.");
+    "Servicing and consumable spares only. End-of-life replacement falls on the agency under the RFP and is not provided for — the age of the installed equipment is not known. Open item, section 09.");
   L.foot(s, NAME);
 
   // 05 projection
   s = p.addSlide();
   y = L.head(s, "05", "Seven-year projection",
-    "The initial term. The four extension years are excluded from every figure in this deck.");
+    "The initial term, extension years excluded. Two steps drive the shape: more operators from year 2, and the year-3 reinvestment landing in year 4.");
   y = L.chart(s, p, y, "bar", [
     { name: "Revenue", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(rev(v))) },
     { name: "EBITDA", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.ebitda)) },
   ], { h: 3.1, axisTitle: "₹ crore", colors: [C.blue, C.green] });
   L.stats(s, y + 0.05, [
-    { label: "EBITDA positive from", value: "Year 1", small: true, sub: `${cr(yrs[0].ebitda)} in the opening season` },
-    { label: "Margin, year 7", value: pc(yrs[6].ebitda_margin), sub: "Against the 27–29% group target for FY28-29" },
+    { label: "EBITDA positive from", value: "Year 1", small: true, sub: `${cr(yrs[0].ebitda)} in the opening season — thin by design` },
+    { label: "Margin, year 7", value: pc(yrs[6].ebitda_margin), sub: "On a mature base weighted to events" },
     { label: "Cumulative EBITDA", value: cr(yrs.reduce((a, v) => a + v.ebitda, 0)), sub: "Across the seven-year initial term" },
   ], { h: 1.28 });
+  L.foot(s, NAME);
+
+  // 05b the reinvestment and the cash that pays for it
+  s = p.addSlide();
+  y = L.head(s, "05", "The year-3 reinvestment",
+    `At the end of year 3 the project spends ${cr(gc.total)} of its own accumulated cash. No second facility, no equity.`);
+  y = L.table(s, y, ["Cash after debt service", "Opening", ...cw.detail.map(x => `Yr ${x.year}`)], [
+    { cells: ["EBITDA", "", ...cw.detail.map(x => crN(x.ebitda))] },
+    { cells: ["Tax and maintenance capex", "", ...cw.detail.map(x => crN(-(x.tax + x.maintenance_capex)))] },
+    { cells: ["Debt service", "", ...cw.detail.map(x => crN(-x.debt_service))] },
+    { cells: ["Reinvestment", "", ...cw.detail.map(x => x.growth_capex ? crN(-x.growth_capex) : "—")] },
+    { cells: ["Closing cash", crN(cw.opening_cash), ...cw.detail.map(x => crN(x.closing_cash))], emphasis: "total" },
+  ], { colW: [2.9, ...Array(8).fill((L.W - 2 * L.M - 2.9) / 8)], rowH: 0.30, fontSize: 10 });
+  y = L.stats(s, y + 0.1, [
+    { label: "Second laser and projection show", value: lk(gc.lines[0].amount, 0), small: true,
+      sub: "Two ticketed shows an evening instead of one — conversion steps from 28% to 34% in year 4" },
+    { label: "Owned activity installations", value: lk(gc.lines[1].amount, 0), small: true,
+      sub: `Demountable, per clause 3.3.2. E-O-D books these gross rather than at a ${pc(20, 0)} share` },
+    { label: "Lowest cash balance", value: lk(cw.lowest_balance, 0), color: C.green,
+      sub: "End of year 3, after the build is paid for" },
+  ], { h: 1.42 });
+  L.footnote(s, y + 0.04, "Why this sits below the debt service line",
+    "The reinvestment is discretionary and deferrable, so it is struck after the loan is served, not before. The coverage ratios in section 07 do not depend on it, and if the cash is not there the build waits — years 4 to 7 then run closer to the year-3 line and the facility is still serviced.");
   L.foot(s, NAME);
 
   // 06 cash flow and returns
   s = p.addSlide();
   y = L.head(s, "06", "Project cash flow and returns",
     "Unlevered free cash flow. Capital deployed is the mobilisation envelope; operating cost is not financed, so it is not a capital item.");
-  y = L.table(s, y, ["₹ crore", "EBITDA", "Tax", "Maint. capex", "Refunds", "Free cash flow"],
-    [{ cells: ["Capital deployed", "", "", "", "", crN(-fc.t0)], emphasis: "sub" },
+  y = L.table(s, y, ["₹ crore", "EBITDA", "Tax", "Maint. capex", "Reinvestment", "Refunds", "Free cash flow"],
+    [{ cells: ["Capital deployed", "", "", "", "", "", crN(-fc.t0)], emphasis: "sub" },
      ...fc.detail.map(d => ({ cells: [`Year ${d.year}`, crN(d.ebitda), crN(-d.tax),
-        crN(-d.maintenance_capex), d.terminal_inflow ? crN(d.terminal_inflow) : "—", crN(d.fcf)] })),
-     { cells: [`Operating free cash flow, ${eng(fc.detail.length)} years`, "", "", "", "", crN(fc.cumulative_fcf)], emphasis: "sub" },
-     { cells: ["Net of capital deployed", "", "", "", "", crN(fc.cumulative_fcf_net_of_capital)], emphasis: "total" }],
-    { colW: [3.4, ...Array(5).fill((L.W - 2 * L.M - 3.4) / 5)], rowH: 0.31 });
+        crN(-d.maintenance_capex), d.growth_capex ? crN(-d.growth_capex) : "—",
+        d.terminal_inflow ? crN(d.terminal_inflow) : "—", crN(d.fcf)] })),
+     { cells: [`Operating free cash flow, ${eng(fc.detail.length)} years`, "", "", "", "", "", crN(fc.cumulative_fcf)], emphasis: "sub" },
+     { cells: ["Net of capital deployed", "", "", "", "", "", crN(fc.cumulative_fcf_net_of_capital)], emphasis: "total" }],
+    { colW: [2.9, ...Array(6).fill((L.W - 2 * L.M - 2.9) / 6)], rowH: 0.30, fontSize: 10 });
   y = L.stats(s, y + 0.1, [
     { label: "Project IRR", value: pc(fc.irr_pct), color: C.green, sub: "Unlevered, extension years excluded" },
     { label: "Payback", value: `${fc.payback_years.toFixed(1)} yrs`, sub: "From first deployment" },
@@ -365,17 +397,18 @@ function buildGGV() {
   // 08a assumptions — revenue
   s = p.addSlide();
   y = L.head(s, "08", "Assumptions and method · revenue",
-    "Every figure in this deck is computed from the inputs below. Nothing is entered directly into the tables.");
+    "Every figure is computed from the inputs below.");
   L.table(s, y, ["Input", "Basis", "Value"], [
     { cells: ["Year 1 footfall", "Opening season, marketing-led, ADA's ₹20 gate held", `${yrs[0].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
     { cells: ["Year 7 footfall", `About ${Math.round(yrs[6].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day`, `${yrs[6].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
     { cells: ["Growth path", "Front-loaded, flattening as the site matures",
         `+${pc((yrs[1].revenue.footfall_lakh / yrs[0].revenue.footfall_lakh - 1) * 100, 0)} yr 2, +${pc((yrs[6].revenue.footfall_lakh / yrs[5].revenue.footfall_lakh - 1) * 100, 0)} by yr 7`] },
     { cells: ["Paid entry ratio", "Net of under-5s and free morning walkers", "76% → 80%"] },
-    { cells: ["Show conversion", "Share buying the fountain and laser ticket", "24% → 31%"] },
+    { cells: ["Show conversion", "Share buying a show ticket; steps up in year 4 with the second show", "24% → 28%, then 34% → 38%"] },
     { cells: ["F&B capture", "Share spending at a kiosk", "32% → 38%"] },
-    { cells: ["Activity capture", "Share using a vendor-operated activity", "11% → 16%"] },
-    { cells: ["Activity revenue share", "E-O-D books its share of vendor takings, not gross spend", "20%"] },
+    { cells: ["Activity capture", "Share using an activity; rises from year 2 as more operators sign", "11% → 15% → 22%"] },
+    { cells: ["Activity revenue share", "On the operator-run part: a share of takings, not the gross spend", "20%"] },
+    { cells: ["Owned share of activities", "E-O-D-owned from year 4, booked gross with its own cost", `${pc(gc.owned_activity_fraction_pct[3], 0)} → ${pc(gc.owned_activity_fraction_pct[6], 0)}`] },
     { cells: ["Vehicle occupancy", "Visitors per vehicle, for the parking line", "3.1"] },
     { cells: ["Gate entry", "Fixed by ADA. No escalation modelled across the term", "₹20"] },
     { cells: ["Show tariff", "Subject to ADA approval; escalated every second year", "₹100 → ₹130"] },
@@ -384,7 +417,7 @@ function buildGGV() {
     { cells: ["Parking", "62% two-wheeler at ₹10, 38% four-wheeler at ₹20", "₹10 / ₹20"] },
     { cells: ["Events and IPs", "Public programming and E-O-D-run IPs, private events, shoots", `${lk(yrs[0].revenue.events, 0)} → ${lk(yrs[6].revenue.events, 0)}`] },
     { cells: ["GST treatment", "Entry, show, activities, parking at 18%; F&B at 12%", "Revenue net of GST"] },
-  ], { colW: [3.0, 6.6, L.W - 2 * L.M - 9.6], rowH: 0.3, fontSize: 10 });
+  ], { colW: [3.0, 6.6, L.W - 2 * L.M - 9.6], rowH: 0.24, fontSize: 9.5 });
   L.foot(s, NAME);
 
   // 08b assumptions — cost, capital, facility
@@ -418,8 +451,12 @@ function buildGGV() {
       body: `No cap on the forward e-auction, and the fee escalates 5% a year on whatever is bid. Every ₹1 lakh a year above the modelled ${lk(g.bid_licence_year1, 0)} costs about ₹8.1 lakh across the term, so the bid price moves the return further than any operating assumption in this deck. Mitigation: a board-approved ceiling before the auction opens.` },
     { title: "Laser and fountain asset condition", color: C.amber,
       body: "The agency inherits equipment of unknown age and must replace end-of-life assets at its own cost, with the onus of proving irreparability also on the agency. Not provided for in the cost model." },
-    { title: "Activity vendor availability", color: C.amber,
-      body: `The activity line is E-O-D's 20% share of vendor takings, not own-operated revenue. It depends on vendors taking space and on ADA approving the concept. At ${cr(yrs[2].revenue.activities)} in year 3 it carries no capital at risk and its loss does not threaten debt service.` },
+    { title: "Activity operator availability", color: C.amber,
+      body: `Through year 3 the whole line is E-O-D's 20% share of operator takings, so it depends on operators taking space and on ADA approving the concept. At ${cr(yrs[2].revenue.activities)} in year 3, losing it does not threaten debt service, and until the year-3 build it carries no capital at risk.` },
+    { title: "Event revenue concentration", color: C.amber,
+      body: `Events are ${pc((yrs[6].revenue.events_public + yrs[6].revenue.events_private) / rev(yrs[6]) * 100, 0)} of year-7 revenue and carry the highest margin, because manning and power are already paid for by the gate. A weak wedding season, or an ADA restriction on private bookings, takes contribution out faster than any other line.` },
+    { title: "Year-3 reinvestment is discretionary", color: C.blue,
+      body: `The year-4 step depends on ${cr(gc.total)} being spent at the end of year 3 out of accumulated cash. Defer it and years 4 to 7 run closer to the year-3 line — the facility is still serviced, because the coverage ratios are struck before this spend.` },
     { title: "Show tariff not set in the RFP", color: C.blue,
       body: `To be agreed with ADA at least ten days before implementation. The model assumes ₹100 in year 1 rising to ₹130 by year 7. The show and activity lines together are ${pc((yrs[2].revenue.show + yrs[2].revenue.activities) / rev(yrs[2]) * 100, 0)} of year-3 revenue.` },
     { title: "Winning licence fee unknown", color: C.blue,
