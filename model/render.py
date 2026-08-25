@@ -598,10 +598,9 @@ beverage collections.</p>
   "against a standing start.<br>"
   f"<b>Footfall.</b> {num(yrs[0]['revenue']['footfall_lakh'],2)} lakh visits — about "
   f"{int(yrs[0]['revenue']['footfall_lakh'] * 1e5 / 365):,} a day — at ADA's ₹20 gate.<br>"
-  "<b>Food and beverage supply.</b> Product is supplied from the existing E-O-D shops at Agra Chaupati, "
-  "so the site requires counters rather than a built kitchen. Kiosk capex is "
-  f"{lakh([c['amount'] for c in g['capex_lines'] if 'Kiosk' in c['item']][0],0)} against ₹18 lakh for a "
-  "standalone fit-out, and cost of goods runs at 44% rather than 52%.")}"""
+  "<b>Food and beverage supply.</b> Product is supplied from the existing E-O-D shops at Agra Chaupati, so "
+  "the site requires counters rather than a built kitchen — no cooking capex, and cost of goods runs at "
+  f"{pct(yrs[0]['opex']['fnb_cogs'] / yrs[0]['revenue']['fnb'] * 100, 0)} of F&B revenue.")}"""
     S.append(("02", "s02", "The ask", body))
 
     # ------------------------------------------------------------ 03 revenue
