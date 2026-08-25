@@ -966,8 +966,11 @@ def main():
         "year": 3, "footfall_lakh": _g3["footfall_lakh"], "show_conversion_pct": 28.0,
         "value_per_rupee_of_tariff_lakh": _g3["footfall_lakh"] * 1e5 * 0.28 / 1.18 / 1e5,
     }
-    ggv["financing"]["walk_away"] = max_licence_fee(
-        build_ggv, GGV_BID_LICENCE_YEAR_1, g_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
+    # The break-even licence fee is an internal bid-discipline number, not deck
+    # content. max_licence_fee() still computes it; re-enable the line below only
+    # when it is asked for.
+    # ggv["financing"]["walk_away"] = max_licence_fee(
+    #     build_ggv, GGV_BID_LICENCE_YEAR_1, g_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     ggv["financing"]["debt_capacity"] = debt_capacity(
         g_cfads, DEBT_RATE_BANK, 7, 1, 0.20, g_wc_util)
 
@@ -1031,8 +1034,9 @@ def main():
         "show_tariff_gross": 165,
         "value_lakh": _r5["footfall_lakh"] * 1e5 * _gap * 165 / 1.18 / 1e5,
     }
-    rv["financing"]["walk_away"] = max_licence_fee(
-        build_rv, RV_BID_LICENCE_YEAR_1, r_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
+    # Internal only, as at Geeta Govind Vatika above.
+    # rv["financing"]["walk_away"] = max_licence_fee(
+    #     build_rv, RV_BID_LICENCE_YEAR_1, r_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     rv["financing"]["debt_capacity"] = debt_capacity(
         r_cfads, DEBT_RATE_BANK, 9, 4, 0.45, r_wc_util)
 

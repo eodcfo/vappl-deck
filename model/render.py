@@ -501,7 +501,7 @@ def deck_ggv():
     GGV_SHARE = 0.20
     g = M["ggv"]; f = g["financing"]; r = g["rfp"]; db = f["debt"]
     yrs = g["years"]; mob = g["mobilisation"]; fc = f["project_fcf"]
-    dc = f["debt_capacity"]; wa = f["walk_away"]
+    dc = f["debt_capacity"]
     S = []
 
     cover = f"""
@@ -816,8 +816,9 @@ into the tables.</p>
 {risks([
   ("Licence fee at auction", "High", "sev-h",
    f"The forward e-auction has no cap and the fee escalates 5% a year on whatever is bid. Every ₹1 lakh a year "
-   f"above the modelled {lakh(g['bid_licence_year1'],0)} costs about ₹8.1 lakh across the seven-year term. The "
-   f"project stops covering the cost of its debt above {lakh(wa['licence_fee_year1'],1)} a year."),
+   f"above the modelled {lakh(g['bid_licence_year1'],0)} costs about ₹8.1 lakh across the seven-year term, so "
+   "the bid price moves the return far more than any operating assumption in this deck does. "
+   "<b>Mitigation:</b> a board-approved ceiling before the auction opens."),
   ("Laser and fountain asset condition", "Medium–High", "sev-mh",
    "The agency inherits equipment of unknown age and must replace anything reaching end of life at its own "
    "cost, with the onus of proving irreparability also on the agency. Not provided for in the cost model."),
@@ -866,7 +867,7 @@ into the tables.</p>
 def deck_rv():
     v = M["rv"]; f = v["financing"]; r = v["rfp"]; db = f["debt"]
     yrs = v["years"]; cap = f["true_capital_requirement"]; mob = v["mobilisation"]
-    dc = f["debt_capacity"]; dopt = f["debt_optimised"]; wa = f["walk_away"]
+    dc = f["debt_capacity"]; dopt = f["debt_optimised"]
     S = []
 
     cover = f"""
@@ -886,7 +887,7 @@ def deck_rv():
     {kpi("Facility as briefed", rs(f["facility_ask"]), sub="Two years of operating cost, per the brief")}
     {kpi("Debt the project can carry", rs(dc["max_total_limit"]), sub=f'At a {dc["target_dscr"]}× DSCR floor')}
     {kpi("Project IRR", pct(f["project_fcf"]["irr_pct"]), sub=f'Against a {pct(f["cost_of_capital"]["all_in_cost_of_cgtmse_debt_pct"],2)} cost of guaranteed debt')}
-    {kpi("Walk-away licence fee", lakh(wa["licence_fee_year1"],1), sub=f'{lakh(wa["licence_fee_month"],2)} a month')}
+    {kpi("Reserve licence fee", lakh(r["reserve_licence_fee_year_lakh"],0), sub="BDA's floor in a sealed highest-bid process")}
   </div>
 </div>
 {note("terra","Read section 06 before section 02",
@@ -1229,12 +1230,13 @@ formula fixed the day the instrument is issued.</p>
     Of the three structures only debt is both viable and permitted without BDA's consent — and it is viable
     only if the facility is <b>sanctioned</b> at {rs(f["facility_ask"])} but <b>committed</b> at
     {rs(dc["max_total_limit"])}, which is what the project services at a 1.30× coverage floor. The binding
-    condition sits earlier than the financing, though: the model solves the break-even licence fee at
-    <b>{lakh(wa["licence_fee_year1"],1)} a year</b> against BDA's
-    {lakh(r["reserve_licence_fee_year_lakh"],0)} reserve — leaving only
-    {pct((wa["licence_fee_year1"]/r["reserve_licence_fee_year_lakh"] - 1) * 100, 0)} of headroom in a sealed
-    highest-bid process. <b>Bid at or barely above reserve, or do not bid.</b> On a contract with a five-year
-    lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.
+    condition sits earlier than the financing, though. At BDA's {lakh(r["reserve_licence_fee_year_lakh"],0)}
+    reserve the project already returns {pct(f["project_fcf"]["irr_pct"])} against a
+    {pct(f["cost_of_capital"]["all_in_cost_of_cgtmse_debt_pct"],2)} cost of guaranteed debt — it does not cover
+    the money that funds it before a single rupee of premium is bid. Every rupee above reserve comes straight
+    out of that gap, and it escalates for the full term. <b>Bid at or barely above reserve, or do not bid.</b>
+    On a contract with a five-year lock-in and a fifteen-year restoration obligation, winning at the wrong
+    price is worse than losing.
   </div>
 </div>
 {note("green","What would change this recommendation",
@@ -1252,10 +1254,11 @@ formula fixed the day the instrument is issued.</p>
    "model assumes 42% rising to 52%. <b>Mitigation:</b> obtain slot capacity and soft-launch data pre-bid; "
    "build the combo, school and group packages BDA already permits; bid a price that survives the base case."),
   ("Bid price in a sealed H1 process", "High", "sev-h",
-   f"Break-even licence fee is {lakh(wa['licence_fee_year1'],1)} a year against a "
-   f"{lakh(r['reserve_licence_fee_year_lakh'],0)} reserve — "
-   f"{pct((wa['licence_fee_year1']/r['reserve_licence_fee_year_lakh']-1)*100,0)} of headroom, in a format that "
-   "rewards the highest bid. <b>Mitigation:</b> a board-approved ceiling before the bid is sealed."),
+   f"The base case already returns {pct(f['project_fcf']['irr_pct'])} against a "
+   f"{pct(f['cost_of_capital']['all_in_cost_of_cgtmse_debt_pct'],2)} cost of debt at BDA's "
+   f"{lakh(r['reserve_licence_fee_year_lakh'],0)} reserve, and the fee escalates for the full term — so a "
+   "premium bid compounds against the project in a format that rewards the highest bid. "
+   "<b>Mitigation:</b> a board-approved ceiling before the bid is sealed."),
   ("Five-year lock-in", "High", "sev-h",
    "Exit before the lock-in expires costs the remaining contractual amount for the unexpired period, plus "
    "forfeiture of the ₹30 lakh performance security. Payback lands at roughly year seven. <b>Mitigation:</b> "
@@ -2266,14 +2269,14 @@ sequence. It is not a choice between equity and debt — it is an order of opera
       ("CGTMSE term loan for Karnal Phase 1, taken to a bank first", ""),
       (rs(alloc["single_borrower_plan"]["Karnal Phase 1 — term loan"]), ""),
       (f'Releases the ₹4 Cr earmarked for Karnal in the equity round', "pos")),
-  row(label_cell("3 · On award", "Only if the bid clears the walk-away price"),
+  row(label_cell("3 · On award", "Sized to mobilisation; operating cost is met from collections"),
       ("CGTMSE facility for Geeta Govind Vatika, sanctioned on award", ""),
       (rs(alloc["single_borrower_plan"]["Geeta Govind Vatika — term loan + standby WC"]), ""),
-      (f'Walk-away licence fee {lakh(gf["walk_away"]["licence_fee_year1"],1)} a year', "")),
+      (f'Services at {num(gf["debt"]["min_dscr_post_moratorium"])}× minimum DSCR', "pos")),
   row(label_cell("4 · On award", "Bid at reserve, or do not bid"),
       ("CGTMSE facility for Ramayan Vatika, within the ceiling allocation", ""),
       (rs(alloc["single_borrower_plan"]["Ramayan Vatika — term loan + standby WC"]), ""),
-      (f'Walk-away licence fee {lakh(vf["walk_away"]["licence_fee_year1"],1)} a year<span class="meta">The project services {rs(vf["debt_capacity"]["max_total_limit"])} at a 1.30× floor; the ceiling allocation is {rs(260)}.</span>', "")),
+      (f'Sanction to the ask, commit to capacity<span class="meta">The project services {rs(vf["debt_capacity"]["max_total_limit"])} at a 1.30× floor; the ceiling allocation is {rs(260)}.</span>', "")),
   row(label_cell("5 · Parallel", "Consolidation the lender will require in any case"),
       ("CGTMSE working capital, retiring ₹3 Cr of NBFC borrowings", ""),
       (rs(alloc["single_borrower_plan"]["VAPPL — working capital, NBFC consolidation"]), ""),

@@ -166,7 +166,7 @@ function sectionCompare(p, f, name, rows, rec) {
 /* ================================ 1 · GGV =============================== */
 function buildGGV() {
   const g = M.ggv, f = g.financing, r = g.rfp, db = f.debt, yrs = g.years;
-  const mob = g.mobilisation, fc = f.project_fcf, dc = f.debt_capacity, wa = f.walk_away;
+  const mob = g.mobilisation, fc = f.project_fcf, dc = f.debt_capacity;
   const p = newDeck("Geeta Govind Vatika — Project Finance",
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
@@ -415,7 +415,7 @@ function buildGGV() {
   y = L.head(s, "09", "Risks and open items");
   L.itemList(s, y, [
     { title: "Licence fee at auction", color: C.terra,
-      body: `No cap on the forward e-auction, and the fee escalates 5% a year on whatever is bid. Every ₹1 lakh a year above the modelled ${lk(g.bid_licence_year1, 0)} costs about ₹8.1 lakh across the term. The project stops covering the cost of its debt above ${lk(wa.licence_fee_year1, 1)} a year.` },
+      body: `No cap on the forward e-auction, and the fee escalates 5% a year on whatever is bid. Every ₹1 lakh a year above the modelled ${lk(g.bid_licence_year1, 0)} costs about ₹8.1 lakh across the term, so the bid price moves the return further than any operating assumption in this deck. Mitigation: a board-approved ceiling before the auction opens.` },
     { title: "Laser and fountain asset condition", color: C.amber,
       body: "The agency inherits equipment of unknown age and must replace end-of-life assets at its own cost, with the onus of proving irreparability also on the agency. Not provided for in the cost model." },
     { title: "Activity vendor availability", color: C.amber,
@@ -438,7 +438,7 @@ function buildGGV() {
 /* ============================ 2 · RAMAYAN VATIKA ======================== */
 function buildRV() {
   const v = M.rv, f = v.financing, r = v.rfp, db = f.debt, yrs = v.years;
-  const cap = f.true_capital_requirement, mob = v.mobilisation, dc = f.debt_capacity, wa = f.walk_away;
+  const cap = f.true_capital_requirement, mob = v.mobilisation, dc = f.debt_capacity;
   const p = newDeck("Ramayan Vatika — Project Finance", "BDA licence-fee concession, 10+5 years");
   const NAME = "Ramayan Vatika · Bareilly Development Authority · Project finance";
 
@@ -450,7 +450,7 @@ function buildRV() {
       { label: "Facility as briefed", value: cr(f.facility_ask), sub: "Two years of operating cost" },
       { label: "Debt the project carries", value: cr(dc.max_total_limit), sub: `At a ${dc.target_dscr}× DSCR floor` },
       { label: "Project IRR", value: pc(f.project_fcf.irr_pct), sub: `Against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt` },
-      { label: "Walk-away licence fee", value: lk(wa.licence_fee_year1), sub: `${lk(wa.licence_fee_month, 2)} a month` },
+      { label: "Reserve licence fee", value: lk(r.reserve_licence_fee_year_lakh, 0), sub: "BDA's floor in a sealed highest-bid process" },
     ],
   });
 
@@ -458,7 +458,7 @@ function buildRV() {
   let s = slide(p);
   s.background = { color: C.white };
   L.verdict(s, 0.5, "stop", "Read this before the rest of the deck",
-    `This deck does not conclude that Ramayan Vatika should be funded on the terms briefed. On the base assumptions the project returns ${pc(f.project_fcf.irr_pct)} against a ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} cost of guaranteed debt, and services ${cr(dc.max_total_limit)} of facility against the ${cr(f.facility_ask)} asked for.\n\nThe three financing structures are set out in full because they were asked for, and because the project does work on BDA's own revenue assumptions. But the bid discipline is the part that matters: the model solves the break-even licence fee at ${lk(wa.licence_fee_year1)} a year against BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve — ${pc((wa.licence_fee_year1 / r.reserve_licence_fee_year_lakh - 1) * 100, 0)} of headroom in a sealed highest-bid process.`, 2.9);
+    `This deck does not conclude that Ramayan Vatika should be funded on the terms briefed. On the base assumptions the project returns ${pc(f.project_fcf.irr_pct)} against a ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} cost of guaranteed debt, and services ${cr(dc.max_total_limit)} of facility against the ${cr(f.facility_ask)} asked for.\n\nThe three financing structures are set out in full because they were asked for, and because the project does work on BDA's own revenue assumptions. But the bid discipline is the part that matters: at BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve the project already returns less than its own cost of debt, and the fee escalates for the full term — so every rupee of premium in a sealed highest-bid process compounds against it.`, 2.9);
   L.stats(s, 3.7, [
     { label: "Base case project IRR", value: pc(f.project_fcf.irr_pct), color: C.terra,
       tint: "FBF1EE", line: C.terra, sub: "Below the cost of its own debt" },
@@ -596,7 +596,7 @@ function buildRV() {
   sectionCompare(p, f, NAME, null, {
     num: "11", kind: "caution",
     head: `Bid at reserve. Fund with a CGTMSE limit, committed at ${cr(dc.max_total_limit)}.`,
-    body: `Of the three structures only debt is both viable and permitted without BDA's consent — and viable only if the facility is sanctioned at ${cr(f.facility_ask)} but committed at ${cr(dc.max_total_limit)}. The binding condition sits earlier than the financing: break-even licence fee is ${lk(wa.licence_fee_year1)} a year against a ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve — ${pc((wa.licence_fee_year1 / r.reserve_licence_fee_year_lakh - 1) * 100, 0)} of headroom in a sealed highest-bid process. Bid at or barely above reserve, or do not bid. On a contract with a five-year lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.`,
+    body: `Of the three structures only debt is both viable and permitted without BDA's consent — and viable only if the facility is sanctioned at ${cr(f.facility_ask)} but committed at ${cr(dc.max_total_limit)}. The binding condition sits earlier than the financing: at BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve the project returns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt, so it does not cover the money that funds it before a rupee of premium is bid. Bid at or barely above reserve, or do not bid. On a contract with a five-year lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.`,
   });
 
   // 12 risks
@@ -606,7 +606,7 @@ function buildRV() {
     { title: "Show conversion", color: C.terra,
       body: "Roughly half the revenue comes from one product with no operating history. Mitigation: obtain slot capacity and soft-launch data pre-bid; bid a price that survives the base case." },
     { title: "Bid price in a sealed H1 process", color: C.terra,
-      body: `Break-even is ${lk(wa.licence_fee_year1)} against a ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve, in a format that rewards the highest bid. Mitigation: a board-approved ceiling before the bid is sealed.` },
+      body: `The base case already returns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} debt at the ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve, and the fee escalates for the full term, in a format that rewards the highest bid. Mitigation: a board-approved ceiling before the bid is sealed.` },
     { title: "Five-year lock-in", color: C.terra,
       body: `Exit before it expires costs the remaining contractual amount plus the ${lk(r.performance_security_lakh, 0)} security. Payback lands at roughly year seven. No contractual mitigation — the bid price has to be right.` },
     { title: "Restoration at handover", color: C.amber,
@@ -1072,7 +1072,7 @@ function buildHub() {
       { color: C.blue, title: "Bank Karnal first",
         body: `A ${cr(alloc.single_borrower_plan["Karnal Phase 1 — term loan"])} CGTMSE term loan. The cleanest credit in the pack, and the sanction that establishes the track record the two concession facilities will need.` },
       { color: C.amber, title: "Bid the two concessions",
-        body: `Only if each clears its walk-away price: ${lk(gf.walk_away.licence_fee_year1)} a year at Geeta Govind Vatika, ${lk(vf.walk_away.licence_fee_year1)} at Ramayan Vatika. Winning at the wrong price is worse than losing.` },
+        body: `Only on award, and only at a price the board has approved in advance. Both are auctions, both fees escalate for the full term, and winning at the wrong price is worse than losing.` },
       { color: C.green, title: "Raise the equity, smaller",
         body: `With ${cr(alloc.ceiling, 0)} of guaranteed debt in place the round need not be ₹16 crore. ₹6–8 crore covers what debt cannot reach, at roughly half the dilution — or a CCD at ${pc(cf.ccd.irr_pct)} without repricing the company.` },
     ],

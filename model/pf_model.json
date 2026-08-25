@@ -727,12 +727,6 @@
     "show_conversion_pct": 28.0,
     "value_per_rupee_of_tariff_lakh": 1.1271186440677967
    },
-   "walk_away": {
-    "hurdle_pct": 12.1,
-    "multiple_of_base": 2.13332463994675,
-    "licence_fee_year1": 76.799687038083,
-    "licence_fee_month": 6.399973919840249
-   },
    "debt_capacity": {
     "target_dscr": 1.3,
     "max_total_limit": 125.61115531262807,
@@ -1889,12 +1883,6 @@
     "modelled_conversion_pct": 48.0,
     "show_tariff_gross": 165,
     "value_lakh": 52.016949152542374
-   },
-   "walk_away": {
-    "hurdle_pct": 12.5,
-    "multiple_of_base": 1.0759093946808536,
-    "licence_fee_year1": 35.50501002446817,
-    "licence_fee_month": 2.9587508353723475
    },
    "debt_capacity": {
     "target_dscr": 1.3,
