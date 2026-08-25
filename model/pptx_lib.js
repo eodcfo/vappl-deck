@@ -43,6 +43,11 @@ const money = x => x == null ? "—"
   : Math.abs(x) < 100 ? `₹${(+x.toFixed(1)).toString().replace(/\.0$/, "")} lakh`
                       : `₹${(+(x / CR).toFixed(2)).toString().replace(/\.00$/, "")} crore`;
 
+/** Small counts read better spelled out in prose than set as digits. */
+const ENG = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen"];
+const eng = n => ENG[n] || String(n);
+
 // ---------------------------------------------------------------- measuring --
 /**
  * Estimated rendered height, in inches, of `text` in a box `w` inches wide.
@@ -51,7 +56,10 @@ const money = x => x == null ? "—"
  */
 function measure(text, w, fontSize, lineSpacingPt) {
   const ls = lineSpacingPt || fontSize * 1.36;
-  const charsPerLine = Math.max(8, Math.floor((w * 72) / (fontSize * 0.47)));
+  // 0.53 em is the measured average advance width of this body face across the
+  // prose in these decks. 0.47 under-counted lines, so ledes wrapped past the
+  // height they were given and got clipped by whatever was placed beneath them.
+  const charsPerLine = Math.max(8, Math.floor((w * 72) / (fontSize * 0.53)));
   let lines = 0;
   for (const para of String(text).split("\n")) {
     lines += para.length === 0 ? 1 : Math.ceil(para.length / charsPerLine);
@@ -199,10 +207,46 @@ function table(s, y, headers, rows, opts = {}) {
     });
     hh += tall;
   });
+  // Same guard the callout panels get: a table that runs past the footer line is
+  // clipped in the rendered deck, so fail the build rather than ship it.
+  const roomT = H - 0.54 - y;
+  if (hh > roomT + 0.02) {
+    OVERFLOWS.push({ slide: CURRENT.slide, deck: CURRENT.deck,
+                     headline: `table: ${String(headers[0] || "").slice(0, 40) || headers.length + " cols"}`,
+                     need: +hh.toFixed(2), room: +roomT.toFixed(2),
+                     short: +(hh - roomT).toFixed(2) });
+  }
   return y + hh + 0.18;
 }
 
 /** Coloured conclusion panel. kind: go | caution | stop | note */
+/**
+ * A compact annotation under a table: a rule, a label and a line or two of prose.
+ * Costs about a third of what the boxed `verdict` panel does, so it is what a
+ * dense slide gets when the point is a caveat rather than a conclusion.
+ */
+function footnote(s, y, label, text) {
+  const w = W - 2 * M;
+  const bodyH = measure(text, w, 9.5, 13);
+  const hh = 0.06 + 0.19 + bodyH;
+  const room = H - 0.54 - y;
+  if (hh > room + 0.02) {
+    OVERFLOWS.push({ slide: CURRENT.slide, deck: CURRENT.deck,
+                     headline: `footnote: ${label.slice(0, 40)}`, need: +hh.toFixed(2),
+                     room: +room.toFixed(2), short: +(hh - room).toFixed(2) });
+  }
+  s.addShape("rect", { x: M, y, w, h: 0.012, fill: { color: C.rule } });
+  s.addText(label.toUpperCase(), {
+    x: M, y: y + 0.06, w, h: 0.19, fontFace: F.body, fontSize: 8,
+    bold: true, color: C.inkMute, charSpacing: 1.4, margin: 0, valign: "top",
+  });
+  s.addText(text, {
+    x: M, y: y + 0.25, w, h: bodyH, fontFace: F.body, fontSize: 9.5,
+    color: C.inkMute, lineSpacing: 13, margin: 0, valign: "top",
+  });
+  return y + hh + 0.14;
+}
+
 function verdict(s, y, kind, headline, bodyText, h) {
   const K = {
     go:      { bg: "EDFAF4", line: C.green, tag: C.green },
@@ -396,6 +440,8 @@ function foot(s, text) {
   });
 }
 
-module.exports = { mark, overflowReport, C, SERIES, F, W, H, M, CR, cr, crN, lk, pc, pp, xx, money, measure,
+module.exports = {
+  eng,
+  footnote, mark, overflowReport, C, SERIES, F, W, H, M, CR, cr, crN, lk, pc, pp, xx, money, measure,
                    cover, head, stats, table, verdict, optionCards, itemList,
                    chart, closing, foot };

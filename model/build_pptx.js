@@ -10,7 +10,7 @@
 const pptxgen = require("pptxgenjs");
 const fs = require("fs"), path = require("path");
 const L = require("./pptx_lib.js");
-const { C, cr, crN, lk, pc, pp, xx, money } = L;
+const { C, cr, crN, lk, pc, pp, xx, money, eng } = L;
 
 const ROOT = path.dirname(__dirname);
 const M = JSON.parse(fs.readFileSync(path.join(ROOT, "model", "pf_model.json"), "utf8"));
@@ -166,28 +166,33 @@ function sectionCompare(p, f, name, rows, rec) {
 /* ================================ 1 · GGV =============================== */
 function buildGGV() {
   const g = M.ggv, f = g.financing, r = g.rfp, db = f.debt, yrs = g.years;
-  const cap = f.true_capital_requirement, mob = g.mobilisation, wa = f.walk_away;
+  const mob = g.mobilisation, fc = f.project_fcf, dc = f.debt_capacity;
   const p = newDeck("Geeta Govind Vatika — Project Finance",
                     "ADA licence-fee concession, 7+4 years");
   const NAME = "Geeta Govind Vatika · Agra Development Authority · Project finance";
 
-  L.cover(slide(p), {
-    eyebrow: "Project finance · 01 of 04", title: "Geeta Govind\nVatika",
-    sub: "A 19-acre cultural park in Taj Nagri Phase-II, five minutes from the park E-O-D already runs. Seven years of operating rights, no land to buy, no structures to build — and one year of operating expenditure to fund before it pays for itself.",
-    meta: "Agra Development Authority · Licence-fee model · 7 + 4 years\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
+  L.cover(p.addSlide(), {
+    eyebrow: "Project finance · Geeta Govind Vatika", title: "Geeta Govind\nVatika",
+    sub: "Nineteen acres in Taj Nagri Phase-II, built and commissioned by the Agra Development Authority. Seven years of operating rights, extendable by four. A ₹1 crore facility to mobilise; operating cost met from collections.",
+    meta: "Agra Development Authority · Licence-fee model · 7 + 4 years · 19 acres\nReserve licence fee ₹2.5 lakh per month · forward e-auction · 5% annual escalation",
     stats: [
-      { label: "Funding ask", value: cr(f.ask), sub: "Mobilisation plus one year of operating cost" },
-      { label: "True capital at risk", value: cr(cap.total), sub: "The rest is revolving liquidity" },
-      { label: "Project IRR", value: pc(f.project_fcf.irr_pct), sub: `Payback ${f.project_fcf.payback_years.toFixed(1)} years` },
+      { label: "Facility sought", value: cr(f.ask), sub: "Mobilisation capex, deposit and advance licence fee" },
+      { label: "Year 1 EBITDA", value: cr(yrs[0].ebitda), sub: `On ${cr(rev(yrs[0]))} of revenue` },
       { label: "Year 7 EBITDA", value: cr(yrs[6].ebitda), sub: `${pc(yrs[6].ebitda_margin)} margin` },
+      { label: "Minimum DSCR", value: xx(db.min_dscr_post_moratorium), sub: "Across the repayment years" },
     ],
   });
 
   // 01 the project
-  let s = slide(p);
+  let s = p.addSlide();
   let y = L.head(s, "01", "The project",
-    "ADA has built a ₹4.0–4.2 crore themed park and now wants an operator. Everything physical already exists — the musical fountains, the 40-minute Krishna Leela laser show, eight kiosks, the Tulsi forest. The winning bidder pays a monthly licence fee and keeps what it collects at the gate.");
-  y = L.table(s, y, ["Term", "What the RFP says"], [
+    "Nineteen acres in Taj Nagri Phase-II, built and fitted out by ADA. The asset is already in place: musical fountains, a 40-minute Krishna Leela laser show, an open-air amphitheatre, a waterbody, eight kiosks and a Tulsi forest. The operator pays a monthly licence fee and retains gate collections.");
+  y = L.stats(s, y, [
+    { label: "Site", value: "19 acres", small: true, sub: "Taj Nagri Phase-II, adjoining Agra Chaupati" },
+    { label: "Term", value: "7 + 4 years", small: true, sub: "Extendable on performance and mutual consent" },
+    { label: "Facility sought", value: cr(f.ask), sub: "Against a park already built and commissioned" },
+  ], { h: 1.24 });
+  L.table(s, y, ["Term", "Position"], [
     { cells: ["Authority", r.authority] },
     { cells: ["Contract period", r.term] },
     { cells: ["Selection", "Technical evaluation, then forward e-auction on the licence fee"] },
@@ -197,153 +202,243 @@ function buildGGV() {
     { cells: ["Security deposit", r.security_deposit_basis] },
     { cells: ["Gate tariff", `₹${r.entry_tariff_inr} entry. Fountain and laser show at rates approved by ADA`] },
     { cells: ["Asset position", r.assets], emphasis: "total" },
-  ], { colW: [3.0, L.W - 2 * L.M - 3.0], rowH: 0.36, fontSize: 11 });
-  L.verdict(s, y, "note", "Why E-O-D wins this on the technical bid",
-    "ADA asks for ₹1 crore average turnover and two similar projects above ₹50 lakh. VAPPL turned over ₹16.29 Cr in FY25-26 and runs four parks — two of them on concessions granted by ADA itself. The competitive question is the auction, not the qualification.", 0.98);
+  ], { colW: [2.6, L.W - 2 * L.M - 2.6], rowH: 0.34, fontSize: 10.5 });
   L.foot(s, NAME);
 
   // 02 the ask
-  s = slide(p);
-  y = L.head(s, "02", "What the money is for",
-    "The brief was one year of opex as loan or investment. That is the right facility size — but being precise about what the money does changes which instrument fits.");
-  y = L.stats(s, y, [
-    { label: "Facility as briefed", value: cr(f.ask), sub: "Mobilisation plus 12 months of operating cost" },
-    { label: "True capital at risk", value: cr(cap.total), tint: "FBF1EE", line: C.terra,
-      sub: "Mobilisation plus the year-1 operating deficit" },
-    { label: "Revolving liquidity", value: cr(f.ask - cap.total),
-      sub: "Drawn, spent, and recovered from collections" },
-  ], { h: 1.26 });
-  y = L.table(s, y, ["Total requirement", "Amount"], [
-    { cells: ["Mobilisation capex — activity equipment, kiosk fit-out, ticketing, signage", lk(mob.capex)] },
-    { cells: ["Security deposit (3 months, refundable), advance licence fee (6 months), EMD and tender fee",
-              lk(mob.security_deposit + mob.advance_licence_fee_6m + mob.emd + mob.tender_fee)] },
+  s = p.addSlide();
+  y = L.head(s, "02", "The ask",
+    "The facility covers mobilisation only: capital equipment, the security deposit and the first six months of licence fee. Operating cost from month one is met from gate, event and F&B collections.");
+  const capexRows = g.capex_lines.map(c => ({
+    cells: [`${c.item}  ·  ${c.life_years}-year life`, lk(c.amount)] }));
+  y = L.table(s, y, ["Application of funds", "Amount"], [
+    ...capexRows,
+    { cells: ["Sub-total — capital equipment", lk(mob.capex)], emphasis: "sub" },
+    { cells: ["Security deposit — three months of licence fee, refundable at expiry", lk(mob.security_deposit)] },
+    { cells: ["Advance licence fee — first six months", lk(mob.advance_licence_fee_6m)] },
+    { cells: ["EMD and tender fee", lk(mob.emd + mob.tender_fee)] },
     { cells: ["Sub-total — mobilisation", lk(mob.total)], emphasis: "sub" },
-    { cells: ["Year 1 operating expenditure", lk(g.year1_opex)] },
-    { cells: ["Facility requested", lk(f.ask)], emphasis: "total" },
-  ], { colW: [10.0, L.W - 2 * L.M - 10.0], rowH: 0.34 });
-  L.verdict(s, y, "stop", "A liquidity requirement, not a capital requirement",
-    `Of the ${cr(f.ask)} asked for, only ${cr(cap.total)} is capital the project consumes and does not return. The rest is working capital — spent on wages and electricity, recovered at the gate. Equity does not come back; a revolving limit does.`);
+    { cells: ["Opening-season working capital — timing float on the advance licence fee, payroll and electricity", lk(mob.working_capital)] },
+    { cells: ["Total facility sought", lk(f.ask)], emphasis: "total" },
+  ], { colW: [10.2, L.W - 2 * L.M - 10.2], rowH: 0.31 });
+  L.footnote(s, y + 0.04, "No activity is bought",
+    `Every activity on site is brought in by a vendor on rent or revenue share — none of it is funded from this facility, none of it appears as capital expenditure, and the vendor carries its own operating cost. E-O-D books its ${pc(20, 0)} share of the vendor's takings, not the gross spend.`);
+  L.foot(s, NAME);
+
+  // 02b year-one operating position
+  s = p.addSlide();
+  y = L.head(s, "02", "The ask · year one",
+    "No part of operating cost is financed. The opening season is met from gate, event and F&B collections.");
+  y = L.stats(s, y, [
+    { label: "Year 1 revenue", value: cr(rev(yrs[0])), sub: "Net of GST" },
+    { label: "Year 1 operating cost", value: cr(yrs[0].opex.total), sub: "Not financed — met from collections" },
+    { label: "Year 1 EBITDA", value: cr(yrs[0].ebitda), color: C.green, tint: "EDFAF4", line: C.green,
+      sub: "The opening season carries itself" },
+  ], { h: 1.5 });
+  y = L.table(s, y + 0.1, ["Year 1 revenue by stream", "₹ crore", "Share"],
+    [["entry", "Gate entry"], ["show", "Fountain and laser show"], ["fnb", "Food and beverage"],
+     ["activities", "Activity layer"], ["parking", "Parking"], ["events", "Events, IPs and shoots"]]
+      .map(([k, nm]) => ({ cells: [nm, crN(yrs[0].revenue[k]),
+        pc(yrs[0].revenue[k] / rev(yrs[0]) * 100, 0)] }))
+      .concat([{ cells: ["Total, net of GST", crN(rev(yrs[0])), "100%"], emphasis: "total" }]),
+    { colW: [7.4, 2.3, L.W - 2 * L.M - 9.7], rowH: 0.27 });
   L.foot(s, NAME);
 
   // 03 revenue
-  s = slide(p);
+  s = p.addSlide();
   y = L.head(s, "03", "Revenue model",
-    "Six streams, built bottom-up from footfall and capture rates. All figures net of GST.");
+    "Six streams. Each is footfall multiplied by a capture rate and a tariff, net of GST. Every rate is derived in section 08.");
   const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"],
-             ["fnb", "Food and beverage"], ["activities", "E-O-D activity layer"]];
-  y = L.chart(s, p, y, "barStacked", [
+             ["fnb", "Food and beverage"], ["activities", "Vendor-operated activities"]];
+  y = L.chart(s, p, y, "bar", [
     ...K.map(([k, n]) => ({ name: n, labels: yrs.map(v => `Yr ${v.year}`),
                             values: yrs.map(v => +crN(v.revenue[k])) })),
     { name: "Parking, events and shoots", labels: yrs.map(v => `Yr ${v.year}`),
       values: yrs.map(v => +crN(v.revenue.parking + v.revenue.events)) },
-  ], { h: 3.05, axisTitle: "₹ crore", labelPos: "ctr",
-       colors: [C.blue, C.terra, C.green, C.amber, "8A93A6"] });
+  ], { h: 3.0, axisTitle: "₹ crore", labelPos: "ctr",
+       colors: [C.blue, C.terra, C.green, C.amber, "8A93A6"], extra: { barGrouping: "stacked" } });
   L.stats(s, y + 0.05, [
-    { label: "Year 1 footfall", value: `${yrs[0].revenue.footfall_lakh.toFixed(2)} L`, sub: "About 850 visits a day" },
-    { label: "Year 7 footfall", value: `${yrs[6].revenue.footfall_lakh.toFixed(2)} L`, sub: "About 1,575 visits a day" },
-    { label: "Show conversion", value: "24% → 31%", small: true, sub: "Share buying the fountain and laser ticket" },
-    { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA — no escalation modelled" },
-  ], { h: 1.20 });
+    { label: "Year 1 footfall", value: `${yrs[0].revenue.footfall_lakh.toFixed(2)} L`,
+      sub: `About ${Math.round(yrs[0].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day` },
+    { label: "Year 7 footfall", value: `${yrs[6].revenue.footfall_lakh.toFixed(2)} L`,
+      sub: `About ${Math.round(yrs[6].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day` },
+    { label: "Revenue per visit", value: `₹${Math.round(rev(yrs[0]) / yrs[0].revenue.footfall_lakh)}`,
+      sub: `Year 1, net of GST. Year 7: ₹${Math.round(rev(yrs[6]) / yrs[6].revenue.footfall_lakh)}` },
+    { label: "Gate tariff", value: "₹20", sub: "Fixed by ADA. No escalation modelled" },
+  ], { h: 1.26 });
   L.foot(s, NAME);
 
   // 04 cost
-  s = slide(p);
+  s = p.addSlide();
   y = L.head(s, "04", "Cost model",
-    "Payroll and the licence fee are the two structural lines. Everything else scales with footfall, revenue or inflation.");
+    "The licence fee escalates on a contracted rate; payroll scales with footfall; the rest move with inflation, revenue or the activity they support.");
   const CK = [["licence_fee", "Licence fee to ADA"], ["manpower", "Payroll"],
               ["electricity", "Electricity"], ["show_amc", "Show AMC and spares"],
               ["water_horticulture", "Water and horticulture"], ["fnb_cogs", "F&B cost of goods"],
               ["marketing", "Marketing"], ["corporate_overhead", "Corporate overhead"]];
   y = L.table(s, y, ["₹ crore", ...yrs.map(v => `Yr ${v.year}`)],
     [...CK.map(([k, n]) => ({ cells: [n, ...yrs.map(v => crN(v.opex[k]))] })),
-     { cells: ["Other operating cost", ...yrs.map(v => crN(v.opex.total -
-        CK.reduce((a, [k]) => a + v.opex[k], 0)))] },
+     { cells: ["Other operating cost", ...yrs.map(v => crN(v.opex.total - CK.reduce((a, [k]) => a + v.opex[k], 0)))] },
      { cells: ["Total operating cost", ...yrs.map(v => crN(v.opex.total))], emphasis: "total" },
-     { cells: ["Revenue / EBITDA margin", ...yrs.map(v => `${crN(rev(v))} · ${pc(v.ebitda_margin, 0)}`)], emphasis: "sub" }],
-    { colW: [3.5, ...Array(7).fill((L.W - 2 * L.M - 3.5) / 7)], rowH: 0.29, fontSize: 10.5 });
-  L.verdict(s, y, "caution", "What is not in this model",
-    "The CCTV integration, ex-servicemen at entry, police verification and six-monthly audits are costed above. What is not costed is replacing a laser or fountain asset that reaches end of life mid-term — that burden sits with the agency. Get the AMC history before bidding.");
+     { cells: ["Revenue", ...yrs.map(v => crN(rev(v)))], emphasis: "sub" },
+     { cells: ["EBITDA", ...yrs.map(v => crN(v.ebitda))], emphasis: "sub" },
+     { cells: ["EBITDA margin", ...yrs.map(v => pc(v.ebitda_margin, 0))], emphasis: "total" }],
+    { colW: [3.5, ...Array(7).fill((L.W - 2 * L.M - 3.5) / 7)], rowH: 0.28, fontSize: 10 });
+  L.footnote(s, y + 0.04, "What the show AMC line does and does not cover",
+    "The line covers servicing and consumable spares only. End-of-life replacement of a laser projector, pump or control unit falls on the agency under the RFP, and no provision for it is carried here — the age and condition of the installed equipment are not known. Open item, section 09.");
   L.foot(s, NAME);
 
-  sectionProjection(p, f, yrs, NAME,
-    "Year 1 loses money — a 15-day mobilisation window, a full-year licence fee from day one, and a park that has never opened to the public.");
-  sectionReturns(p, f, NAME);
-  sectionScenarios(p, g.scenarios, NAME,
-    "Three drivers move this project: footfall, show conversion, and the licence fee you bid. The downside moves all three against you at once.",
-    "stop", "The downside is a bad bid, not a bad year",
-    `The model solves the break-even licence fee at ${lk(wa.licence_fee_year1)} a year — ${lk(wa.licence_fee_month, 2)} a month, about ${pc((wa.licence_fee_month / r.reserve_licence_fee_month_lakh - 1) * 100, 0)} above ADA's reserve. Hold that line in the auction room.`);
+  // 05 projection
+  s = p.addSlide();
+  y = L.head(s, "05", "Seven-year projection",
+    "The initial term. The four extension years are excluded from every figure in this deck.");
+  y = L.chart(s, p, y, "bar", [
+    { name: "Revenue", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(rev(v))) },
+    { name: "EBITDA", labels: yrs.map(v => `Yr ${v.year}`), values: yrs.map(v => +crN(v.ebitda)) },
+  ], { h: 3.1, axisTitle: "₹ crore", colors: [C.blue, C.green] });
+  L.stats(s, y + 0.05, [
+    { label: "EBITDA positive from", value: "Year 1", small: true, sub: `${cr(yrs[0].ebitda)} in the opening season` },
+    { label: "Margin, year 7", value: pc(yrs[6].ebitda_margin), sub: "Against the 27–29% group target for FY28-29" },
+    { label: "Cumulative EBITDA", value: cr(yrs.reduce((a, v) => a + v.ebitda, 0)), sub: "Across the seven-year initial term" },
+  ], { h: 1.28 });
+  L.foot(s, NAME);
 
-  // 08 equity
-  s = slide(p);
-  const eq = f.equity;
-  y = L.head(s, "08", "Option A · Equity",
-    "A third party funds the project for a share of it. No repayment obligation, no covenant — and on these numbers the most expensive money on the table.");
+  // 06 cash flow and returns
+  s = p.addSlide();
+  y = L.head(s, "06", "Project cash flow and returns",
+    "Unlevered free cash flow. Capital deployed is the mobilisation envelope; operating cost is not financed, so it is not a capital item.");
+  y = L.table(s, y, ["₹ crore", "EBITDA", "Tax", "Maint. capex", "Refunds", "Free cash flow"],
+    [{ cells: ["Capital deployed", "", "", "", "", crN(-fc.t0)], emphasis: "sub" },
+     ...fc.detail.map(d => ({ cells: [`Year ${d.year}`, crN(d.ebitda), crN(-d.tax),
+        crN(-d.maintenance_capex), d.terminal_inflow ? crN(d.terminal_inflow) : "—", crN(d.fcf)] })),
+     { cells: [`Operating free cash flow, ${eng(fc.detail.length)} years`, "", "", "", "", crN(fc.cumulative_fcf)], emphasis: "sub" },
+     { cells: ["Net of capital deployed", "", "", "", "", crN(fc.cumulative_fcf_net_of_capital)], emphasis: "total" }],
+    { colW: [3.4, ...Array(5).fill((L.W - 2 * L.M - 3.4) / 5)], rowH: 0.31 });
+  y = L.stats(s, y + 0.1, [
+    { label: "Project IRR", value: pc(fc.irr_pct), color: C.green, sub: "Unlevered, extension years excluded" },
+    { label: "Payback", value: `${fc.payback_years.toFixed(1)} yrs`, sub: "From first deployment" },
+    { label: "NPV at 15%", value: cr(fc.npv_at_15pct), sub: "Discounted at 15%" },
+    { label: "FCF net of capital", value: cr(fc.cumulative_fcf_net_of_capital),
+      sub: `${cr(fc.cumulative_fcf)} earned over seven years, less the ${cr(fc.t0)} deployed` },
+  ], { h: 1.26 });
+  L.foot(s, NAME);
+
+  // 07 the facility
+  s = p.addSlide();
+  y = L.head(s, "07", "The facility",
+    `A CGTMSE-guaranteed composite facility of ${cr(db.total_limit)}: a term loan against mobilisation and a small revolving limit for within-year seasonality. No collateral, and no charge over ADA's assets.`);
   y = L.table(s, y, ["Term", "Structure"], [
-    { cells: ["Capital", cr(eq.investment)] },
-    { cells: ["Stake offered", pc(eq.stake_pct, 0)] },
-    { cells: ["Exit", `End of year ${eq.exit_year}, valued as the discounted remaining concession cash flow`] },
-    { cells: ["Exit equity value", cr(eq.exit_equity_value)] },
-    { cells: ["Investor proceeds — dividends plus exit", cr(eq.dividends.reduce((a, b) => a + b, 0) + eq.exit_proceeds)] },
-    { cells: ["Investor IRR", pc(eq.irr_pct)], emphasis: "total" },
-    { cells: ["Stake needed to clear a 22% hurdle", pc(eq.stake_for_22pct, 0)], emphasis: "total" },
-  ], { colW: [7.4, L.W - 2 * L.M - 7.4], rowH: 0.36 });
-  L.verdict(s, y + 0.3, "stop", "Project-level equity is the wrong instrument here",
-    `At ${pc(eq.stake_pct, 0)} the investor earns ${pc(eq.irr_pct)} — below a deposit rate. Clearing a conventional 22% hurdle would take ${pc(eq.stake_for_22pct, 0)} of the project. A seven-year concession generating ${cr(f.project_fcf.cumulative_fcf)} of lifetime free cash flow cannot pay an equity return on ${cr(eq.investment)} and still leave E-O-D a reason to operate it. If equity is wanted, raise it at company level.`, 1.6);
+    { cells: ["Scheme", `CGTMSE ${M.cgtmse.scheme} · ceiling ${cr(M.cgtmse.ceiling_per_borrower_cr * 100, 0)} per borrower, aggregated across all lenders`] },
+    { cells: ["Term loan", `${cr(db.term_loan)} — mobilisation capex, security deposit, advance licence fee`] },
+    { cells: ["Working capital limit", `${cr(db.wc_limit)} — within-year seasonality standby`] },
+    { cells: ["Interest rate", `${pc(db.rate_pct, 2)} · repo-linked; CGTMSE keeps MLI pricing within ~3% of EBLR`] },
+    { cells: ["Annual guarantee fee", `${pc(db.cgtmse.agf_rate_pct, 2)} · on the sanctioned amount in year 1, on the outstanding thereafter`] },
+    { cells: ["All-in cost", pc(db.rate_pct + db.cgtmse.agf_rate_pct, 2)] },
+    { cells: ["Tenor", `${db.tl_tenor_years} years — proposed, to be agreed with the lender. Matched to the licence period so the loan cannot outlive the concession`] },
+    { cells: ["Principal moratorium", `${db.tl_moratorium_years} year — proposed, to be agreed with the lender. CGTMSE prescribes neither tenor nor moratorium`] },
+    { cells: ["Guarantee coverage", `${pc(db.cgtmse.coverage_pct, 0)} · ${cr(db.cgtmse.guaranteed_amount)} guaranteed`] },
+    { cells: ["Security", "Nil collateral. Hypothecation of assets financed. Director personal guarantee permitted; third-party guarantee is not"] },
+    { cells: ["Total finance cost over the term", cr(db.total_finance_cost)], emphasis: "total" },
+  ], { colW: [2.9, L.W - 2 * L.M - 2.9], rowH: 0.31, fontSize: 10.5 });
   L.foot(s, NAME);
 
-  sectionDebt(p, f, NAME,
-    "A CGTMSE-guaranteed composite facility: a small term loan against mobilisation, and a revolving working-capital limit against the operating cycle. No collateral, no charge on ADA's assets — which matters, because there are none to charge.",
-    { kind: "go", head: "The facility fits — but the moratorium is doing the work",
-      body: `The three-year principal moratorium pushes the first repayment into year 4, when EBITDA is ${cr(yrs[3].ebitda)} rather than ${cr(yrs[1].ebitda)}. A bank offering this with a one-year moratorium is offering a facility that defaults in year 2.` });
-
-  // 10 CCD
-  s = slide(p);
-  const cc = f.ccd;
-  y = L.head(s, "10", "Option C · Debt converted to equity",
-    "Money in as debt, a coupon while the project ramps, then compulsory conversion into equity on a formula fixed the day it is issued.");
-  y = L.table(s, y, ["Term", "Structure"], [
-    { cells: ["Principal", cr(cc.principal)] },
-    { cells: ["Coupon, paid annually until conversion", pc(cc.coupon_pct, 1)] },
-    { cells: ["Conversion — compulsory, not at the holder's option", `End of year ${cc.conversion_year}`] },
-    { cells: ["Conversion stake", pc(cc.conversion_stake_pct, 0)] },
-    { cells: ["Coupon paid to conversion", cr(cc.coupon_paid_total)] },
-    { cells: ["Investor IRR", pc(cc.irr_pct)], emphasis: "total" },
-  ], { colW: [8.4, L.W - 2 * L.M - 8.4], rowH: 0.36 });
-  L.verdict(s, y + 0.2, "stop", "Worse than either pure option, at project level",
-    `The CCD returns ${pc(cc.irr_pct)} — below the equity case, because the coupon years consume the cash the project needs while ramping. It combines the cash-flow burden of debt with the dilution of equity and the guarantee benefit of neither.\n\nIf a CCD is used anywhere: the conversion formula must be fixed on the date of issue, or it fails the FEMA pricing test and becomes external commercial borrowing. Until it converts it is borrowing on the balance sheet.`);
+  // 07b repayment schedule
+  s = p.addSlide();
+  y = L.head(s, "07", "The facility · repayment and cover");
+  y = L.table(s, y, ["₹ crore", "TL o/s", "TL int.", "WC drawn", "WC int.", "AGF", "Principal", "Debt service", "CFADS", "DSCR"],
+    db.schedule.map(x => ({ cells: [`Year ${x.year}${x.principal === 0 ? " · moratorium" : ""}`,
+      crN(x.tl_opening), crN(x.tl_interest), crN(x.wc_outstanding), crN(x.wc_interest),
+      crN(x.agf), crN(x.principal), crN(x.debt_service), crN(x.cfads),
+      x.dscr ? x.dscr.toFixed(2) + "×" : "—"] })),
+    { colW: [2.5, ...Array(9).fill((L.W - 2 * L.M - 2.5) / 9)], rowH: 0.32, fontSize: 10 });
+  y = L.stats(s, y + 0.12, [
+    { label: "Minimum DSCR", value: xx(db.min_dscr_post_moratorium), color: C.green,
+      sub: "Across the repayment years. Banks underwrite to 1.30×" },
+    { label: "Average DSCR", value: xx(db.avg_dscr_post_moratorium), sub: "Across the repayment years" },
+    { label: "Debt capacity at 1.30×", value: cr(dc.max_total_limit),
+      sub: `Headroom of ${cr(dc.max_total_limit - db.total_limit)} over the facility sought` },
+  ], { h: 1.28 });
+  L.verdict(s, y + 0.04, "note", "Licence fee assumption",
+    `Every figure in this deck is calculated on a licence fee of ${lk(g.bid_licence_year1, 0)} a year — ₹3.0 lakh a month against ADA's ${lk(r.reserve_licence_fee_month_lakh, 1)} per month reserve — escalating at ${pc(r.escalation_pct, 0)} a year as the RFP provides. The fee is settled by forward e-auction and is not known until it concludes; the model requires re-running against the actual award.`);
   L.foot(s, NAME);
 
-  sectionCompare(p, f, NAME, null, {
-    num: "11", kind: "go", head: "Option B — a right-sized CGTMSE composite facility",
-    body: `The project earns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt. That ${pp(f.cost_of_capital.spread_over_debt_pct)} spread belongs to E-O-D, and debt is the only instrument that lets E-O-D keep it. Term loan ${cr(db.term_loan)} over ${db.tl_tenor_years} years with a ${db.tl_moratorium_years}-year principal moratorium, plus a working-capital limit sanctioned at ${cr(f.debt_optimised.wc_limit)} rather than the full year of opex — saving ${lk(f.agf_saving_optimised, 2)} of guarantee fee and leaving more of the group's ₹10 Cr CGTMSE ceiling for Karnal.`,
-  });
+  // 08a assumptions — revenue
+  s = p.addSlide();
+  y = L.head(s, "08", "Assumptions and method · revenue",
+    "Every figure in this deck is computed from the inputs below. Nothing is entered directly into the tables.");
+  L.table(s, y, ["Input", "Basis", "Value"], [
+    { cells: ["Year 1 footfall", "Opening season, marketing-led, ADA's ₹20 gate held", `${yrs[0].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
+    { cells: ["Year 7 footfall", `About ${Math.round(yrs[6].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day`, `${yrs[6].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
+    { cells: ["Growth path", "Front-loaded, flattening as the site matures",
+        `+${pc((yrs[1].revenue.footfall_lakh / yrs[0].revenue.footfall_lakh - 1) * 100, 0)} yr 2, +${pc((yrs[6].revenue.footfall_lakh / yrs[5].revenue.footfall_lakh - 1) * 100, 0)} by yr 7`] },
+    { cells: ["Paid entry ratio", "Net of under-5s and free morning walkers", "76% → 80%"] },
+    { cells: ["Show conversion", "Share buying the fountain and laser ticket", "24% → 31%"] },
+    { cells: ["F&B capture", "Share spending at a kiosk", "32% → 38%"] },
+    { cells: ["Activity capture", "Share using a vendor-operated activity", "11% → 16%"] },
+    { cells: ["Activity revenue share", "E-O-D books its share of vendor takings, not gross spend", "20%"] },
+    { cells: ["Vehicle occupancy", "Visitors per vehicle, for the parking line", "3.1"] },
+    { cells: ["Gate entry", "Fixed by ADA. No escalation modelled across the term", "₹20"] },
+    { cells: ["Show tariff", "Subject to ADA approval; escalated every second year", "₹100 → ₹130"] },
+    { cells: ["F&B spend per capture", "Ready-to-eat and pre-packaged only; no cooking on site", "₹35 → ₹46"] },
+    { cells: ["Activity spend per capture", "Visitor spend at the vendor, before E-O-D's share", "₹120 → ₹180"] },
+    { cells: ["Parking", "62% two-wheeler at ₹10, 38% four-wheeler at ₹20", "₹10 / ₹20"] },
+    { cells: ["Events and IPs", "Public programming and E-O-D-run IPs, private events, shoots", `${lk(yrs[0].revenue.events, 0)} → ${lk(yrs[6].revenue.events, 0)}`] },
+    { cells: ["GST treatment", "Entry, show, activities, parking at 18%; F&B at 12%", "Revenue net of GST"] },
+  ], { colW: [3.0, 6.6, L.W - 2 * L.M - 9.6], rowH: 0.3, fontSize: 10 });
+  L.foot(s, NAME);
 
-  // 12 risks
-  s = slide(p);
-  y = L.head(s, "12", "Risks and open items");
+  // 08b assumptions — cost, capital, facility
+  s = p.addSlide();
+  y = L.head(s, "08", "Assumptions and method · cost and facility");
+  L.table(s, y, ["Input", "Basis", "Value"], [
+    { cells: ["Licence fee", "Winning bid, contracted escalation", `${lk(g.bid_licence_year1, 0)}, +5% a year`] },
+    { cells: ["Payroll", "31 heads at year-1 footfall; scales at 0.35× footfall growth", "+7% a year, plus scale"] },
+    { cells: ["Cost inflation", "Electricity, horticulture, AMC, repairs, insurance, IT, contingency", "6.5% a year"] },
+    { cells: ["F&B cost of goods", "Supplied from the EAC kitchens at transfer cost, not bought in", "44% of F&B revenue"] },
+    { cells: ["Marketing", "Front-loaded for the opening season, then normalised", "7.5% → 4.5% of revenue"] },
+    { cells: ["Corporate overhead", "Agra cluster allocation, not a standalone rate", "5% of revenue"] },
+    { cells: ["Depreciation", "Straight line over the lives shown in section 02", `${lk(g.annual_depreciation, 1)} a year`] },
+    { cells: ["Maintenance capex", "Deducted in free cash flow, not in EBITDA", "2% of revenue"] },
+    { cells: ["Tax", "On EBIT where positive; nil where negative", pc(M.meta.tax_rate_pct, 0)] },
+    { cells: ["Free cash flow", "EBITDA less tax less maintenance capex", "Section 06"] },
+    { cells: ["Terminal value", "Deposit and EMD refund only. No going-concern or extension value", "Deposits only"] },
+    { cells: ["Discount rate", "For the NPV in section 06", "15%"] },
+    { cells: ["Interest rate", "Scheduled bank, repo-linked", pc(db.rate_pct, 2)] },
+    { cells: ["Annual guarantee fee", "CGTMSE standard slab for the facility size", pc(db.cgtmse.agf_rate_pct, 2)] },
+    { cells: ["Repayment", "Equal principal instalments after the moratorium", `${db.tl_tenor_years} yrs, ${db.tl_moratorium_years}-yr moratorium`] },
+    { cells: ["CFADS", "Cash available for debt service, taken as EBITDA", "EBITDA"] },
+  ], { colW: [3.0, 6.6, L.W - 2 * L.M - 9.6], rowH: 0.29, fontSize: 10 });
+  L.foot(s, NAME);
+
+  // 09 risks
+  s = p.addSlide();
+  y = L.head(s, "09", "Risks and open items");
   L.itemList(s, y, [
-    { title: "Auction overshoot", color: C.terra,
-      body: `No cap on the forward e-auction. Every ₹1 lakh a year above the modelled ${lk(g.bid_licence_year1, 0)} costs about ₹8.1 lakh over the term. Mitigation: a board-approved walk-away of ${lk(wa.licence_fee_year1)} a year.` },
-    { title: "ADA tariff control", color: C.terra,
-      body: "ADA fixes the gate at ₹20 and approves every other rate. The show ticket carries roughly a third of revenue and E-O-D cannot price it. Mitigation: agree the tariff and escalation path in writing before the work order." },
+    { title: "Licence fee at auction", color: C.terra,
+      body: `No cap on the forward e-auction, and the fee escalates 5% a year on whatever is bid. Every ₹1 lakh a year above the modelled ${lk(g.bid_licence_year1, 0)} costs about ₹8.1 lakh across the term, so the bid price moves the return further than any operating assumption in this deck. Mitigation: a board-approved ceiling before the auction opens.` },
     { title: "Laser and fountain asset condition", color: C.amber,
-      body: "The agency inherits equipment of unknown age and must replace end-of-life assets at its own cost. Mitigation: joint condition survey and AMC history before bidding." },
-    { title: "Year-1 cash", color: C.amber,
-      body: `The project loses ${cr(-yrs[0].ebitda)} at EBITDA in year 1 while paying six months of licence fee in advance. Mitigation: this is what the working-capital limit is for.` },
-    { title: "No permanent structures", color: C.amber,
-      body: "Clause 3.3.2 bars permanent construction, so the activity layer must be demountable — higher unit cost, shorter asset life. The capex schedule assumes an eight-year life." },
-    { title: "Show tariff is not set in the RFP", color: C.blue,
-      body: "Left to be agreed with ADA at least ten days before implementation. The largest revenue assumption in the model and the least documented. Raise it as a pre-bid query." },
-  ], { cols: 2, rowH: 1.26 });
+      body: "The agency inherits equipment of unknown age and must replace end-of-life assets at its own cost, with the onus of proving irreparability also on the agency. Not provided for in the cost model." },
+    { title: "Activity vendor availability", color: C.amber,
+      body: `The activity line is E-O-D's 20% share of vendor takings, not own-operated revenue. It depends on vendors taking space and on ADA approving the concept. At ${cr(yrs[2].revenue.activities)} in year 3 it carries no capital at risk and its loss does not threaten debt service.` },
+    { title: "Show tariff not set in the RFP", color: C.blue,
+      body: `To be agreed with ADA at least ten days before implementation. The model assumes ₹100 in year 1 rising to ₹130 by year 7. The show and activity lines together are ${pc((yrs[2].revenue.show + yrs[2].revenue.activities) / rev(yrs[2]) * 100, 0)} of year-3 revenue.` },
+    { title: "Winning licence fee unknown", color: C.blue,
+      body: `Every figure is built on a ${lk(g.bid_licence_year1, 0)} annual bid and requires re-running against the actual award.` },
+    { title: "Electricity arrears", color: C.amber,
+      body: `Electricity is paid direct to the discom monthly. VAPPL carries ${cr(M.company.profile.fy26.electricity_arrears)} of accumulated arrears across the existing estate, which is a condition precedent to any lender sanction.` },
+    { title: "Concession renewal", color: C.amber,
+      body: "Seven years, extendable by four at ADA's discretion, with the licence fee revisable for the extended term. No extension value is included in any figure in this deck." },
+  ], { cols: 2, rowH: 1.24 });
   L.foot(s, NAME);
 
   return p.writeFile({ fileName: path.join(OUT, "EOD-Geeta-Govind-Vatika-Project-Finance.pptx") });
 }
 
+
 /* ============================ 2 · RAMAYAN VATIKA ======================== */
 function buildRV() {
   const v = M.rv, f = v.financing, r = v.rfp, db = f.debt, yrs = v.years;
-  const cap = f.true_capital_requirement, mob = v.mobilisation, dc = f.debt_capacity, wa = f.walk_away;
+  const cap = f.true_capital_requirement, mob = v.mobilisation, dc = f.debt_capacity;
   const p = newDeck("Ramayan Vatika — Project Finance", "BDA licence-fee concession, 10+5 years");
   const NAME = "Ramayan Vatika · Bareilly Development Authority · Project finance";
 
@@ -355,7 +450,7 @@ function buildRV() {
       { label: "Facility as briefed", value: cr(f.facility_ask), sub: "Two years of operating cost" },
       { label: "Debt the project carries", value: cr(dc.max_total_limit), sub: `At a ${dc.target_dscr}× DSCR floor` },
       { label: "Project IRR", value: pc(f.project_fcf.irr_pct), sub: `Against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt` },
-      { label: "Walk-away licence fee", value: lk(wa.licence_fee_year1), sub: `${lk(wa.licence_fee_month, 2)} a month` },
+      { label: "Reserve licence fee", value: lk(r.reserve_licence_fee_year_lakh, 0), sub: "BDA's floor in a sealed highest-bid process" },
     ],
   });
 
@@ -363,7 +458,7 @@ function buildRV() {
   let s = slide(p);
   s.background = { color: C.white };
   L.verdict(s, 0.5, "stop", "Read this before the rest of the deck",
-    `This deck does not conclude that Ramayan Vatika should be funded on the terms briefed. On the base assumptions the project returns ${pc(f.project_fcf.irr_pct)} against a ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} cost of guaranteed debt, and services ${cr(dc.max_total_limit)} of facility against the ${cr(f.facility_ask)} asked for.\n\nThe three financing structures are set out in full because they were asked for, and because the project does work on BDA's own revenue assumptions. But the bid discipline is the part that matters: the model solves the break-even licence fee at ${lk(wa.licence_fee_year1)} a year against BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve — ${pc((wa.licence_fee_year1 / r.reserve_licence_fee_year_lakh - 1) * 100, 0)} of headroom in a sealed highest-bid process.`, 2.9);
+    `This deck does not conclude that Ramayan Vatika should be funded on the terms briefed. On the base assumptions the project returns ${pc(f.project_fcf.irr_pct)} against a ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} cost of guaranteed debt, and services ${cr(dc.max_total_limit)} of facility against the ${cr(f.facility_ask)} asked for.\n\nThe three financing structures are set out in full because they were asked for, and because the project does work on BDA's own revenue assumptions. But the bid discipline is the part that matters: at BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve the project already returns less than its own cost of debt, and the fee escalates for the full term — so every rupee of premium in a sealed highest-bid process compounds against it.`, 2.9);
   L.stats(s, 3.7, [
     { label: "Base case project IRR", value: pc(f.project_fcf.irr_pct), color: C.terra,
       tint: "FBF1EE", line: C.terra, sub: "Below the cost of its own debt" },
@@ -501,7 +596,7 @@ function buildRV() {
   sectionCompare(p, f, NAME, null, {
     num: "11", kind: "caution",
     head: `Bid at reserve. Fund with a CGTMSE limit, committed at ${cr(dc.max_total_limit)}.`,
-    body: `Of the three structures only debt is both viable and permitted without BDA's consent — and viable only if the facility is sanctioned at ${cr(f.facility_ask)} but committed at ${cr(dc.max_total_limit)}. The binding condition sits earlier than the financing: break-even licence fee is ${lk(wa.licence_fee_year1)} a year against a ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve — ${pc((wa.licence_fee_year1 / r.reserve_licence_fee_year_lakh - 1) * 100, 0)} of headroom in a sealed highest-bid process. Bid at or barely above reserve, or do not bid. On a contract with a five-year lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.`,
+    body: `Of the three structures only debt is both viable and permitted without BDA's consent — and viable only if the facility is sanctioned at ${cr(f.facility_ask)} but committed at ${cr(dc.max_total_limit)}. The binding condition sits earlier than the financing: at BDA's ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve the project returns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} guaranteed debt, so it does not cover the money that funds it before a rupee of premium is bid. Bid at or barely above reserve, or do not bid. On a contract with a five-year lock-in and a fifteen-year restoration obligation, winning at the wrong price is worse than losing.`,
   });
 
   // 12 risks
@@ -511,15 +606,15 @@ function buildRV() {
     { title: "Show conversion", color: C.terra,
       body: "Roughly half the revenue comes from one product with no operating history. Mitigation: obtain slot capacity and soft-launch data pre-bid; bid a price that survives the base case." },
     { title: "Bid price in a sealed H1 process", color: C.terra,
-      body: `Break-even is ${lk(wa.licence_fee_year1)} against a ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve, in a format that rewards the highest bid. Mitigation: a board-approved ceiling before the bid is sealed.` },
+      body: `The base case already returns ${pc(f.project_fcf.irr_pct)} against ${pc(f.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)} debt at the ${lk(r.reserve_licence_fee_year_lakh, 0)} reserve, and the fee escalates for the full term, in a format that rewards the highest bid. Mitigation: a board-approved ceiling before the bid is sealed.` },
     { title: "Five-year lock-in", color: C.terra,
       body: `Exit before it expires costs the remaining contractual amount plus the ${lk(r.performance_security_lakh, 0)} security. Payback lands at roughly year seven. No contractual mitigation — the bid price has to be right.` },
     { title: "Restoration at handover", color: C.amber,
       body: "Every asset returned in handover condition, BDA's decision binding. A bronze statue and a Miyawaki forest over fifteen years. Mitigation: photographed joint handover report on day one; accrue a provision annually." },
     { title: "Lock-in conflict unresolved", color: C.blue,
       body: "Clause 9 states seven years where clause 14 states five. A seven-year lock-in materially worsens the risk. Settle by pre-bid query before anything is committed." },
-    { title: "Bid dates are blank", color: C.blue,
-      body: "The data sheet's key-dates table has no bid start, end, pre-bid meeting or technical-opening dates. Confirm the live schedule on etender.up.nic.in before planning submission." },
+    { title: "Restoration at handover", color: C.amber,
+      body: "Every asset returned in handover condition, BDA's decision binding. A bronze statue and a Miyawaki forest over fifteen years. Mitigation: a photographed joint handover report on day one and a restoration provision accrued annually." },
   ], { cols: 2, rowH: 1.26 });
   L.foot(s, NAME);
 
@@ -886,7 +981,7 @@ function buildHub() {
 
   L.cover(slide(p), {
     eyebrow: "Project finance · Portfolio", title: "Three projects,\none balance sheet",
-    sub: "Geeta Govind Vatika, Ramayan Vatika and Karnal, each modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.",
+    sub: "Geeta Govind Vatika on guaranteed debt; Ramayan Vatika and Karnal each modelled as equity, guaranteed debt, and debt that converts to equity — plus the company-level view that ties them together. Built on the ₹10 crore CGTMSE ceiling that came into force in April 2025.",
     meta: `${c.profile.name} · CIN ${c.profile.cin} · MSME classification Small Enterprise\nPrepared ${M.meta.prepared} · every figure generated from model/pf_model.py`,
     stats: [
       { label: "Total funding sought", value: cr(totalAsk, 1), sub: "Across the three projects, as briefed" },
@@ -899,7 +994,7 @@ function buildHub() {
   // 01 the three projects compared
   let s = slide(p);
   let y = L.head(s, "01", "The three projects, compared",
-    "The same analysis run three times. What differs is not the method — it is how much capital each genuinely consumes, and what it earns on it.");
+    "The same analysis three times. What differs is how much capital each consumes, and what it earns on it.");
   y = L.table(s, y, ["", "Geeta Govind Vatika", "Ramayan Vatika", "Karnal"], [
     { cells: ["Counterparty", "Agra Dev. Authority", "Bareilly Dev. Authority", "A4A Highway Nest LLP"] },
     { cells: ["Term / lock-in", "7 + 4 yrs · none", "10 + 5 yrs · 5 years", "15 yrs · none"] },
@@ -916,11 +1011,11 @@ function buildHub() {
         { text: pp(kf.cost_of_capital.spread_over_debt_pct), color: C.green }] },
     { cells: ["Minimum DSCR at the size asked", xx(gf.debt.min_dscr_post_moratorium), xx(vf.debt.min_dscr_post_moratorium), xx(kf.debt.min_dscr_post_moratorium)] },
     { cells: ["Assets a lender can charge", "None — ADA owns all", "None — expressly barred", "Yes — E-O-D owns fit-out"] },
-    { cells: ["Equity IRR at project level", pc(gf.equity.irr_pct), pc(vf.equity.irr_pct), pc(kf.equity.irr_pct)] },
+    { cells: ["Equity IRR at project level", "Not offered — debt only", pc(vf.equity.irr_pct), pc(kf.equity.irr_pct)] },
     { cells: ["Recommended instrument", "CGTMSE debt", "CGTMSE debt, at reserve", "CGTMSE debt"], emphasis: "total" },
-  ], { colW: [4.0, ...Array(3).fill((L.W - 2 * L.M - 4.0) / 3)], rowH: 0.33, fontSize: 10.5 });
-  L.verdict(s, y, "stop", "The same conclusion three times, for the same reason",
-    "None of the three clears an equity hurdle at project level, and it is not because any is a bad project. A single park generating ₹1–2.5 crore of mature EBITDA cannot pay a 22% return on the capital it needs and leave an operator's margin. Equity works on a portfolio and a brand; it does not work one licence at a time. Two of the three out-earn guaranteed debt comfortably — fund them with it and keep the spread.", 0.98);
+  ], { colW: [4.2, ...Array(3).fill((L.W - 2 * L.M - 4.2) / 3)], rowH: 0.28, fontSize: 10 });
+  L.verdict(s, y, "stop", "One instrument, three different routes to it",
+    `Geeta Govind Vatika is offered on debt only: a guaranteed facility supplies the whole ${cr(gf.ask)} at ${pc(gf.cost_of_capital.all_in_cost_of_cgtmse_debt_pct, 2)}, no collateral and no dilution, so there is nothing an equity structure would buy that it does not already provide. Karnal earns ${pc(kf.project_fcf.irr_pct)} and Ramayan Vatika ${pc(vf.project_fcf.irr_pct)}; neither clears an equity hurdle at project level. A single park generating ₹1–2.5 crore of mature EBITDA cannot pay a 22% return and leave an operator's margin. Equity belongs at company level, where it buys a portfolio rather than one wasting licence.`);
   L.foot(s, NAME);
 
   // 02 CGTMSE framework
@@ -977,7 +1072,7 @@ function buildHub() {
       { color: C.blue, title: "Bank Karnal first",
         body: `A ${cr(alloc.single_borrower_plan["Karnal Phase 1 — term loan"])} CGTMSE term loan. The cleanest credit in the pack, and the sanction that establishes the track record the two concession facilities will need.` },
       { color: C.amber, title: "Bid the two concessions",
-        body: `Only if each clears its walk-away price: ${lk(gf.walk_away.licence_fee_year1)} a year at Geeta Govind Vatika, ${lk(vf.walk_away.licence_fee_year1)} at Ramayan Vatika. Winning at the wrong price is worse than losing.` },
+        body: `Only on award, and only at a price the board has approved in advance. Both are auctions, both fees escalate for the full term, and winning at the wrong price is worse than losing.` },
       { color: C.green, title: "Raise the equity, smaller",
         body: `With ${cr(alloc.ceiling, 0)} of guaranteed debt in place the round need not be ₹16 crore. ₹6–8 crore covers what debt cannot reach, at roughly half the dilution — or a CCD at ${pc(cf.ccd.irr_pct)} without repricing the company.` },
     ],
@@ -1021,10 +1116,10 @@ const rpc = c => c.related_party_conversion.convert_lt_plus_promoter_409;
   }
   const over = L.overflowReport();
   if (over.length) {
-    console.log(`\n  ${over.length} panel(s) short of room — fix the source, do not ship clipped text:`);
+    console.log(`\n  ${over.length} element(s) short of room — fix the source, do not ship clipped text:`);
     over.forEach(o => console.log(
       `    ${o.deck.split(" — ")[0].padEnd(26)} slide ${String(o.slide).padStart(2)}  short ${String(o.short).padStart(4)}"  "${o.headline}"`));
   } else {
-    console.log("\n  no panel overflows");
+    console.log("\n  no overflows (panels and tables measured)");
   }
 })();
