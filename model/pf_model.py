@@ -305,8 +305,8 @@ GGV_OWNED_ACTIVITY_COST_RATIO = 0.35
 # and sound hire, and permissions for a public IP; for a private booking, little
 # more than consumables, because the client's own caterer and decorator do the
 # rest and a shoot is a location fee against a site that is already staffed.
-GGV_PUBLIC_EVENT_COST_RATIO = 0.28
-GGV_PRIVATE_EVENT_COST_RATIO = 0.12
+GGV_PUBLIC_EVENT_COST_RATIO = 0.20
+GGV_PRIVATE_EVENT_COST_RATIO = 0.10
 
 def build_ggv():
     years = []
@@ -345,6 +345,11 @@ def build_ggv():
             "mobilisation": mobilisation, "years": years,
             "year1_opex": year1_opex, "funding_ask": ask,
             "peak_cash_deficit": peak_deficit, "annual_depreciation": dep,
+            "cost_ratios": {
+                "public_event_delivery_pct": GGV_PUBLIC_EVENT_COST_RATIO * 100,
+                "private_event_delivery_pct": GGV_PRIVATE_EVENT_COST_RATIO * 100,
+                "fnb_cogs_pct": 44.0,
+            },
             "growth_capex": {
                 "year": GGV_GROWTH_CAPEX_YEAR,
                 "lines": [{"item": n, "amount": a, "life_years": l} for n, a, l in GGV_GROWTH_CAPEX],
