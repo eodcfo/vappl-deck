@@ -10,7 +10,7 @@
 const pptxgen = require("pptxgenjs");
 const fs = require("fs"), path = require("path");
 const L = require("./pptx_lib.js");
-const { C, cr, crN, lk, pc, pp, xx, money } = L;
+const { C, cr, crN, lk, pc, pp, xx, money, eng } = L;
 
 const ROOT = path.dirname(__dirname);
 const M = JSON.parse(fs.readFileSync(path.join(ROOT, "model", "pf_model.json"), "utf8"));
@@ -247,9 +247,9 @@ function buildGGV() {
   // 03 revenue
   s = p.addSlide();
   y = L.head(s, "03", "Revenue model",
-    "Six streams. Each is footfall multiplied by a capture rate and a tariff, net of GST. Every rate is derived in section 07.");
+    "Six streams. Each is footfall multiplied by a capture rate and a tariff, net of GST. Every rate is derived in section 08.");
   const K = [["entry", "Gate entry"], ["show", "Fountain & laser show"],
-             ["fnb", "Food and beverage"], ["activities", "E-O-D activity layer"]];
+             ["fnb", "Food and beverage"], ["activities", "Vendor-operated activities"]];
   y = L.chart(s, p, y, "bar", [
     ...K.map(([k, n]) => ({ name: n, labels: yrs.map(v => `Yr ${v.year}`),
                             values: yrs.map(v => +crN(v.revenue[k])) })),
@@ -311,7 +311,7 @@ function buildGGV() {
     [{ cells: ["Capital deployed", "", "", "", "", crN(-fc.t0)], emphasis: "sub" },
      ...fc.detail.map(d => ({ cells: [`Year ${d.year}`, crN(d.ebitda), crN(-d.tax),
         crN(-d.maintenance_capex), d.terminal_inflow ? crN(d.terminal_inflow) : "—", crN(d.fcf)] })),
-     { cells: ["Operating free cash flow, seven years", "", "", "", "", crN(fc.cumulative_fcf)], emphasis: "sub" },
+     { cells: [`Operating free cash flow, ${eng(fc.detail.length)} years`, "", "", "", "", crN(fc.cumulative_fcf)], emphasis: "sub" },
      { cells: ["Net of capital deployed", "", "", "", "", crN(fc.cumulative_fcf_net_of_capital)], emphasis: "total" }],
     { colW: [3.4, ...Array(5).fill((L.W - 2 * L.M - 3.4) / 5)], rowH: 0.31 });
   y = L.stats(s, y + 0.1, [
@@ -368,7 +368,7 @@ function buildGGV() {
     "Every figure in this deck is computed from the inputs below. Nothing is entered directly into the tables.");
   L.table(s, y, ["Input", "Basis", "Value"], [
     { cells: ["Year 1 footfall", "Opening season, marketing-led, ADA's ₹20 gate held", `${yrs[0].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
-    { cells: ["Year 7 footfall", "About 1,590 visits a day", `${yrs[6].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
+    { cells: ["Year 7 footfall", `About ${Math.round(yrs[6].revenue.footfall_lakh * 1e5 / 365).toLocaleString()} visits a day`, `${yrs[6].revenue.footfall_lakh.toFixed(2)} lakh visits`] },
     { cells: ["Growth path", "Front-loaded, flattening as the site matures",
         `+${pc((yrs[1].revenue.footfall_lakh / yrs[0].revenue.footfall_lakh - 1) * 100, 0)} yr 2, +${pc((yrs[6].revenue.footfall_lakh / yrs[5].revenue.footfall_lakh - 1) * 100, 0)} by yr 7`] },
     { cells: ["Paid entry ratio", "Net of under-5s and free morning walkers", "76% → 80%"] },
@@ -424,6 +424,10 @@ function buildGGV() {
       body: `To be agreed with ADA at least ten days before implementation. The model assumes ₹100 in year 1 rising to ₹130 by year 7. The show and activity lines together are ${pc((yrs[2].revenue.show + yrs[2].revenue.activities) / rev(yrs[2]) * 100, 0)} of year-3 revenue.` },
     { title: "Winning licence fee unknown", color: C.blue,
       body: `Every figure is built on a ${lk(g.bid_licence_year1, 0)} annual bid and requires re-running against the actual award.` },
+    { title: "Electricity arrears", color: C.amber,
+      body: `Electricity is paid direct to the discom monthly. VAPPL carries ${cr(M.company.profile.fy26.electricity_arrears)} of accumulated arrears across the existing estate, which is a condition precedent to any lender sanction.` },
+    { title: "Concession renewal", color: C.amber,
+      body: "Seven years, extendable by four at ADA's discretion, with the licence fee revisable for the extended term. No extension value is included in any figure in this deck." },
   ], { cols: 2, rowH: 1.24 });
   L.foot(s, NAME);
 

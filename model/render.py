@@ -43,6 +43,12 @@ def pct(x, dp=1, sign=False):
     if x is None: return "—"
     return (f"{x:+.{dp}f}%" if sign else f"{x:.{dp}f}%")
 
+def eng(n):
+    """Small counts read better spelled out in prose than set as digits."""
+    words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen"]
+    return words[n] if n < len(words) else str(n)
+
 def num(x, dp=2):
     return "—" if x is None else f"{x:.{dp}f}"
 
@@ -476,7 +482,7 @@ def fcf_table(fcf, years_label="Year", terminal_label="Deposits refunded at expi
             cells.append((cr(t) if t else '<span class="muted">—</span>', "pos" if t else ""))
         cells.append((cr(d["fcf"]), cls(d["fcf"])))
         rows.append(row(*cells))
-    rows.append(row(("Operating free cash flow, seven years", ""), *blanks,
+    rows.append(row((f"Operating free cash flow, {eng(len(fcf['detail']))} years", ""), *blanks,
                     (cr(fcf["cumulative_fcf"]), cls(fcf["cumulative_fcf"])), cls_="sub"))
     net = fcf["cumulative_fcf_net_of_capital"]
     rows.append(row(("Net of capital deployed", ""), *blanks,
@@ -593,7 +599,7 @@ beverage collections.</p>
     keys = [("entry", "Gate entry", "₹20 per head, ADA-notified. Children under 5 and morning walkers free."),
             ("show", "Musical fountain and laser show", "40-minute Krishna Leela show plus fountain. Tariff approved by ADA."),
             ("fnb", "Food and beverage", "Six 8×8 ft and two 10×10 ft kiosks, supplied from Agra Chaupati."),
-            ("activities", "Entertainment activities", "Demountable activity layer under clause G. No permanent structures."),
+            ("activities", "Vendor-operated activities", "Demountable activity layer under clause G. No permanent structures."),
             ("parking", "Parking", "Two- and four-wheeler. EV charging exempt while charging."),
             ("events", "Events, IPs and shoots", "Public programming and E-O-D-run IPs, birthdays, pre-wedding shoots, corporate bookings.")]
     for k, name, meta in keys:
@@ -629,7 +635,7 @@ of GST. The derivation of every rate is in section 08.</p>
     cost_rows.append(row(("Total operating cost", ""), *[(cr(y["opex"]["total"]), "") for y in yrs], cls_="total"))
     cost_rows.append(row(("As % of revenue", ""), *[(pct(y["opex"]["total"] / y["revenue"]["total"] * 100, 0), "muted") for y in yrs], cls_="dim"))
     body = f"""
-<p class="lede">Thirteen lines. The licence fee escalates on a contracted rate; payroll scales with
+<p class="lede">{eng(len(cost_keys)).capitalize()} lines. The licence fee escalates on a contracted rate; payroll scales with
 footfall; the rest move with inflation, revenue or the activity they support.</p>
 {table([""] + [f"Yr {y['year']}" for y in yrs], cost_rows)}
 {note("amber","Obligations carried inside these lines",
@@ -752,7 +758,7 @@ over ADA's assets — the park is ADA property throughout.</p>
 into the tables.</p>
 {assm([("Revenue — volume", [
    ("Year 1 footfall", "Opening season, marketing-led, ADA's ₹20 gate held", f"{num(yrs[0]['revenue']['footfall_lakh'],2)} lakh visits"),
-   ("Year 7 footfall", "About 1,590 visits a day", f"{num(yrs[6]['revenue']['footfall_lakh'],2)} lakh visits"),
+   ("Year 7 footfall", f"About {int(yrs[6]['revenue']['footfall_lakh'] * 1e5 / 365):,} visits a day", f"{num(yrs[6]['revenue']['footfall_lakh'],2)} lakh visits"),
    ("Growth path", "Front-loaded, flattening as the site matures",
     f"+{pct((yrs[1]['revenue']['footfall_lakh']/yrs[0]['revenue']['footfall_lakh']-1)*100,0)} yr 2, "
     f"+{pct((yrs[6]['revenue']['footfall_lakh']/yrs[5]['revenue']['footfall_lakh']-1)*100,0)} by yr 7"),

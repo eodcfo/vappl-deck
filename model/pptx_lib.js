@@ -43,6 +43,11 @@ const money = x => x == null ? "—"
   : Math.abs(x) < 100 ? `₹${(+x.toFixed(1)).toString().replace(/\.0$/, "")} lakh`
                       : `₹${(+(x / CR).toFixed(2)).toString().replace(/\.00$/, "")} crore`;
 
+/** Small counts read better spelled out in prose than set as digits. */
+const ENG = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen"];
+const eng = n => ENG[n] || String(n);
+
 // ---------------------------------------------------------------- measuring --
 /**
  * Estimated rendered height, in inches, of `text` in a box `w` inches wide.
@@ -436,6 +441,7 @@ function foot(s, text) {
 }
 
 module.exports = {
+  eng,
   footnote, mark, overflowReport, C, SERIES, F, W, H, M, CR, cr, crN, lk, pc, pp, xx, money, measure,
                    cover, head, stats, table, verdict, optionCards, itemList,
                    chart, closing, foot };
