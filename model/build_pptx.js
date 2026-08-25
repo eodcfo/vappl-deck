@@ -205,7 +205,7 @@ function buildGGV() {
     { cells: ["Asset position", r.assets], emphasis: "total" },
   ], { colW: [2.6, L.W - 2 * L.M - 2.6], rowH: 0.30, fontSize: 10.5 });
   L.footnote(s, y + 0.04, "Why this site and not another",
-    "Geeta Govind Vatika shares a boundary with Agra Chaupati, which E-O-D already runs — one block of roughly 25 acres, with internal pathways and gates between them. F&B is supplied from kitchens that already exist next door, so this site needs counters rather than a built kitchen; private events sell into a customer base E-O-D already serves. The two specialise instead of competing: Chaupati the food and adventure destination, Geeta Govind Vatika the event and show destination.");
+    "Geeta Govind Vatika and Agra Chaupati, which E-O-D already runs, sit on one block of roughly 25 acres and share a grille boundary, with internal pathways and gates between them. F&B is supplied from kitchens that already exist next door, so this site needs counters rather than a built kitchen; private events sell into a customer base E-O-D already serves. The two specialise instead of competing: Chaupati the food and adventure destination, Geeta Govind Vatika the event and show destination.");
   L.foot(s, NAME);
 
   // 02 the ask
