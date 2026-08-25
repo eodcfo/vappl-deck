@@ -205,7 +205,7 @@ def ggv_revenue(year_idx):
     entry = f * paid_entry_ratio * entry_gross / (1 + entry_gst)
     show  = f * show_conv * show_gross_by_year[y] / (1 + show_gst)
     fnb   = f * fnb_capture * fnb_spend_by_year[y] / (1 + fnb_gst)
-    act   = f * act_capture * act_spend_by_year[y] / (1 + act_gst)
+    act   = f * act_capture * act_spend_by_year[y] / (1 + act_gst) * GGV_ACTIVITY_REVENUE_SHARE
 
     vehicles = f / 3.1
     park_gross = vehicles * (0.62 * 10 + 0.38 * 20)
@@ -213,7 +213,7 @@ def ggv_revenue(year_idx):
 
     # Public IPs and ticketed community events, front-loaded: the year-1 plan builds
     # the audience through programming rather than through price.
-    events = [30.0, 34.0, 36.0, 38.0, 40.0, 42.0, 44.0][y]
+    events = [50.0, 58.0, 64.0, 70.0, 75.0, 80.0, 85.0][y]
 
     return {"entry": entry, "show": show, "fnb": fnb, "activities": act,
             "parking": parking, "events": events,
@@ -232,7 +232,7 @@ def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
     show_amc   = 14.0 * infl
     rm         = 8.0 * infl * scale
     fnb_cogs   = 0.44 * rev["fnb"]   # supplied from the EAC kitchens, not bought in
-    act_cost   = 0.22 * rev["activities"]
+    act_cost   = 0.0     # borne by the activity vendor, not by E-O-D
     marketing  = [0.075, 0.065, 0.055, 0.050, 0.045, 0.045, 0.045][y] * rev["total"]
     insurance  = 5.0 * infl
     it_cctv    = 3.5 * infl
@@ -247,14 +247,19 @@ def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
             "insurance_statutory": insurance, "it_cctv": it_cctv,
             "corporate_overhead": overhead, "contingency": contingency, "total": total}
 
+# No activity equipment is bought. Every activity on site is brought in by a
+# vendor on rent or revenue share, so it carries no capital cost here.
 GGV_CAPEX = [
-    ("Activity equipment (demountable — no permanent structures permitted)", 40.0, 8),
     ("Kiosk counters, common seating, shade structures", 8.0, 7),
-    ("Ticketing, POS, CCTV and ICCC integration", 12.0, 5),
+    ("Ticketing, POS and CCTV", 6.0, 5),
+    ("Horticulture equipment, tools, uniforms, safety kit", 8.0, 5),
     ("Signage, branding, wayfinding", 5.0, 5),
-    ("Uniforms, tools, horticulture kit, safety equipment", 4.0, 3),
     ("Pre-operative and contingency", 3.0, 5),
 ]
+
+# Activities are vendor-operated. E-O-D books its share of the vendor's takings,
+# not the gross spend, and carries none of the operating cost.
+GGV_ACTIVITY_REVENUE_SHARE = 0.20
 
 def build_ggv():
     years = []
@@ -278,7 +283,9 @@ def build_ggv():
         "total": capex_total + sec_dep + adv_licence + GGV_RFP["emd_lakh"] + GGV_RFP["tender_fee_lakh"],
     }
     year1_opex = years[0]["opex"]["total"]
-    ask = mobilisation["total"]      # opex is self-funded from collections
+    ask = 100.0                                     # Rs 1 crore
+    mobilisation["working_capital"] = ask - mobilisation["total"]
+    mobilisation["ask"] = ask
     peak_deficit = mobilisation["total"] + max(0.0, -years[0]["ebitda"])
     return {"rfp": GGV_RFP, "bid_licence_year1": GGV_BID_LICENCE_YEAR_1,
             "capex_lines": [{"item": n, "amount": a, "life_years": l} for n, a, l in GGV_CAPEX],
@@ -699,7 +706,11 @@ def project_fcf(years, t0_outflow, terminal_inflow=0.0, maint_capex_pct=0.02):
             "irr_pct": r * 100 if r is not None else None,
             "npv_at_15pct": npv(0.15, flows),
             "payback_years": payback_year(flows),
-            "cumulative_fcf": sum(flows[1:])}
+            # Operating free cash flow over the term, before the capital that was
+            # deployed to earn it, and the same figure net of that capital. The
+            # second is what the free-cash-flow column in the decks adds up to.
+            "cumulative_fcf": sum(flows[1:]),
+            "cumulative_fcf_net_of_capital": sum(flows)}
 
 def exit_valuation(fcf_detail, years, exit_year, discount=0.15, terminal_inflow=0.0,
                    ebitda_multiple=5.0):
@@ -918,9 +929,9 @@ def main():
     g_opex1 = ggv["year1_opex"]
     g_ask = ggv["funding_ask"]                       # mobilisation + one year of opex, as briefed
     g_cfads = [y["ebitda"] for y in ggv["years"]]
-    g_wc_util = [18.0, 14.0, 10.0, 8.0, 6.0, 5.0, 4.0]
+    g_wc_util = [34.0, 26.0, 18.0, 13.0, 9.0, 7.0, 5.0]
     g_debt = composite_facility(
-        term_loan=80.0, wc_limit=20.0, wc_utilisation=g_wc_util,
+        term_loan=58.0, wc_limit=42.0, wc_utilisation=g_wc_util,
         rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=1, cfads=g_cfads,
         label="CGTMSE composite facility \u2014 Geeta Govind Vatika")
     g_fcf = project_fcf(ggv["years"], g_mob,
@@ -949,7 +960,7 @@ def main():
         "exit_equity_value": g_exit_val, "exit_year": g_exit_year, "exit_valuation": g_exit,
     }
     ggv["financing"]["debt_optimised"] = composite_facility(
-        term_loan=80.0, wc_limit=20.0, wc_utilisation=g_wc_util,
+        term_loan=58.0, wc_limit=42.0, wc_utilisation=g_wc_util,
         rate=DEBT_RATE_BANK, tl_tenor=7, tl_moratorium=1, cfads=g_cfads,
         label="As proposed \u2014 the standby limit is already at peak drawdown")
     ggv["financing"]["agf_saving_optimised"] = (
