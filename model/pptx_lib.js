@@ -29,8 +29,30 @@ const W = 13.333, H = 7.5, M = 0.62;              // LAYOUT_WIDE, margins
 // slide is recorded here rather than silently clipped.
 const OVERFLOWS = [];
 const CURRENT = { deck: "", slide: 0 };
-function mark(deck, slide) { CURRENT.deck = deck; CURRENT.slide = slide; }
+function mark(deck, slide) {
+  CURRENT.deck = deck; CURRENT.slide = slide; CURRENT.bottom = 0; CURRENT.last = "";
+}
 function overflowReport() { return OVERFLOWS; }
+
+/**
+ * Record that an element occupies [y, y + h], and complain if it starts above the
+ * bottom of the one before it.
+ *
+ * Every slide here threads a running `y` down the page, so an element drawn on top
+ * of another means a caller dropped a return value — `L.table(...)` where it should
+ * be `y = L.table(...)`. That has shipped twice. The overflow check cannot catch it:
+ * two elements printed over each other still sit well clear of the footer.
+ */
+function claim(y, h, what) {
+  if (y + 0.02 < CURRENT.bottom) {
+    OVERFLOWS.push({ slide: CURRENT.slide, deck: CURRENT.deck,
+                     headline: `${what} OVERLAPS ${CURRENT.last}`,
+                     need: +(CURRENT.bottom - y).toFixed(2), room: 0,
+                     short: +(CURRENT.bottom - y).toFixed(2) });
+  }
+  CURRENT.bottom = Math.max(CURRENT.bottom, y + h);
+  CURRENT.last = what;
+}
 
 // ---------------------------------------------------------------- formatting --
 const cr  = (x, d = 2) => x == null ? "—" : `₹${(x / CR).toFixed(d)} Cr`;
@@ -126,8 +148,10 @@ function head(s, n, title, lede) {
       x: M, y: 1.04, w: W - 2 * M, h: ledeH, fontFace: F.body, fontSize: 12.5,
       color: C.inkSoft, lineSpacing: 17.5, margin: 0, valign: "top",
     });
+    claim(0.44, 0.60 + ledeH + 0.14, "head");
     return 1.04 + ledeH + 0.14;
   }
+  claim(0.44, 0.80, "head");
   return 1.24;
 }
 
@@ -159,6 +183,7 @@ function stats(s, y, cells, opts = {}) {
       fontSize: 9.5, color: C.inkMute, lineSpacing: 12.5, margin: 0, valign: "top",
     });
   });
+  claim(y, h, "stats");
   return y + h + 0.26;
 }
 
@@ -216,6 +241,7 @@ function table(s, y, headers, rows, opts = {}) {
                      need: +hh.toFixed(2), room: +roomT.toFixed(2),
                      short: +(hh - roomT).toFixed(2) });
   }
+  claim(y, hh, `table: ${String(headers[0] || "").slice(0, 22)}`);
   return y + hh + 0.18;
 }
 
@@ -244,6 +270,7 @@ function footnote(s, y, label, text) {
     x: M, y: y + 0.25, w, h: bodyH, fontFace: F.body, fontSize: 9.5,
     color: C.inkMute, lineSpacing: 13, margin: 0, valign: "top",
   });
+  claim(y, hh, `footnote: ${label.slice(0, 22)}`);
   return y + hh + 0.14;
 }
 
@@ -292,6 +319,7 @@ function verdict(s, y, kind, headline, bodyText, h) {
     fontSize: bodyPt, color: C.inkSoft, lineSpacing: bodyPt * 1.42,
     margin: 0, valign: "top",
   });
+  claim(y, hh, `panel: ${headline.slice(0, 24)}`);
   return y + hh + 0.22;
 }
 
@@ -363,6 +391,7 @@ function itemList(s, y, items, opts = {}) {
       margin: 0, valign: "top",
     });
   });
+  claim(y, per * (opts.rowH || 0.94), "item list");
   return y + per * (opts.rowH || 0.94);
 }
 
@@ -391,6 +420,7 @@ function chart(s, pres, y, type, data, opts = {}) {
     barGapWidthPct: opts.gap || 45, border: { pt: 0 },
     plotArea: { fill: { color: C.white } },
   }, opts.extra || {}));
+  claim(y, opts.h || 3.2, "chart");
   return y + (opts.h || 3.2) + 0.2;
 }
 
