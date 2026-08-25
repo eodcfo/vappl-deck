@@ -119,12 +119,22 @@ body{margin:0;background:var(--canvas);color:var(--ink);font-family:"DM Sans",-a
 .fin{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums;margin:0 0 8px;}
 .fin th{font-weight:500;text-align:left;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);padding:12px 14px 10px 0;border-bottom:1px solid var(--rule-strong);white-space:nowrap;}
 .fin th.r,.fin td.r{text-align:right;padding-right:0;}
+/* A figure broken across two lines reads as two figures, so the numeric column
+   never wraps. Wide tables already scroll inside .fin-scroll. */
+.fin td.r{white-space:nowrap;}
+/* The right padding above is dropped so the last column sits flush with the table
+   edge. Without a matching left gutter on every cell after the first, a column
+   whose text runs to its own right edge butts straight into the next one. */
+.fin th+th,.fin td+td{padding-left:18px;}
 .fin th.c,.fin td.c{text-align:center;}
 .fin td{padding:13px 14px 13px 0;border-bottom:1px solid var(--rule);color:var(--ink);vertical-align:baseline;}
 .fin tr:last-child td{border-bottom:none;}
-.fin tr.sub td{background:linear-gradient(to right,rgba(43,102,234,0.04),transparent 60%);}
+/* The gradient goes on the row, not the cell: set per-cell it restarts in every
+   column and the highlight reads as vertical stripes. */
+.fin tr.sub{background:linear-gradient(to right,rgba(43,102,234,0.04),transparent 60%);}
 .fin tr.sub td:first-child{font-weight:600;}
-.fin tr.total td{background:linear-gradient(to right,var(--terracotta-soft),transparent 60%);border-top:1px solid rgba(200,85,61,0.15);}
+.fin tr.total{background:linear-gradient(to right,var(--terracotta-soft),transparent 60%);}
+.fin tr.total td{border-top:1px solid rgba(200,85,61,0.15);}
 .fin tr.total td:first-child{font-weight:700;}
 .fin tr.dim td{color:var(--ink-mute);}
 .fin .label{font-weight:600;font-size:14px;}
