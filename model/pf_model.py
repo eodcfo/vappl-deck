@@ -198,26 +198,42 @@ def ggv_revenue(year_idx):
     act_gst = 0.18
 
     paid_entry_ratio = [0.76, 0.77, 0.78, 0.78, 0.79, 0.79, 0.80][y]
-    show_conv        = [0.24, 0.26, 0.28, 0.29, 0.30, 0.30, 0.31][y] * SCEN["yield"]
     fnb_capture      = [0.32, 0.34, 0.35, 0.36, 0.37, 0.38, 0.38][y]
-    act_capture      = [0.11, 0.13, 0.14, 0.15, 0.15, 0.16, 0.16][y]
+    # Show conversion steps up in year 4: the year-3 reinvestment adds a second
+    # show, so an evening visit has two ticketed reasons to stay rather than one.
+    show_conv        = [0.24, 0.26, 0.28, 0.34, 0.36, 0.37, 0.38][y] * SCEN["yield"]
+    # More operators are signed from year 2 as the site proves its footfall, so a
+    # larger share of visitors finds an activity they want.
+    act_capture      = [0.11, 0.15, 0.17, 0.20, 0.21, 0.22, 0.22][y]
 
     entry = f * paid_entry_ratio * entry_gross / (1 + entry_gst)
     show  = f * show_conv * show_gross_by_year[y] / (1 + show_gst)
     fnb   = f * fnb_capture * fnb_spend_by_year[y] / (1 + fnb_gst)
-    act   = f * act_capture * act_spend_by_year[y] / (1 + act_gst) * GGV_ACTIVITY_REVENUE_SHARE
+
+    # Visitor spend at the activity layer, before it is split with the operators.
+    act_gross = f * act_capture * act_spend_by_year[y] / (1 + act_gst)
+    # Everything is vendor-run until the year-3 reinvestment. From year 4 E-O-D
+    # owns part of the layer, so it books that part gross and carries its cost.
+    owned = GGV_ACTIVITY_OWNED_FRACTION[y]
+    act = (act_gross * (1 - owned) * GGV_ACTIVITY_REVENUE_SHARE) + (act_gross * owned)
 
     vehicles = f / 3.1
     park_gross = vehicles * (0.62 * 10 + 0.38 * 20)
     parking = park_gross / 1.18
 
-    # Public IPs and ticketed community events, front-loaded: the year-1 plan builds
-    # the audience through programming rather than through price.
-    events = [50.0, 58.0, 64.0, 70.0, 75.0, 80.0, 85.0][y]
+    # Ticketed community events and E-O-D's own IPs. Year 1 builds the audience
+    # through programming rather than through price.
+    events_public = [32.0, 38.0, 43.0, 49.0, 54.0, 58.0, 62.0][y]
+    # Weddings, corporate offsites, birthdays, pre-wedding and film shoots. This is
+    # the line the Agra Chaupati adjacency and the year-3 show build most affect.
+    events_private = [18.0, 24.0, 29.0, 37.0, 42.0, 46.0, 50.0][y]
 
-    return {"entry": entry, "show": show, "fnb": fnb, "activities": act,
-            "parking": parking, "events": events,
-            "total": entry + show + fnb + act + parking + events,
+    return {"entry": entry, "show": show, "fnb": fnb,
+            "activities": act, "activities_gross": act_gross, "activities_owned_frac": owned,
+            "parking": parking,
+            "events_public": events_public, "events_private": events_private,
+            "events": events_public + events_private,
+            "total": entry + show + fnb + act + parking + events_public + events_private,
             "footfall_lakh": f}
 
 def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
@@ -232,23 +248,33 @@ def ggv_opex(year_idx, rev, licence_year_1=GGV_BID_LICENCE_YEAR_1):
     show_amc   = 14.0 * infl
     rm         = 8.0 * infl * scale
     fnb_cogs   = 0.44 * rev["fnb"]   # supplied from the EAC kitchens, not bought in
-    act_cost   = 0.0     # borne by the activity vendor, not by E-O-D
+    # Vendor-run activities cost E-O-D nothing. The owned part, from year 4, carries
+    # manning, power and consumables at 35% of what it takes.
+    act_cost   = rev["activities_gross"] * rev["activities_owned_frac"] * GGV_OWNED_ACTIVITY_COST_RATIO
+    # Cost of delivering the events themselves. Public IPs carry artists, production
+    # and permissions; private bookings carry incremental manning, power and
+    # housekeeping only, because the client brings its own caterer and decorator.
+    events_cost = (GGV_PUBLIC_EVENT_COST_RATIO * rev["events_public"] +
+                   GGV_PRIVATE_EVENT_COST_RATIO * rev["events_private"])
     marketing  = [0.075, 0.065, 0.055, 0.050, 0.045, 0.045, 0.045][y] * rev["total"]
     insurance  = 5.0 * infl
     it_cctv    = 3.5 * infl
     overhead   = 0.050 * rev["total"]                     # Agra cluster allocation (shared with EAC/ESP)
     contingency= 3.0 * infl                               # ADA penalty provision
     total = (licence + manpower + electricity + water_hort + show_amc + rm +
-             fnb_cogs + act_cost + marketing + insurance + it_cctv + overhead + contingency)
+             fnb_cogs + act_cost + events_cost + marketing + insurance + it_cctv +
+             overhead + contingency)
     total *= SCEN["opex"]
     return {"licence_fee": licence, "manpower": manpower, "electricity": electricity,
             "water_horticulture": water_hort, "show_amc": show_amc, "repairs": rm,
-            "fnb_cogs": fnb_cogs, "activity_cost": act_cost, "marketing": marketing,
+            "fnb_cogs": fnb_cogs, "activity_cost": act_cost, "events_cost": events_cost,
+            "marketing": marketing,
             "insurance_statutory": insurance, "it_cctv": it_cctv,
             "corporate_overhead": overhead, "contingency": contingency, "total": total}
 
-# No activity equipment is bought. Every activity on site is brought in by a
-# vendor on rent or revenue share, so it carries no capital cost here.
+# Nothing at mobilisation is an attraction. Every activity on site at opening is
+# brought in by an operator on rent or revenue share, so none of it is funded by
+# the facility and none of it appears here.
 GGV_CAPEX = [
     ("Kiosk counters, common seating, shade structures", 8.0, 7),
     ("Ticketing, POS and CCTV", 6.0, 5),
@@ -257,20 +283,47 @@ GGV_CAPEX = [
     ("Pre-operative and contingency", 3.0, 5),
 ]
 
-# Activities are vendor-operated. E-O-D books its share of the vendor's takings,
-# not the gross spend, and carries none of the operating cost.
+# Vendor-run activities pay E-O-D a share of their takings, not the gross spend.
 GGV_ACTIVITY_REVENUE_SHARE = 0.20
+
+# Reinvestment out of operating cash at the end of year 3 — no new facility, no
+# equity. It is discretionary and deferrable, which is why it sits below the debt
+# service line and does not touch the coverage ratios.
+GGV_GROWTH_CAPEX_YEAR = 3
+GGV_GROWTH_CAPEX = [
+    ("Second laser and projection show", 26.0, 7),
+    ("Owned activity installations, demountable", 14.0, 5),
+]
+# Share of the activity layer E-O-D owns and operates itself once that build is
+# commissioned. The rest stays with the operators on revenue share.
+GGV_ACTIVITY_OWNED_FRACTION = [0.0, 0.0, 0.0, 0.30, 0.32, 0.34, 0.36]
+GGV_OWNED_ACTIVITY_COST_RATIO = 0.35
+
+# Cost of putting the events on, counting only what is genuinely incremental.
+# Manning, power, housekeeping and security are already carried in their own
+# lines and are not charged again here. What is left is artists, external stage
+# and sound hire, and permissions for a public IP; for a private booking, little
+# more than consumables, because the client's own caterer and decorator do the
+# rest and a shoot is a location fee against a site that is already staffed.
+GGV_PUBLIC_EVENT_COST_RATIO = 0.28
+GGV_PRIVATE_EVENT_COST_RATIO = 0.12
 
 def build_ggv():
     years = []
     dep = straight_line_dep([(a, l) for _, a, l in GGV_CAPEX])
+    # The year-3 build is commissioned at the end of that year, so it starts
+    # depreciating — and starts earning — in year 4.
+    growth_dep = straight_line_dep([(a, l) for _, a, l in GGV_GROWTH_CAPEX])
     for i in range(1, 8):
         rev = ggv_revenue(i)
         op = ggv_opex(i, rev)
         ebitda = rev["total"] - op["total"]
+        dep_i = dep + (growth_dep if i > GGV_GROWTH_CAPEX_YEAR else 0.0)
+        growth_capex = sum(a for _, a, _ in GGV_GROWTH_CAPEX) if i == GGV_GROWTH_CAPEX_YEAR else 0.0
         years.append({"year": i, "revenue": rev, "opex": op, "ebitda": ebitda,
                       "ebitda_margin": ebitda / rev["total"] * 100,
-                      "depreciation": dep, "ebit": ebitda - dep})
+                      "depreciation": dep_i, "ebit": ebitda - dep_i,
+                      "growth_capex": growth_capex})
     capex_total = sum(a for _, a, _ in GGV_CAPEX)
     sec_dep = GGV_BID_LICENCE_YEAR_1 / 4                     # 3 months of licence fee
     adv_licence = GGV_BID_LICENCE_YEAR_1 / 2                 # first 6 months in advance
@@ -291,7 +344,15 @@ def build_ggv():
             "capex_lines": [{"item": n, "amount": a, "life_years": l} for n, a, l in GGV_CAPEX],
             "mobilisation": mobilisation, "years": years,
             "year1_opex": year1_opex, "funding_ask": ask,
-            "peak_cash_deficit": peak_deficit, "annual_depreciation": dep}
+            "peak_cash_deficit": peak_deficit, "annual_depreciation": dep,
+            "growth_capex": {
+                "year": GGV_GROWTH_CAPEX_YEAR,
+                "lines": [{"item": n, "amount": a, "life_years": l} for n, a, l in GGV_GROWTH_CAPEX],
+                "total": sum(a for _, a, _ in GGV_GROWTH_CAPEX),
+                "annual_depreciation": growth_dep,
+                "owned_activity_fraction_pct": [x * 100 for x in GGV_ACTIVITY_OWNED_FRACTION],
+                "owned_activity_cost_ratio_pct": GGV_OWNED_ACTIVITY_COST_RATIO * 100,
+            }}
 
 # ============================================================================
 # PROJECT 2 — RAMAYAN VATIKA, BAREILLY (Bareilly Development Authority)
@@ -650,6 +711,31 @@ def composite_facility(term_loan, wc_limit, wc_utilisation, rate, tl_tenor,
         "total_finance_cost": sum(r["tl_interest"] + r["wc_interest"] + r["agf"] for r in rows),
     }
 
+def cash_waterfall(fcf_detail, schedule, opening_cash):
+    """
+    What is actually left in the account after the loan is served.
+
+    The project free cash flow view answers "does this project earn its capital
+    back". This answers a different and blunter question a lender asks: with the
+    facility being repaid on schedule, does the balance ever go below zero — and
+    can the business fund its own reinvestment without coming back for more money.
+    """
+    ds = {x["year"]: x["debt_service"] for x in schedule}
+    cash, rows, low = opening_cash, [], opening_cash
+    for d in fcf_detail:
+        service = ds.get(d["year"], 0.0)
+        net = (d["ebitda"] - d["tax"] - d["maintenance_capex"]
+               - d.get("growth_capex", 0.0) - service)
+        cash += net
+        low = min(low, cash)
+        rows.append({"year": d["year"], "ebitda": d["ebitda"], "tax": d["tax"],
+                     "maintenance_capex": d["maintenance_capex"],
+                     "growth_capex": d.get("growth_capex", 0.0),
+                     "debt_service": service, "net": net, "closing_cash": cash})
+    return {"opening_cash": opening_cash, "detail": rows,
+            "lowest_balance": low, "closing_cash": cash,
+            "self_funding": low >= 0.0}
+
 def debt_capacity(cfads, rate, tl_tenor, tl_moratorium, wc_share, wc_util_profile,
                   target_dscr=1.30, hi=2000.0):
     """
@@ -693,13 +779,14 @@ def project_fcf(years, t0_outflow, terminal_inflow=0.0, maint_capex_pct=0.02):
         tax = max(0.0, ebit) * CORPORATE_TAX
         rev = y["revenue"]["total"] if isinstance(y["revenue"], dict) else y["revenue"]
         maint = rev * maint_capex_pct
-        fcf = ebitda - tax - maint
+        growth = y.get("growth_capex", 0.0)
+        fcf = ebitda - tax - maint - growth
         term = terminal_inflow if i == len(years) - 1 else 0.0
         fcf += term
         flows.append(fcf)
         detail.append({"year": y["year"], "ebitda": ebitda, "tax": tax,
-                       "maintenance_capex": maint, "terminal_inflow": term,
-                       "fcf": fcf})
+                       "maintenance_capex": maint, "growth_capex": growth,
+                       "terminal_inflow": term, "fcf": fcf})
     r = irr(flows)
     return {"t0": t0_outflow, "terminal_inflow": terminal_inflow,
             "flows": flows, "detail": detail,
@@ -971,8 +1058,16 @@ def main():
     # when it is asked for.
     # ggv["financing"]["walk_away"] = max_licence_fee(
     #     build_ggv, GGV_BID_LICENCE_YEAR_1, g_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
+    # The opening balance is the part of the facility not spent on mobilisation:
+    # the standby working capital is what carries the thin first season.
+    ggv["financing"]["cash_waterfall"] = cash_waterfall(
+        g_fcf["detail"], g_debt["schedule"],
+        opening_cash=ggv["mobilisation"]["working_capital"])
+    # Capacity has to be measured on the structure actually proposed. Solving it at
+    # a different term/working-capital split answers a question nobody asked, and
+    # makes the headroom against the facility sought meaningless.
     ggv["financing"]["debt_capacity"] = debt_capacity(
-        g_cfads, DEBT_RATE_BANK, 7, 1, 0.20, g_wc_util)
+        g_cfads, DEBT_RATE_BANK, 7, 1, g_debt["wc_limit"] / g_debt["total_limit"], g_wc_util)
 
     ggv["scenarios"] = run_scenarios(build_ggv, [
         ("downside", {"footfall": 0.85, "yield": 0.85, "opex": 1.05, "licence": 1.25},
@@ -1038,7 +1133,7 @@ def main():
     # rv["financing"]["walk_away"] = max_licence_fee(
     #     build_rv, RV_BID_LICENCE_YEAR_1, r_debt["cgtmse"]["agf_rate_pct"] + DEBT_RATE_BANK * 100)
     rv["financing"]["debt_capacity"] = debt_capacity(
-        r_cfads, DEBT_RATE_BANK, 9, 4, 0.45, r_wc_util)
+        r_cfads, DEBT_RATE_BANK, 9, 4, r_debt["wc_limit"] / r_debt["total_limit"], r_wc_util)
 
     rv["scenarios"] = run_scenarios(build_rv, [
         ("downside", {"footfall": 0.85, "yield": 0.85, "opex": 1.05, "licence": 1.33},
@@ -1090,7 +1185,7 @@ def main():
         "exit_equity_value": k_exit_val, "exit_year": k_exit_year, "exit_valuation": k_exit,
     }
     karnal["financing"]["debt_capacity"] = debt_capacity(
-        k_cfads, DEBT_RATE_BANK, 9, 2, 0.15, k_wc_util)
+        k_cfads, DEBT_RATE_BANK, 9, 2, k_debt["wc_limit"] / k_debt["total_limit"], k_wc_util)
 
     karnal["scenarios"] = run_scenarios(build_karnal, [
         ("downside", {"footfall": 0.75, "opex": 1.08},
@@ -1371,10 +1466,14 @@ if __name__ == "__main__":
         dc = f["debt_capacity"]
         print(f"  DEBT CAPACITY at DSCR {dc['target_dscr']}: {cr(dc['max_total_limit'])}"
               f" (TL {cr(dc['max_term_loan'])} + WC {cr(dc['max_wc_limit'])})")
-        print(f"  EQUITY {f['equity']['stake_pct']:.0f}% -> IRR {f['equity']['irr_pct']:.1f}%"
-              f"  x{f['equity']['money_multiple']:.2f} | stake needed for 22%: {f['equity']['stake_for_22pct']:.0f}%")
-        print(f"  CCD    {f['ccd']['conversion_stake_pct']:.0f}% -> IRR {f['ccd']['irr_pct']:.1f}%"
-              f"  x{f['ccd']['money_multiple']:.2f}")
+        if "equity" in f:
+            print(f"  EQUITY {f['equity']['stake_pct']:.0f}% -> IRR {f['equity']['irr_pct']:.1f}%"
+                  f"  x{f['equity']['money_multiple']:.2f} | stake needed for 22%: {f['equity']['stake_for_22pct']:.0f}%")
+        if "ccd" in f:
+            print(f"  CCD    {f['ccd']['conversion_stake_pct']:.0f}% -> IRR {f['ccd']['irr_pct']:.1f}%"
+                  f"  x{f['ccd']['money_multiple']:.2f}")
+        if "instruments" in f:
+            print(f"  OFFERED ON: {', '.join(f['instruments'])} only")
 
     p = m["karnal"]
     print("\n=== KARNAL (Rs Cr) ===")
