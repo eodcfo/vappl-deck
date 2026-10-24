@@ -237,6 +237,38 @@ RAIL_SHARED = [
     ("pf-company.html", "Company"),
 ]
 
+def social_metadata(title, self_href):
+    base = "https://eodcfo.github.io/vappl-deck"
+    url = base + "/" + self_href
+    image_base = base + "/images/og/default"
+    description = "E-O-D Parks | Vision Amusement Park Pvt. Ltd."
+    alt = "e-o-d Parks: nature, water and outdoor adventure"
+    tags = [
+        ("property", "og:type", "website"),
+        ("property", "og:title", title),
+        ("property", "og:description", description),
+        ("property", "og:site_name", "E-O-D Parks"),
+        ("property", "og:url", url),
+    ]
+    for suffix, width, height in [("wide", 1200, 630), ("square", 1200, 1200)]:
+        tags.extend([
+            ("property", "og:image", f"{image_base}-{suffix}.png"),
+            ("property", "og:image:width", str(width)),
+            ("property", "og:image:height", str(height)),
+            ("property", "og:image:type", "image/png"),
+            ("property", "og:image:alt", alt),
+        ])
+    tags.extend([
+        ("name", "twitter:card", "summary_large_image"),
+        ("name", "twitter:title", title),
+        ("name", "twitter:description", description),
+        ("name", "twitter:image", f"{image_base}-twitter.png"),
+        ("name", "twitter:image:alt", alt),
+    ])
+    return "\n".join(f'<meta {kind}="{key}" content="{e(value)}">'
+                     for kind, key, value in tags) + f'\n<link rel="canonical" href="{url}">'
+
+
 def page(title, badge, sections, rail, self_href):
     rail_html = "\n".join(
         f'<li class="rail__item{" rail__item--active" if i == 0 else ""}">'
@@ -253,6 +285,7 @@ def page(title, badge, sections, rail, self_href):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(title)}</title>
+{social_metadata(title, self_href)}
 {FONTS}
 <style>{CSS}</style>
 </head>
