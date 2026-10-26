@@ -203,3 +203,9 @@ python3 -m http.server 8080
 Deployed via GitHub Pages from the `main` branch. To update the live site, commit changes to `main` and push — Pages rebuilds automatically within ~2 minutes.
 
 > **Workflow:** develop on a feature branch, open a PR into `main`, and merge to publish.
+
+## TypeScript source and verification
+
+Browser source lives in `web/`. JavaScript in `assets/` is compiler output retained for the existing static/runtime deployment. Use Node 22.18 or newer, `npm ci --ignore-scripts`, and `npm run build:web` after changing source. `npm run check` checks browser and tooling types and compares emitted JavaScript with fresh compilation in a disposable directory.
+
+Presentation source is strict TypeScript in `model/build_pptx.ts` and `model/pptx_lib.ts`, with validated Python model JSON and checked-in JavaScript output. See [presentation generation and isolated verification](docs/presentation-generators.md) for commands and evidence.

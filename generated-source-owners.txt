@@ -1,0 +1,6 @@
+# Compiler output|maintained strict TypeScript owner
+assets/deck-navigation.js|web/deck-navigation.ts
+assets/finance-navigation.js|web/finance-navigation.ts
+model/build_pptx.js|model/build_pptx.ts
+model/pptx_lib.js|model/pptx_lib.ts
+model/finance-contract.js|model/finance-contract.ts

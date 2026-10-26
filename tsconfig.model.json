@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": "model",
+    "outDir": "model",
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "sourceRoot": "./"
+  },
+  "include": [
+    "model/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES5",
+    "lib": [
+      "DOM",
+      "ES2015"
+    ],
+    "module": "none",
+    "noEmitOnError": true,
+    "outDir": "assets",
+    "rootDir": "web",
+    "types": []
+  },
+  "include": [
+    "web/**/*.ts"
+  ]
+}

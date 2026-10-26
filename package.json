@@ -1,0 +1,24 @@
+{
+  "name": "vappl-deck",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit && tsc --project tsconfig.tools.json && tsc --project tsconfig.model.json --noEmit",
+    "build:web": "tsc",
+    "check": "npm run typecheck && npm run check:generated && npm run check:model && npm run check:sources",
+    "check:generated": "node scripts/check-generated.mts assets",
+    "build:model": "tsc --project tsconfig.model.json",
+    "build:pptx": "npm run build:model && node model/build_pptx.js",
+    "check:model": "node scripts/check-model-generated.mts",
+    "verify:model": "npm run build:model && node scripts/verify-model.mts",
+    "check:sources": "node scripts/check-sources.mts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "pptxgenjs": "4.0.1",
+    "typescript": "5.9.3",
+    "zod": "4.6.6"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

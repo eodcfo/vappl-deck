@@ -1,0 +1,23 @@
+import {appendFileSync} from 'node:fs';
+import net from 'node:net';
+import tls from 'node:tls';
+import http from 'node:http';
+import https from 'node:https';
+import http2 from 'node:http2';
+import dgram from 'node:dgram';
+import {syncBuiltinESMExports} from 'node:module';
+const log=process.env.PPTX_NETWORK_LOG;
+if(!log)throw new Error('The isolated model runner must own the network-attempt log.');
+const deny=(api:string)=>(..._args:unknown[]):never=>{
+ appendFileSync(log,JSON.stringify({api})+'\n');
+ throw new Error(`Network disabled for presentation verification: ${api}`);
+};
+net.connect=deny('net.connect');net.createConnection=deny('net.createConnection');
+net.Socket.prototype.connect=deny('Socket.connect');
+tls.connect=deny('tls.connect');
+http.request=deny('http.request');http.get=deny('http.get');
+https.request=deny('https.request');https.get=deny('https.get');
+http2.connect=deny('http2.connect');
+dgram.createSocket=deny('dgram.createSocket');
+globalThis.fetch=deny('fetch');
+syncBuiltinESMExports();

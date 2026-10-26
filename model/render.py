@@ -284,22 +284,7 @@ def page(title, badge, sections, rail, self_href):
 {sections}
   </main>
 </div>
-<script>
-(function(){{
-  const sections = document.querySelectorAll('section[id]');
-  const items = document.querySelectorAll('.rail__item');
-  const obs = new IntersectionObserver(entries=>{{
-    entries.forEach(en=>{{
-      if(en.isIntersecting){{
-        items.forEach(i=>i.classList.remove('rail__item--active'));
-        const link = document.querySelector('.rail__item a[href="#'+en.target.id+'"]');
-        if(link) link.closest('.rail__item').classList.add('rail__item--active');
-      }}
-    }});
-  }},{{rootMargin:'-20% 0px -70% 0px'}});
-  sections.forEach(s=>obs.observe(s));
-}})();
-</script>
+<script src="assets/finance-navigation.js"></script>
 </body>
 </html>
 """
